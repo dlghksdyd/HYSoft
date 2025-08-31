@@ -11,9 +11,9 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace Test.Views
+namespace Test.FileTransfer
 {
-    public class TcpClientViewModel : BindableBase
+    public class FileTransferClientViewModel : BindableBase
     {
         // ---- 상태/설정 바인딩용 프로퍼티 ----
         private string _serverHost = "127.0.0.1";
