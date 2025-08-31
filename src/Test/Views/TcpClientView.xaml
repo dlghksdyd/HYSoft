@@ -17,16 +17,21 @@
             Command="{Binding ServerStartCommand}"
             Content="서버 시작" />
         <Button
-            Margin="589,41,0,0"
+            Margin="150,36,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Command="{Binding ClientStartCommand}"
             Content="클라이언트 연결" />
         <Button
-            Margin="601,95,0,0"
+            Margin="275,36,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Command="{Binding ClientSendDataCommand}"
+            Command="{Binding ClientSendFileCommand}"
             Content="데이터 전송" />
+        <TextBox
+            Width="400"
+            Height="40"
+            Margin="54,86,346,308"
+            Text="{Binding Status, FallbackValue=상태값}" />
     </Grid>
 </Window>

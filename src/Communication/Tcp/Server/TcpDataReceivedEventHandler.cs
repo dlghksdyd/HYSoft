@@ -25,6 +25,11 @@ namespace HYSoft.Communication.Tcp.Server
         public readonly byte[] Data = data;
 
         /// <summary>
+        /// 클라이언트의 고유 GUID입니다.
+        /// </summary>
+        public readonly Guid ClientId = clientId;
+
+        /// <summary>
         /// 수신한 클라이언트에게 응답 데이터를 비동기적으로 전송합니다.
         /// </summary>
         /// <param name="data">전송할 데이터 바이트 배열입니다.</param>

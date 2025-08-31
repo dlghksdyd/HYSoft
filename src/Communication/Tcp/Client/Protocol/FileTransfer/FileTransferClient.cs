@@ -1,197 +1,175 @@
 ﻿using System;
-using System.Buffers;
 using System.Buffers.Binary;
+using System.Collections.Generic;
 using System.IO;
-using System.IO.Hashing;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace HYSoft.Communication.Tcp.Client.Protocol.FileTransfer
 {
-    /// <summary>
-    /// 파일 업로드(클라이언트→서버) 전용 구현.
-    /// - 재개(Resume) 지원(서버가 지원 시)
-    /// - 진행률 콜백 지원(IProgress<long>)
-    /// - 취소 토큰 지원
-    /// </summary>
-    public sealed class FileTransferClient
+    public class FileTransferClient
     {
-        private readonly IByteTransport _transport;
+        private readonly TcpClient _client;
 
-        public FileTransferClient(IByteTransport transport)
+        // 프로토콜 상수
+        private const uint MAGIC_HEADER = 0x46543130; // "FT10"
+        private const uint MAGIC_TAIL = 0x4654454E;   // "FTEN"
+        private const byte STATUS_OK = 0x00;
+        private const byte STATUS_RESUME = 0x01;
+        private const byte STATUS_ERROR = 0xFF;
+
+        // 송신 청크 크기
+        private const int DefaultChunkSize = 64 * 1024;
+
+        public FileTransferClient(TcpClientOptions options)
         {
-            _transport = transport ?? throw new ArgumentNullException(nameof(transport));
+            _client = TcpClientManager.Create(options);
         }
 
         /// <summary>
-        /// 원격 서버로 파일을 업로드한다.
+        /// 파일을 서버로 전송합니다. 서버는 다음 핸드셰이크를 따릅니다.
+        /// 1) 클라이언트 → 서버: [MAGIC_HEADER(4)][Flags(1)][FileSize(8)][NameLen(2)][FileName(UTF-8)]
+        /// 2) 서버 → 클라이언트: [Status(1)][StartOffset(8)]  (Status=OK이면 0부터, RESUME면 지정 오프셋부터)
+        /// 3) 클라이언트 → 서버: 파일 데이터를 StartOffset부터 순차 전송 (청크 스트리밍)
+        /// 4) 클라이언트 → 서버: [MAGIC_TAIL(4)][CRC32(4)]
+        /// 5) 서버 → 클라이언트: [FinalStatus(1)] (OK=수신/검증 성공)
         /// </summary>
-        /// <param name="localFilePath">업로드할 로컬 파일 경로</param>
-        /// <param name="remotePath">서버가 저장할 상대/절대 경로(서버 규칙 따름)</param>
-        /// <param name="chunkSize">송신 청크 크기(기본 2MiB, 256KiB~4MiB 가드)</param>
-        /// <param name="progress">전송 바이트 누계 콜백</param>
-        public async Task<(bool Ok, ulong BytesTransferred, uint ServerCrc, byte ResultCode)>
-            SendFileAsync(
-                string localFilePath,
-                string remotePath,
-                int chunkSize = 2 * 1024 * 1024,
-                IProgress<long>? progress = null,
-                CancellationToken cancellationToken = default)
+        /// <param name="filePath">전송할 로컬 파일 경로</param>
+        public async Task SendFileAsync(string filePath)
         {
-            if (string.IsNullOrWhiteSpace(localFilePath))
-                throw new ArgumentException("localFilePath is required.", nameof(localFilePath));
-            if (string.IsNullOrWhiteSpace(remotePath))
-                throw new ArgumentException("remotePath is required.", nameof(remotePath));
+            if (string.IsNullOrWhiteSpace(filePath))
+                throw new ArgumentException("filePath is null or empty.", nameof(filePath));
+            if (!File.Exists(filePath))
+                throw new FileNotFoundException("File not found.", filePath);
 
-            // 가드: 청크 크기 범위 (256 KiB ~ 4 MiB)
-            chunkSize = Math.Clamp(chunkSize, 256 * 1024, 4 * 1024 * 1024);
+            var fileInfo = new FileInfo(filePath);
+            long fileSize = fileInfo.Length;
+            if (fileSize < 0)
+                throw new IOException("Invalid file size.");
 
-            // 파일 정보
-            var fi = new FileInfo(localFilePath);
-            if (!fi.Exists) throw new FileNotFoundException("Local file not found.", localFilePath);
-            ulong fileSize = (ulong)fi.Length;
+            string fileName = fileInfo.Name;
+            byte[] fileNameBytes = Encoding.UTF8.GetBytes(fileName);
+            if (fileNameBytes.Length > ushort.MaxValue)
+                throw new InvalidOperationException("File name is too long for protocol.");
 
-            // === 1) HELLO 전송 ===
-            // [Op(1)=0x10][u16 ver=1][u64 size][u16 pathLen][pathUtf8...]
-            var pathUtf8 = Encoding.UTF8.GetBytes(remotePath);
-            if (pathUtf8.Length > ushort.MaxValue) throw new ArgumentOutOfRangeException(nameof(remotePath), "Path too long.");
+            // 1) 서버 연결
+            await _client.ConnectAsync().ConfigureAwait(false);
 
-            int helloLen = 1 + 2 + 8 + 2 + pathUtf8.Length;
-            byte[] hello = ArrayPool<byte>.Shared.Rent(helloLen);
-            try
+            // 2) 헤더 송신
+            // [MAGIC_HEADER(4)][Flags(1)][FileSize(8)][NameLen(2)][FileName(?)]
+            // Flags: 현재 0 (향후 옵션 확장용)
+            byte[] header = new byte[4 + 1 + 8 + 2 + fileNameBytes.Length];
+            int offset = 0;
+            BinaryPrimitives.WriteUInt32BigEndian(header.AsSpan(offset, 4), MAGIC_HEADER); offset += 4;
+            header[offset++] = 0x00; // Flags
+            BinaryPrimitives.WriteUInt64BigEndian(header.AsSpan(offset, 8), (ulong)fileSize); offset += 8;
+            BinaryPrimitives.WriteUInt16BigEndian(header.AsSpan(offset, 2), (ushort)fileNameBytes.Length); offset += 2;
+            fileNameBytes.AsSpan().CopyTo(header.AsSpan(offset));
+            await _client.SendAsync(header).ConfigureAwait(false);
+
+            // 3) 서버 응답 수신: [Status(1)][StartOffset(8)]
+            byte[] resp = new byte[1 + 8];
+            await _client.ReceiveAsync(resp).ConfigureAwait(false);
+            byte status = resp[0];
+            ulong startOffsetU = BinaryPrimitives.ReadUInt64BigEndian(resp.AsSpan(1, 8));
+            long startOffset = (long)startOffsetU;
+
+            if (status != STATUS_OK && status != STATUS_RESUME)
+                throw new IOException($"Server rejected header. Status=0x{status:X2}");
+
+            if (startOffset < 0 || startOffset > fileSize)
+                throw new IOException($"Invalid resume offset from server: {startOffset}");
+
+            // 4) 파일 데이터 전송 (StartOffset부터)
+            uint crc32 = 0xFFFFFFFFu;
+            const int chunkSize = DefaultChunkSize;
+
+            // 파일 전체 CRC를 검증해야 하므로 전송 범위 외 부분도 CRC에 포함되어야 함.
+            //  - 서버가 resume을 지시했더라도 CRC는 파일 전체 기준으로 계산하여 tail에서 보냄.
+            //  - 서버도 동일 규칙으로 복구/검증한다고 가정.
+            await using (var fs = new FileStream(
+                filePath,
+                FileMode.Open,
+                FileAccess.Read,
+                FileShare.Read,
+                bufferSize: chunkSize,
+                useAsync: true))
             {
-                int p = 0;
-                hello[p++] = 0x10; // Hello
-                BinaryPrimitives.WriteUInt16LittleEndian(hello.AsSpan(p, 2), 1); p += 2;
-                BinaryPrimitives.WriteUInt64LittleEndian(hello.AsSpan(p, 8), fileSize); p += 8;
-                BinaryPrimitives.WriteUInt16LittleEndian(hello.AsSpan(p, 2), (ushort)pathUtf8.Length); p += 2;
-                pathUtf8.AsSpan().CopyTo(hello.AsSpan(p)); p += pathUtf8.Length;
+                byte[] buffer = new byte[chunkSize];
 
-                await _transport.SendAsync(hello.AsMemory(0, p), cancellationToken).ConfigureAwait(false);
-            }
-            finally
-            {
-                ArrayPool<byte>.Shared.Return(hello);
-            }
-
-            // === 2) RESUME 수신 ===
-            // [Op(1)=0x11][u64 offset]
-            byte[] resumeArr = ArrayPool<byte>.Shared.Rent(1 + 8);
-            try
-            {
-                await _transport.ReceiveExactAsync(resumeArr.AsMemory(0, 1 + 8), cancellationToken).ConfigureAwait(false);
-
-                if (resumeArr[0] != 0x11)
-                    throw new IOException($"Protocol error: expected RESUME(0x11), got 0x{resumeArr[0]:X2}.");
-
-                ulong resumeOffset = BinaryPrimitives.ReadUInt64LittleEndian(resumeArr.AsSpan(1, 8));
-
-                // 진행률 초기 보고
-                progress?.Report((long)resumeOffset);
-
-                // === 3) 파일 열기(최적화) & 파이프라인 읽기 ===
-                long totalSent = (long)resumeOffset;
-                var crc32 = new Crc32(); // .NET 8 System.IO.Hashing
-                byte[] bufA = ArrayPool<byte>.Shared.Rent(chunkSize);
-                byte[] bufB = ArrayPool<byte>.Shared.Rent(chunkSize);
-
-                try
+                // (a) 먼저 0 ~ StartOffset-1 구간의 CRC만 계산 (송신은 안 함)
+                long pos = 0;
+                while (pos < startOffset)
                 {
-                    using var fs = new FileStream(
-                        path: localFilePath,
-                        mode: FileMode.Open,
-                        access: FileAccess.Read,
-                        share: FileShare.Read,
-                        bufferSize: 1024 * 1024, // 1 MiB
-                        options: FileOptions.Asynchronous | FileOptions.SequentialScan);
-
-                    // 재개 위치로 이동
-                    fs.Position = (long)resumeOffset;
-
-                    // 초기 버퍼 채우기
-                    int read = await fs.ReadAsync(bufA.AsMemory(0, chunkSize), cancellationToken).ConfigureAwait(false);
-                    byte[] cur = bufA;
-                    byte[] nxt = bufB;
-
-                    while (read > 0)
-                    {
-                        // 다음 청크 읽기 시작 (파이프라이닝)
-                        var readNextTask = fs.ReadAsync(nxt.AsMemory(0, chunkSize), cancellationToken).AsTask();
-
-                        // === 4) DATA 전송 ===
-                        // DATA: [Op(1)=0x20][u32 chunkLen][bytes...]
-                        int frameLen = 1 + 4 + read;
-                        byte[] frame = ArrayPool<byte>.Shared.Rent(frameLen);
-                        try
-                        {
-                            int q = 0;
-                            frame[q++] = 0x20; // DATA
-                            BinaryPrimitives.WriteUInt32LittleEndian(frame.AsSpan(q, 4), (uint)read); q += 4;
-                            cur.AsSpan(0, read).CopyTo(frame.AsSpan(q)); q += read;
-
-                            await _transport.SendAsync(frame.AsMemory(0, q), cancellationToken).ConfigureAwait(false);
-                        }
-                        finally
-                        {
-                            ArrayPool<byte>.Shared.Return(frame);
-                        }
-
-                        // CRC 누적(클라이언트 측)
-                        crc32.Append(cur.AsSpan(0, read));
-
-                        // 진행률
-                        totalSent += read;
-                        progress?.Report(totalSent);
-
-                        // 다음 반복 준비
-                        read = await readNextTask.ConfigureAwait(false);
-                        (cur, nxt) = (nxt, cur);
-                    }
-                }
-                finally
-                {
-                    ArrayPool<byte>.Shared.Return(bufA);
-                    ArrayPool<byte>.Shared.Return(bufB);
+                    int toRead = (int)Math.Min(chunkSize, startOffset - pos);
+                    int read = await fs.ReadAsync(buffer.AsMemory(0, toRead)).ConfigureAwait(false);
+                    if (read <= 0) throw new EndOfStreamException("Unexpected EOF while pre-CRC calculation.");
+                    crc32 = Crc32.Update(crc32, buffer.AsSpan(0, read));
+                    pos += read;
                 }
 
-                // 최종 CRC 추출 (IEEE CRC-32). System.IO.Hashing은 big-endian 바이트를 반환함.
-                Span<byte> crcOut = stackalloc byte[4];
-                crc32.GetCurrentHash(crcOut);
-                uint crcClient = BinaryPrimitives.ReadUInt32BigEndian(crcOut); // ⬅️ BigEndian로 읽기
-
-                // === 5) FINAL 전송 ===
-                // FINAL: [Op(1)=0x30][u32 crc32]  (우리는 '리틀엔디언'으로 전송)
-                byte[] finalArr = new byte[1 + 4];
-                finalArr[0] = 0x30;
-                BinaryPrimitives.WriteUInt32LittleEndian(finalArr.AsSpan(1, 4), crcClient);
-                await _transport.SendAsync(finalArr.AsMemory(), cancellationToken).ConfigureAwait(false);
-
-                // === 6) RESULT 수신 ===
-                // RESULT: [Op(1)=0x31][u8 status][u64 bytesWritten][u32 crc32Server]
-                byte[] resultBuf = ArrayPool<byte>.Shared.Rent(1 + 1 + 8 + 4);
-                try
+                // (b) StartOffset ~ 파일 끝까지는 읽으면서 송신 + CRC 누적
+                while (pos < fileSize)
                 {
-                    await _transport.ReceiveExactAsync(resultBuf.AsMemory(0, 1 + 1 + 8 + 4), cancellationToken).ConfigureAwait(false);
+                    int toRead = (int)Math.Min(chunkSize, fileSize - pos);
+                    int read = await fs.ReadAsync(buffer.AsMemory(0, toRead)).ConfigureAwait(false);
+                    if (read <= 0) throw new EndOfStreamException("Unexpected EOF while sending.");
 
-                    if (resultBuf[0] != 0x31)
-                        throw new IOException($"Protocol error: expected RESULT(0x31), got 0x{resultBuf[0]:X2}.");
+                    // 송신
+                    await _client.SendAsync(new ReadOnlyMemory<byte>(buffer, 0, read)).ConfigureAwait(false);
 
-                    byte status = resultBuf[1];
-                    ulong bytesWritten = BinaryPrimitives.ReadUInt64LittleEndian(resultBuf.AsSpan(2, 8));
-                    uint serverCrc = BinaryPrimitives.ReadUInt32LittleEndian(resultBuf.AsSpan(10, 4));
-
-                    bool ok = status == 0 && bytesWritten == fileSize;
-                    return (ok, bytesWritten, serverCrc, status);
-                }
-                finally
-                {
-                    ArrayPool<byte>.Shared.Return(resultBuf);
+                    // CRC
+                    crc32 = Crc32.Update(crc32, buffer.AsSpan(0, read));
+                    pos += read;
                 }
             }
-            finally
+
+            // CRC 보수
+            crc32 ^= 0xFFFFFFFFu;
+
+            // 5) 테일 송신: [MAGIC_TAIL(4)][CRC32(4)]
+            byte[] tail = new byte[8];
+            BinaryPrimitives.WriteUInt32BigEndian(tail.AsSpan(0, 4), MAGIC_TAIL);
+            BinaryPrimitives.WriteUInt32BigEndian(tail.AsSpan(4, 4), crc32);
+            await _client.SendAsync(tail).ConfigureAwait(false);
+
+            // 6) 최종 상태 수신: [FinalStatus(1)]
+            byte[] finalResp = new byte[1];
+            await _client.ReceiveAsync(finalResp).ConfigureAwait(false);
+
+            if (finalResp[0] != STATUS_OK)
+                throw new IOException($"Server reported error on finalize. Status=0x{finalResp[0]:X2}");
+        }
+
+        /// <summary>
+        /// RFC 1952 형태의 표준 CRC32 (Polynomial 0xEDB88320) 계산기.
+        /// </summary>
+        private static class Crc32
+        {
+            private const uint Poly = 0xEDB88320u;
+            private static readonly uint[] Table = CreateTable();
+
+            private static uint[] CreateTable()
             {
-                ArrayPool<byte>.Shared.Return(resumeArr);
+                var table = new uint[256];
+                for (uint i = 0; i < 256; i++)
+                {
+                    uint c = i;
+                    for (int k = 0; k < 8; k++)
+                        c = (c & 1) != 0 ? (Poly ^ (c >> 1)) : (c >> 1);
+                    table[i] = c;
+                }
+                return table;
+            }
+
+            public static uint Update(uint crc, ReadOnlySpan<byte> data)
+            {
+                uint c = crc;
+                foreach (byte b in data)
+                {
+                    c = Table[(c ^ b) & 0xFF] ^ (c >> 8);
+                }
+                return c;
             }
         }
     }
