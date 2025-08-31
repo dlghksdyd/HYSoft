@@ -15,10 +15,15 @@
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<LangVersion>latest</LangVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<None Include="..\..\README.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="System.IO.Hashing" Version="9.0.8" />
 	</ItemGroup>
 
 	<!-- 마지막으로 성공 푸시한 버전을 로드 -->
@@ -29,8 +34,7 @@
 		</PropertyGroup>
 
 		<!-- 파일이 있으면 읽기 -->
-		<ReadLinesFromFile File="$(ProjectDir).last_published_version"
-		                   Condition="Exists('$(ProjectDir).last_published_version')">
+		<ReadLinesFromFile File="$(ProjectDir).last_published_version" Condition="Exists('$(ProjectDir).last_published_version')">
 			<Output TaskParameter="Lines" ItemName="_LastPubVerLines" />
 		</ReadLinesFromFile>
 
@@ -41,28 +45,18 @@
 	</Target>
 
 	<!-- Pack 이후, 버전이 바뀐 경우에만 push 실행 -->
-	<Target Name="PublishNuGetOnPack"
-	        AfterTargets="Pack"
-	        DependsOnTargets="LoadLastPublishedVersion">
+	<Target Name="PublishNuGetOnPack" AfterTargets="Pack" DependsOnTargets="LoadLastPublishedVersion">
 		<!-- 키 없거나 Release가 아니면 전체 skip -->
-		<Message Importance="Low"
-		         Condition="'$(Configuration)'!='Release' or '$(NUGET_API_KEY)'==''"
-		         Text="Skip push (Configuration=$(Configuration), NUGET_API_KEY exists=$([System.String]::Copy('$(NUGET_API_KEY)') != '' ? 'yes' : 'no'))" />
+		<Message Importance="Low" Condition="'$(Configuration)'!='Release' or '$(NUGET_API_KEY)'==''" Text="Skip push (Configuration=$(Configuration), NUGET_API_KEY exists=$([System.String]::Copy('$(NUGET_API_KEY)') != '' ? 'yes' : 'no'))" />
 
 		<!-- 실제 푸시: 버전이 다를 때만 -->
-		<Exec Condition="'$(Configuration)'=='Release' and '$(NUGET_API_KEY)'!='' and '$(Version)'!='$(LastPublishedVersion)'"
-		      Command="cmd /c set DOTNET_CLI_UI_LANGUAGE=en &amp;&amp; dotnet nuget push &quot;$(PackageOutputPath)$(PackageId).$(Version).nupkg&quot; --api-key $(NUGET_API_KEY) --source https://api.nuget.org/v3/index.json --skip-duplicate" />
+		<Exec Condition="'$(Configuration)'=='Release' and '$(NUGET_API_KEY)'!='' and '$(Version)'!='$(LastPublishedVersion)'" Command="cmd /c set DOTNET_CLI_UI_LANGUAGE=en &amp;&amp; dotnet nuget push &quot;$(PackageOutputPath)$(PackageId).$(Version).nupkg&quot; --api-key $(NUGET_API_KEY) --source https://api.nuget.org/v3/index.json --skip-duplicate" />
 
 		<!-- 같은 버전이면 스킵 로그 -->
-		<Message Importance="High"
-		         Condition="'$(Configuration)'=='Release' and '$(NUGET_API_KEY)'!='' and '$(Version)'=='$(LastPublishedVersion)'"
-		         Text="NuGet push skipped: Version $(Version) == LastPublishedVersion $(LastPublishedVersion)" />
+		<Message Importance="High" Condition="'$(Configuration)'=='Release' and '$(NUGET_API_KEY)'!='' and '$(Version)'=='$(LastPublishedVersion)'" Text="NuGet push skipped: Version $(Version) == LastPublishedVersion $(LastPublishedVersion)" />
 
 		<!-- push 성공 후 현재 버전 기록 (Exec 성공시만 실행됨) -->
-		<WriteLinesToFile Condition="'$(Configuration)'=='Release' and '$(NUGET_API_KEY)'!='' and '$(Version)'!='$(LastPublishedVersion)'"
-		                  File="$(PublishedVersionFile)"
-		                  Lines="$(Version)"
-		                  Overwrite="true" />
+		<WriteLinesToFile Condition="'$(Configuration)'=='Release' and '$(NUGET_API_KEY)'!='' and '$(Version)'!='$(LastPublishedVersion)'" File="$(PublishedVersionFile)" Lines="$(Version)" Overwrite="true" />
 	</Target>
 
 </Project>
