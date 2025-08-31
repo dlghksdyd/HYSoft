@@ -7,6 +7,14 @@ using System.Threading.Tasks;
 
 namespace HYSoft.Communication.Tcp.Client.Protocol.FileTransfer
 {
+    /// <summary>
+    /// 파일 전송 클라이언트 구현 클래스입니다.
+    /// 
+    /// <para>
+    /// 서버와 지정된 프로토콜로 파일 전송을 수행하며,
+    /// 헤더 전송 → 서버 응답(Resume 여부) → 본문 전송 → Tail 전송 → 최종 상태 응답의 순서를 따릅니다.
+    /// </para>
+    /// </summary>
     public class FileTransferClient
     {
         private readonly TcpClient _client;
@@ -25,20 +33,38 @@ namespace HYSoft.Communication.Tcp.Client.Protocol.FileTransfer
         private bool _isSending;
         private readonly object _lock = new();
 
+        /// <summary>
+        /// <see cref="FileTransferClient"/> 클래스의 새 인스턴스를 초기화합니다.
+        /// </summary>
+        /// <param name="options">서버 접속 정보를 포함한 <see cref="TcpClientOptions"/>.</param>
         public FileTransferClient(TcpClientOptions options)
         {
             _client = TcpClientManager.Create(options);
         }
 
         /// <summary>
-        /// 파일을 서버로 전송합니다. 서버는 다음 핸드셰이크를 따릅니다.
-        /// 1) 클라이언트 → 서버: [MAGIC_HEADER(4)][Flags(1)][FileSize(8)][NameLen(2)][FileName(UTF-8)]
-        /// 2) 서버 → 클라이언트: [Status(1)][StartOffset(8)]  (Status=OK이면 0부터, RESUME면 지정 오프셋부터)
-        /// 3) 클라이언트 → 서버: 파일 데이터를 StartOffset부터 순차 전송 (청크 스트리밍)
-        /// 4) 클라이언트 → 서버: [MAGIC_TAIL(4)][CRC32(4)]
-        /// 5) 서버 → 클라이언트: [FinalStatus(1)] (OK=수신/검증 성공)
+        /// 지정한 파일을 서버로 전송합니다.
         /// </summary>
-        /// <param name="filePath">전송할 로컬 파일 경로</param>
+        /// <param name="filePath">전송할 로컬 파일 경로.</param>
+        /// <returns>
+        /// 비동기 작업을 나타내는 <see cref="Task"/>.
+        /// 전송 완료 시 정상적으로 완료되며,
+        /// 서버가 오류를 반환하거나 네트워크 오류 발생 시 <see cref="IOException"/> 또는 <see cref="InvalidOperationException"/>이 발생합니다.
+        /// </returns>
+        /// <exception cref="ArgumentException"><paramref name="filePath"/>가 null 또는 빈 문자열일 경우.</exception>
+        /// <exception cref="FileNotFoundException">지정된 경로에 파일이 존재하지 않는 경우.</exception>
+        /// <exception cref="IOException">파일 크기 오류, 서버 오류 응답, 전송 중단 등 입출력 예외가 발생한 경우.</exception>
+        /// <exception cref="InvalidOperationException">이미 다른 파일 전송 작업이 진행 중인 경우.</exception>
+        /// <remarks>
+        /// 프로토콜 순서:
+        /// <list type="number">
+        ///   <item><description>클라이언트 → 서버: 헤더 [MAGIC_HEADER(4)][Flags(1)][FileSize(8)][NameLen(2)][FileName]</description></item>
+        ///   <item><description>서버 → 클라이언트: 응답 [Status(1)][StartOffset(8)]</description></item>
+        ///   <item><description>클라이언트 → 서버: 파일 데이터 (StartOffset ~ 끝까지)</description></item>
+        ///   <item><description>클라이언트 → 서버: Tail [MAGIC_TAIL(4)][CRC32(4)]</description></item>
+        ///   <item><description>서버 → 클라이언트: 최종 상태 [FinalStatus(1)]</description></item>
+        /// </list>
+        /// </remarks>
         public async Task SendFileAsync(string filePath)
         {
             lock (_lock)

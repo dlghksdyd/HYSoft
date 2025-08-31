@@ -36,6 +36,14 @@ namespace HYSoft.Communication.Tcp.Server.Protocol.FileTransfer
         private const byte STATUS_RESUME = 0x01;
         private const byte STATUS_ERROR = 0xFF;
 
+        /// <summary>
+        /// <see cref="FileTransferServer"/> 클래스의 새 인스턴스를 초기화합니다.
+        /// </summary>
+        /// <param name="options">서버 소켓 설정을 포함하는 <see cref="TcpServerOptions"/>.</param>
+        /// <param name="storageRoot">
+        /// 수신한 파일을 저장할 루트 폴더 경로.
+        /// 지정하지 않으면 <c>AppContext.BaseDirectory\received</c> 폴더가 사용됩니다.
+        /// </param>
         public FileTransferServer(TcpServerOptions options, string? storageRoot = null)
         {
             _server = TcpServerManager.Create(options);
@@ -44,8 +52,15 @@ namespace HYSoft.Communication.Tcp.Server.Protocol.FileTransfer
         }
 
         /// <summary>
-        /// 파일 수신 서버를 시작하고, DataReceived 핸들러를 설치합니다.
+        /// 파일 수신 서버를 시작하고, 클라이언트 연결에서 전송되는 파일을 수신할 수 있도록 준비합니다.
         /// </summary>
+        /// <returns>
+        /// 비동기적으로 서버 소켓이 시작되는 작업을 나타내는 <see cref="Task"/>.
+        /// </returns>
+        /// <remarks>
+        /// 내부적으로 <see cref="TcpServer.StartAsync"/>를 호출하고,
+        /// 데이터 수신 이벤트 핸들러(<see cref="TcpServer.DataReceived"/>)를 등록합니다.
+        /// </remarks>
         public async Task ReceiveFileAsync()
         {
             _server.DataReceived += OnDataReceived;
