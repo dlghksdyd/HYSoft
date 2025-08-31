@@ -1,0 +1,7 @@
+.vs/*
+
+src/Communication/obj/*
+src/Communication/bin/*
+
+src/Test/obj/*
+src/Test/bin/*

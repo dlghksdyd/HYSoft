@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<RootNamespace>HYSoft.Communication</RootNamespace>
+		<PackageId>HYSoft.Communication</PackageId>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Version>1.0.0</Version>
+		<Authors>Hwanyong.lee</Authors>
+		<Company>HYSoft</Company>
+		<Description>Communication Library</Description>
+		<RepositoryUrl>https://github.com/dlghksdyd/Communication</RepositoryUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	</PropertyGroup>
+
+</Project>
