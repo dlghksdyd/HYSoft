@@ -1,19 +1,30 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<RootNamespace>HYSoft.Communication</RootNamespace>
-		<PackageId>HYSoft.Communication</PackageId>
 		<TargetFramework>net8.0-windows</TargetFramework>
-		<Nullable>enable</Nullable>
-		<UseWPF>true</UseWPF>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>1.0.0</Version>
+		<RootNamespace>HYSoft.Communication</RootNamespace>
+		<PackageOutputPath>$(ProjectDir)bin\$(Configuration)\</PackageOutputPath>
+
+		<!-- NuGet 메타데이터 -->
+		<PackageId>HYSoft.Communication</PackageId>
+		<Version>1.0.2</Version>
 		<Authors>Hwanyong.lee</Authors>
 		<Company>HYSoft</Company>
-		<Description>Communication Library</Description>
-		<RepositoryUrl>https://github.com/dlghksdyd/Communication</RepositoryUrl>
+		<Description>Communication Utilities</Description>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\..\README.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
+
+	<Target Name="PublishNuGetOnPack"
+	        AfterTargets="Pack"
+	        Condition="'$(Configuration)'=='Release'">
+		<Exec Command='cmd /c set DOTNET_CLI_UI_LANGUAGE=en &amp;&amp; dotnet nuget push "$(PackageOutputPath)$(PackageId).$(Version).nupkg" --api-key %NUGET_API_KEY% --source https://api.nuget.org/v3/index.json' />
+	</Target>
 
 </Project>
