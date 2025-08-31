@@ -7,7 +7,7 @@
 
 		<!-- NuGet 메타데이터 -->
 		<PackageId>HYSoft.Communication</PackageId>
-		<Version>1.0.3</Version>
+		<Version>1.0.4</Version>
 		<Authors>Hwanyong.lee</Authors>
 		<Company>HYSoft</Company>
 		<Description>Communication Utilities</Description>
@@ -16,6 +16,14 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<LangVersion>latest</LangVersion>
+		<PublishedVersionFile>$(ProjectDir).last_published_version</PublishedVersionFile>
+
+		<!-- Git 저장소 메타데이터 -->
+		<RepositoryUrl>https://github.com/dlghksdyd/HYSoft</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+
+		<!-- 패키지 페이지 링크 -->
+		<PackageProjectUrl>https://github.com/dlghksdyd/HYSoft</PackageProjectUrl>
 	</PropertyGroup>
 
 	<ItemGroup>
