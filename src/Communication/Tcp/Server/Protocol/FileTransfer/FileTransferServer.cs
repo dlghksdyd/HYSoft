@@ -73,7 +73,14 @@ namespace HYSoft.Communication.Tcp.Server.Protocol.FileTransfer
                 }
                 finally
                 {
-                    session.Lock.Release();
+                    try
+                    {
+                        session.Lock.Release();
+                    }
+                    catch (ObjectDisposedException)
+                    {
+
+                    }
                 }
             });
         }
@@ -353,7 +360,6 @@ namespace HYSoft.Communication.Tcp.Server.Protocol.FileTransfer
             public void DisposeBuffers()
             {
                 try { HeaderBuffer.Dispose(); } catch { /* ignore */ }
-                try { Lock.Dispose(); } catch { /* ignore */ }
             }
         }
 
