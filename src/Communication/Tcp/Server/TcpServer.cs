@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Buffers;
 using System.Collections.Concurrent;
 using System.Linq;
@@ -14,8 +15,14 @@ namespace HYSoft.Communication.Tcp.Server
     /// </summary>
     public sealed class TcpServer
     {
+        /// <summary>
+        /// 이 인스턴스가 이미 해제(Dispose)되었는지 여부를 나타냅니다.
+        /// </summary>
         public bool IsDisposed { get; private set; }
 
+        /// <summary>
+        /// 서버 인스턴스의 고유 식별자입니다.
+        /// </summary>
         public readonly Guid Guid = Guid.NewGuid();
 
         private readonly TcpServerOptions _options;
@@ -30,8 +37,15 @@ namespace HYSoft.Communication.Tcp.Server
         private CancellationTokenSource? _acceptCts;
         private Task? _acceptTask;
 
-        // 운용 정보 제공
+        /// <summary>
+        /// 현재 연결되어 있는 클라이언트 수를 반환합니다.
+        /// </summary>
         public int ConnectedCount => _clients.Count;
+
+        /// <summary>
+        /// 현재 연결된 클라이언트의 스냅샷을 (클라이언트 ID, 원격 EndPoint) 배열로 반환합니다.
+        /// </summary>
+        /// <returns>(Client Id, Remote EndPoint) 쌍의 배열.</returns>
         public (Guid Id, EndPoint? Remote)[] GetClientsSnapshot()
             => _clients.Values.Select(c => (c.Id, c.RemoteEndPoint)).ToArray();
 
@@ -39,6 +53,9 @@ namespace HYSoft.Communication.Tcp.Server
 
         #region Events
 
+        /// <summary>
+        /// 클라이언트로부터 데이터가 수신되었을 때 발생하는 이벤트입니다.
+        /// </summary>
         public event TcpDataReceivedEventHandler? DataReceived;
 
         private void RaiseDataReceived(TcpClientContext ctx, byte[] data)
@@ -55,7 +72,12 @@ namespace HYSoft.Communication.Tcp.Server
 
         #region Log
 
+        /// <summary>
+        /// 오류 발생 시 호출되는 외부 로깅 델리게이트입니다.
+        /// <para>첫 번째 매개변수는 예외, 두 번째 매개변수는 설명 메시지입니다.</para>
+        /// </summary>
         public Action<Exception, string>? LogError { get; init; }
+
         private void Log(Exception ex, string msg)
         {
             try { LogError?.Invoke(ex, msg); } catch { /* ignored */ }
@@ -108,6 +130,10 @@ namespace HYSoft.Communication.Tcp.Server
             if (IsDisposed) throw new ObjectDisposedException(nameof(TcpServer));
         }
 
+        /// <summary>
+        /// 서버를 시작하고 클라이언트 연결 수락 루프를 비동기적으로 실행합니다.
+        /// </summary>
+        /// <returns>비동기 작업을 나타내는 <see cref="Task"/>.</returns>
         public async Task StartAsync()
         {
             await _startStopLock.WaitAsync().ConfigureAwait(false);
@@ -153,6 +179,10 @@ namespace HYSoft.Communication.Tcp.Server
             }
         }
 
+        /// <summary>
+        /// 서버를 중지하고 모든 클라이언트 연결을 종료합니다.
+        /// </summary>
+        /// <returns>비동기 작업을 나타내는 <see cref="Task"/>.</returns>
         public async Task StopAsync()
         {
             await _startStopLock.WaitAsync().ConfigureAwait(false);
@@ -191,6 +221,11 @@ namespace HYSoft.Communication.Tcp.Server
             }
         }
 
+        /// <summary>
+        /// 지정한 클라이언트 연결을 강제로 끊습니다.
+        /// </summary>
+        /// <param name="clientId">연결을 끊을 클라이언트의 ID.</param>
+        /// <returns>연결이 존재하여 정상적으로 제거되면 <c>true</c>, 그렇지 않으면 <c>false</c>.</returns>
         public bool Disconnect(Guid clientId)
         {
             if (_clients.TryRemove(clientId, out var ctx))
@@ -201,6 +236,13 @@ namespace HYSoft.Communication.Tcp.Server
             return false;
         }
 
+        /// <summary>
+        /// 지정한 클라이언트에 데이터를 비동기적으로 전송합니다.
+        /// </summary>
+        /// <param name="clientId">대상 클라이언트 ID.</param>
+        /// <param name="data">전송할 데이터 버퍼.</param>
+        /// <param name="ct">전송 작업을 취소하기 위한 토큰(선택).</param>
+        /// <returns>성공 시 <c>true</c>, 실패 시 <c>false</c>를 반환합니다.</returns>
         public async Task<bool> SendAsync(Guid clientId, ReadOnlyMemory<byte> data, CancellationToken ct = default)
         {
             if (data.Length == 0) return true;
@@ -246,6 +288,12 @@ namespace HYSoft.Communication.Tcp.Server
             }
         }
 
+        /// <summary>
+        /// 현재 연결된 모든 클라이언트에게 데이터를 브로드캐스트합니다.
+        /// </summary>
+        /// <param name="data">전송할 데이터 버퍼.</param>
+        /// <param name="ct">전송 작업을 취소하기 위한 토큰(선택).</param>
+        /// <returns>성공적으로 전송된 클라이언트 수를 반환합니다.</returns>
         public async Task<int> BroadcastAsync(ReadOnlyMemory<byte> data, CancellationToken ct = default)
         {
             if (data.Length == 0) return 0;

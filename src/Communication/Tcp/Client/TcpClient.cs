@@ -9,10 +9,20 @@ using System.Threading.Tasks;
 
 namespace HYSoft.Communication.Tcp.Client
 {
+    /// <summary>
+    /// 비동기 TCP 클라이언트 구현 클래스입니다.
+    /// 서버에 연결하고 데이터를 송수신할 수 있도록 지원합니다.
+    /// </summary>
     public class TcpClient
     {
+        /// <summary>
+        /// 이 인스턴스가 이미 해제(Dispose)되었는지 여부를 나타냅니다.
+        /// </summary>
         public bool IsDisposed { get; private set; } = false;
 
+        /// <summary>
+        /// 클라이언트 인스턴스의 고유 식별자입니다.
+        /// </summary>
         public readonly Guid Guid = Guid.NewGuid();
         
         private readonly TcpClientOptions _options;
@@ -83,6 +93,13 @@ namespace HYSoft.Communication.Tcp.Client
             throw new ObjectDisposedException(nameof(TcpClient));
         }
 
+        /// <summary>
+        /// 서버에 비동기적으로 연결을 시도합니다.
+        /// 이미 연결된 경우 정상 상태이면 재연결하지 않습니다.
+        /// </summary>
+        /// <returns>비동기 작업을 나타내는 <see cref="Task"/>.</returns>
+        /// <exception cref="TimeoutException">지정된 연결 제한 시간 내에 연결하지 못한 경우 발생합니다.</exception>
+        /// <exception cref="InvalidOperationException">객체가 해제되었거나 소켓이 이미 닫힌 경우 발생합니다.</exception>
         public async Task ConnectAsync()
         {
             await _connectLock.WaitAsync().ConfigureAwait(false);
@@ -180,6 +197,14 @@ namespace HYSoft.Communication.Tcp.Client
             }
         }
 
+        /// <summary>
+        /// 지정한 버퍼의 데이터를 서버로 비동기 전송합니다.
+        /// </summary>
+        /// <param name="buffer">전송할 데이터 버퍼입니다.</param>
+        /// <returns>비동기 작업을 나타내는 <see cref="Task"/>.</returns>
+        /// <exception cref="InvalidOperationException">소켓이 연결되지 않았거나 이미 해제된 경우 발생합니다.</exception>
+        /// <exception cref="TimeoutException">송신이 지정된 제한 시간 내에 완료되지 않은 경우 발생합니다.</exception>
+        /// <exception cref="SocketException">네트워크 오류가 발생한 경우 발생합니다.</exception>
         public async Task SendAsync(ReadOnlyMemory<byte> buffer)
         {
             ThrowIfDisposed();
@@ -243,12 +268,28 @@ namespace HYSoft.Communication.Tcp.Client
             }
         }
 
+        /// <summary>
+        /// 지정한 여러 버퍼의 데이터를 순차적으로 서버로 전송합니다.
+        /// </summary>
+        /// <param name="buffers">전송할 데이터 버퍼 목록입니다.</param>
+        /// <returns>비동기 작업을 나타내는 <see cref="Task"/>.</returns>
+        /// <exception cref="InvalidOperationException">소켓이 연결되지 않았거나 이미 해제된 경우 발생합니다.</exception>
+        /// <exception cref="TimeoutException">송신이 지정된 제한 시간 내에 완료되지 않은 경우 발생합니다.</exception>
+        /// <exception cref="SocketException">네트워크 오류가 발생한 경우 발생합니다.</exception>
         public async Task SendAsync(IReadOnlyList<ReadOnlyMemory<byte>> buffers)
         {
             foreach (var b in buffers)
                 await SendAsync(b).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// 지정된 버퍼 크기만큼 서버에서 데이터를 수신합니다.
+        /// </summary>
+        /// <param name="buffer">수신한 데이터를 저장할 버퍼입니다.</param>
+        /// <returns>비동기 작업을 나타내는 <see cref="Task"/>.</returns>
+        /// <exception cref="InvalidOperationException">소켓이 연결되지 않았거나 이미 해제된 경우 발생합니다.</exception>
+        /// <exception cref="TimeoutException">수신이 지정된 제한 시간 내에 완료되지 않은 경우 발생합니다.</exception>
+        /// <exception cref="SocketException">네트워크 오류 또는 원격 호스트가 연결을 종료한 경우 발생합니다.</exception>
         public async Task ReceiveAsync(Memory<byte> buffer)
         {
             ThrowIfDisposed();
