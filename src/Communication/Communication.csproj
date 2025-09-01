@@ -27,15 +27,17 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="MsSql\**" />
+	  <EmbeddedResource Remove="MsSql\**" />
+	  <None Remove="MsSql\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<None Include="..\..\README.md" Pack="true" PackagePath="\" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <PackageReference Include="System.IO.Hashing" Version="9.0.8" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="MsSql\" />
 	</ItemGroup>
 
 	<!-- 마지막으로 성공 푸시한 버전을 로드 -->
