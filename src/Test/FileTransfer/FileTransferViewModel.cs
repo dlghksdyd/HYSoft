@@ -13,7 +13,7 @@ using System.Windows.Input;
 
 namespace Test.FileTransfer
 {
-    public class FileTransferClientViewModel : BindableBase
+    public class FileTransferViewModel : BindableBase
     {
         // ---- 상태/설정 바인딩용 프로퍼티 ----
         private string _serverHost = "127.0.0.1";

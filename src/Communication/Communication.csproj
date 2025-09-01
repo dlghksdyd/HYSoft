@@ -16,7 +16,7 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<LangVersion>latest</LangVersion>
-		<PublishedVersionFile>$(ProjectDir).last_published_version</PublishedVersionFile>
+		<PublishedVersionFile>$(ProjectDir)..\..\.last_published_version</PublishedVersionFile>
 
 		<!-- Git 저장소 메타데이터 -->
 		<RepositoryUrl>https://github.com/dlghksdyd/HYSoft</RepositoryUrl>
@@ -34,6 +34,10 @@
 	  <PackageReference Include="System.IO.Hashing" Version="9.0.8" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="MsSql\" />
+	</ItemGroup>
+
 	<!-- 마지막으로 성공 푸시한 버전을 로드 -->
 	<Target Name="LoadLastPublishedVersion">
 		<!-- 기본값 -->
@@ -42,7 +46,7 @@
 		</PropertyGroup>
 
 		<!-- 파일이 있으면 읽기 -->
-		<ReadLinesFromFile File="$(ProjectDir).last_published_version" Condition="Exists('$(ProjectDir).last_published_version')">
+		<ReadLinesFromFile File="$(ProjectDir)..\..\.last_published_version" Condition="Exists('$(ProjectDir)..\..\.last_published_version')">
 			<Output TaskParameter="Lines" ItemName="_LastPubVerLines" />
 		</ReadLinesFromFile>
 

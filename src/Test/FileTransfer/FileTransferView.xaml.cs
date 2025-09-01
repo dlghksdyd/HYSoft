@@ -17,15 +17,15 @@ using System.Windows.Shapes;
 namespace Test.FileTransfer
 {
     /// <summary>
-    /// FileTransferClientView.xaml에 대한 상호 작용 논리
+    /// FileTransferView.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class FileTransferClientView : Window
+    public partial class FileTransferView : Window
     {
-        public FileTransferClientView()
+        public FileTransferView()
         {
             InitializeComponent();
 
-            this.DataContext = new FileTransferClientViewModel();
+            this.DataContext = new FileTransferViewModel();
         }
     }
 }
