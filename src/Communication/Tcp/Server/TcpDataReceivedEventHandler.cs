@@ -35,6 +35,6 @@ namespace HYSoft.Communication.Tcp.Server
         /// <param name="data">전송할 데이터 바이트 배열입니다.</param>
         /// <returns>성공 여부를 나타내는 <see cref="Task{Boolean}"/>.</returns>
         public async Task<bool> ReplyAsync(byte[] data)
-            => await tcpServer.SendAsync(clientId, data);
+            => await tcpServer.SendAsync(ClientId, data);
     }
 }

@@ -10,7 +10,7 @@
 
 		<!-- NuGet 메타데이터 -->
 		<PackageId>HYSoft.Communication</PackageId>
-		<Version>1.0.5</Version>
+		<Version>1.0.6</Version>
 		<Authors>Hwanyong.lee</Authors>
 		<Company>HYSoft</Company>
 		<Description>Communication Utilities</Description>

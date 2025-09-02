@@ -80,7 +80,7 @@ namespace HYSoft.Communication.Tcp.Server.Protocol.FileTransfer
                 {
                     await ProcessIncomingAsync(session, ctx).ConfigureAwait(false);
                 }
-                catch (Exception ex)
+                catch
                 {
                     // 실패 시 에러 응답 및 정리
                     try { await ctx.ReplyAsync(new byte[] { STATUS_ERROR }).ConfigureAwait(false); } catch { /* ignore */ }
