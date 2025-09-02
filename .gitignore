@@ -2,6 +2,8 @@
 
 src/Communication/obj/*
 src/Communication/bin/*
+src/Data/obj/*
+src/Data/bin/*
 
 samples/CommunicationSample/obj/*
 samples/CommunicationSample/bin/*
