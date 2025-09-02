@@ -5,7 +5,7 @@ VisualStudioVersion = 17.14.36414.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Communication", "src\Communication\Communication.csproj", "{FF18FA95-86AA-D903-DD53-7E230BF602D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "src\Test\Test.csproj", "{D362BF47-7A16-1187-7CFD-2213D496CB3B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunicationExample", "src\Test\CommunicationExample.csproj", "{D362BF47-7A16-1187-7CFD-2213D496CB3B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
