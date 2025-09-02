@@ -1,0 +1,107 @@
+### YamlMime:ManagedReference
+items:
+- uid: HYSoft.Communication.Tcp.Server
+  commentId: N:HYSoft.Communication.Tcp.Server
+  id: HYSoft.Communication.Tcp.Server
+  children:
+  - HYSoft.Communication.Tcp.Server.TcpDataReceivedContext
+  - HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler
+  - HYSoft.Communication.Tcp.Server.TcpServer
+  - HYSoft.Communication.Tcp.Server.TcpServerManager
+  - HYSoft.Communication.Tcp.Server.TcpServerOptions
+  langs:
+  - csharp
+  - vb
+  name: HYSoft.Communication.Tcp.Server
+  nameWithType: HYSoft.Communication.Tcp.Server
+  fullName: HYSoft.Communication.Tcp.Server
+  type: Namespace
+  assemblies:
+  - Communication
+references:
+- uid: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler
+  commentId: T:HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler
+  parent: HYSoft.Communication.Tcp.Server
+  isExternal: true
+  href: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.html
+  name: TcpDataReceivedEventHandler
+  nameWithType: TcpDataReceivedEventHandler
+  fullName: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler
+- uid: HYSoft.Communication.Tcp.Server.TcpDataReceivedContext
+  commentId: T:HYSoft.Communication.Tcp.Server.TcpDataReceivedContext
+  parent: HYSoft.Communication.Tcp.Server
+  isExternal: true
+  href: HYSoft.Communication.Tcp.Server.TcpDataReceivedContext.html
+  name: TcpDataReceivedContext
+  nameWithType: TcpDataReceivedContext
+  fullName: HYSoft.Communication.Tcp.Server.TcpDataReceivedContext
+- uid: HYSoft.Communication.Tcp.Server.TcpServer
+  commentId: T:HYSoft.Communication.Tcp.Server.TcpServer
+  parent: HYSoft.Communication.Tcp.Server
+  isExternal: true
+  href: HYSoft.Communication.Tcp.Server.TcpServer.html
+  name: TcpServer
+  nameWithType: TcpServer
+  fullName: HYSoft.Communication.Tcp.Server.TcpServer
+- uid: HYSoft.Communication.Tcp.Server.TcpServerManager
+  commentId: T:HYSoft.Communication.Tcp.Server.TcpServerManager
+  isExternal: true
+  href: HYSoft.Communication.Tcp.Server.TcpServerManager.html
+  name: TcpServerManager
+  nameWithType: TcpServerManager
+  fullName: HYSoft.Communication.Tcp.Server.TcpServerManager
+- uid: HYSoft.Communication.Tcp.Server.TcpServerOptions
+  commentId: T:HYSoft.Communication.Tcp.Server.TcpServerOptions
+  parent: HYSoft.Communication.Tcp.Server
+  isExternal: true
+  href: HYSoft.Communication.Tcp.Server.TcpServerOptions.html
+  name: TcpServerOptions
+  nameWithType: TcpServerOptions
+  fullName: HYSoft.Communication.Tcp.Server.TcpServerOptions
+- uid: HYSoft.Communication.Tcp.Server
+  commentId: N:HYSoft.Communication.Tcp.Server
+  isExternal: true
+  href: HYSoft.html
+  name: HYSoft.Communication.Tcp.Server
+  nameWithType: HYSoft.Communication.Tcp.Server
+  fullName: HYSoft.Communication.Tcp.Server
+  spec.csharp:
+  - uid: HYSoft
+    name: HYSoft
+    isExternal: true
+    href: HYSoft.html
+  - name: .
+  - uid: HYSoft.Communication
+    name: Communication
+    isExternal: true
+    href: HYSoft.Communication.html
+  - name: .
+  - uid: HYSoft.Communication.Tcp
+    name: Tcp
+    isExternal: true
+    href: HYSoft.Communication.Tcp.html
+  - name: .
+  - uid: HYSoft.Communication.Tcp.Server
+    name: Server
+    isExternal: true
+    href: HYSoft.Communication.Tcp.Server.html
+  spec.vb:
+  - uid: HYSoft
+    name: HYSoft
+    isExternal: true
+    href: HYSoft.html
+  - name: .
+  - uid: HYSoft.Communication
+    name: Communication
+    isExternal: true
+    href: HYSoft.Communication.html
+  - name: .
+  - uid: HYSoft.Communication.Tcp
+    name: Tcp
+    isExternal: true
+    href: HYSoft.Communication.Tcp.html
+  - name: .
+  - uid: HYSoft.Communication.Tcp.Server
+    name: Server
+    isExternal: true
+    href: HYSoft.Communication.Tcp.Server.html

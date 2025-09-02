@@ -1,0 +1,56 @@
+### YamlMime:TableOfContent
+items:
+- uid: HYSoft.Communication.Database.Mssql
+  name: HYSoft.Communication.Database.Mssql
+  type: Namespace
+  items:
+  - uid: HYSoft.Communication.Database.Mssql.DbContextBase
+    name: DbContextBase
+    type: Class
+- uid: HYSoft.Communication.Tcp.Client
+  name: HYSoft.Communication.Tcp.Client
+  type: Namespace
+  items:
+  - uid: HYSoft.Communication.Tcp.Client.TcpClient
+    name: TcpClient
+    type: Class
+  - uid: HYSoft.Communication.Tcp.Client.TcpClientManager
+    name: TcpClientManager
+    type: Class
+  - uid: HYSoft.Communication.Tcp.Client.TcpClientOptions
+    name: TcpClientOptions
+    type: Class
+- uid: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer
+  name: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer
+  type: Namespace
+  items:
+  - uid: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient
+    name: FileTransferClient
+    type: Class
+- uid: HYSoft.Communication.Tcp.Server
+  name: HYSoft.Communication.Tcp.Server
+  type: Namespace
+  items:
+  - uid: HYSoft.Communication.Tcp.Server.TcpDataReceivedContext
+    name: TcpDataReceivedContext
+    type: Class
+  - uid: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler
+    name: TcpDataReceivedEventHandler
+    type: Delegate
+  - uid: HYSoft.Communication.Tcp.Server.TcpServer
+    name: TcpServer
+    type: Class
+  - uid: HYSoft.Communication.Tcp.Server.TcpServerManager
+    name: TcpServerManager
+    type: Class
+  - uid: HYSoft.Communication.Tcp.Server.TcpServerOptions
+    name: TcpServerOptions
+    type: Class
+- uid: HYSoft.Communication.Tcp.Server.Protocol.FileTransfer
+  name: HYSoft.Communication.Tcp.Server.Protocol.FileTransfer
+  type: Namespace
+  items:
+  - uid: HYSoft.Communication.Tcp.Server.Protocol.FileTransfer.FileTransferServer
+    name: FileTransferServer
+    type: Class
+memberLayout: SamePage

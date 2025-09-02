@@ -1,0 +1,40 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.schema.json",
+  "metadata": [
+    {
+      "src": [
+        {
+          "src": "..",
+          "files": [
+            "bin/Release/net8.0-windows/*.dll"
+          ]
+        }
+      ],
+      "dest": "api"
+    }
+  ],
+  "build": {
+    "content": [
+      { "files": [ "articles/**.md", "index.md", "toc.yml" ] },
+      {
+        "files": [ "api/**.yml" ],
+        "dest": "api"
+      }
+    ],
+    "resource": [
+      { "files": [ "images/**" ] }
+    ],
+    "xref": [
+      "https://xref.docs.microsoft.com/query?uid={uid}"
+    ],
+    "globalMetadata": {
+      "_appName": "HYSoft",
+      "_appTitle": "HYSoft",
+      "_enableSearch": true
+    },
+    "template": [
+      "default"
+    ],
+    "dest": "_site"
+  }
+}

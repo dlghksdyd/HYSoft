@@ -1,0 +1,270 @@
+### YamlMime:ManagedReference
+items:
+- uid: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler
+  commentId: T:HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler
+  id: TcpDataReceivedEventHandler
+  parent: HYSoft.Communication.Tcp.Server
+  children:
+  - HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.#ctor(System.Object,System.IntPtr)
+  - HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.BeginInvoke(HYSoft.Communication.Tcp.Server.TcpDataReceivedContext,System.AsyncCallback,System.Object)
+  - HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.EndInvoke(System.IAsyncResult)
+  - HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.Invoke(HYSoft.Communication.Tcp.Server.TcpDataReceivedContext)
+  langs:
+  - csharp
+  - vb
+  name: TcpDataReceivedEventHandler
+  nameWithType: TcpDataReceivedEventHandler
+  fullName: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler
+  type: Delegate
+  source:
+    href: https://github.com/dlghksdyd/HYSoft/blob/78187021d61ebd716c9ebcca33d970389db623d8/src/Communication/Tcp/Server/TcpDataReceivedEventHandler.cs
+  assemblies:
+  - Communication
+  namespace: HYSoft.Communication.Tcp.Server
+  summary: TCP 서버에서 클라이언트로부터 데이터가 수신되었을 때 호출되는 이벤트 핸들러를 나타냅니다.
+  example: []
+  syntax:
+    content: public delegate void TcpDataReceivedEventHandler(TcpDataReceivedContext context)
+    parameters:
+    - id: context
+      type: HYSoft.Communication.Tcp.Server.TcpDataReceivedContext
+      description: 수신된 데이터와 응답을 보낼 수 있는 기능을 포함한 <xref href="HYSoft.Communication.Tcp.Server.TcpDataReceivedContext" data-throw-if-not-resolved="false"></xref> 객체입니다.
+    content.vb: Public Delegate Sub TcpDataReceivedEventHandler(context As TcpDataReceivedContext)
+- uid: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.#ctor(System.Object,System.IntPtr)
+  commentId: M:HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.#ctor(System.Object,System.IntPtr)
+  id: '#ctor(System.Object,System.IntPtr)'
+  parent: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler
+  langs:
+  - csharp
+  - vb
+  name: TcpDataReceivedEventHandler(object, nint)
+  nameWithType: TcpDataReceivedEventHandler.TcpDataReceivedEventHandler(object, nint)
+  fullName: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.TcpDataReceivedEventHandler(object, nint)
+  type: Constructor
+  source:
+    href: https://github.com/dlghksdyd/HYSoft/blob/78187021d61ebd716c9ebcca33d970389db623d8/src/Communication/Tcp/Server/TcpDataReceivedEventHandler.cs
+  assemblies:
+  - Communication
+  namespace: HYSoft.Communication.Tcp.Server
+  syntax:
+    content: public TcpDataReceivedEventHandler(object @object, nint method)
+    parameters:
+    - id: object
+      type: System.Object
+    - id: method
+      type: System.IntPtr
+    content.vb: Public Sub New([object] As Object, method As IntPtr)
+  overload: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.#ctor*
+  nameWithType.vb: TcpDataReceivedEventHandler.New(Object, IntPtr)
+  fullName.vb: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.New(Object, System.IntPtr)
+  name.vb: New(Object, IntPtr)
+- uid: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.Invoke(HYSoft.Communication.Tcp.Server.TcpDataReceivedContext)
+  commentId: M:HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.Invoke(HYSoft.Communication.Tcp.Server.TcpDataReceivedContext)
+  id: Invoke(HYSoft.Communication.Tcp.Server.TcpDataReceivedContext)
+  parent: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler
+  langs:
+  - csharp
+  - vb
+  name: Invoke(TcpDataReceivedContext)
+  nameWithType: TcpDataReceivedEventHandler.Invoke(TcpDataReceivedContext)
+  fullName: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.Invoke(HYSoft.Communication.Tcp.Server.TcpDataReceivedContext)
+  type: Method
+  source:
+    href: https://github.com/dlghksdyd/HYSoft/blob/78187021d61ebd716c9ebcca33d970389db623d8/src/Communication/Tcp/Server/TcpDataReceivedEventHandler.cs
+  assemblies:
+  - Communication
+  namespace: HYSoft.Communication.Tcp.Server
+  syntax:
+    content: public virtual void Invoke(TcpDataReceivedContext context)
+    parameters:
+    - id: context
+      type: HYSoft.Communication.Tcp.Server.TcpDataReceivedContext
+    content.vb: Public Overridable Sub Invoke(context As TcpDataReceivedContext)
+  overload: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.Invoke*
+- uid: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.BeginInvoke(HYSoft.Communication.Tcp.Server.TcpDataReceivedContext,System.AsyncCallback,System.Object)
+  commentId: M:HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.BeginInvoke(HYSoft.Communication.Tcp.Server.TcpDataReceivedContext,System.AsyncCallback,System.Object)
+  id: BeginInvoke(HYSoft.Communication.Tcp.Server.TcpDataReceivedContext,System.AsyncCallback,System.Object)
+  parent: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler
+  langs:
+  - csharp
+  - vb
+  name: BeginInvoke(TcpDataReceivedContext, AsyncCallback, object)
+  nameWithType: TcpDataReceivedEventHandler.BeginInvoke(TcpDataReceivedContext, AsyncCallback, object)
+  fullName: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.BeginInvoke(HYSoft.Communication.Tcp.Server.TcpDataReceivedContext, System.AsyncCallback, object)
+  type: Method
+  source:
+    href: https://github.com/dlghksdyd/HYSoft/blob/78187021d61ebd716c9ebcca33d970389db623d8/src/Communication/Tcp/Server/TcpDataReceivedEventHandler.cs
+  assemblies:
+  - Communication
+  namespace: HYSoft.Communication.Tcp.Server
+  syntax:
+    content: public virtual IAsyncResult BeginInvoke(TcpDataReceivedContext context, AsyncCallback callback, object @object)
+    parameters:
+    - id: context
+      type: HYSoft.Communication.Tcp.Server.TcpDataReceivedContext
+    - id: callback
+      type: System.AsyncCallback
+    - id: object
+      type: System.Object
+    return:
+      type: System.IAsyncResult
+    content.vb: Public Overridable Function BeginInvoke(context As TcpDataReceivedContext, callback As AsyncCallback, [object] As Object) As IAsyncResult
+  overload: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.BeginInvoke*
+  nameWithType.vb: TcpDataReceivedEventHandler.BeginInvoke(TcpDataReceivedContext, AsyncCallback, Object)
+  fullName.vb: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.BeginInvoke(HYSoft.Communication.Tcp.Server.TcpDataReceivedContext, System.AsyncCallback, Object)
+  name.vb: BeginInvoke(TcpDataReceivedContext, AsyncCallback, Object)
+- uid: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.EndInvoke(System.IAsyncResult)
+  commentId: M:HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.EndInvoke(System.IAsyncResult)
+  id: EndInvoke(System.IAsyncResult)
+  parent: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler
+  langs:
+  - csharp
+  - vb
+  name: EndInvoke(IAsyncResult)
+  nameWithType: TcpDataReceivedEventHandler.EndInvoke(IAsyncResult)
+  fullName: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.EndInvoke(System.IAsyncResult)
+  type: Method
+  source:
+    href: https://github.com/dlghksdyd/HYSoft/blob/78187021d61ebd716c9ebcca33d970389db623d8/src/Communication/Tcp/Server/TcpDataReceivedEventHandler.cs
+  assemblies:
+  - Communication
+  namespace: HYSoft.Communication.Tcp.Server
+  syntax:
+    content: public virtual void EndInvoke(IAsyncResult result)
+    parameters:
+    - id: result
+      type: System.IAsyncResult
+    content.vb: Public Overridable Sub EndInvoke(result As IAsyncResult)
+  overload: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.EndInvoke*
+references:
+- uid: HYSoft.Communication.Tcp.Server.TcpDataReceivedContext
+  commentId: T:HYSoft.Communication.Tcp.Server.TcpDataReceivedContext
+  parent: HYSoft.Communication.Tcp.Server
+  isExternal: true
+  href: HYSoft.Communication.Tcp.Server.TcpDataReceivedContext.html
+  name: TcpDataReceivedContext
+  nameWithType: TcpDataReceivedContext
+  fullName: HYSoft.Communication.Tcp.Server.TcpDataReceivedContext
+- uid: HYSoft.Communication.Tcp.Server
+  commentId: N:HYSoft.Communication.Tcp.Server
+  isExternal: true
+  href: HYSoft.html
+  name: HYSoft.Communication.Tcp.Server
+  nameWithType: HYSoft.Communication.Tcp.Server
+  fullName: HYSoft.Communication.Tcp.Server
+  spec.csharp:
+  - uid: HYSoft
+    name: HYSoft
+    isExternal: true
+    href: HYSoft.html
+  - name: .
+  - uid: HYSoft.Communication
+    name: Communication
+    isExternal: true
+    href: HYSoft.Communication.html
+  - name: .
+  - uid: HYSoft.Communication.Tcp
+    name: Tcp
+    isExternal: true
+    href: HYSoft.Communication.Tcp.html
+  - name: .
+  - uid: HYSoft.Communication.Tcp.Server
+    name: Server
+    isExternal: true
+    href: HYSoft.Communication.Tcp.Server.html
+  spec.vb:
+  - uid: HYSoft
+    name: HYSoft
+    isExternal: true
+    href: HYSoft.html
+  - name: .
+  - uid: HYSoft.Communication
+    name: Communication
+    isExternal: true
+    href: HYSoft.Communication.html
+  - name: .
+  - uid: HYSoft.Communication.Tcp
+    name: Tcp
+    isExternal: true
+    href: HYSoft.Communication.Tcp.html
+  - name: .
+  - uid: HYSoft.Communication.Tcp.Server
+    name: Server
+    isExternal: true
+    href: HYSoft.Communication.Tcp.Server.html
+- uid: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.#ctor*
+  commentId: Overload:HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.#ctor
+  isExternal: true
+  href: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.html#HYSoft_Communication_Tcp_Server_TcpDataReceivedEventHandler__ctor_System_Object_System_IntPtr_
+  name: TcpDataReceivedEventHandler
+  nameWithType: TcpDataReceivedEventHandler.TcpDataReceivedEventHandler
+  fullName: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.TcpDataReceivedEventHandler
+  nameWithType.vb: TcpDataReceivedEventHandler.New
+  fullName.vb: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.New
+  name.vb: New
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IntPtr
+  commentId: T:System.IntPtr
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.intptr
+  name: nint
+  nameWithType: nint
+  fullName: nint
+  nameWithType.vb: IntPtr
+  fullName.vb: System.IntPtr
+  name.vb: IntPtr
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.Invoke*
+  commentId: Overload:HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.Invoke
+  isExternal: true
+  href: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.html#HYSoft_Communication_Tcp_Server_TcpDataReceivedEventHandler_Invoke_HYSoft_Communication_Tcp_Server_TcpDataReceivedContext_
+  name: Invoke
+  nameWithType: TcpDataReceivedEventHandler.Invoke
+  fullName: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.Invoke
+- uid: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.BeginInvoke*
+  commentId: Overload:HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.BeginInvoke
+  isExternal: true
+  href: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.html#HYSoft_Communication_Tcp_Server_TcpDataReceivedEventHandler_BeginInvoke_HYSoft_Communication_Tcp_Server_TcpDataReceivedContext_System_AsyncCallback_System_Object_
+  name: BeginInvoke
+  nameWithType: TcpDataReceivedEventHandler.BeginInvoke
+  fullName: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.BeginInvoke
+- uid: System.AsyncCallback
+  commentId: T:System.AsyncCallback
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.asynccallback
+  name: AsyncCallback
+  nameWithType: AsyncCallback
+  fullName: System.AsyncCallback
+- uid: System.IAsyncResult
+  commentId: T:System.IAsyncResult
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iasyncresult
+  name: IAsyncResult
+  nameWithType: IAsyncResult
+  fullName: System.IAsyncResult
+- uid: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.EndInvoke*
+  commentId: Overload:HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.EndInvoke
+  isExternal: true
+  href: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.html#HYSoft_Communication_Tcp_Server_TcpDataReceivedEventHandler_EndInvoke_System_IAsyncResult_
+  name: EndInvoke
+  nameWithType: TcpDataReceivedEventHandler.EndInvoke
+  fullName: HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.EndInvoke

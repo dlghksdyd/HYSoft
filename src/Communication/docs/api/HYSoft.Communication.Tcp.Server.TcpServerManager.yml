@@ -1,0 +1,431 @@
+### YamlMime:ManagedReference
+items:
+- uid: HYSoft.Communication.Tcp.Server.TcpServerManager
+  commentId: T:HYSoft.Communication.Tcp.Server.TcpServerManager
+  id: TcpServerManager
+  parent: HYSoft.Communication.Tcp.Server
+  children:
+  - HYSoft.Communication.Tcp.Server.TcpServerManager.Create(HYSoft.Communication.Tcp.Server.TcpServerOptions)
+  - HYSoft.Communication.Tcp.Server.TcpServerManager.Dispose(HYSoft.Communication.Tcp.Server.TcpServer)
+  langs:
+  - csharp
+  - vb
+  name: TcpServerManager
+  nameWithType: TcpServerManager
+  fullName: HYSoft.Communication.Tcp.Server.TcpServerManager
+  type: Class
+  source:
+    href: https://github.com/dlghksdyd/HYSoft/blob/78187021d61ebd716c9ebcca33d970389db623d8/src/Communication/Tcp/Server/TcpServerManager.cs
+  assemblies:
+  - Communication
+  namespace: HYSoft.Communication.Tcp.Server
+  summary: <xref href="HYSoft.Communication.Tcp.Server.TcpServer" data-throw-if-not-resolved="false"></xref> 인스턴스를 생성하고 관리하는 정적 매니저 클래스입니다.
+  example: []
+  syntax:
+    content: public static class TcpServerManager
+    content.vb: Public Module TcpServerManager
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ToString
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.GetHashCode
+- uid: HYSoft.Communication.Tcp.Server.TcpServerManager.Create(HYSoft.Communication.Tcp.Server.TcpServerOptions)
+  commentId: M:HYSoft.Communication.Tcp.Server.TcpServerManager.Create(HYSoft.Communication.Tcp.Server.TcpServerOptions)
+  id: Create(HYSoft.Communication.Tcp.Server.TcpServerOptions)
+  parent: HYSoft.Communication.Tcp.Server.TcpServerManager
+  langs:
+  - csharp
+  - vb
+  name: Create(TcpServerOptions)
+  nameWithType: TcpServerManager.Create(TcpServerOptions)
+  fullName: HYSoft.Communication.Tcp.Server.TcpServerManager.Create(HYSoft.Communication.Tcp.Server.TcpServerOptions)
+  type: Method
+  source:
+    href: https://github.com/dlghksdyd/HYSoft/blob/78187021d61ebd716c9ebcca33d970389db623d8/src/Communication/Tcp/Server/TcpServerManager.cs
+  assemblies:
+  - Communication
+  namespace: HYSoft.Communication.Tcp.Server
+  summary: 지정된 옵션을 사용하여 새로운 <xref href="HYSoft.Communication.Tcp.Server.TcpServer" data-throw-if-not-resolved="false"></xref> 인스턴스를 생성하고 등록합니다.
+  example: []
+  syntax:
+    content: public static TcpServer Create(TcpServerOptions options)
+    parameters:
+    - id: options
+      type: HYSoft.Communication.Tcp.Server.TcpServerOptions
+      description: 서버 생성 시 사용할 <xref href="HYSoft.Communication.Tcp.Server.TcpServerOptions" data-throw-if-not-resolved="false"></xref>입니다.
+    return:
+      type: HYSoft.Communication.Tcp.Server.TcpServer
+      description: 생성된 <xref href="HYSoft.Communication.Tcp.Server.TcpServer" data-throw-if-not-resolved="false"></xref> 인스턴스입니다.
+    content.vb: Public Shared Function Create(options As TcpServerOptions) As TcpServer
+  overload: HYSoft.Communication.Tcp.Server.TcpServerManager.Create*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code class="paramref">options</code>가 <code>null</code>인 경우 발생합니다.
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: 서버를 내부 딕셔너리에 등록하지 못한 경우 발생합니다.
+- uid: HYSoft.Communication.Tcp.Server.TcpServerManager.Dispose(HYSoft.Communication.Tcp.Server.TcpServer)
+  commentId: M:HYSoft.Communication.Tcp.Server.TcpServerManager.Dispose(HYSoft.Communication.Tcp.Server.TcpServer)
+  id: Dispose(HYSoft.Communication.Tcp.Server.TcpServer)
+  parent: HYSoft.Communication.Tcp.Server.TcpServerManager
+  langs:
+  - csharp
+  - vb
+  name: Dispose(TcpServer)
+  nameWithType: TcpServerManager.Dispose(TcpServer)
+  fullName: HYSoft.Communication.Tcp.Server.TcpServerManager.Dispose(HYSoft.Communication.Tcp.Server.TcpServer)
+  type: Method
+  source:
+    href: https://github.com/dlghksdyd/HYSoft/blob/78187021d61ebd716c9ebcca33d970389db623d8/src/Communication/Tcp/Server/TcpServerManager.cs
+  assemblies:
+  - Communication
+  namespace: HYSoft.Communication.Tcp.Server
+  summary: 지정된 <xref href="HYSoft.Communication.Tcp.Server.TcpServer" data-throw-if-not-resolved="false"></xref> 인스턴스를 해제(dispose)하고 내부 관리 목록에서 제거합니다.
+  example: []
+  syntax:
+    content: public static void Dispose(TcpServer server)
+    parameters:
+    - id: server
+      type: HYSoft.Communication.Tcp.Server.TcpServer
+      description: 해제할 <xref href="HYSoft.Communication.Tcp.Server.TcpServer" data-throw-if-not-resolved="false"></xref> 인스턴스입니다.
+    content.vb: Public Shared Sub Dispose(server As TcpServer)
+  overload: HYSoft.Communication.Tcp.Server.TcpServerManager.Dispose*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code class="paramref">server</code>가 <code>null</code>인 경우 발생합니다.
+references:
+- uid: HYSoft.Communication.Tcp.Server.TcpServer
+  commentId: T:HYSoft.Communication.Tcp.Server.TcpServer
+  parent: HYSoft.Communication.Tcp.Server
+  isExternal: true
+  href: HYSoft.Communication.Tcp.Server.TcpServer.html
+  name: TcpServer
+  nameWithType: TcpServer
+  fullName: HYSoft.Communication.Tcp.Server.TcpServer
+- uid: HYSoft.Communication.Tcp.Server
+  commentId: N:HYSoft.Communication.Tcp.Server
+  isExternal: true
+  href: HYSoft.html
+  name: HYSoft.Communication.Tcp.Server
+  nameWithType: HYSoft.Communication.Tcp.Server
+  fullName: HYSoft.Communication.Tcp.Server
+  spec.csharp:
+  - uid: HYSoft
+    name: HYSoft
+    isExternal: true
+    href: HYSoft.html
+  - name: .
+  - uid: HYSoft.Communication
+    name: Communication
+    isExternal: true
+    href: HYSoft.Communication.html
+  - name: .
+  - uid: HYSoft.Communication.Tcp
+    name: Tcp
+    isExternal: true
+    href: HYSoft.Communication.Tcp.html
+  - name: .
+  - uid: HYSoft.Communication.Tcp.Server
+    name: Server
+    isExternal: true
+    href: HYSoft.Communication.Tcp.Server.html
+  spec.vb:
+  - uid: HYSoft
+    name: HYSoft
+    isExternal: true
+    href: HYSoft.html
+  - name: .
+  - uid: HYSoft.Communication
+    name: Communication
+    isExternal: true
+    href: HYSoft.Communication.html
+  - name: .
+  - uid: HYSoft.Communication.Tcp
+    name: Tcp
+    isExternal: true
+    href: HYSoft.Communication.Tcp.html
+  - name: .
+  - uid: HYSoft.Communication.Tcp.Server
+    name: Server
+    isExternal: true
+    href: HYSoft.Communication.Tcp.Server.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: HYSoft.Communication.Tcp.Server.TcpServerOptions
+  commentId: T:HYSoft.Communication.Tcp.Server.TcpServerOptions
+  parent: HYSoft.Communication.Tcp.Server
+  isExternal: true
+  href: HYSoft.Communication.Tcp.Server.TcpServerOptions.html
+  name: TcpServerOptions
+  nameWithType: TcpServerOptions
+  fullName: HYSoft.Communication.Tcp.Server.TcpServerOptions
+- uid: System.ArgumentNullException
+  commentId: T:System.ArgumentNullException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.argumentnullexception
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.InvalidOperationException
+  commentId: T:System.InvalidOperationException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.invalidoperationexception
+  name: InvalidOperationException
+  nameWithType: InvalidOperationException
+  fullName: System.InvalidOperationException
+- uid: HYSoft.Communication.Tcp.Server.TcpServerManager.Create*
+  commentId: Overload:HYSoft.Communication.Tcp.Server.TcpServerManager.Create
+  isExternal: true
+  href: HYSoft.Communication.Tcp.Server.TcpServerManager.html#HYSoft_Communication_Tcp_Server_TcpServerManager_Create_HYSoft_Communication_Tcp_Server_TcpServerOptions_
+  name: Create
+  nameWithType: TcpServerManager.Create
+  fullName: HYSoft.Communication.Tcp.Server.TcpServerManager.Create
+- uid: HYSoft.Communication.Tcp.Server.TcpServerManager.Dispose*
+  commentId: Overload:HYSoft.Communication.Tcp.Server.TcpServerManager.Dispose
+  isExternal: true
+  href: HYSoft.Communication.Tcp.Server.TcpServerManager.html#HYSoft_Communication_Tcp_Server_TcpServerManager_Dispose_HYSoft_Communication_Tcp_Server_TcpServer_
+  name: Dispose
+  nameWithType: TcpServerManager.Dispose
+  fullName: HYSoft.Communication.Tcp.Server.TcpServerManager.Dispose

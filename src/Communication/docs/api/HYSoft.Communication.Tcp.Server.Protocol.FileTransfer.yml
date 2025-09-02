@@ -1,0 +1,24 @@
+### YamlMime:ManagedReference
+items:
+- uid: HYSoft.Communication.Tcp.Server.Protocol.FileTransfer
+  commentId: N:HYSoft.Communication.Tcp.Server.Protocol.FileTransfer
+  id: HYSoft.Communication.Tcp.Server.Protocol.FileTransfer
+  children:
+  - HYSoft.Communication.Tcp.Server.Protocol.FileTransfer.FileTransferServer
+  langs:
+  - csharp
+  - vb
+  name: HYSoft.Communication.Tcp.Server.Protocol.FileTransfer
+  nameWithType: HYSoft.Communication.Tcp.Server.Protocol.FileTransfer
+  fullName: HYSoft.Communication.Tcp.Server.Protocol.FileTransfer
+  type: Namespace
+  assemblies:
+  - Communication
+references:
+- uid: HYSoft.Communication.Tcp.Server.Protocol.FileTransfer.FileTransferServer
+  commentId: T:HYSoft.Communication.Tcp.Server.Protocol.FileTransfer.FileTransferServer
+  isExternal: true
+  href: HYSoft.Communication.Tcp.Server.Protocol.FileTransfer.FileTransferServer.html
+  name: FileTransferServer
+  nameWithType: FileTransferServer
+  fullName: HYSoft.Communication.Tcp.Server.Protocol.FileTransfer.FileTransferServer

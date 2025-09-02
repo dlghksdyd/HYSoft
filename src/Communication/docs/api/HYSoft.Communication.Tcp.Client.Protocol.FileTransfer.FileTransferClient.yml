@@ -1,0 +1,597 @@
+### YamlMime:ManagedReference
+items:
+- uid: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient
+  commentId: T:HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient
+  id: FileTransferClient
+  parent: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer
+  children:
+  - HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient.#ctor(HYSoft.Communication.Tcp.Client.TcpClientOptions)
+  - HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient.SendFileAsync(System.String)
+  langs:
+  - csharp
+  - vb
+  name: FileTransferClient
+  nameWithType: FileTransferClient
+  fullName: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient
+  type: Class
+  source:
+    href: https://github.com/dlghksdyd/HYSoft/blob/78187021d61ebd716c9ebcca33d970389db623d8/src/Communication/Tcp/Client/Protocol/FileTransfer/FileTransferClient.cs
+  assemblies:
+  - Communication
+  namespace: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer
+  summary: >-
+    파일 전송 클라이언트 구현 클래스입니다.
+
+
+    <p>
+
+    서버와 지정된 프로토콜로 파일 전송을 수행하며,
+
+    헤더 전송 → 서버 응답(Resume 여부) → 본문 전송 → Tail 전송 → 최종 상태 응답의 순서를 따릅니다.
+
+    </p>
+  example: []
+  syntax:
+    content: public class FileTransferClient
+    content.vb: Public Class FileTransferClient
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ToString
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.GetHashCode
+- uid: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient.#ctor(HYSoft.Communication.Tcp.Client.TcpClientOptions)
+  commentId: M:HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient.#ctor(HYSoft.Communication.Tcp.Client.TcpClientOptions)
+  id: '#ctor(HYSoft.Communication.Tcp.Client.TcpClientOptions)'
+  parent: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient
+  langs:
+  - csharp
+  - vb
+  name: FileTransferClient(TcpClientOptions)
+  nameWithType: FileTransferClient.FileTransferClient(TcpClientOptions)
+  fullName: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient.FileTransferClient(HYSoft.Communication.Tcp.Client.TcpClientOptions)
+  type: Constructor
+  source:
+    href: https://github.com/dlghksdyd/HYSoft/blob/78187021d61ebd716c9ebcca33d970389db623d8/src/Communication/Tcp/Client/Protocol/FileTransfer/FileTransferClient.cs
+  assemblies:
+  - Communication
+  namespace: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer
+  summary: <xref href="HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient" data-throw-if-not-resolved="false"></xref> 클래스의 새 인스턴스를 초기화합니다.
+  example: []
+  syntax:
+    content: public FileTransferClient(TcpClientOptions options)
+    parameters:
+    - id: options
+      type: HYSoft.Communication.Tcp.Client.TcpClientOptions
+      description: 서버 접속 정보를 포함한 <xref href="HYSoft.Communication.Tcp.Client.TcpClientOptions" data-throw-if-not-resolved="false"></xref>.
+    content.vb: Public Sub New(options As TcpClientOptions)
+  overload: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient.#ctor*
+  nameWithType.vb: FileTransferClient.New(TcpClientOptions)
+  fullName.vb: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient.New(HYSoft.Communication.Tcp.Client.TcpClientOptions)
+  name.vb: New(TcpClientOptions)
+- uid: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient.SendFileAsync(System.String)
+  commentId: M:HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient.SendFileAsync(System.String)
+  id: SendFileAsync(System.String)
+  parent: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient
+  langs:
+  - csharp
+  - vb
+  name: SendFileAsync(string)
+  nameWithType: FileTransferClient.SendFileAsync(string)
+  fullName: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient.SendFileAsync(string)
+  type: Method
+  source:
+    href: https://github.com/dlghksdyd/HYSoft/blob/78187021d61ebd716c9ebcca33d970389db623d8/src/Communication/Tcp/Client/Protocol/FileTransfer/FileTransferClient.cs
+  assemblies:
+  - Communication
+  namespace: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer
+  summary: 지정한 파일을 서버로 전송합니다.
+  remarks: >-
+    프로토콜 순서:
+
+    <ol><li>클라이언트 → 서버: 헤더 [MAGIC_HEADER(4)][Flags(1)][FileSize(8)][NameLen(2)][FileName]</li><li>서버 → 클라이언트: 응답 [Status(1)][StartOffset(8)]</li><li>클라이언트 → 서버: 파일 데이터 (StartOffset ~ 끝까지)</li><li>클라이언트 → 서버: Tail [MAGIC_TAIL(4)][CRC32(4)]</li><li>서버 → 클라이언트: 최종 상태 [FinalStatus(1)]</li></ol>
+  example: []
+  syntax:
+    content: public Task SendFileAsync(string filePath)
+    parameters:
+    - id: filePath
+      type: System.String
+      description: 전송할 로컬 파일 경로.
+    return:
+      type: System.Threading.Tasks.Task
+      description: >-
+        비동기 작업을 나타내는 <xref href="System.Threading.Tasks.Task" data-throw-if-not-resolved="false"></xref>.
+
+        전송 완료 시 정상적으로 완료되며,
+
+        서버가 오류를 반환하거나 네트워크 오류 발생 시 <xref href="System.IO.IOException" data-throw-if-not-resolved="false"></xref> 또는 <xref href="System.InvalidOperationException" data-throw-if-not-resolved="false"></xref>이 발생합니다.
+    content.vb: Public Function SendFileAsync(filePath As String) As Task
+  overload: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient.SendFileAsync*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code class="paramref">filePath</code>가 null 또는 빈 문자열일 경우.
+  - type: System.IO.FileNotFoundException
+    commentId: T:System.IO.FileNotFoundException
+    description: 지정된 경로에 파일이 존재하지 않는 경우.
+  - type: System.IO.IOException
+    commentId: T:System.IO.IOException
+    description: 파일 크기 오류, 서버 오류 응답, 전송 중단 등 입출력 예외가 발생한 경우.
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: 이미 다른 파일 전송 작업이 진행 중인 경우.
+  nameWithType.vb: FileTransferClient.SendFileAsync(String)
+  fullName.vb: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient.SendFileAsync(String)
+  name.vb: SendFileAsync(String)
+references:
+- uid: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer
+  commentId: N:HYSoft.Communication.Tcp.Client.Protocol.FileTransfer
+  isExternal: true
+  href: HYSoft.html
+  name: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer
+  nameWithType: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer
+  fullName: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer
+  spec.csharp:
+  - uid: HYSoft
+    name: HYSoft
+    isExternal: true
+    href: HYSoft.html
+  - name: .
+  - uid: HYSoft.Communication
+    name: Communication
+    isExternal: true
+    href: HYSoft.Communication.html
+  - name: .
+  - uid: HYSoft.Communication.Tcp
+    name: Tcp
+    isExternal: true
+    href: HYSoft.Communication.Tcp.html
+  - name: .
+  - uid: HYSoft.Communication.Tcp.Client
+    name: Client
+    isExternal: true
+    href: HYSoft.Communication.Tcp.Client.html
+  - name: .
+  - uid: HYSoft.Communication.Tcp.Client.Protocol
+    name: Protocol
+    isExternal: true
+    href: HYSoft.Communication.Tcp.Client.Protocol.html
+  - name: .
+  - uid: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer
+    name: FileTransfer
+    isExternal: true
+    href: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.html
+  spec.vb:
+  - uid: HYSoft
+    name: HYSoft
+    isExternal: true
+    href: HYSoft.html
+  - name: .
+  - uid: HYSoft.Communication
+    name: Communication
+    isExternal: true
+    href: HYSoft.Communication.html
+  - name: .
+  - uid: HYSoft.Communication.Tcp
+    name: Tcp
+    isExternal: true
+    href: HYSoft.Communication.Tcp.html
+  - name: .
+  - uid: HYSoft.Communication.Tcp.Client
+    name: Client
+    isExternal: true
+    href: HYSoft.Communication.Tcp.Client.html
+  - name: .
+  - uid: HYSoft.Communication.Tcp.Client.Protocol
+    name: Protocol
+    isExternal: true
+    href: HYSoft.Communication.Tcp.Client.Protocol.html
+  - name: .
+  - uid: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer
+    name: FileTransfer
+    isExternal: true
+    href: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient
+  commentId: T:HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient
+  isExternal: true
+  href: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient.html
+  name: FileTransferClient
+  nameWithType: FileTransferClient
+  fullName: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient
+- uid: HYSoft.Communication.Tcp.Client.TcpClientOptions
+  commentId: T:HYSoft.Communication.Tcp.Client.TcpClientOptions
+  parent: HYSoft.Communication.Tcp.Client
+  isExternal: true
+  href: HYSoft.Communication.Tcp.Client.TcpClientOptions.html
+  name: TcpClientOptions
+  nameWithType: TcpClientOptions
+  fullName: HYSoft.Communication.Tcp.Client.TcpClientOptions
+- uid: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient.#ctor*
+  commentId: Overload:HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient.#ctor
+  isExternal: true
+  href: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient.html#HYSoft_Communication_Tcp_Client_Protocol_FileTransfer_FileTransferClient__ctor_HYSoft_Communication_Tcp_Client_TcpClientOptions_
+  name: FileTransferClient
+  nameWithType: FileTransferClient.FileTransferClient
+  fullName: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient.FileTransferClient
+  nameWithType.vb: FileTransferClient.New
+  fullName.vb: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient.New
+  name.vb: New
+- uid: HYSoft.Communication.Tcp.Client
+  commentId: N:HYSoft.Communication.Tcp.Client
+  isExternal: true
+  href: HYSoft.html
+  name: HYSoft.Communication.Tcp.Client
+  nameWithType: HYSoft.Communication.Tcp.Client
+  fullName: HYSoft.Communication.Tcp.Client
+  spec.csharp:
+  - uid: HYSoft
+    name: HYSoft
+    isExternal: true
+    href: HYSoft.html
+  - name: .
+  - uid: HYSoft.Communication
+    name: Communication
+    isExternal: true
+    href: HYSoft.Communication.html
+  - name: .
+  - uid: HYSoft.Communication.Tcp
+    name: Tcp
+    isExternal: true
+    href: HYSoft.Communication.Tcp.html
+  - name: .
+  - uid: HYSoft.Communication.Tcp.Client
+    name: Client
+    isExternal: true
+    href: HYSoft.Communication.Tcp.Client.html
+  spec.vb:
+  - uid: HYSoft
+    name: HYSoft
+    isExternal: true
+    href: HYSoft.html
+  - name: .
+  - uid: HYSoft.Communication
+    name: Communication
+    isExternal: true
+    href: HYSoft.Communication.html
+  - name: .
+  - uid: HYSoft.Communication.Tcp
+    name: Tcp
+    isExternal: true
+    href: HYSoft.Communication.Tcp.html
+  - name: .
+  - uid: HYSoft.Communication.Tcp.Client
+    name: Client
+    isExternal: true
+    href: HYSoft.Communication.Tcp.Client.html
+- uid: System.Threading.Tasks.Task
+  commentId: T:System.Threading.Tasks.Task
+  parent: System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task
+  name: Task
+  nameWithType: Task
+  fullName: System.Threading.Tasks.Task
+- uid: System.IO.IOException
+  commentId: T:System.IO.IOException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.io.ioexception
+  name: IOException
+  nameWithType: IOException
+  fullName: System.IO.IOException
+- uid: System.InvalidOperationException
+  commentId: T:System.InvalidOperationException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.invalidoperationexception
+  name: InvalidOperationException
+  nameWithType: InvalidOperationException
+  fullName: System.InvalidOperationException
+- uid: System.ArgumentException
+  commentId: T:System.ArgumentException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.argumentexception
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: System.IO.FileNotFoundException
+  commentId: T:System.IO.FileNotFoundException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.io.filenotfoundexception
+  name: FileNotFoundException
+  nameWithType: FileNotFoundException
+  fullName: System.IO.FileNotFoundException
+- uid: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient.SendFileAsync*
+  commentId: Overload:HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient.SendFileAsync
+  isExternal: true
+  href: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient.html#HYSoft_Communication_Tcp_Client_Protocol_FileTransfer_FileTransferClient_SendFileAsync_System_String_
+  name: SendFileAsync
+  nameWithType: FileTransferClient.SendFileAsync
+  fullName: HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient.SendFileAsync
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
