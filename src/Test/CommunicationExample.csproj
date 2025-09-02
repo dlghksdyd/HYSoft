@@ -9,11 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="HYSoft.Communication" Version="1.0.6" />
     <PackageReference Include="Prism.Wpf" Version="9.0.537" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Communication\Communication.csproj" />
   </ItemGroup>
 
 </Project>

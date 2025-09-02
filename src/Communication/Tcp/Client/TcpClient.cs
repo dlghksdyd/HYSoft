@@ -28,7 +28,7 @@ namespace HYSoft.Communication.Tcp.Client
         private readonly TcpClientOptions _options;
 
         // 내부 소켓과 동시성 제어용 락
-        private Socket _socket;
+        private Socket? _socket;
         private readonly SemaphoreSlim _connectLock = new(1, 1);
         private readonly SemaphoreSlim _sendLock = new(1, 1);
         private readonly SemaphoreSlim _receiveLock = new(1, 1);
@@ -217,7 +217,7 @@ namespace HYSoft.Communication.Tcp.Client
                 throw new InvalidOperationException("The socket is not connected.");
 
             // 에러 메시지에 목적지 정보를 포함하면 디버깅에 유용
-            string remote = null;
+            string? remote = null;
             try { remote = socket.RemoteEndPoint?.ToString(); } catch { /* ignore */ }
 
             await _sendLock.WaitAsync().ConfigureAwait(false);
@@ -300,7 +300,7 @@ namespace HYSoft.Communication.Tcp.Client
             if (!socket.Connected)
                 throw new InvalidOperationException("The socket is not connected.");
 
-            string remote = null;
+            string? remote = null;
             try { remote = socket.RemoteEndPoint?.ToString(); } catch { /* ignore */ }
 
             await _receiveLock.WaitAsync().ConfigureAwait(false);

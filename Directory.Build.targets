@@ -1,0 +1,44 @@
+<Project>
+	<!-- pack 대상 프로젝트에 한해 XML 주석을 lib/<TFM>에 포함 -->
+	<ItemGroup Condition="'$(IsPackable)'=='true' or '$(GeneratePackageOnBuild)'=='True'">
+		<Content Include="$(PackageOutputPath)$(AssemblyName).xml"
+				 Pack="true"
+				 PackagePath="lib/$(TargetFramework)"
+				 Condition="Exists('$(PackageOutputPath)$(AssemblyName).xml')" />
+	</ItemGroup>
+
+	<PropertyGroup>
+		<PublishedVersionFile>$(MSBuildThisFileDirectory).last_published_version</PublishedVersionFile>
+	</PropertyGroup>
+
+	<!-- 마지막으로 성공 푸시한 버전을 로드 -->
+	<Target Name="LoadLastPublishedVersion" Condition="'$(NUGET_API_KEY)'!=''">
+		<!-- 기본값 -->
+		<PropertyGroup>
+			<LastPublishedVersion></LastPublishedVersion>
+		</PropertyGroup>
+
+		<!-- 파일이 있으면 읽기 -->
+		<ReadLinesFromFile File="$(PublishedVersionFile)" Condition="Exists('$(PublishedVersionFile)')">
+			<Output TaskParameter="Lines" ItemName="_LastPubVerLines" />
+		</ReadLinesFromFile>
+
+		<!-- 읽은 값을 속성으로 설정 -->
+		<PropertyGroup Condition="'@(_LastPubVerLines)'!=''">
+			<LastPublishedVersion>@(_LastPubVerLines->'%(Identity)')</LastPublishedVersion>
+		</PropertyGroup>
+	</Target>
+
+	<!-- Pack 이후, 버전이 바뀐 경우에만 push 실행 -->
+	<Target Name="PublishNuGetOnPack" AfterTargets="Pack" DependsOnTargets="LoadLastPublishedVersion" Condition="'$(Configuration)'=='Release' and '$(NUGET_API_KEY)'!='' and '$(IsPackable)'=='true'">
+
+		<!-- 실제 푸시: 버전이 다를 때만 -->
+		<Exec Condition="'$(Version)'!='$(LastPublishedVersion)'" Command="cmd /c set DOTNET_CLI_UI_LANGUAGE=en &amp;&amp; dotnet nuget push &quot;$(PackageOutputPath)$(PackageId).$(Version).nupkg&quot; --api-key $(NUGET_API_KEY) --source https://api.nuget.org/v3/index.json --skip-duplicate" />
+
+		<!-- 같은 버전이면 스킵 로그 -->
+		<Message Importance="High" Condition="'$(Version)'=='$(LastPublishedVersion)'" Text="NuGet push skipped: Version $(Version) == LastPublishedVersion $(LastPublishedVersion)" />
+
+		<!-- push 성공 후 현재 버전 기록 (Exec 성공시만 실행됨) -->
+		<WriteLinesToFile Condition="'$(Version)'!='$(LastPublishedVersion)'" File="$(PublishedVersionFile)" Lines="$(Version)" Overwrite="true" />
+	</Target>
+</Project>

@@ -9,7 +9,7 @@ namespace HYSoft.Communication.Database.Mssql
     /// </summary>
     public abstract class DbContextBase : DbContext
     {
-        private static DbContextOptions<DbContextBase> _options;
+        private static DbContextOptions<DbContextBase>? _options;
 
         /// <summary>
         ///     기본 생성자입니다. 

@@ -1,2 +1,0 @@
-# HYSoft
-Software Development Kit

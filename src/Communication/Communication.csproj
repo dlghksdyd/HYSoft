@@ -5,38 +5,21 @@
 		<RootNamespace>HYSoft.Communication</RootNamespace>
 		<PackageOutputPath>$(ProjectDir)bin\$(Configuration)\</PackageOutputPath>
 
-		<!-- XML 주석 문서화 -->
-		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-
 		<!-- NuGet 메타데이터 -->
 		<PackageId>HYSoft.Communication</PackageId>
 		<Version>1.0.6</Version>
-		<Authors>Hwanyong.lee</Authors>
-		<Company>HYSoft</Company>
 		<Description>Communication Utilities</Description>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<LangVersion>latest</LangVersion>
-		<PublishedVersionFile>$(ProjectDir)..\..\.last_published_version</PublishedVersionFile>
-
-		<!-- Git 저장소 메타데이터 -->
-		<RepositoryUrl>https://github.com/dlghksdyd/HYSoft</RepositoryUrl>
-		<RepositoryType>git</RepositoryType>
-
-		<!-- 패키지 페이지 링크 -->
-		<PackageProjectUrl>https://github.com/dlghksdyd/HYSoft</PackageProjectUrl>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="MsSql\**" />
-	  <EmbeddedResource Remove="MsSql\**" />
-	  <None Remove="MsSql\**" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Include="..\..\README.md" Pack="true" PackagePath="\" />
+		<Compile Remove="MsSql\**" />
+		<EmbeddedResource Remove="MsSql\**" />
+		<None Remove="MsSql\**" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -44,39 +27,5 @@
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.8" />
 	  <PackageReference Include="System.IO.Hashing" Version="9.0.8" />
 	</ItemGroup>
-
-	<!-- 마지막으로 성공 푸시한 버전을 로드 -->
-	<Target Name="LoadLastPublishedVersion">
-		<!-- 기본값 -->
-		<PropertyGroup>
-			<LastPublishedVersion></LastPublishedVersion>
-		</PropertyGroup>
-
-		<!-- 파일이 있으면 읽기 -->
-		<ReadLinesFromFile File="$(ProjectDir)..\..\.last_published_version" Condition="Exists('$(ProjectDir)..\..\.last_published_version')">
-			<Output TaskParameter="Lines" ItemName="_LastPubVerLines" />
-		</ReadLinesFromFile>
-
-		<!-- 읽은 값을 속성으로 설정 -->
-		<PropertyGroup Condition="'@(_LastPubVerLines)' != ''">
-			<LastPublishedVersion>@(_LastPubVerLines->'%(Identity)')</LastPublishedVersion>
-		</PropertyGroup>
-	</Target>
-
-	<!-- Pack 이후, 버전이 바뀐 경우에만 push 실행 -->
-	<Target Name="PublishNuGetOnPack" AfterTargets="Pack" DependsOnTargets="LoadLastPublishedVersion">
-		<!-- 키 없거나 Release가 아니면 전체 skip -->
-		<Message Importance="Low" Condition="'$(Configuration)'!='Release' or '$(NUGET_API_KEY)'==''" Text="Skip push (Configuration=$(Configuration), NUGET_API_KEY exists=no)" />
-		<Message Importance="Low" Condition="'$(Configuration)'=='Release' and '$(NUGET_API_KEY)'!=''" Text="Push enabled (Configuration=$(Configuration), NUGET_API_KEY exists=yes)" />
-
-		<!-- 실제 푸시: 버전이 다를 때만 -->
-		<Exec Condition="'$(Configuration)'=='Release' and '$(NUGET_API_KEY)'!='' and '$(Version)'!='$(LastPublishedVersion)'" Command="cmd /c set DOTNET_CLI_UI_LANGUAGE=en &amp;&amp; dotnet nuget push &quot;$(PackageOutputPath)$(PackageId).$(Version).nupkg&quot; --api-key $(NUGET_API_KEY) --source https://api.nuget.org/v3/index.json --skip-duplicate" />
-
-		<!-- 같은 버전이면 스킵 로그 -->
-		<Message Importance="High" Condition="'$(Configuration)'=='Release' and '$(NUGET_API_KEY)'!='' and '$(Version)'=='$(LastPublishedVersion)'" Text="NuGet push skipped: Version $(Version) == LastPublishedVersion $(LastPublishedVersion)" />
-
-		<!-- push 성공 후 현재 버전 기록 (Exec 성공시만 실행됨) -->
-		<WriteLinesToFile Condition="'$(Configuration)'=='Release' and '$(NUGET_API_KEY)'!='' and '$(Version)'!='$(LastPublishedVersion)'" File="$(PublishedVersionFile)" Lines="$(Version)" Overwrite="true" />
-	</Target>
 
 </Project>
