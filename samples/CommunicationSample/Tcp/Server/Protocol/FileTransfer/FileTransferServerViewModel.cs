@@ -11,13 +11,6 @@ namespace CommunicationSample.Tcp.Server.Protocol.FileTransfer
 {
     public class FileTransferServerViewModel : BindableBase
     {
-        private string _receiveFolder = Path.Combine(AppContext.BaseDirectory, "received");
-        public string ReceiveFolder
-        {
-            get => _receiveFolder;
-            set => SetProperty(ref _receiveFolder, value);
-        }
-
         private string _status = "Idle";
         public string Status
         {
@@ -55,12 +48,12 @@ namespace CommunicationSample.Tcp.Server.Protocol.FileTransfer
                     SendBufferSize = 64 * 1024,
                     MaxClients = 1024
                 };
-                var fileServer = new FileTransferServer(serverOptions, ReceiveFolder);
+                var fileServer = new FileTransferServer(serverOptions, @".\obj\");
                 await fileServer.ReceiveFileAsync();
 
                 IsServerRunning = true;
                 
-                Status = $"Server started on 0.0.0.0:20000, saving to: {ReceiveFolder}";
+                Status = @$"Server started on 0.0.0.0:20000, saving to: .\obj\";
             }
             catch (Exception ex)
             {

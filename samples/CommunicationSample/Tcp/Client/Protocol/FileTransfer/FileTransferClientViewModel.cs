@@ -31,7 +31,7 @@ namespace CommunicationSample.Tcp.Client.Protocol.FileTransfer
         }
 
         private FileTransferClient? _fileClient;
-        private readonly string _filePath = "./CommunicationSample.dll";
+        private readonly string _filePath = "./FileTransferTestFile.txt";
         
         public ICommand ClientStartCommand => new DelegateCommand(() =>
         {
