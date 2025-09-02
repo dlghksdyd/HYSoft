@@ -2,7 +2,6 @@
 
 src/Communication/obj/*
 src/Communication/bin/*
-src/Communication/publish-api/*
 
-src/Test/obj/*
-src/Test/bin/*
+samples/CommunicationSample/obj/*
+samples/CommunicationSample/bin/*

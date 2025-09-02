@@ -13,4 +13,10 @@
     <PackageReference Include="Prism.Wpf" Version="9.0.537" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Tcp\Server\Protocol\FileTransfer\FileTransferServerView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>
