@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using CommunicationSample;
 using HYSoft.Communication.Tcp.Client;
 using HYSoft.Communication.Tcp.Client.Protocol.FileTransfer;
 using HYSoft.Communication.Tcp.Server;
@@ -7,7 +8,7 @@ using System.IO;
 using System.Net;
 using System.Windows.Input;
 
-namespace CommunicationSample.Tcp.Server.Protocol.FileTransfer
+namespace Samples.Communication.Tcp.Server.Protocol.FileTransfer
 {
     public class FileTransferServerViewModel : BindableBase
     {

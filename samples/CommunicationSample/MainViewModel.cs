@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using CommunicationSample.Tcp.Client.Protocol.FileTransfer;
-using CommunicationSample.Tcp.Server.Protocol.FileTransfer;
+using Samples.Communication.Tcp.Client.Protocol.FileTransfer;
+using Samples.Communication.Tcp.Server.Protocol.FileTransfer;
 
 namespace CommunicationSample
 {

@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Tcp\Server\Protocol\FileTransfer\FileTransferServerView.xaml.cs">
+    <Compile Update="Communication\Tcp\Server\Protocol\FileTransfer\FileTransferServerView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

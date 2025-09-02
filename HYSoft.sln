@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "솔루션 항목", "솔루�
 		Directory.Build.targets = Directory.Build.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunicationSample", "samples\CommunicationSample\CommunicationSample.csproj", "{EF2E58FB-83B0-3182-7932-D945B7171B86}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples", "samples\CommunicationSample\Samples.csproj", "{EF2E58FB-83B0-3182-7932-D945B7171B86}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "src\Data\Data.csproj", "{7D1E201A-CD9C-4ACA-89B6-C66C3CF93726}"
 EndProject

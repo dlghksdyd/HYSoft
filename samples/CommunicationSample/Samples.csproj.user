@@ -5,7 +5,7 @@
     <Compile Update="MainView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Tcp\Client\Protocol\FileTransfer\FileTransferClientView.xaml.cs">
+    <Compile Update="Communication\Tcp\Client\Protocol\FileTransfer\FileTransferClientView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

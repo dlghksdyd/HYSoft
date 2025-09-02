@@ -3,7 +3,7 @@
     "Name": "새 프로필",
     "Projects": [
       {
-        "Path": "samples\\CommunicationSample\\CommunicationSample.csproj",
+        "Path": "samples\\CommunicationSample\\Samples.csproj",
         "Action": "Start"
       }
     ]

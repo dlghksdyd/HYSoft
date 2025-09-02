@@ -14,18 +14,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CommunicationSample.Tcp.Client.Protocol.FileTransfer
+namespace Samples.Communication.Tcp.Server.Protocol.FileTransfer
 {
     /// <summary>
-    /// FileTransferClientView.xaml에 대한 상호 작용 논리
+    /// FileTransferServerView.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class FileTransferClientView : Window
+    public partial class FileTransferServerView : Window
     {
-        public FileTransferClientView()
+        public FileTransferServerView()
         {
             InitializeComponent();
 
-            this.DataContext = new FileTransferClientViewModel();
+            this.DataContext = new FileTransferServerViewModel();
         }
     }
 }
