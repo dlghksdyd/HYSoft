@@ -3,6 +3,8 @@
 		<!-- 공통 NuGet 메타데이터 -->
 		<Authors>Hwanyong.lee</Authors>
 		<Company>HYSoft</Company>
+		<Version>$([System.IO.File]::ReadAllText('$(MSBuildThisFileDirectory).to_publish_version').Trim())</Version>
+		<PackageVersion>$(Version)</PackageVersion>
 
 		<!-- Git 저장소 메타데이터 -->
 		<RepositoryUrl>https://github.com/dlghksdyd/HYSoft</RepositoryUrl>

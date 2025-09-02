@@ -7,7 +7,6 @@
 
 		<!-- NuGet 메타데이터 -->
 		<PackageId>HYSoft.Communication</PackageId>
-		<Version>1.0.6</Version>
 		<Description>Communication Utilities</Description>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
