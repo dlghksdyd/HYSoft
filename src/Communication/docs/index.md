@@ -1,11 +1,5 @@
----
-_layout: landing
----
+# HYSoft Communication Docs
 
-# This is the **HOMEPAGE**.
-
-Refer to [Markdown](http://daringfireball.net/projects/markdown/) for how to write markdown files.
-
-## Quick Start Notes:
-
-1. Add images to the *images* folder if the file is referencing an image.
+여기서 시작하세요 👇  
+- **빠른 시작**: 서버/클라이언트 샘플 실행  
+- **API 문서**: 좌측 메뉴의 *API Reference* 클릭

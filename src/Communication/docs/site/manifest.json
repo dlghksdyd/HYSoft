@@ -15,7 +15,7 @@
       "source_relative_path": "api/HYSoft.Communication.Database.Mssql.DbContextBase.yml",
       "output": {
         ".html": {
-          "relative_path": "api/api/HYSoft.Communication.Database.Mssql.DbContextBase.html"
+          "relative_path": "api/HYSoft.Communication.Database.Mssql.DbContextBase.html"
         }
       },
       "version": "",
@@ -29,7 +29,7 @@
       "source_relative_path": "api/HYSoft.Communication.Database.Mssql.yml",
       "output": {
         ".html": {
-          "relative_path": "api/api/HYSoft.Communication.Database.Mssql.html"
+          "relative_path": "api/HYSoft.Communication.Database.Mssql.html"
         }
       },
       "version": "",
@@ -43,7 +43,7 @@
       "source_relative_path": "api/HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient.yml",
       "output": {
         ".html": {
-          "relative_path": "api/api/HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient.html"
+          "relative_path": "api/HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient.html"
         }
       },
       "version": "",
@@ -57,7 +57,7 @@
       "source_relative_path": "api/HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.yml",
       "output": {
         ".html": {
-          "relative_path": "api/api/HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.html"
+          "relative_path": "api/HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.html"
         }
       },
       "version": "",
@@ -71,7 +71,7 @@
       "source_relative_path": "api/HYSoft.Communication.Tcp.Client.TcpClient.yml",
       "output": {
         ".html": {
-          "relative_path": "api/api/HYSoft.Communication.Tcp.Client.TcpClient.html"
+          "relative_path": "api/HYSoft.Communication.Tcp.Client.TcpClient.html"
         }
       },
       "version": "",
@@ -85,7 +85,7 @@
       "source_relative_path": "api/HYSoft.Communication.Tcp.Client.TcpClientManager.yml",
       "output": {
         ".html": {
-          "relative_path": "api/api/HYSoft.Communication.Tcp.Client.TcpClientManager.html"
+          "relative_path": "api/HYSoft.Communication.Tcp.Client.TcpClientManager.html"
         }
       },
       "version": "",
@@ -99,7 +99,7 @@
       "source_relative_path": "api/HYSoft.Communication.Tcp.Client.TcpClientOptions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/api/HYSoft.Communication.Tcp.Client.TcpClientOptions.html"
+          "relative_path": "api/HYSoft.Communication.Tcp.Client.TcpClientOptions.html"
         }
       },
       "version": "",
@@ -113,7 +113,7 @@
       "source_relative_path": "api/HYSoft.Communication.Tcp.Client.yml",
       "output": {
         ".html": {
-          "relative_path": "api/api/HYSoft.Communication.Tcp.Client.html"
+          "relative_path": "api/HYSoft.Communication.Tcp.Client.html"
         }
       },
       "version": "",
@@ -127,7 +127,7 @@
       "source_relative_path": "api/HYSoft.Communication.Tcp.Server.Protocol.FileTransfer.FileTransferServer.yml",
       "output": {
         ".html": {
-          "relative_path": "api/api/HYSoft.Communication.Tcp.Server.Protocol.FileTransfer.FileTransferServer.html"
+          "relative_path": "api/HYSoft.Communication.Tcp.Server.Protocol.FileTransfer.FileTransferServer.html"
         }
       },
       "version": "",
@@ -141,7 +141,7 @@
       "source_relative_path": "api/HYSoft.Communication.Tcp.Server.Protocol.FileTransfer.yml",
       "output": {
         ".html": {
-          "relative_path": "api/api/HYSoft.Communication.Tcp.Server.Protocol.FileTransfer.html"
+          "relative_path": "api/HYSoft.Communication.Tcp.Server.Protocol.FileTransfer.html"
         }
       },
       "version": "",
@@ -155,7 +155,7 @@
       "source_relative_path": "api/HYSoft.Communication.Tcp.Server.TcpDataReceivedContext.yml",
       "output": {
         ".html": {
-          "relative_path": "api/api/HYSoft.Communication.Tcp.Server.TcpDataReceivedContext.html"
+          "relative_path": "api/HYSoft.Communication.Tcp.Server.TcpDataReceivedContext.html"
         }
       },
       "version": "",
@@ -169,7 +169,7 @@
       "source_relative_path": "api/HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.yml",
       "output": {
         ".html": {
-          "relative_path": "api/api/HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.html"
+          "relative_path": "api/HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler.html"
         }
       },
       "version": "",
@@ -183,7 +183,7 @@
       "source_relative_path": "api/HYSoft.Communication.Tcp.Server.TcpServer.yml",
       "output": {
         ".html": {
-          "relative_path": "api/api/HYSoft.Communication.Tcp.Server.TcpServer.html"
+          "relative_path": "api/HYSoft.Communication.Tcp.Server.TcpServer.html"
         }
       },
       "version": "",
@@ -197,7 +197,7 @@
       "source_relative_path": "api/HYSoft.Communication.Tcp.Server.TcpServerManager.yml",
       "output": {
         ".html": {
-          "relative_path": "api/api/HYSoft.Communication.Tcp.Server.TcpServerManager.html"
+          "relative_path": "api/HYSoft.Communication.Tcp.Server.TcpServerManager.html"
         }
       },
       "version": "",
@@ -211,7 +211,7 @@
       "source_relative_path": "api/HYSoft.Communication.Tcp.Server.TcpServerOptions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/api/HYSoft.Communication.Tcp.Server.TcpServerOptions.html"
+          "relative_path": "api/HYSoft.Communication.Tcp.Server.TcpServerOptions.html"
         }
       },
       "version": "",
@@ -225,7 +225,7 @@
       "source_relative_path": "api/HYSoft.Communication.Tcp.Server.yml",
       "output": {
         ".html": {
-          "relative_path": "api/api/HYSoft.Communication.Tcp.Server.html"
+          "relative_path": "api/HYSoft.Communication.Tcp.Server.html"
         }
       },
       "version": "",
@@ -239,10 +239,10 @@
       "source_relative_path": "api/toc.yml",
       "output": {
         ".html": {
-          "relative_path": "api/api/toc.html"
+          "relative_path": "api/toc.html"
         },
         ".json": {
-          "relative_path": "api/api/toc.json"
+          "relative_path": "api/toc.json"
         }
       },
       "version": ""

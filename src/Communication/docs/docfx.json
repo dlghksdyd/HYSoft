@@ -16,25 +16,15 @@
   "build": {
     "content": [
       { "files": [ "articles/**.md", "index.md", "toc.yml" ] },
-      {
-        "files": [ "api/**.yml" ],
-        "dest": "api"
-      }
+      { "files": [ "api/**.yml" ] }
     ],
-    "resource": [
-      { "files": [ "images/**" ] }
-    ],
-    "xref": [
-      "https://xref.docs.microsoft.com/query?uid={uid}"
-    ],
+    "xref": [ "https://xref.docs.microsoft.com/query?uid={uid}" ],
     "globalMetadata": {
       "_appName": "HYSoft",
       "_appTitle": "HYSoft",
       "_enableSearch": true
     },
-    "template": [
-      "default"
-    ],
-    "dest": "_site"
+    "template": [ "default" ],
+    "dest": "site"
   }
 }
