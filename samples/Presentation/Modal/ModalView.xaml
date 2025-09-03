@@ -10,6 +10,6 @@
         Title="Modal Sample" Height="450" Width="800">
     <Grid>
         <Button Content="모달 창 띄우기" Width="200" Height="50" Command="{Binding ModalOpenCommand }"></Button>
-        <ContentPresenter Content="{x:Static modal:PopupManager.View}"></ContentPresenter>
+        <ContentPresenter Content="{x:Static modal:ModalManager.View}"></ContentPresenter>
     </Grid>
 </Window>

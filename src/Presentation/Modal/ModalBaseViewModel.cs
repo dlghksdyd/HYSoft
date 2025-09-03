@@ -11,10 +11,10 @@ using System.Windows.Media;
 
 namespace HYSoft.Presentation.Modal
 {
-    public class PopupBaseViewModel(Brush background) : BindableBase
+    public class ModalBaseViewModel(Brush background) : BindableBase
     {
-        private ObservableCollection<PopupInfo> _popupList = [];
-        public ObservableCollection<PopupInfo> PopupList
+        private ObservableCollection<ModalInfo> _popupList = [];
+        public ObservableCollection<ModalInfo> PopupList
         {
             get => _popupList;
             set => SetProperty(ref _popupList, value);
@@ -22,7 +22,7 @@ namespace HYSoft.Presentation.Modal
 
         public void OpenPopup(object popupViewModel)
         {
-            var info = new PopupInfo()
+            var info = new ModalInfo()
             {
                 Content = popupViewModel,
                 Background = (SolidColorBrush)background
@@ -37,7 +37,7 @@ namespace HYSoft.Presentation.Modal
         }
     }
 
-    public class PopupInfo : BindableBase
+    public class ModalInfo : BindableBase
     {
         private object? _content;
         public object? Content

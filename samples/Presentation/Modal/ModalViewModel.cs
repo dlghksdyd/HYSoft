@@ -12,7 +12,7 @@ namespace Samples.Presentation.Modal
     {
         public ICommand ModalOpenCommand => new DelegateCommand(() =>
         {
-            PopupManager.Open(new ModalInfoViewModel());
+            ModalManager.Open(new ModalInfoViewModel());
         });
     }
 }

@@ -11,19 +11,19 @@ using System.Windows.Threading;
 
 namespace HYSoft.Presentation.Modal
 {
-    public static class PopupManager
+    public static class ModalManager
     {
-        public static PopupBaseView? View { get; set; }
-        private static PopupBaseViewModel? ViewModel { get; set; }
+        public static ModalBaseView? View { get; set; }
+        private static ModalBaseViewModel? ViewModel { get; set; }
         
-        private static readonly Dictionary<object, TaskCompletionSource<PopupResult>> _pending = new();
+        private static readonly Dictionary<object, TaskCompletionSource<ModalResult>> _pending = new();
 
         public static void Configure(Brush background)
         {
             if (background == null) throw new ArgumentNullException(nameof(background));
 
-            View = new PopupBaseView();
-            ViewModel = new PopupBaseViewModel(background);
+            View = new ModalBaseView();
+            ViewModel = new ModalBaseViewModel(background);
             View.DataContext = ViewModel;
         }
 
@@ -49,7 +49,7 @@ namespace HYSoft.Presentation.Modal
         /// <summary>
         /// 동기 모달 Open. UI 스레드에서 호출해야 합니다.
         /// </summary>
-        public static PopupResult Open(object viewmodel)
+        public static ModalResult Open(object viewmodel)
         {
             if (ViewModel == null)
                 throw new InvalidOperationException("PopupManager.Configure() must be called before opening popups.");
@@ -59,7 +59,7 @@ namespace HYSoft.Presentation.Modal
                 throw new InvalidOperationException("PopupManager.Open must be called on the UI thread.");
 
             // 결과 대기용 TCS 준비
-            var tcs = new TaskCompletionSource<PopupResult>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var tcs = new TaskCompletionSource<ModalResult>(TaskCreationOptions.RunContinuationsAsynchronously);
             _pending[viewmodel] = tcs;
             
             // 팝업 열기
@@ -77,7 +77,7 @@ namespace HYSoft.Presentation.Modal
         /// <summary>
         /// 팝업 닫기(+ 모달 결과 전달). 팝업 내부 OK/Cancel 버튼 커맨드 등에서 호출.
         /// </summary>
-        public static void Close(object viewmodel, PopupResult result = PopupResult.None)
+        public static void Close(object viewmodel, ModalResult result = ModalResult.None)
         {
             if (ViewModel == null) return;
 

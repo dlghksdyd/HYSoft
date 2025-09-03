@@ -7,5 +7,5 @@ src/Data/bin/*
 src/Presentation/obj/*
 src/Presentation/bin/*
 
-samples/CommunicationSample/obj/*
-samples/CommunicationSample/bin/*
+samples/obj/*
+samples/bin/*

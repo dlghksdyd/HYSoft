@@ -23,8 +23,8 @@ namespace Samples.Presentation.Modal
         public ModalView()
         {
             // 반드시 InitializeComponent 전에 호출해야 한다.
-            PopupManager.Configure(Brushes.Blue);
-            PopupManager.RegisterView<ModalInfoView, ModalInfoViewModel>();
+            ModalManager.Configure(Brushes.Blue);
+            ModalManager.RegisterView<ModalInfoView, ModalInfoViewModel>();
 
             InitializeComponent();
 

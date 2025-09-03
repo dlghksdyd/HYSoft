@@ -9,12 +9,12 @@ namespace Samples.Presentation.Modal
     {
         public ICommand OkCommand => new DelegateCommand(() =>
         {
-            PopupManager.Close(this, PopupResult.Ok);
+            ModalManager.Close(this, ModalResult.Ok);
         });
 
         public ICommand CancelCommand => new DelegateCommand(() =>
         {
-            PopupManager.Close(this, PopupResult.Cancel);
+            ModalManager.Close(this, ModalResult.Cancel);
         });
     }
 }

@@ -5,11 +5,11 @@ using System.Windows.Controls;
 namespace HYSoft.Presentation.Modal
 {
     /// <summary>
-    /// PopupBaseView.xaml에 대한 상호 작용 논리
+    /// ModalBaseView.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class PopupBaseView : UserControl
+    public partial class ModalBaseView : UserControl
     {
-        public PopupBaseView()
+        public ModalBaseView()
         {
             InitializeComponent();
         }

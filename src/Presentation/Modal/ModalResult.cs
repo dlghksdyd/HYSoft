@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HYSoft.Presentation.Modal
 {
-    public enum PopupResult
+    public enum ModalResult
     {
         None,
         Ok,
