@@ -1,5 +1,5 @@
 ﻿#nullable enable
-using CommunicationSample;
+using Samples;
 using HYSoft.Communication.Tcp.Client;
 using HYSoft.Communication.Tcp.Client.Protocol.FileTransfer;
 using HYSoft.Communication.Tcp.Server;

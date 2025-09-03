@@ -2,12 +2,13 @@
 
 	<PropertyGroup>
 		<TargetFramework>net8.0-windows</TargetFramework>
-		<RootNamespace>HYSoft.Communication</RootNamespace>
+		<RootNamespace>HYSoft.Presentation</RootNamespace>
+		<UseWPF>true</UseWPF>
 		<PackageOutputPath>$(ProjectDir)bin\$(Configuration)\</PackageOutputPath>
 
 		<!-- NuGet 메타데이터 -->
-		<PackageId>HYSoft.Communication</PackageId>
-		<Description>Communication Utilities</Description>
+		<PackageId>HYSoft.Presentation</PackageId>
+		<Description>UI Components for WPF.</Description>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -16,9 +17,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.8" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.8" />
-	  <PackageReference Include="System.IO.Hashing" Version="9.0.8" />
+		<PackageReference Include="Prism.Wpf" Version="9.0.537" />
 	</ItemGroup>
 
 </Project>

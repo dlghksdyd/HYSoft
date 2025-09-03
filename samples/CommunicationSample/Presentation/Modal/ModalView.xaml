@@ -1,0 +1,15 @@
+﻿<Window x:Class="Samples.Presentation.Modal.ModalView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Samples.Presentation.Modal"
+        xmlns:modal="clr-namespace:HYSoft.Presentation.Modal;assembly=Presentation"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance local:ModalViewModel}"
+        Title="Modal Sample" Height="450" Width="800">
+    <Grid>
+        <Button Content="모달 창 띄우기" Width="200" Height="50" Command="{Binding ModalOpenCommand }"></Button>
+        <ContentPresenter Content="{x:Static modal:PopupManager.View}"></ContentPresenter>
+    </Grid>
+</Window>

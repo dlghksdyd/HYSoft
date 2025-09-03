@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Samples.Communication.Tcp.Client.Protocol.FileTransfer;
+﻿using Samples.Communication.Tcp.Client.Protocol.FileTransfer;
 using Samples.Communication.Tcp.Server.Protocol.FileTransfer;
+using Samples.Presentation.Modal;
+using System.Windows.Input;
 
-namespace CommunicationSample
+namespace Samples
 {
     public class MainViewModel : BindableBase
     {
@@ -17,6 +13,12 @@ namespace CommunicationSample
             server.Show();
             var client = new FileTransferClientView();
             client.Show();
+        });
+
+        public ICommand ModalSampleCommand => new DelegateCommand(() =>
+        {
+            var modal = new ModalView();
+            modal.Show();
         });
     }
 }
