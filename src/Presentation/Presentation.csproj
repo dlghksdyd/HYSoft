@@ -8,7 +8,7 @@
 
 		<!-- NuGet 메타데이터 -->
 		<PackageId>HYSoft.Presentation</PackageId>
-		<Description>UI Components for WPF.</Description>
+		<Description>UI Library for WPF.</Description>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
