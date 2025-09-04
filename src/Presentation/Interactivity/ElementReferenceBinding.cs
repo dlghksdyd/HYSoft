@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace MLib.Mvvm
+namespace HYSoft.Presentation.Interactivity
 {
     /// <summary>
     /// <see cref="UIElement"/> (또는 <see cref="FrameworkElement"/>) 자신의 참조를
@@ -101,22 +97,20 @@ namespace MLib.Mvvm
                 TryPushSelfToSource(expr, fe);
 
             // DataContext 나중 세팅/교체 대응
-            if (!(bool)fe.GetValue(IsSubscribedProperty))
-            {
-                fe.DataContextChanged += Fe_DataContextChanged;
-                fe.SetValue(IsSubscribedProperty, true);
-            }
+            if ((bool)fe.GetValue(IsSubscribedProperty)) return;
+            
+            fe.DataContextChanged += Fe_DataContextChanged;
+            fe.SetValue(IsSubscribedProperty, true);
         }
 
         private static void OnAnyUnloaded(object sender, RoutedEventArgs e)
         {
             if (sender is not FrameworkElement fe) return;
 
-            if ((bool)fe.GetValue(IsSubscribedProperty))
-            {
-                fe.DataContextChanged -= Fe_DataContextChanged;
-                fe.SetValue(IsSubscribedProperty, false);
-            }
+            if (!(bool)fe.GetValue(IsSubscribedProperty)) return;
+            
+            fe.DataContextChanged -= Fe_DataContextChanged;
+            fe.SetValue(IsSubscribedProperty, false);
         }
 
         private static void Fe_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -148,19 +142,19 @@ namespace MLib.Mvvm
             var targetType = prop.PropertyType;
 
             // 타입에 맞춰 주입: UIElement/FrameworkElement/object/WeakReference<UIElement> 등을 지원
-            object valueToSet = null;
+            object? valueToSet;
 
-            if (targetType.IsAssignableFrom(self.GetType()))
+            if (targetType.IsInstanceOfType(self))
             {
                 valueToSet = self; // UIElement/FrameworkElement/object 등
             }
             else if (targetType.IsGenericType &&
                      targetType.GetGenericTypeDefinition() == typeof(WeakReference<>) &&
-                     targetType.GetGenericArguments()[0].IsAssignableFrom(self.GetType()))
+                     targetType.GetGenericArguments()[0].IsInstanceOfType(self))
             {
                 // WeakReference<UIElement> 같은 경우
-                var weakRefCtor = targetType.GetConstructor(new[] { targetType.GetGenericArguments()[0] });
-                valueToSet = weakRefCtor?.Invoke(new object[] { self });
+                var weakRefCtor = targetType.GetConstructor([targetType.GetGenericArguments()[0]]);
+                valueToSet = weakRefCtor?.Invoke([self]);
             }
             else if (targetType == typeof(object))
             {
