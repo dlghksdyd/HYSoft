@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<RootNamespace>HYSoft.Presentation</RootNamespace>
+		<UseWPF>true</UseWPF>
+		<PackageOutputPath>$(ProjectDir)bin\$(Configuration)\</PackageOutputPath>
+
+		<!-- NuGet 메타데이터 -->
+		<PackageId>HYSoft.Presentation.Styles</PackageId>
+		<Description>UI Controls and Themes for WPF.</Description>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<LangVersion>latest</LangVersion>
+	</PropertyGroup>
+
+</Project>

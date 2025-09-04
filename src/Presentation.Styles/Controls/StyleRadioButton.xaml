@@ -1,0 +1,75 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:HYSoft.Presentation.Styles">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Style/StyleColor.xaml"></ResourceDictionary>
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- StyleRadioButton 전용 템플릿 -->
+    <Style TargetType="{x:Type local:StyleRadioButton}">
+        <Setter Property="Foreground" Value="{StaticResource style/color/text/white}"/>
+        <Setter Property="FontSize" Value="{StaticResource Style/FontSize/H4}"/>
+        <Setter Property="ButtonSize" Value="16"></Setter>
+        <Setter Property="TextPadding" Value="10"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:StyleRadioButton}">
+                    <Border Background="Transparent" SnapsToDevicePixels="True">
+                        <Grid Margin="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="{TemplateBinding TextPadding}"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Bullet 영역 -->
+                            <Grid Grid.Column="0" Width="{TemplateBinding ButtonSize}" Height="{TemplateBinding ButtonSize}">
+                                <!-- 바깥 원 -->
+                                <Ellipse x:Name="PART_Bullet"
+                                         Stroke="{StaticResource style/color/border/primary}"
+                                         StrokeThickness="0"
+                                         Fill="{StaticResource style/color/surface/white}"/>
+
+                                <!-- 안쪽 점(체크 표시) -->
+                                <Ellipse x:Name="PART_Dot"
+                                         Margin="4"
+                                         Fill="{StaticResource style/color/surface/selected}"
+                                         Opacity="0">
+                                </Ellipse>
+                            </Grid>
+
+                            <!-- 텍스트 -->
+                            <TextBlock x:Name="xTextBlock"
+                                       Grid.Column="2"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       FontSize="{TemplateBinding FontSize}"
+                                       VerticalAlignment="Center"
+                                       Text="{TemplateBinding Text}"></TextBlock>
+                        </Grid>
+                    </Border>
+
+                    <!-- 상태 트리거 -->
+                    <ControlTemplate.Triggers>
+                        <!-- 체크되었을 때: 점 보이기 -->
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="PART_Dot" Property="Opacity" Value="1"/>
+                        </Trigger>
+
+                        <!-- 마우스오버: 배경 강조 -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_Bullet" Property="Fill" Value="{StaticResource style/color/surface/hover2}"/>
+                        </Trigger>
+
+                        <!-- 비활성화: 투명도 낮춤 -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="PART_Bullet" Property="Opacity" Value="0.5"/>
+                            <Setter TargetName="PART_Dot" Property="Opacity" Value="0.5"/>
+                            <Setter TargetName="xTextBlock" Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

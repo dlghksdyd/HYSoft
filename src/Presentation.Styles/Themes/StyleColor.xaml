@@ -1,0 +1,26 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="style/color/logo/primary" Color="#0B78BC"></SolidColorBrush>
+    <SolidColorBrush x:Key="style/color/logo/secondary" Color="#E48900"></SolidColorBrush>
+
+    <SolidColorBrush x:Key="style/color/text/primary" Color="#EAEAEA"></SolidColorBrush>
+    <SolidColorBrush x:Key="style/color/text/white" Color="#FFFFFF"></SolidColorBrush>
+    <SolidColorBrush x:Key="style/color/text/watermark" Color="#bbbbbb"></SolidColorBrush>
+
+    <SolidColorBrush x:Key="style/color/border/primary" Color="#999999"></SolidColorBrush>
+
+    <SolidColorBrush x:Key="style/color/surface/primary" Color="#1E2736"></SolidColorBrush>
+    <SolidColorBrush x:Key="style/color/surface/section" Color="#2D3847"></SolidColorBrush>
+    <SolidColorBrush x:Key="style/color/surface/title" Color="#4E5969"></SolidColorBrush>
+    <SolidColorBrush x:Key="style/color/surface/content" Color="#34495E"></SolidColorBrush>
+    <SolidColorBrush x:Key="style/color/surface/hover" Color="#4C7DADCC"></SolidColorBrush>
+    <SolidColorBrush x:Key="style/color/surface/hover2" Color="#FF7DADCC"></SolidColorBrush>
+    <SolidColorBrush x:Key="style/color/surface/selected" Color="#3F80A9"></SolidColorBrush>
+    <SolidColorBrush x:Key="style/color/surface/info" Color="#D1E8EF"></SolidColorBrush>
+    <SolidColorBrush x:Key="style/color/surface/white" Color="#FFFFFF"></SolidColorBrush>
+    <SolidColorBrush x:Key="style/color/surface/transparent" Color="#00FFFFFF"></SolidColorBrush>
+    <SolidColorBrush x:Key="style/color/surface/transparent_fill" Color="#01FFFFFF"></SolidColorBrush>
+    <SolidColorBrush x:Key="style/color/surface/popup" Color="#4CD1E8EF"></SolidColorBrush>
+    
+</ResourceDictionary>

@@ -1,11 +1,4 @@
 .vs/*
 
-src/Communication/obj/*
-src/Communication/bin/*
-src/Data/obj/*
-src/Data/bin/*
-src/Presentation/obj/*
-src/Presentation/bin/*
-
-samples/obj/*
-samples/bin/*
+**/obj/**
+**/bin/**
