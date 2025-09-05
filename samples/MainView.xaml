@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
         xmlns:local="clr-namespace:Samples"
         mc:Ignorable="d"
         Title="MainView" Height="450" Width="800"
@@ -10,8 +11,8 @@
         d:DataContext="{d:DesignInstance local:MainViewModel}">
     <Grid>
         <DockPanel LastChildFill="False">
-            <Button DockPanel.Dock="Top" Content="File Transfer Test" Padding="10" Command="{Binding FileTransferSampleCommand}"></Button>
-            <Button DockPanel.Dock="Top" Content="Modal Test" Padding="10" Command="{Binding ModalSampleCommand}"></Button>
+            <hy:StyleButton CornerRadius="8" DockPanel.Dock="Top" Content="File Transfer Test" Padding="10" Command="{Binding FileTransferSampleCommand}"/>
+            <hy:StyleButton CornerRadius="8" DockPanel.Dock="Top" Content="Modal Test" Padding="10" Command="{Binding ModalSampleCommand}"></hy:StyleButton>
         </DockPanel>
     </Grid>
 </Window>

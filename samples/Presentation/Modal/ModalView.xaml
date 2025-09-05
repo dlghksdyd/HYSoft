@@ -4,12 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Samples.Presentation.Modal"
-        xmlns:modal="http://schemas.hysoft.com/wpf/2025/xaml"
+        xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance local:ModalViewModel}"
         Title="Modal Sample" Height="450" Width="800">
     <Grid>
         <Button Content="모달 창 띄우기" Width="200" Height="50" Command="{Binding ModalOpenCommand }"></Button>
-        <ContentPresenter Content="{x:Static modal:ModalManager.View}"></ContentPresenter>
+        <ContentPresenter Content="{x:Static hy:ModalManager.View}"></ContentPresenter>
     </Grid>
 </Window>

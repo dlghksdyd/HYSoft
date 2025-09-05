@@ -1,14 +1,14 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Controls/StyleButton.xaml" />
-        <ResourceDictionary Source="/Controls/StyleCheckBox.xaml" />
-        <ResourceDictionary Source="/Controls/StylePasswordBox.xaml" />
-        <ResourceDictionary Source="/Controls/StyleRadioButton.xaml" />
-        <ResourceDictionary Source="/Controls/StyleScrollViewer.xaml" />
-        <ResourceDictionary Source="/Controls/StyleTextBox.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/StyleButton.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/StyleCheckBox.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/StylePasswordBox.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/StyleRadioButton.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/StyleScrollViewer.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/StyleTextBox.xaml" />
 
-        <ResourceDictionary Source="/Themes/StyleColor.xaml" />
-        <ResourceDictionary Source="/Themes/StyleFontSize.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Themes/StyleColor.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Themes/StyleFontSize.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
