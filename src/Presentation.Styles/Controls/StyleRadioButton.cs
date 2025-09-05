@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace HYSoft.Presentation.Styles
+namespace HYSoft.Presentation.Styles.Controls
 {
     public class StyleRadioButton : RadioButton
     {

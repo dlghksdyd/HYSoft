@@ -9,6 +9,7 @@
 
 	<PropertyGroup>
 		<PublishedVersionFile>$(MSBuildThisFileDirectory).last_published_version</PublishedVersionFile>
+		<HysoftPwshExe Condition="'$(HysoftPwshExe)'=='' and '$(OS)'=='Windows_NT'">powershell</HysoftPwshExe>
 	</PropertyGroup>
 
 	<!-- 마지막으로 성공 푸시한 버전을 로드 -->
@@ -40,5 +41,37 @@
 
 		<!-- push 성공 후 현재 버전 기록 (Exec 성공시만 실행됨) -->
 		<WriteLinesToFile Condition="'$(Version)'!='$(LastPublishedVersion)'" File="$(PublishedVersionFile)" Lines="$(Version)" Overwrite="true" />
+	</Target>
+
+	<!-- Global Xmlns 생성 -->
+	<Target Name="Hysoft_GenerateGlobalXmlns"
+	        BeforeTargets="BeforeCompile"
+	        Condition="'$(HysoftXmlnsEnabled)'=='True' or '$(HysoftXmlnsEnabled)'=='true'"
+	        Inputs="@(Compile);$(HysoftXmlns);$(HysoftXmlnsPrefix);$(HysoftXmlnsIncludeAll);$(HysoftXmlnsExclude)"
+	        Outputs="$(IntermediateOutputPath)GlobalXmlns.g.cs">
+
+		<!-- 컴파일 파일 목록 작성 (한 줄에 하나) -->
+		<WriteLinesToFile
+			File="$(IntermediateOutputPath)globalxmlns.filelist.txt"
+			Lines="@(Compile->'%(FullPath)')"
+			Overwrite="true"
+			Encoding="UTF-8" />
+
+		<!-- 실행 (NoProfile/Bypass) -->
+		<Exec Command="&quot;$(HysoftPwshExe)&quot; -NoProfile -ExecutionPolicy Bypass -File &quot;$(SolutionDir)scripts\Generate-GlobalXmlns.ps1&quot; -Url &quot;$(HysoftXmlns)&quot; -Prefix &quot;$(HysoftXmlnsPrefix)&quot; -IncludeAll:$(HysoftXmlnsIncludeAll) -Exclude &quot;$(HysoftXmlnsExclude)&quot; -FilesList &quot;$(IntermediateOutputPath)globalxmlns.filelist.txt&quot; -OutputFile &quot;$(IntermediateOutputPath)GlobalXmlns.g.cs&quot;" />
+
+		<!-- 생성물 컴파일 포함 -->
+		<ItemGroup>
+			<Compile Include="$(IntermediateOutputPath)GlobalXmlns.g.cs">
+				<Visible>false</Visible>
+				<AutoGen>true</AutoGen>
+				<DesignTimeSharedInput>true</DesignTimeSharedInput>
+			</Compile>
+		</ItemGroup>
+	</Target>
+
+	<Target Name="Hysoft_CleanGlobalXmlns" AfterTargets="Clean">
+		<Delete Files="$(IntermediateOutputPath)GlobalXmlns.g.cs" />
+		<Delete Files="$(IntermediateOutputPath)globalxmlns.filelist.txt" />
 	</Target>
 </Project>

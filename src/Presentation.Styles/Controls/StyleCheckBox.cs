@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace HYSoft.Presentation.Styles
+namespace HYSoft.Presentation.Styles.Controls
 {
     public class StyleCheckBox : CheckBox
     {

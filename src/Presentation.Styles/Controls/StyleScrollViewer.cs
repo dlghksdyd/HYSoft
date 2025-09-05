@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
-namespace HYSoft.Presentation.Styles
+namespace HYSoft.Presentation.Styles.Controls
 {
     public class StyleScrollViewer : ScrollViewer
     {

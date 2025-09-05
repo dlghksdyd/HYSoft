@@ -5,6 +5,14 @@
 		<Company>HYSoft</Company>
 		<Version>$([System.IO.File]::ReadAllText('$(MSBuildThisFileDirectory).to_publish_version').Trim())</Version>
 		<PackageVersion>$(Version)</PackageVersion>
+		<UseWPF>true</UseWPF>
+
+		<!-- Global Xmlns 생성 메타데이터 -->
+		<HysoftXmlns>http://schemas.hysoft.com/wpf/2025/xaml</HysoftXmlns>
+		<HysoftXmlnsPrefix>hy</HysoftXmlnsPrefix>
+		<HysoftXmlnsIncludeAll>true</HysoftXmlnsIncludeAll>
+		<HysoftXmlnsExclude>HYSoft.Communication.Internal.*;</HysoftXmlnsExclude>
+		<HysoftXmlnsEnabled>true</HysoftXmlnsEnabled>
 
 		<!-- Git 저장소 메타데이터 -->
 		<RepositoryUrl>https://github.com/dlghksdyd/HYSoft</RepositoryUrl>

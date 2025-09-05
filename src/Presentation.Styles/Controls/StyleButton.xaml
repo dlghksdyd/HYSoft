@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:HYSoft.Presentation.Styles"
+                    xmlns:local="clr-namespace:HYSoft.Presentation.Styles.Controls"
                     xmlns:controls="clr-namespace:HYSoft.Presentation.Styles.Controls">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Themes/StyleColor.xaml"></ResourceDictionary>
@@ -9,15 +9,15 @@
 
     <Style TargetType="{x:Type controls:StyleButton}">
         <Setter Property="OverridesDefaultStyle" Value="True"></Setter>
-        <Setter Property="Foreground" Value="{StaticResource style/color/text/primary}"/>
+        <Setter Property="Foreground" Value="{StaticResource Style/Color/Text/Primary}"/>
         <Setter Property="FontSize" Value="{StaticResource Style/FontSize/H4}"/>
         <Setter Property="Padding" Value="0"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="Background" Value="{StaticResource style/color/surface/info}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource style/color/border/primary}"/>
+        <Setter Property="Background" Value="{StaticResource Style/Color/Surface/Info}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Style/Color/Border/Primary}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="CornerRadius" Value="4"></Setter>
         <Setter Property="Template">

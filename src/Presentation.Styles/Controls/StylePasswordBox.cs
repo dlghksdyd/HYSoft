@@ -10,7 +10,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace HYSoft.Presentation.Styles
+namespace HYSoft.Presentation.Styles.Controls
 {
     public class StylePasswordBox : TextBox
     {
@@ -36,7 +36,7 @@ namespace HYSoft.Presentation.Styles
             set { SetValue(CornerRadiusProperty, value); }
         }
 
-        private PasswordBox _passwordBox;
+        private PasswordBox? _passwordBox;
 
         static StylePasswordBox()
         {

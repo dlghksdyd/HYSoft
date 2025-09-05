@@ -8,7 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace HYSoft.Presentation.Styles
+namespace HYSoft.Presentation.Styles.Controls
 {
     public class StyleTextBox : TextBox
     {
