@@ -11,8 +11,11 @@
         d:DataContext="{d:DesignInstance local:MainViewModel}">
     <Grid>
         <DockPanel LastChildFill="False">
-            <hy:StyleButton CornerRadius="8" DockPanel.Dock="Top" Content="File Transfer Test" Padding="10" Command="{Binding FileTransferSampleCommand}"/>
-            <hy:StyleButton CornerRadius="8" DockPanel.Dock="Top" Content="Modal Test" Padding="10" Command="{Binding ModalSampleCommand}"></hy:StyleButton>
+            <hy:StyleButton CornerRadius="8" Width="300" DockPanel.Dock="Top" Content="File Transfer Test" Padding="10" Command="{Binding FileTransferSampleCommand}"/>
+
+            <Separator DockPanel.Dock="Top" Height="10"></Separator>
+
+            <hy:StyleButton CornerRadius="8" Width="300" DockPanel.Dock="Top" Content="Modal Test" Padding="10" Command="{Binding ModalSampleCommand}"></hy:StyleButton>
         </DockPanel>
     </Grid>
 </Window>

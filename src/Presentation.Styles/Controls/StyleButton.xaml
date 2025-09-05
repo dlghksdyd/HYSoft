@@ -3,13 +3,12 @@
                     xmlns:local="clr-namespace:HYSoft.Presentation.Styles.Controls"
                     xmlns:controls="clr-namespace:HYSoft.Presentation.Styles.Controls">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Themes/StyleColor.xaml"></ResourceDictionary>
-        <ResourceDictionary Source="/Themes/StyleFontSize.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Presentation.Styles;component/Themes/StyleColor.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Presentation.Styles;component/Themes/StyleFontSize.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type controls:StyleButton}">
-        <Setter Property="OverridesDefaultStyle" Value="True"></Setter>
-        <Setter Property="Foreground" Value="{StaticResource Style/Color/Text/Primary}"/>
+        <Setter Property="Foreground" Value="Black"/>
         <Setter Property="FontSize" Value="{StaticResource Style/FontSize/H4}"/>
         <Setter Property="Padding" Value="0"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>

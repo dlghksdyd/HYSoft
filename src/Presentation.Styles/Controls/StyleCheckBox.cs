@@ -13,7 +13,7 @@ namespace HYSoft.Presentation.Styles.Controls
     {
         static StyleCheckBox()
         {
-
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(StyleCheckBox), new FrameworkPropertyMetadata(typeof(StyleCheckBox)));
         }
 
         public Thickness TextPadding

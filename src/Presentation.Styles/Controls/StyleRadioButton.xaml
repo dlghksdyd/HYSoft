@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:HYSoft.Presentation.Styles.Controls">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Themes/StyleColor.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Presentation.Styles;component/Themes/StyleColor.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 
     <!-- StyleRadioButton 전용 템플릿 -->

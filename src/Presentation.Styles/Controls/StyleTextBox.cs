@@ -50,16 +50,13 @@ namespace HYSoft.Presentation.Styles.Controls
 
         static StyleTextBox()
         {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(StyleTextBox), new FrameworkPropertyMetadata(typeof(StyleTextBox)));
+
             WaterMarkProperty = DependencyProperty.Register("WaterMark", typeof(string), typeof(StyleTextBox), new FrameworkPropertyMetadata());
             WaterMarkForegroundProperty = DependencyProperty.Register("WaterMarkForeground", typeof(SolidColorBrush), typeof(StyleTextBox), new FrameworkPropertyMetadata());
             CornerRadiusProperty = DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(StyleTextBox), new FrameworkPropertyMetadata());
             CanPasteProperty = DependencyProperty.Register(nameof(CanPaste), typeof(bool), typeof(StyleTextBox), new PropertyMetadata(true, OnCanPasteChanged));
             CanKoreanProperty = DependencyProperty.Register(nameof(CanKorean), typeof(bool), typeof(StyleTextBox), new PropertyMetadata(true, OnCanKoreanChanged));
-        }
-
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
         }
 
         private static void OnCanPasteChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

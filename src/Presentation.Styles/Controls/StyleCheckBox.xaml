@@ -2,13 +2,12 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:HYSoft.Presentation.Styles.Controls">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Themes/StyleColor.xaml"></ResourceDictionary>
-        <ResourceDictionary Source="/Themes/StyleFontSize.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Presentation.Styles;component/Themes/StyleColor.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Presentation.Styles;component/Themes/StyleFontSize.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type local:StyleCheckBox}">
-        <!-- 시스템 브러시는 테마 변경 반영 위해 DynamicResource 권장 -->
-        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Foreground" Value="{StaticResource {x:Static SystemColors.ControlTextBrushKey}}"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="Padding" Value="4,0,0,0"/>

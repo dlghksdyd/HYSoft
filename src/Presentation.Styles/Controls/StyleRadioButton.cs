@@ -29,6 +29,8 @@ namespace HYSoft.Presentation.Styles.Controls
 
         static StyleRadioButton()
         {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(StyleRadioButton), new FrameworkPropertyMetadata(typeof(StyleRadioButton)));
+
             ButtonSizeProperty = DependencyProperty.Register("ButtonSize", typeof(double), typeof(StyleRadioButton), new FrameworkPropertyMetadata());
             TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(StyleRadioButton), new FrameworkPropertyMetadata());
             TextPaddingProperty = DependencyProperty.Register("TextPadding", typeof(GridLength), typeof(StyleRadioButton), new FrameworkPropertyMetadata());

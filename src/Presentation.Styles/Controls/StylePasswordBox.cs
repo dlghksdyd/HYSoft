@@ -40,6 +40,8 @@ namespace HYSoft.Presentation.Styles.Controls
 
         static StylePasswordBox()
         {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(StylePasswordBox), new FrameworkPropertyMetadata(typeof(StylePasswordBox)));
+
             WaterMarkProperty = DependencyProperty.Register("WaterMark", typeof(string), typeof(StylePasswordBox), new FrameworkPropertyMetadata());
             WaterMarkForegroundProperty = DependencyProperty.Register("WaterMarkForeground", typeof(SolidColorBrush), typeof(StylePasswordBox), new FrameworkPropertyMetadata());
             CornerRadiusProperty = DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(StylePasswordBox), new FrameworkPropertyMetadata());

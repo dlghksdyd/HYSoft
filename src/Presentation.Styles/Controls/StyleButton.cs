@@ -21,6 +21,7 @@ namespace HYSoft.Presentation.Styles.Controls
 
         static StyleButton()
         {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(StyleButton), new FrameworkPropertyMetadata(typeof(StyleButton)));
             CornerRadiusProperty = DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(StyleButton), new FrameworkPropertyMetadata());
         }
     }
