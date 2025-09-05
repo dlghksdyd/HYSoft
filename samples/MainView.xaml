@@ -9,9 +9,9 @@
         x:Name="Root"
         d:DataContext="{d:DesignInstance local:MainViewModel}">
     <Grid>
-        <StackPanel>
-            <Button Content="파일 전송 테스트" Margin="10" Padding="10" Command="{Binding FileTransferSampleCommand}"></Button>
-            <Button Content="팝업 테스트" Margin="10" Padding="10" Command="{Binding ModalSampleCommand}"></Button>
-        </StackPanel>
+        <DockPanel LastChildFill="False">
+            <Button DockPanel.Dock="Top" Content="File Transfer Test" Padding="10" Command="{Binding FileTransferSampleCommand}"></Button>
+            <Button DockPanel.Dock="Top" Content="Modal Test" Padding="10" Command="{Binding ModalSampleCommand}"></Button>
+        </DockPanel>
     </Grid>
 </Window>
