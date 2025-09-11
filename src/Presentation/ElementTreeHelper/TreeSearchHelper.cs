@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Versioning;
 using System.Windows;
 using System.Windows.Media;
 
@@ -8,6 +9,7 @@ namespace HYSoft.Presentation.ElementTreeHelper
     /// WPF의 시각 트리(VisualTree) 및 논리 트리(LogicalTree)에서
     /// 특정 조건에 맞는 요소를 탐색하기 위한 유틸리티 메서드를 제공합니다.
     /// </summary>
+    [SupportedOSPlatform("windows")]
     public static class TreeSearchHelper
     {
         /// <summary>

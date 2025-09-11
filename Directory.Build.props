@@ -6,6 +6,7 @@
 		<Version>$([System.IO.File]::ReadAllText('$(MSBuildThisFileDirectory).to_publish_version').Trim())</Version>
 		<PackageVersion>$(Version)</PackageVersion>
 		<UseWPF>true</UseWPF>
+		<TargetFramework>net8.0-windows</TargetFramework>
 
 		<!-- Global Xmlns 생성 메타데이터 -->
 		<HysoftXmlns>http://schemas.hysoft.com/wpf/2025/xaml</HysoftXmlns>

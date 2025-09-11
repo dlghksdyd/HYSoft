@@ -1,0 +1,32 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="clr-namespace:HYSoft.Presentation.Styles.Design">
+
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type d:ColorKey}, ResourceId=LogoPrimary}" />
+
+    <SolidColorBrush x:Key="Style/Color/Logo/Primary" Color="#0B78BC" />
+    <SolidColorBrush x:Key="Style/Color/Logo/Secondary" Color="#E48900" />
+
+    <SolidColorBrush x:Key="Style/Color/Text/Primary" Color="#EAEAEA" />
+    <SolidColorBrush x:Key="Style/Color/Text/White" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="Style/Color/Text/Watermark" Color="#bbbbbb" />
+    <SolidColorBrush x:Key="Style/Color/Text/Success" Color="#00C763" />
+    <SolidColorBrush x:Key="Style/Color/Text/Error" Color="#FF3A3A" />
+
+    <SolidColorBrush x:Key="Style/Color/Border/Primary" Color="#999999" />
+
+    <SolidColorBrush x:Key="Style/Color/Surface/Primary" Color="#1E2736" />
+    <SolidColorBrush x:Key="Style/Color/Surface/Section" Color="#2D3847" />
+    <SolidColorBrush x:Key="Style/Color/Surface/Title" Color="#4E5969" />
+    <SolidColorBrush x:Key="Style/Color/Surface/Content" Color="#34495E" />
+    <SolidColorBrush x:Key="Style/Color/Surface/Hover" Color="#4C7DADCC" />
+    <SolidColorBrush x:Key="Style/Color/Surface/Hover2" Color="#FF7DADCC" />
+    <SolidColorBrush x:Key="Style/Color/Surface/Selected" Color="#3F80A9" />
+    <SolidColorBrush x:Key="Style/Color/Surface/Info" Color="#D1E8EF" />
+    <SolidColorBrush x:Key="Style/Color/Surface/White" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="Style/Color/Surface/Transparent" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="Style/Color/Surface/TransparentFill" Color="#01FFFFFF" />
+    <SolidColorBrush x:Key="Style/Color/Surface/Popup" Color="#4CD1E8EF" />
+
+</ResourceDictionary>

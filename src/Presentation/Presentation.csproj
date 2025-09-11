@@ -17,6 +17,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Interactivity\NewFolder\**" />
+	  <EmbeddedResource Remove="Interactivity\NewFolder\**" />
+	  <None Remove="Interactivity\NewFolder\**" />
+	  <Page Remove="Interactivity\NewFolder\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Prism.Wpf" Version="9.0.537" />
 	</ItemGroup>
 

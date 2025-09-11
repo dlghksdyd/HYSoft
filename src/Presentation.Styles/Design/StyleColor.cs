@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Windows;
 using System.Windows.Media;
 
-namespace HYSoft.Presentation.Styles.Themes
+namespace HYSoft.Presentation.Styles.Design
 {
+    public static class ColorKey
+    {
+        public static ComponentResourceKey LogoPrimary =>
+            new(typeof(ColorKey), nameof(LogoPrimary));
+    }
+
     public static class StyleColor
     {
         public static SolidColorBrush LogoPrimary = new SolidColorBrush(Color.FromArgb(255, 0x0B, 0x78, 0xBC));

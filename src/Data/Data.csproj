@@ -4,6 +4,7 @@
 		<TargetFramework>net8.0-windows</TargetFramework>
 		<RootNamespace>HYSoft.Data</RootNamespace>
 		<PackageOutputPath>$(ProjectDir)bin\$(Configuration)\</PackageOutputPath>
+		<UseWPF>true</UseWPF>
 
 		<!-- NuGet 메타데이터 -->
 		<PackageId>HYSoft.Data</PackageId>

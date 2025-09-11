@@ -30,14 +30,11 @@
 		</PropertyGroup>
 	</Target>
 
-	<!-- Pack 이후, 버전이 바뀐 경우에만 push 실행 -->
-	<Target Name="PublishNuGetOnPack" AfterTargets="Pack" DependsOnTargets="LoadLastPublishedVersion" Condition="'$(Configuration)'=='Release' and '$(NUGET_API_KEY)'!='' and '$(IsPackable)'=='true'">
+	<!-- Pack 이후, push 실행 -->
+	<Target Name="PublishNuGetOnPack" AfterTargets="Pack" DependsOnTargets="LoadLastPublishedVersion" Condition="'$(Configuration)'=='Release' and '$(NUGET_API_KEY)'!='' and '$(IsPackable)'=='true' and '$(MSBuildProjectName)'=='Bundle'">
 
 		<!-- 실제 푸시: 버전이 다를 때만 -->
-		<Exec Condition="'$(Version)'!='$(LastPublishedVersion)'" Command="cmd /c set DOTNET_CLI_UI_LANGUAGE=en &amp;&amp; dotnet nuget push &quot;$(PackageOutputPath)$(PackageId).$(Version).nupkg&quot; --api-key $(NUGET_API_KEY) --source https://api.nuget.org/v3/index.json --skip-duplicate" />
-
-		<!-- 같은 버전이면 스킵 로그 -->
-		<Message Importance="High" Condition="'$(Version)'=='$(LastPublishedVersion)'" Text="NuGet push skipped: Version $(Version) == LastPublishedVersion $(LastPublishedVersion)" />
+		<Exec Command="cmd /c set DOTNET_CLI_UI_LANGUAGE=en &amp;&amp; dotnet nuget push &quot;$(PackageOutputPath)$(PackageId).$(Version).nupkg&quot; --api-key $(NUGET_API_KEY) --source https://api.nuget.org/v3/index.json --skip-duplicate" />
 
 		<!-- push 성공 후 현재 버전 기록 (Exec 성공시만 실행됨) -->
 		<WriteLinesToFile Condition="'$(Version)'!='$(LastPublishedVersion)'" File="$(PublishedVersionFile)" Lines="$(Version)" Overwrite="true" />
@@ -70,8 +67,20 @@
 		</ItemGroup>
 	</Target>
 
+	<!-- Dll 산출물을 솔루션의 dll 폴더로 복사 -->
+	<Target Name="CopyOutputToSolutionDll" AfterTargets="Build"
+	        Condition="'$(MSBuildProjectName)' != 'Samples' And '$(MSBuildProjectName)' != 'Bundle'">
+		<!-- dll 폴더 보장 -->
+		<MakeDir Directories="$(SolutionDir)dll" Condition="!Exists('$(SolutionDir)dll')" />
+
+		<!-- 주 DLL -->
+		<Copy SourceFiles="$(TargetPath)"
+		      DestinationFolder="$(SolutionDir)dll\" />
+	</Target>
+
 	<Target Name="Hysoft_CleanGlobalXmlns" AfterTargets="Clean">
 		<Delete Files="$(IntermediateOutputPath)GlobalXmlns.g.cs" />
 		<Delete Files="$(IntermediateOutputPath)globalxmlns.filelist.txt" />
 	</Target>
+
 </Project>
