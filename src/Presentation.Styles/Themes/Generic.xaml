@@ -7,7 +7,7 @@
         <ResourceDictionary Source="/Presentation.Styles;component/Controls/StyleScrollViewer.xaml" />
         <ResourceDictionary Source="/Presentation.Styles;component/Controls/StyleTextBox.xaml" />
 
-        <ResourceDictionary Source="/Presentation.Styles;component/Design/StyleColor.xaml" />
-        <ResourceDictionary Source="/Presentation.Styles;component/Design/StyleFontSize.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Colors/StyleColor.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Fonts/StyleFontSize.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

@@ -1,21 +1,36 @@
-﻿<Window x:Class="Samples.MainView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
-        xmlns:local="clr-namespace:Samples"
-        mc:Ignorable="d"
-        Title="MainView" Height="450" Width="800"
-        x:Name="Root"
-        d:DataContext="{d:DesignInstance local:MainViewModel}">
+﻿<Window
+    x:Class="Samples.MainView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
+    xmlns:local="clr-namespace:Samples"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="Root"
+    Title="MainView"
+    Width="800"
+    Height="450"
+    d:DataContext="{d:DesignInstance local:MainViewModel}"
+    mc:Ignorable="d">
     <Grid>
         <DockPanel LastChildFill="False">
-            <hy:StyleButton CornerRadius="8" Width="300" DockPanel.Dock="Top" Content="File Transfer Test" Padding="10" Command="{Binding FileTransferSampleCommand}"/>
+            <hy:StyleButton
+                Width="300"
+                Padding="10"
+                Command="{Binding FileTransferSampleCommand}"
+                Content="File Transfer Test"
+                CornerRadius="8"
+                DockPanel.Dock="Top" />
 
-            <Separator DockPanel.Dock="Top" Height="10"></Separator>
+            <Separator Height="10" DockPanel.Dock="Top" />
 
-            <hy:StyleButton CornerRadius="8" Width="300" DockPanel.Dock="Top" Content="Modal Test" Padding="10" Command="{Binding ModalSampleCommand}"></hy:StyleButton>
+            <hy:StyleButton
+                Width="300"
+                Padding="10"
+                Command="{Binding ModalSampleCommand}"
+                Content="Modal Test"
+                CornerRadius="8"
+                DockPanel.Dock="Top" />
         </DockPanel>
     </Grid>
 </Window>

@@ -21,10 +21,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Design\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <Page Update="Themes\Generic.xaml">
 	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 	  </Page>
