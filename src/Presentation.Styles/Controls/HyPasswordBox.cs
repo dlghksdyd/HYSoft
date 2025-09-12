@@ -12,7 +12,7 @@ using System.Windows.Media;
 
 namespace HYSoft.Presentation.Styles.Controls
 {
-    public class StylePasswordBox : TextBox
+    public class HyPasswordBox : TextBox
     {
         public static readonly DependencyProperty WaterMarkProperty;
         public static readonly DependencyProperty WaterMarkForegroundProperty;
@@ -38,13 +38,13 @@ namespace HYSoft.Presentation.Styles.Controls
 
         private PasswordBox? _passwordBox;
 
-        static StylePasswordBox()
+        static HyPasswordBox()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(StylePasswordBox), new FrameworkPropertyMetadata(typeof(StylePasswordBox)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(HyPasswordBox), new FrameworkPropertyMetadata(typeof(HyPasswordBox)));
 
-            WaterMarkProperty = DependencyProperty.Register("WaterMark", typeof(string), typeof(StylePasswordBox), new FrameworkPropertyMetadata());
-            WaterMarkForegroundProperty = DependencyProperty.Register("WaterMarkForeground", typeof(SolidColorBrush), typeof(StylePasswordBox), new FrameworkPropertyMetadata());
-            CornerRadiusProperty = DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(StylePasswordBox), new FrameworkPropertyMetadata());
+            WaterMarkProperty = DependencyProperty.Register("WaterMark", typeof(string), typeof(HyPasswordBox), new FrameworkPropertyMetadata());
+            WaterMarkForegroundProperty = DependencyProperty.Register("WaterMarkForeground", typeof(SolidColorBrush), typeof(HyPasswordBox), new FrameworkPropertyMetadata());
+            CornerRadiusProperty = DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(HyPasswordBox), new FrameworkPropertyMetadata());
         }
 
         public override void OnApplyTemplate()
@@ -67,7 +67,7 @@ namespace HYSoft.Presentation.Styles.Controls
 
         private void StylePasswordBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            StylePasswordBox element = sender as StylePasswordBox;
+            HyPasswordBox element = sender as HyPasswordBox;
 
             //element._passwordBox.Password = element.Text;
         }

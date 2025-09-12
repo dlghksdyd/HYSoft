@@ -18,9 +18,7 @@
 		<None Include="$(SolutionDir)dll\*.dll" Pack="true" PackagePath="lib\net8.0-windows7.0\" />
 	</ItemGroup>
 
-	<Target Name="CleanSolutionDll_Once"
-	        BeforeTargets="Clean"
-	        Condition="'$(MSBuildProjectName)'=='Bundle'">
+	<Target Name="CleanSolutionDll_Once" BeforeTargets="Clean" Condition="'$(MSBuildProjectName)'=='Bundle'">
 		<PropertyGroup>
 			<_DllDir>$(SolutionDir)dll</_DllDir>
 		</PropertyGroup>

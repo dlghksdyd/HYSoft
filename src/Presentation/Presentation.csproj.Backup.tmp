@@ -17,18 +17,18 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="Converter\**" />
 	  <Compile Remove="Interactivity\NewFolder\**" />
-	  <EmbeddedResource Remove="Converter\**" />
 	  <EmbeddedResource Remove="Interactivity\NewFolder\**" />
-	  <None Remove="Converter\**" />
 	  <None Remove="Interactivity\NewFolder\**" />
-	  <Page Remove="Converter\**" />
 	  <Page Remove="Interactivity\NewFolder\**" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Prism.Wpf" Version="9.0.537" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Converters\" />
 	</ItemGroup>
 
 </Project>

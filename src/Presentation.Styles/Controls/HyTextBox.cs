@@ -10,7 +10,7 @@ using System.Windows.Media;
 
 namespace HYSoft.Presentation.Styles.Controls
 {
-    public class StyleTextBox : TextBox
+    public class HyTextBox : TextBox
     {
         public static readonly DependencyProperty WaterMarkProperty;
         public static readonly DependencyProperty WaterMarkForegroundProperty;
@@ -48,20 +48,20 @@ namespace HYSoft.Presentation.Styles.Controls
             set => SetValue(CanKoreanProperty, value);
         }
 
-        static StyleTextBox()
+        static HyTextBox()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(StyleTextBox), new FrameworkPropertyMetadata(typeof(StyleTextBox)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(HyTextBox), new FrameworkPropertyMetadata(typeof(HyTextBox)));
 
-            WaterMarkProperty = DependencyProperty.Register("WaterMark", typeof(string), typeof(StyleTextBox), new FrameworkPropertyMetadata());
-            WaterMarkForegroundProperty = DependencyProperty.Register("WaterMarkForeground", typeof(SolidColorBrush), typeof(StyleTextBox), new FrameworkPropertyMetadata());
-            CornerRadiusProperty = DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(StyleTextBox), new FrameworkPropertyMetadata());
-            CanPasteProperty = DependencyProperty.Register(nameof(CanPaste), typeof(bool), typeof(StyleTextBox), new PropertyMetadata(true, OnCanPasteChanged));
-            CanKoreanProperty = DependencyProperty.Register(nameof(CanKorean), typeof(bool), typeof(StyleTextBox), new PropertyMetadata(true, OnCanKoreanChanged));
+            WaterMarkProperty = DependencyProperty.Register("WaterMark", typeof(string), typeof(HyTextBox), new FrameworkPropertyMetadata());
+            WaterMarkForegroundProperty = DependencyProperty.Register("WaterMarkForeground", typeof(SolidColorBrush), typeof(HyTextBox), new FrameworkPropertyMetadata());
+            CornerRadiusProperty = DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(HyTextBox), new FrameworkPropertyMetadata());
+            CanPasteProperty = DependencyProperty.Register(nameof(CanPaste), typeof(bool), typeof(HyTextBox), new PropertyMetadata(true, OnCanPasteChanged));
+            CanKoreanProperty = DependencyProperty.Register(nameof(CanKorean), typeof(bool), typeof(HyTextBox), new PropertyMetadata(true, OnCanKoreanChanged));
         }
 
         private static void OnCanPasteChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is StyleTextBox tb)
+            if (d is HyTextBox tb)
             {
                 if ((bool)e.NewValue == false)
                 {
@@ -116,7 +116,7 @@ namespace HYSoft.Presentation.Styles.Controls
 
         private static void OnCanKoreanChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is StyleTextBox tb)
+            if (d is HyTextBox tb)
             {
                 if ((bool)e.NewValue == false)
                 {

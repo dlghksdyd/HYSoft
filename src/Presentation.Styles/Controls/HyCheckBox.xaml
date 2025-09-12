@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:HYSoft.Presentation.Styles.Controls">
 
-    <Style TargetType="{x:Type local:StyleCheckBox}">
+    <Style TargetType="{x:Type local:HyCheckBox}">
         <Setter Property="Foreground" Value="{StaticResource {x:Static SystemColors.ControlTextBrushKey}}" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Left" />
@@ -16,7 +16,7 @@
         <Setter Property="CheckThickness" Value="3" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:StyleCheckBox}">
+                <ControlTemplate TargetType="{x:Type local:HyCheckBox}">
                     <Grid x:Name="Root" SnapsToDevicePixels="True">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />

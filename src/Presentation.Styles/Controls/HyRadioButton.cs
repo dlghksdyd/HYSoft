@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace HYSoft.Presentation.Styles.Controls
 {
-    public class StyleRadioButton : RadioButton
+    public class HyRadioButton : RadioButton
     {
         public static readonly DependencyProperty ButtonSizeProperty;
         public static readonly DependencyProperty TextProperty;
@@ -27,13 +27,13 @@ namespace HYSoft.Presentation.Styles.Controls
             set { SetValue(TextPaddingProperty, value); }
         }
 
-        static StyleRadioButton()
+        static HyRadioButton()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(StyleRadioButton), new FrameworkPropertyMetadata(typeof(StyleRadioButton)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(HyRadioButton), new FrameworkPropertyMetadata(typeof(HyRadioButton)));
 
-            ButtonSizeProperty = DependencyProperty.Register("ButtonSize", typeof(double), typeof(StyleRadioButton), new FrameworkPropertyMetadata());
-            TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(StyleRadioButton), new FrameworkPropertyMetadata());
-            TextPaddingProperty = DependencyProperty.Register("TextPadding", typeof(GridLength), typeof(StyleRadioButton), new FrameworkPropertyMetadata());
+            ButtonSizeProperty = DependencyProperty.Register("ButtonSize", typeof(double), typeof(HyRadioButton), new FrameworkPropertyMetadata());
+            TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(HyRadioButton), new FrameworkPropertyMetadata());
+            TextPaddingProperty = DependencyProperty.Register("TextPadding", typeof(GridLength), typeof(HyRadioButton), new FrameworkPropertyMetadata());
         }
     }
 }

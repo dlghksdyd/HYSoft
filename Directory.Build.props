@@ -8,13 +8,6 @@
 		<UseWPF>true</UseWPF>
 		<TargetFramework>net8.0-windows</TargetFramework>
 
-		<!-- Global Xmlns 생성 메타데이터 -->
-		<HysoftXmlns>http://schemas.hysoft.com/wpf/2025/xaml</HysoftXmlns>
-		<HysoftXmlnsPrefix>hy</HysoftXmlnsPrefix>
-		<HysoftXmlnsIncludeAll>true</HysoftXmlnsIncludeAll>
-		<HysoftXmlnsExclude>HYSoft.Communication.Internal.*;</HysoftXmlnsExclude>
-		<HysoftXmlnsEnabled>true</HysoftXmlnsEnabled>
-
 		<!-- Git 저장소 메타데이터 -->
 		<RepositoryUrl>https://github.com/dlghksdyd/HYSoft</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
@@ -25,6 +18,13 @@
 		<NoWarn>$(NoWarn);1591</NoWarn>
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
+
+		<!-- Global Xmlns 생성 메타데이터 -->
+		<HysoftXmlns>http://schemas.hysoft.com/wpf/2025/xaml</HysoftXmlns>
+		<HysoftXmlnsPrefix>hy</HysoftXmlnsPrefix>
+		<HysoftXmlnsIncludeAll>true</HysoftXmlnsIncludeAll>
+		<HysoftXmlnsExclude>HYSoft.Communication.Internal.*;</HysoftXmlnsExclude>
+		<HysoftXmlnsEnabled>true</HysoftXmlnsEnabled>
 
 		<!-- NuGet 페이지에 README 노출 기본값 -->
 		<PackageReadmeFile>README.md</PackageReadmeFile>

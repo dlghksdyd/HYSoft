@@ -153,12 +153,12 @@
     </Style>
 
     <!--  ScrollViewer용 스타일: 내부 스크롤바에 위 스타일 적용  -->
-    <Style TargetType="{x:Type local:StyleScrollViewer}">
+    <Style TargetType="{x:Type local:HyScrollViewer}">
         <Setter Property="Padding" Value="0" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:StyleScrollViewer}">
+                <ControlTemplate TargetType="{x:Type local:HyScrollViewer}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />

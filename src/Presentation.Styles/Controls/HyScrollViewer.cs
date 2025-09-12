@@ -9,11 +9,11 @@ using System.Windows.Controls.Primitives;
 
 namespace HYSoft.Presentation.Styles.Controls
 {
-    public class StyleScrollViewer : ScrollViewer
+    public class HyScrollViewer : ScrollViewer
     {
-        static StyleScrollViewer()
+        static HyScrollViewer()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(StyleScrollViewer), new FrameworkPropertyMetadata(typeof(StyleScrollViewer)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(HyScrollViewer), new FrameworkPropertyMetadata(typeof(HyScrollViewer)));
         }
     }
 }

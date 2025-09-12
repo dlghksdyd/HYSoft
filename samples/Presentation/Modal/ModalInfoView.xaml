@@ -31,7 +31,7 @@
                 <hy:StyleButton
                     Margin="0,0,20,0"
                     Padding="40,12,40,12"
-                    Background="{hy:Color TextTertiary}"
+                    Background="{hy:Color Key=TextSecondary}"
                     Command="{Binding OkCommand}"
                     Content="확인" />
                 <hy:StyleButton

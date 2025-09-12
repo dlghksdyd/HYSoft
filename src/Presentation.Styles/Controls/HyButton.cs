@@ -9,7 +9,7 @@ using System.Windows.Media;
 
 namespace HYSoft.Presentation.Styles.Controls
 {
-    public class StyleButton : Button
+    public class HyButton : Button
     {
         public static readonly DependencyProperty CornerRadiusProperty;
 
@@ -19,10 +19,10 @@ namespace HYSoft.Presentation.Styles.Controls
             set => SetValue(CornerRadiusProperty, value);
         }
 
-        static StyleButton()
+        static HyButton()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(StyleButton), new FrameworkPropertyMetadata(typeof(StyleButton)));
-            CornerRadiusProperty = DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(StyleButton), new FrameworkPropertyMetadata());
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(HyButton), new FrameworkPropertyMetadata(typeof(HyButton)));
+            CornerRadiusProperty = DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(HyButton), new FrameworkPropertyMetadata());
         }
     }
 }

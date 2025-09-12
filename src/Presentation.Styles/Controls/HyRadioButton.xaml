@@ -4,14 +4,14 @@
     xmlns:local="clr-namespace:HYSoft.Presentation.Styles.Controls">
 
     <!--  StyleRadioButton 전용 템플릿  -->
-    <Style TargetType="{x:Type local:StyleRadioButton}">
+    <Style TargetType="{x:Type local:HyRadioButton}">
         <Setter Property="Foreground" Value="White" />
         <Setter Property="FontSize" Value="20" />
         <Setter Property="ButtonSize" Value="16" />
         <Setter Property="TextPadding" Value="10" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:StyleRadioButton}">
+                <ControlTemplate TargetType="{x:Type local:HyRadioButton}">
                     <Border Background="Transparent" SnapsToDevicePixels="True">
                         <Grid Margin="0">
                             <Grid.ColumnDefinitions>

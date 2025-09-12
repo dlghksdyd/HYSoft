@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HYSoft.Presentation.Styles.Colors
+namespace HYSoft.Presentation.Styles.ColorThemes
 {
     public static class ColorKeys
     {

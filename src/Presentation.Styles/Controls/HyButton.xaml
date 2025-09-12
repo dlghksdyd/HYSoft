@@ -4,7 +4,7 @@
     xmlns:controls="clr-namespace:HYSoft.Presentation.Styles.Controls"
     xmlns:local="clr-namespace:HYSoft.Presentation.Styles.Controls">
 
-    <Style TargetType="{x:Type controls:StyleButton}">
+    <Style TargetType="{x:Type controls:HyButton}">
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontSize" Value="20" />
         <Setter Property="Padding" Value="0" />
@@ -18,7 +18,7 @@
         <Setter Property="CornerRadius" Value="4" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type controls:StyleButton}">
+                <ControlTemplate TargetType="{x:Type controls:HyButton}">
                     <Border
                         x:Name="Root"
                         Background="{TemplateBinding Background}"
