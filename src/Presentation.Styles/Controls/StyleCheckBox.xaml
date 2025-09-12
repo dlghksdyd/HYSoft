@@ -2,10 +2,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:HYSoft.Presentation.Styles.Controls">
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Presentation.Styles;component/Design/StyleColor.xaml" />
-        <ResourceDictionary Source="/Presentation.Styles;component/Design/StyleFontSize.xaml" />
-    </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type local:StyleCheckBox}">
         <Setter Property="Foreground" Value="{StaticResource {x:Static SystemColors.ControlTextBrushKey}}" />
@@ -14,9 +10,9 @@
         <Setter Property="Padding" Value="4,0,0,0" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="TextPadding" Value="10 0 0 0" />
-        <Setter Property="HoverBackground" Value="{StaticResource Style/Color/Surface/Hover2}" />
-        <Setter Property="PressedBackground" Value="{StaticResource Style/Color/Surface/Hover2}" />
-        <Setter Property="CheckBrush" Value="{StaticResource Style/Color/Surface/Selected}" />
+        <Setter Property="HoverBackground" Value="White" />
+        <Setter Property="PressedBackground" Value="Gray" />
+        <Setter Property="CheckBrush" Value="Black" />
         <Setter Property="CheckThickness" Value="3" />
         <Setter Property="Template">
             <Setter.Value>

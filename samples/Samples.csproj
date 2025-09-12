@@ -9,7 +9,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="HySoft.Bundle" Version="1.0.25" />
+		<PackageReference Include="HySoft.Bundle" Version="1.0.33" />
 		<PackageReference Include="Prism.Wpf" Version="9.0.537" />
 	</ItemGroup>
 

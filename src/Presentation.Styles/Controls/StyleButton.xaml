@@ -3,21 +3,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:HYSoft.Presentation.Styles.Controls"
     xmlns:local="clr-namespace:HYSoft.Presentation.Styles.Controls">
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Presentation.Styles;component/Design/StyleColor.xaml" />
-        <ResourceDictionary Source="/Presentation.Styles;component/Design/StyleFontSize.xaml" />
-    </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type controls:StyleButton}">
         <Setter Property="Foreground" Value="Black" />
-        <Setter Property="FontSize" Value="{StaticResource Style/FontSize/H4}" />
+        <Setter Property="FontSize" Value="20" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="Background" Value="{StaticResource Style/Color/Surface/Info}" />
-        <Setter Property="BorderBrush" Value="{StaticResource Style/Color/Border/Primary}" />
+        <Setter Property="Background" Value="Gray" />
+        <Setter Property="BorderBrush" Value="Black" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="CornerRadius" Value="4" />
         <Setter Property="Template">
