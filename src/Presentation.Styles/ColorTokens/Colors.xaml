@@ -1,0 +1,15 @@
+<!-- Auto-generated 2025-09-13 21:10:39 -->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:c="clr-namespace:HYSoft.Presentation.Styles.ColorTokens">
+
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.ButtonPrimaryBorder}}" Color="{StaticResource ButtonPrimaryBorder}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.ButtonPrimarySurface}}" Color="{StaticResource ButtonPrimarySurface}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.ButtonPrimaryText}}" Color="{StaticResource ButtonPrimaryText}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TablePrimaryBorderContent}}" Color="{StaticResource TablePrimaryBorderContent}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TablePrimaryBorderTitle}}" Color="{StaticResource TablePrimaryBorderTitle}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TablePrimarySurfaceContent}}" Color="{StaticResource TablePrimarySurfaceContent}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TablePrimarySurfaceTitle}}" Color="{StaticResource TablePrimarySurfaceTitle}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TablePrimaryTextContent}}" Color="{StaticResource TablePrimaryTextContent}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TablePrimaryTextTitle}}" Color="{StaticResource TablePrimaryTextTitle}" />
+</ResourceDictionary>

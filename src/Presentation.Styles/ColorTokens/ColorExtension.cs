@@ -6,7 +6,7 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Markup.Primitives;
 
-namespace HYSoft.Presentation.Styles.ColorThemes
+namespace HYSoft.Presentation.Styles.ColorTokens
 {
     [MarkupExtensionReturnType(typeof(Brush))]
     public sealed class ColorExtension : MarkupExtension

@@ -3,8 +3,6 @@ using System.Windows;
 
 namespace HYSoft.Presentation.DragDrop
 {
-
-
     public class DragDataContext : BindableBase, IDragDataContext
     {
         private UIElement _dragScope = new UIElement();

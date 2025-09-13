@@ -14,22 +14,20 @@
     mc:Ignorable="d">
     <Grid>
         <DockPanel LastChildFill="False">
-            <hy:StyleButton
+            <Button
                 Width="300"
                 Padding="10"
                 Command="{Binding FileTransferSampleCommand}"
                 Content="File Transfer Test"
-                CornerRadius="8"
                 DockPanel.Dock="Top" />
 
             <Separator Height="10" DockPanel.Dock="Top" />
 
-            <hy:StyleButton
+            <Button
                 Width="300"
                 Padding="10"
                 Command="{Binding ModalSampleCommand}"
                 Content="Modal Test"
-                CornerRadius="8"
                 DockPanel.Dock="Top" />
         </DockPanel>
     </Grid>

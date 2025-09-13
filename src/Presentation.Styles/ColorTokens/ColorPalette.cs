@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 
-namespace HYSoft.Presentation.Styles.ColorThemes
+namespace HYSoft.Presentation.Styles.ColorTokens
 {
     /// <summary>
     /// 전역 컬러 팔레트.
@@ -180,69 +180,62 @@ namespace HYSoft.Presentation.Styles.ColorThemes
 
         /// <summary>
         /// 초기 팔레트 구성.
-        /// - 각 키에 대해 UI Dispatcher에 귀속된 브러시를 생성합니다.
-        /// - Freeze하지 않으며, 이후 Override로 in-place 변경됩니다.
+        /// - 각 키(EColorKeys)를 순회하며 Application 리소스(Colors.xaml → Color.Semantics.xaml)에서
+        ///   기본 색을 가져와 UI Dispatcher에 귀속된 SolidColorBrush 인스턴스를 만듭니다.
+        /// - 리소스가 없으면 Transparent로 초기화합니다.
+        /// - 생성된 브러시는 교체하지 않고, 이후 Override()로 in-place 변경됩니다.
         /// </summary>
         private static Dictionary<EColorKeys, SolidColorBrush> BuildDefaults()
         {
-            SolidColorBrush B(string hex, double? op = null)
+            var dict = new Dictionary<EColorKeys, SolidColorBrush>();
+
+            // Application 리소스 접근 (디자인/테스트 환경 대비)
+            ResourceDictionary? appRes = null;
+            try { appRes = Application.Current?.Resources; } catch { /* no-op */ }
+
+            foreach (EColorKeys key in Enum.GetValues(typeof(EColorKeys)))
             {
-                // ToColor는 예외 버전이므로 초기값은 확실한 hex만 사용
-                var b = MakeBrush(ToColor(hex), op);
-                // (op는 MakeBrush에서 이미 적용되므로 아래 중복 적용은 무해하지만 명시적으로 남겨둡니다)
-                if (op.HasValue) b.Opacity = Clamp01(op.Value);
-                return b;
+                Color baseColor = Colors.Transparent;
+
+                // Colors.xaml 외부 노출 리소스 키: {ComponentResourceKey TypeInTargetAssembly={x:Type ColorKeys}, ResourceId=EColorKeys.Key}
+                // C#에서는 다음과 같이 구성됩니다.
+                var componentKey = new ComponentResourceKey(typeof(ColorKeys), key);
+
+                // 1) SolidColorBrush 리소스로 제공되는 경우 (Colors.xaml에서 노출된 시맨틱 브러시)
+                if (appRes != null && appRes.Contains(componentKey))
+                {
+                    var val = appRes[componentKey];
+                    if (val is SolidColorBrush b && b != null)
+                    {
+                        baseColor = b.Color;
+                    }
+                    else if (val is Color c)
+                    {
+                        baseColor = c;
+                    }
+                    // 다른 타입이면 무시 → Transparent 유지
+                }
+                else
+                {
+                    // 2) 혹시 직접 시맨틱 키 이름으로 Color가 들어있는 경우를 대비 (드물지만 안전망)
+                    //    예: Color.Semantics.xaml에 Color로 들어있거나 별도 병합 순서 차이 등
+                    var fallbackKey = key.ToString(); // e.g., ButtonPrimarySurface
+                    if (appRes != null && appRes.Contains(fallbackKey))
+                    {
+                        var val = appRes[fallbackKey];
+                        if (val is SolidColorBrush b2 && b2 != null)
+                            baseColor = b2.Color;
+                        else if (val is Color c2)
+                            baseColor = c2;
+                    }
+                }
+
+                // 최종 기본색으로 UI Dispatcher에 귀속된 브러시 생성
+                var brush = MakeBrush(baseColor);
+                dict[key] = brush;
             }
 
-            // 최신 키셋(EColorKeys) 기준 기본값
-            return new Dictionary<EColorKeys, SolidColorBrush>
-            {
-                // Brand
-                { EColorKeys.BrandPrimary,      B("#0B78BC") },
-                { EColorKeys.BrandSecondary,    B("#E48900") },
-                { EColorKeys.BrandTertiary,     B("#0A6DAA") },
-                { EColorKeys.BrandQuaternary,   B("#095F95") },
-
-                // State (Info/Success/Warning/Error + Hover/Active/Disabled 오버레이 감각)
-                { EColorKeys.StateInfo,         B("#D1E8EF") },
-                { EColorKeys.StateSuccess,      B("#00C763") },
-                { EColorKeys.StateWarning,      B("#D97706") },
-                { EColorKeys.StateError,        B("#FF3A3A") },
-
-                { EColorKeys.StateHover,        B("#26FFFFFF") }, // ~15% white overlay
-                { EColorKeys.StateActive,       B("#40FFFFFF") }, // ~25% white overlay
-                { EColorKeys.StateDisabled,     B("#5CFFFFFF") }, // ~36% white overlay
-
-                // Text
-                { EColorKeys.TextPrimary,       B("#EAEAEA") },
-                { EColorKeys.TextSecondary,     B("#BBBBBB") },
-                { EColorKeys.TextTertiary,      B("#9CA3AF") },
-                { EColorKeys.TextQuaternary,    B("#6B7280") },
-
-                // Surface (다크 톤 예시)
-                { EColorKeys.SurfacePrimary,    B("#1E2736") },
-                { EColorKeys.SurfaceSecondary,  B("#2D3847") },
-                { EColorKeys.SurfaceTertiary,   B("#4E5969") },
-                { EColorKeys.SurfaceQuaternary, B("#34495E") },
-
-                // Border
-                { EColorKeys.BorderPrimary,     B("#999999") },
-                { EColorKeys.BorderSecondary,   B("#7A8698") },
-                { EColorKeys.BorderTertiary,    B("#5B6B7D") },
-                { EColorKeys.BorderQuaternary,  B("#3E4C59") },
-
-                // Icon (텍스트 톤과 동일 시작)
-                { EColorKeys.IconPrimary,       B("#EAEAEA") },
-                { EColorKeys.IconSecondary,     B("#BBBBBB") },
-                { EColorKeys.IconTertiary,      B("#9CA3AF") },
-                { EColorKeys.IconQuaternary,    B("#6B7280") },
-
-                // Layer (초기에는 Surface 단계와 동일값)
-                { EColorKeys.LayerBase,         B("#1E2736") },
-                { EColorKeys.Layer1,            B("#2D3847") },
-                { EColorKeys.Layer2,            B("#4E5969") },
-                { EColorKeys.Layer3,            B("#34495E") },
-            };
+            return dict;
         }
     }
 }
