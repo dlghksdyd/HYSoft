@@ -27,15 +27,17 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Orientation="Horizontal">
-                <Button
+                <hy:HyButton
                     Margin="0,0,20,0"
                     Padding="40,12,40,12"
-                    Background="{hy:Color ButtonPrimaryBorder}"
+                    Background="{hy:Color Key=ButtonPrimaryText}"
+                    BorderThickness="1"
                     Command="{Binding OkCommand}"
                     Content="확인" />
                 <Button
                     Padding="40,12,40,12"
-                    Background="{hy:Color ButtonPrimaryText}"
+                    Background="{hy:Color TablePrimaryBorderContent}"
+                    BorderThickness="1"
                     Command="{Binding CancelCommand}"
                     Content="취소" />
             </StackPanel>

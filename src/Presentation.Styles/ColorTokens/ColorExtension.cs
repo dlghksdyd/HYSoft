@@ -4,7 +4,6 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Media;
-using System.Windows.Markup.Primitives;
 
 namespace HYSoft.Presentation.Styles.ColorTokens
 {
@@ -17,88 +16,85 @@ namespace HYSoft.Presentation.Styles.ColorTokens
         [ConstructorArgument("key")]
         public EColorKeys Key { get; set; }
 
-        // (타깃 객체, DP) → 릴레이 엔트리
+        // (타깃 객체, DP) → 릴레이 엔트리 (향후 실시간 테마 전환용 확장 시 사용 가능)
         private static readonly ConditionalWeakTable<DependencyObject, Dictionary<DependencyProperty, Entry>> _table = new();
 
-        // 팔레트 변경 → 릴레이 갱신
-        static ColorExtension()
+        private sealed class Entry
         {
-            ColorPalette.Changed += OnPaletteChanged;
-        }
-
-        private static void OnPaletteChanged(EColorKeys changedKey, Color color, double? opacity)
-        {
-            foreach (var kvObj in _table)
-            {
-                var obj = kvObj.Key;
-                var map = kvObj.Value;
-                foreach (var kvDp in map)
-                {
-                    var entry = kvDp.Value;
-                    if (entry.Key == changedKey)
-                    {
-                        // 같은 릴레이 브러시 인스턴스의 Color만 업데이트 (in-place)
-                        void Apply()
-                        {
-                            entry.Brush.Color = color;
-                            if (opacity.HasValue) entry.Brush.Opacity = Clamp01(opacity.Value);
-                        }
-                        var disp = entry.Brush.Dispatcher ?? Application.Current?.Dispatcher;
-                        if (disp?.CheckAccess() == true) Apply();
-                        else disp?.Invoke(Apply);
-                    }
-                }
-            }
+            public SolidColorBrush RelayBrush { get; set; } = new SolidColorBrush();
+            public object ResourceKey { get; set; }
         }
 
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            // 타깃 정보 획득
-            var pvt = (IProvideValueTarget)serviceProvider.GetService(typeof(IProvideValueTarget));
-            var targetObj = pvt?.TargetObject as DependencyObject;
-            var targetDp = pvt?.TargetProperty as DependencyProperty;
+            // 1) 타깃 정보 가져오기
+            var pvt = serviceProvider?.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
+            var targetObject = pvt?.TargetObject;
+            var targetProperty = pvt?.TargetProperty as DependencyProperty;
 
-            // 템플릿/BAML 중간 단계에서는 마크업 체인 반환이 필요할 수 있음
-            if (targetObj == null || targetDp == null)
+            // 템플릿/BAML 컴파일 중에는 확정 대상이 아닌 경우가 있음 → 마크업 확장 자신을 반환해 재평가 유도
+            if (targetObject is not DependencyObject d || targetProperty is null)
                 return this;
 
-            // 타깃 엔트리 확보 (있으면 재사용)
-            var map = _table.GetOrCreateValue(targetObj);
-            if (!map.TryGetValue(targetDp, out var entry))
-            {
-                // 새 릴레이 브러시 생성 (이 브러시는 "복사본"이며 Freeze하지 않음)
-                var brush = new SolidColorBrush(ColorPalette.GetColor(Key))
-                {
-                    Opacity = ColorPalette.GetBrush(Key).Opacity
-                };
-                entry = new Entry { Brush = brush, Key = Key };
-                map[targetDp] = entry;
-            }
-            else
-            {
-                // 기존 인스턴스 유지 + 색만 새 Key 값으로 갱신
-                var src = ColorPalette.GetBrush(Key);
-                void Apply()
-                {
-                    entry.Brush.Color = src.Color;
-                    entry.Brush.Opacity = src.Opacity;
-                }
-                var disp = entry.Brush.Dispatcher ?? Application.Current?.Dispatcher;
-                if (disp?.CheckAccess() == true) Apply();
-                else disp?.Invoke(Apply);
+            // 2) Brush 키 구성: ComponentResourceKey(typeof(ColorKeys), EColorKeys.Key)
+            var brushKey = new ComponentResourceKey(typeof(ColorKeys), Key);
 
-                entry.Key = Key;
-            }
+            // 3) 리소스 탐색(우선: 요소의 TryFindResource → 전역 Application)
+            if (TryResolveBrush(d, brushKey, out var brush))
+                return brush;
 
-            return entry.Brush;
+            // 4) 폴백: 동일한 이름의 Color 리소스를 찾아서 Brush 생성 시도
+            if (TryResolveColorThenMakeBrush(d, Key.ToString(), out var madeBrush))
+                return madeBrush;
+
+            // 5) 최종 폴백: 투명 브러시 (누락을 시각적으로 구분하고 싶다면 Debug용 색으로 바꿔도 됨)
+            return new SolidColorBrush(Colors.Transparent);
         }
 
-        private static double Clamp01(double v) => v < 0 ? 0 : (v > 1 ? 1 : v);
-
-        private sealed class Entry
+        private static bool TryResolveBrush(DependencyObject d, object resourceKey, out Brush brush)
         {
-            public SolidColorBrush Brush { get; set; }
-            public EColorKeys Key { get; set; }
+            // 요소 기준 탐색
+            brush = TryFindResourceOnObject(d, resourceKey) as Brush;
+            if (brush != null) return true;
+
+            // Application 전역
+            if (Application.Current != null)
+            {
+                brush = Application.Current.TryFindResource(resourceKey) as Brush;
+                if (brush != null) return true;
+            }
+
+            brush = null;
+            return false;
+        }
+
+        private static bool TryResolveColorThenMakeBrush(DependencyObject d, string colorKey, out Brush brush)
+        {
+            object found = TryFindResourceOnObject(d, colorKey);
+            found ??= Application.Current?.TryFindResource(colorKey);
+
+            if (found is Color color)
+            {
+                // Freeze하지 않음: 나중에 런타임에서 색 변경 시 in-place 업데이트 패턴 확장 가능
+                var b = new SolidColorBrush(color);
+                brush = b;
+                return true;
+            }
+
+            brush = null;
+            return false;
+        }
+
+        private static object TryFindResourceOnObject(DependencyObject d, object key)
+        {
+            // FrameworkElement / FrameworkContentElement 우선
+            if (d is FrameworkElement fe)
+                return fe.TryFindResource(key);
+            if (d is FrameworkContentElement fce)
+                return fce.TryFindResource(key);
+
+            // 의존 객체만 있고 요소가 아니면, 상위 트리를 못타므로 null
+            return null;
         }
     }
 }

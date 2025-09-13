@@ -4,9 +4,9 @@ generate_from_tokens_json.py
 
 입력 JSON (Tokens Studio 스타일)에서 다음을 생성:
 - Color.Primitives.xaml    (Colours.*, White/Black = Color / Scales = Int32; Scales 딕셔너리 x:Key="Scales")
-- Color.Tokens.xaml        (Primary.* = Color; 값은 Primitives의 Color를 StaticResource로 참조)
-- Color.Semantics.xaml     (시맨틱 = SolidColorBrush; Color는 Tokens/Primitives Color를 StaticResource로 참조)
-- Colors.xaml              (외부노출 = ComponentResourceKey + EColorKeys)
+- Color.Tokens.xaml        (Primary.* = Color; 값은 HEX 리터럴. 원본 참조는 Primitives Color를 해석해 매핑)
+- Color.Semantics.xaml     (시맨틱 = Color; HEX 리터럴 확정본으로 보관)
+- Colors.xaml              (외부노출 = SolidColorBrush / ComponentResourceKey + EColorKeys, Color.Semantics.xaml 병합)
 - ColorKeys.cs             (EColorKeys = 시맨틱 키 PascalCase)
 
 사용:
@@ -21,9 +21,10 @@ from xml.sax.saxutils import escape as xml_escape
 
 DEFAULT_NS = "HYSoft.Presentation.Styles.ColorTokens"
 
-# 경로: 사용자가 예제로 준 pack URI
+# pack URI (사용 상황에 맞게 변경 가능)
 PRIMITIVES_RD_SOURCE = "/Presentation.Styles;component/ColorTokens/Color.Primitives.xaml"
 TOKENS_RD_SOURCE     = "/Presentation.Styles;component/ColorTokens/Color.Tokens.xaml"
+COLOR_SEM_RD_SOURCE  = "/Presentation.Styles;component/ColorTokens/Color.Semantics.xaml"
 
 # ---------- Helpers ----------
 
@@ -36,7 +37,6 @@ f"""<!-- Auto-generated {now_stamp()} -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml\""""
     )
-    # 위 라인의 끝에 있는 \" 는 의도된 문자열 리터럴 이스케이프 (XAML 출력은 정상)
     if include_ns_c and ns:
         head += f'\n                    xmlns:c="clr-namespace:{ns}"'
     head += ">\n"
@@ -87,7 +87,7 @@ def read_tokens(root):
         for step, leaf in node.items():
             if isinstance(leaf, dict) and "$value" in leaf:
                 ref = str(leaf["$value"]).strip().strip("{}").strip()
-                out[f"{name}.{step}"] = ref  # e.g., "Primary.100" -> "Colours.Slate.100"
+                out[f"{name}.{step}"] = ref
     return out
 
 def read_semantics(root):
@@ -96,7 +96,7 @@ def read_semantics(root):
     def walk(node, path):
         if isinstance(node, dict) and "$value" in node:
             ref = str(node["$value"]).strip().strip("{}").strip()
-            out[".".join(path)] = ref     # "ButtonPrimary.Surface" -> "Primary.100" or "Colours.Slate.200"
+            out[".".join(path)] = ref
             return
         if isinstance(node, dict):
             for k, v in node.items():
@@ -110,12 +110,6 @@ def semantics_key_to_pascal(name_with_dots):
 # ---------- Scale key transform ----------
 
 def transform_scale_key(key: str) -> str:
-    """
-    'Scales.2s.4XL' -> 'Scales.2S.4Xl'
-    규칙:
-      - 두번째 세그먼트가 '<숫자>s'면 마지막 's'를 'S'로
-      - 세번째 세그먼트가 '...XL'로 끝나면 끝 'L'만 소문자화
-    """
     parts = key.split(".")
     if len(parts) != 3 or parts[0] != "Scales":
         return key
@@ -131,11 +125,8 @@ def transform_scale_key(key: str) -> str:
 
 def gen_color_primitives_xaml(primitive_colors, primitive_scales):
     lines = []
-    # Colours (Color)
     for key, hexval in sorted(primitive_colors.items()):
         lines.append(f'    <Color x:Key="{xml_escape(key)}">{xml_escape(hexval)}</Color>')
-
-    # Scales (Int32) - 내부 ResourceDictionary + x:Key + 키 변환
     if primitive_scales:
         lines.append("")
         lines.append('    <!-- Scales (integers) -->')
@@ -144,35 +135,33 @@ def gen_color_primitives_xaml(primitive_colors, primitive_scales):
             tkey = transform_scale_key(key)
             lines.append(f'        <sys:Int32 x:Key="{xml_escape(tkey)}">{int(num)}</sys:Int32>')
         lines.append('    </ResourceDictionary>')
-
     return wrap_dict("\n".join(lines))
 
-def gen_color_tokens_xaml(tokens_map):
-    """
-    Tokens = Color (값은 Primitives Color StaticResource 참조).
-    + 상단에 Primitives 병합 추가.
-    """
+def gen_color_tokens_xaml(tokens_map, primitive_colors):
     lines = []
     for token_key, primitive_ref in sorted(tokens_map.items()):
-        lines.append(f'    <Color x:Key="{xml_escape(token_key)}">{{StaticResource {xml_escape(primitive_ref)}}}</Color>')
+        hexval = primitive_colors.get(primitive_ref, "#00000000")
+        lines.append(f'    <Color x:Key="{xml_escape(token_key)}">{xml_escape(hexval)}</Color>')
     return wrap_dict("\n".join(lines), merged_sources=[PRIMITIVES_RD_SOURCE])
 
-def gen_color_semantics_xaml(semantics_map):
-    """
-    Semantics = SolidColorBrush (Color는 Tokens 또는 Primitives의 Color StaticResource 참조).
-    + 상단에 Tokens 병합 추가.
-    """
+def gen_color_semantics_xaml(semantics_map, tokens_map, primitive_colors):
+    def resolve_hex(ref: str) -> str:
+        if ref.startswith("Primary."):
+            prim_ref = tokens_map.get(ref)
+            if prim_ref:
+                return primitive_colors.get(prim_ref, "#00000000")
+            return "#00000000"
+        return primitive_colors.get(ref, "#00000000")
+
     lines = []
     for sem_key, ref in sorted(semantics_map.items()):
         pascal = semantics_key_to_pascal(sem_key)
-        lines.append(f'    <SolidColorBrush x:Key="{pascal}" Color="{{StaticResource {xml_escape(ref)}}}" />')
-    return wrap_dict("\n".join(lines), merged_sources=[TOKENS_RD_SOURCE])
+        hexval = resolve_hex(ref)
+        lines.append(f'    <Color x:Key="{xml_escape(pascal)}">{xml_escape(hexval)}</Color>')
+
+    return wrap_dict("\n".join(lines))
 
 def gen_colors_exposed_xaml(semantics_map, ns):
-    """
-    외부 노출: ComponentResourceKey + EColorKeys
-    (여기선 별도 병합이 필요 없도록 App.xaml에서 병합 순서 보장 권장)
-    """
     lines = []
     for sem_key in sorted(semantics_map.keys()):
         pascal = semantics_key_to_pascal(sem_key)
@@ -181,7 +170,12 @@ def gen_colors_exposed_xaml(semantics_map, ns):
             f'ResourceId={{x:Static c:EColorKeys.{pascal}}}}}" '
             f'Color="{{StaticResource {pascal}}}" />'
         )
-    return wrap_dict("\n".join(lines), include_ns_c=True, ns=ns)
+    return wrap_dict(
+        "\n".join(lines),
+        include_ns_c=True,
+        ns=ns,
+        merged_sources=[COLOR_SEM_RD_SOURCE]
+    )
 
 def gen_colorkeys_cs(semantics_map, ns):
     keys = [semantics_key_to_pascal(k) for k in sorted(semantics_map.keys())]
@@ -213,8 +207,8 @@ def main():
         data = json.load(f)
 
     primitive_colors, primitive_scales = read_primitive_colors_and_scales(data)
-    tokens_map     = read_tokens(data)       # Primary.* -> Colours.*.*
-    semantics_map  = read_semantics(data)    # e.g. "ButtonPrimary.Surface" -> "Primary.100"
+    tokens_map     = read_tokens(data)
+    semantics_map  = read_semantics(data)
 
     os.makedirs(args.outdir, exist_ok=True)
 
@@ -222,10 +216,10 @@ def main():
         f.write(gen_color_primitives_xaml(primitive_colors, primitive_scales))
 
     with open(os.path.join(args.outdir, "Color.Tokens.xaml"), "w", encoding="utf-8") as f:
-        f.write(gen_color_tokens_xaml(tokens_map))
+        f.write(gen_color_tokens_xaml(tokens_map, primitive_colors))
 
     with open(os.path.join(args.outdir, "Color.Semantics.xaml"), "w", encoding="utf-8") as f:
-        f.write(gen_color_semantics_xaml(semantics_map))
+        f.write(gen_color_semantics_xaml(semantics_map, tokens_map, primitive_colors))
 
     with open(os.path.join(args.outdir, "Colors.xaml"), "w", encoding="utf-8") as f:
         f.write(gen_colors_exposed_xaml(semantics_map, args.ns))

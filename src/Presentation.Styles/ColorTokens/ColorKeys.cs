@@ -1,4 +1,4 @@
-// Auto-generated 2025-09-13 21:10:39
+// Auto-generated 2025-09-13 22:27:24
 namespace HYSoft.Presentation.Styles.ColorTokens
 {
     public static class ColorKeys
