@@ -14,10 +14,6 @@ namespace Samples
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-
-            // App.xaml에서 ResourceDictionary들이 모두 로드된 뒤에 호출해야 함
-            // ButtonPrimaryBorder를 예시로 컬러를 바꿔보자.
-            ColorPalette.Override(EColorKeys.ButtonPrimaryBorder, Colors.Black);
         }
     }
 }

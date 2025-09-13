@@ -45,139 +45,6 @@ namespace HYSoft.Presentation.Styles.ColorTokens
         /// </summary>
         public static Color GetColor(EColorKeys key) => GetBrush(key).Color;
 
-        // hex → Color (예외 버전)
-        private static Color ToColor(string hex)
-            => (Color)ColorConverter.ConvertFromString((hex ?? "").Trim());
-
-        // ========= Override API =========
-
-        /// <summary>
-        /// 안전한 hex 파싱 시도. 실패 시 Transparent 반환.
-        /// 잘못된 입력이 들어와도 예외가 바깥으로 전파되지 않도록 합니다.
-        /// </summary>
-        private static bool TryToColor(string? hex, out Color color)
-        {
-            try
-            {
-                color = (Color)ColorConverter.ConvertFromString((hex ?? "").Trim());
-                return true;
-            }
-            catch
-            {
-                color = Colors.Transparent;
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 현재 키의 Brush 인스턴스를 교체하지 않고,
-        /// "제자리(in-place)"로 색/불투명도를 변경합니다. (hex 입력)
-        /// UI는 즉시 갱신됩니다.
-        /// </summary>
-        public static void Override(EColorKeys key, string hex, double? opacity = null)
-        {
-            if (TryToColor(hex, out var c)) Override(key, c, opacity);
-        }
-
-        /// <summary>
-        /// 현재 키의 Brush 인스턴스를 교체하지 않고,
-        /// "제자리(in-place)"로 색/불투명도를 변경합니다. (Color 입력)
-        /// - 동일 브러시 인스턴스 유지 → UI 즉시 갱신
-        /// - opacity가 지정되면 0~1 범위에서 적용
-        /// </summary>
-        public static void Override(EColorKeys key, Color color, double? opacity = null)
-        {
-            lock (_gate)
-            {
-                if (!_map.TryGetValue(key, out var brush))
-                {
-                    brush = new SolidColorBrush(color);
-                    if (opacity.HasValue) brush.Opacity = Clamp01(opacity.Value);
-                    _map[key] = brush;
-                }
-                else
-                {
-                    void Apply()
-                    {
-                        brush.Color = color;
-                        if (opacity.HasValue) brush.Opacity = Clamp01(opacity.Value);
-                    }
-                    var disp = brush.Dispatcher ?? Application.Current?.Dispatcher;
-                    if (disp?.CheckAccess() == true) Apply();
-                    else disp?.Invoke(Apply);
-                }
-            }
-
-            // 🔔 구독자(릴레이 브러시)에게 알림
-            Changed?.Invoke(key, color, opacity);
-        }
-
-        /// <summary>
-        /// Brush 인스턴스를 "교체"합니다.
-        /// · 주의: 기존 컨트롤들이 참조 중이던 브러시는 더 이상 업데이트되지 않습니다.
-        /// · 즉, 이미 UI에 꽂힌 곳엔 반영되지 않습니다.
-        /// · 특별한 이유(성능 최적화, 다른 Dispatcher 귀속 등)가 아니면 Override 사용을 권장합니다.
-        /// </summary>
-        public static void Replace(EColorKeys key, SolidColorBrush newBrush)
-        {
-            if (newBrush == null) return;
-            lock (_gate) _map[key] = newBrush;
-        }
-
-        /// <summary>
-        /// 여러 키를 한 번에 덮어쓰기 (hex 맵).
-        /// 내부적으로 Override를 호출하므로 UI는 즉시 갱신됩니다.
-        /// </summary>
-        public static void OverrideMany(IDictionary<EColorKeys, string> hexMap)
-        {
-            if (hexMap == null) return;
-            foreach (var kv in hexMap) Override(kv.Key, kv.Value);
-        }
-
-        /// <summary>
-        /// 지정한 Color/Opacity로 UI Dispatcher에 귀속된 브러시를 생성합니다.
-        /// - 항상 Freeze하지 않습니다(동적 변경을 위해).
-        /// - Application.Current가 없을 수 있는 디자인/테스트 환경을 고려해 안전 경로 포함.
-        /// </summary>
-        private static SolidColorBrush MakeBrush(Color c, double? op = null)
-        {
-            void Init(SolidColorBrush b)
-            {
-                b.Color = c;
-                if (op.HasValue) b.Opacity = Clamp01(op.Value);
-            }
-
-            var disp = Application.Current?.Dispatcher;
-            if (disp?.CheckAccess() == true)
-            {
-                var b = new SolidColorBrush();
-                Init(b);
-                return b;
-            }
-            else if (disp != null)
-            {
-                return disp.Invoke(() =>
-                {
-                    var b = new SolidColorBrush();
-                    Init(b);
-                    return b;
-                });
-            }
-            else // 안전망: 디스패처가 없으면 그냥 생성(디자인/테스트 환경)
-            {
-                var b = new SolidColorBrush();
-                Init(b);
-                return b;
-            }
-        }
-
-        /// <summary>
-        /// 0~1 범위로 Clamping.
-        /// </summary>
-        private static double Clamp01(double v) => v < 0 ? 0 : (v > 1 ? 1 : v);
-
-        // ========= Defaults =========
-
         private static Dictionary<EColorKeys, SolidColorBrush> BuildDefaults()
         {
             // Presentation.Styles 어셈블리 경로에 맞게 유지
@@ -218,18 +85,18 @@ namespace HYSoft.Presentation.Styles.ColorTokens
             }
 
             return new Dictionary<EColorKeys, SolidColorBrush>
-    {
-        { EColorKeys.ButtonPrimaryBorder,        FromResource("ButtonPrimaryBorder") },
-        { EColorKeys.ButtonPrimarySurface,       FromResource("ButtonPrimarySurface") },
-        { EColorKeys.ButtonPrimaryText,          FromResource("ButtonPrimaryText") },
+            {
+                { EColorKeys.ButtonPrimaryBorder,        FromResource("ButtonPrimaryBorder") },
+                { EColorKeys.ButtonPrimarySurface,       FromResource("ButtonPrimarySurface") },
+                { EColorKeys.ButtonPrimaryText,          FromResource("ButtonPrimaryText") },
 
-        { EColorKeys.TablePrimaryBorderContent,  FromResource("TablePrimaryBorderContent") },
-        { EColorKeys.TablePrimaryBorderTitle,    FromResource("TablePrimaryBorderTitle") },
-        { EColorKeys.TablePrimarySurfaceContent, FromResource("TablePrimarySurfaceContent") },
-        { EColorKeys.TablePrimarySurfaceTitle,   FromResource("TablePrimarySurfaceTitle") },
-        { EColorKeys.TablePrimaryTextContent,    FromResource("TablePrimaryTextContent") },
-        { EColorKeys.TablePrimaryTextTitle,      FromResource("TablePrimaryTextTitle") },
-    };
+                { EColorKeys.TablePrimaryBorderContent,  FromResource("TablePrimaryBorderContent") },
+                { EColorKeys.TablePrimaryBorderTitle,    FromResource("TablePrimaryBorderTitle") },
+                { EColorKeys.TablePrimarySurfaceContent, FromResource("TablePrimarySurfaceContent") },
+                { EColorKeys.TablePrimarySurfaceTitle,   FromResource("TablePrimarySurfaceTitle") },
+                { EColorKeys.TablePrimaryTextContent,    FromResource("TablePrimaryTextContent") },
+                { EColorKeys.TablePrimaryTextTitle,      FromResource("TablePrimaryTextTitle") }, 
+            };
         }
     }
 }
