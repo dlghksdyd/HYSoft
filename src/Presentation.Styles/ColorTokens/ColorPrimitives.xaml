@@ -1,4 +1,4 @@
-<!-- Auto-generated 2025-09-13 22:27:24 -->
+<!-- Auto-generated 2025-09-13 23:20:13 -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
@@ -104,19 +104,4 @@
     <Color x:Key="Colours.Yellow.800">#6d3a00</Color>
     <Color x:Key="Colours.Yellow.900">#442200</Color>
     <Color x:Key="White">#ffffff</Color>
-
-    <!-- Scales (integers) -->
-    <ResourceDictionary x:Key="Scales" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-        <sys:Int32 x:Key="Scales.2S.2Xl">24</sys:Int32>
-        <sys:Int32 x:Key="Scales.2S.2XS">4</sys:Int32>
-        <sys:Int32 x:Key="Scales.2S.3Xl">32</sys:Int32>
-        <sys:Int32 x:Key="Scales.2S.3XS">2</sys:Int32>
-        <sys:Int32 x:Key="Scales.2S.4Xl">40</sys:Int32>
-        <sys:Int32 x:Key="Scales.2S.Full">99</sys:Int32>
-        <sys:Int32 x:Key="Scales.2S.L">16</sys:Int32>
-        <sys:Int32 x:Key="Scales.2S.M">12</sys:Int32>
-        <sys:Int32 x:Key="Scales.2S.S">8</sys:Int32>
-        <sys:Int32 x:Key="Scales.2S.Xl">20</sys:Int32>
-        <sys:Int32 x:Key="Scales.2S.XS">6</sys:Int32>
-    </ResourceDictionary>
 </ResourceDictionary>

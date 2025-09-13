@@ -1,0 +1,14 @@
+<!-- Auto-generated 2025-09-13 23:20:13 -->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="ButtonPrimaryBorder">#839db4</SolidColorBrush>
+    <SolidColorBrush x:Key="ButtonPrimarySurface">#ebf1f6</SolidColorBrush>
+    <SolidColorBrush x:Key="ButtonPrimaryText">#293b4d</SolidColorBrush>
+    <SolidColorBrush x:Key="TablePrimaryBorderContent">#a4b8cd</SolidColorBrush>
+    <SolidColorBrush x:Key="TablePrimaryBorderTitle">#a4b8cd</SolidColorBrush>
+    <SolidColorBrush x:Key="TablePrimarySurfaceContent">#293b4d</SolidColorBrush>
+    <SolidColorBrush x:Key="TablePrimarySurfaceTitle">#1d2c3b</SolidColorBrush>
+    <SolidColorBrush x:Key="TablePrimaryTextContent">#c5d4e3</SolidColorBrush>
+    <SolidColorBrush x:Key="TablePrimaryTextTitle">#c5d4e3</SolidColorBrush>
+</ResourceDictionary>

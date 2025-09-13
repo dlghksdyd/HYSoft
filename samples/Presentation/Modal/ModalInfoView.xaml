@@ -30,13 +30,13 @@
                 <hy:HyButton
                     Margin="0,0,20,0"
                     Padding="40,12,40,12"
-                    Background="{hy:Color Key=ButtonPrimaryText}"
+                    Background="{hy:Color ButtonPrimaryBorder}"
                     BorderThickness="1"
                     Command="{Binding OkCommand}"
                     Content="확인" />
                 <Button
                     Padding="40,12,40,12"
-                    Background="{hy:Color TablePrimaryBorderContent}"
+                    Background="{hy:Color TablePrimaryTextTitle}"
                     BorderThickness="1"
                     Command="{Binding CancelCommand}"
                     Content="취소" />
