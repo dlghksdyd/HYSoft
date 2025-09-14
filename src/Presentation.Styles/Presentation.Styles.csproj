@@ -17,17 +17,17 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="6.1.0" />
+		<PackageReference Include="MahApps.Metro.IconPacks.Material" Version="6.1.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Page Update="Themes\Generic.xaml">
-	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-	  </Page>
+		<Resource Include="Icons\png\**\*.png" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Icons\png\" />
+		<Page Update="Themes\Generic.xaml">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</Page>
 	</ItemGroup>
 
 </Project>

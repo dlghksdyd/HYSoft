@@ -9,8 +9,29 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="HySoft.Bundle" Version="1.0.54" />
+	  <Compile Remove="Presentation\Styles\NewFolder\**" />
+	  <EmbeddedResource Remove="Presentation\Styles\NewFolder\**" />
+	  <None Remove="Presentation\Styles\NewFolder\**" />
+	  <Page Remove="Presentation\Styles\NewFolder\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Prism.Wpf" Version="9.0.537" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="Communication">
+	    <HintPath>..\dll\Communication.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Data">
+	    <HintPath>..\dll\Data.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Presentation">
+	    <HintPath>..\dll\Presentation.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Presentation.Styles">
+	    <HintPath>..\dll\Presentation.Styles.dll</HintPath>
+	  </Reference>
 	</ItemGroup>
 
 	<ItemGroup>

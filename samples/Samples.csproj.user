@@ -11,5 +11,8 @@
     <Compile Update="Presentation\Modal\ModalView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Presentation\Styles\Icons\IconsView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

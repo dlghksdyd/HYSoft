@@ -2,6 +2,7 @@
 using Samples.Communication.Tcp.Server.Protocol.FileTransfer;
 using Samples.Presentation.Modal;
 using System.Windows.Input;
+using Samples.Presentation.Styles.Icons;
 
 namespace Samples
 {
@@ -18,6 +19,12 @@ namespace Samples
         public ICommand ModalSampleCommand => new DelegateCommand(() =>
         {
             var modal = new ModalView();
+            modal.Show();
+        });
+
+        public ICommand IconSampleCommand => new DelegateCommand(() =>
+        {
+            var modal = new IconsView();
             modal.Show();
         });
     }

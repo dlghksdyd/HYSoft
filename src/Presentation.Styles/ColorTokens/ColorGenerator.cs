@@ -59,6 +59,7 @@ namespace HYSoft.Presentation.Styles.ColorTokens
 
     public static class ColorKeys
     {
+        
     }
 
     public enum EColorKeys
