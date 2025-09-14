@@ -32,7 +32,7 @@ namespace HYSoft.Presentation.Styles.ColorTokens
                 if (fallbackDict.Contains(key) && fallbackDict[key] is SolidColorBrush b2)
                     return b2;
 
-                // 3) 모든 경로에서 못 찾으면 투명 (디버깅용으로 바꾸고 싶으면 여기 색만 변경)
+                // 3) 모든 경로에서 못 찾으면 투명
                 return new SolidColorBrush(Colors.Transparent);
             }
 

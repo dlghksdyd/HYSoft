@@ -1,25 +1,26 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-HYSoft Color Codegen (Semantics → ColorSemantics.xaml, ColorGenerator.cs)
+HYSoft Color Codegen
 
 - Input default: tokens.json  (override with --input)
-- Output files: ColorSemantics.xaml, ColorGenerator.cs  (directory via --outdir)
-- Namespace default: HYSoft.Presentation.Styles.ColorTokens (override with --namespace)
+- Output files: ColorSemantics.xaml, ColorGenerator.cs  (--outdir)
+- Namespace default: HYSoft.Presentation.Styles.ColorTokens (--namespace)
 
 Rules
-- EColorKeys = 모든 Semantics(DIMS) 트리의 leaf("$value")를 경로 결합(PascalCase)한 키들
+- EColorKeys = 모든 "Semantics/*" 트리의 leaf("$value")를 경로 결합(PascalCase)한 키
   예) Button.Primary.Surface => ButtonPrimarySurface
-      TablePrimary.Surface.Title => TablePrimarySurfaceTitle
+      Table.Primary.SurfaceTitle => TablePrimarySurfaceTitle
 - 색상 해석:
-  {Primary.N} -> ColorTokens/DIMS.Primary.N -> (보통) {Colours.Slate.N} -> Primitives/Default.Colours.Slate.N -> #hex
-  {Colours.Family.Level} -> Primitives/Default.Colours.Family.Level -> #hex
+  {Primary.N} -> ColorTokens/* .Primary.N -> (보통) {Colours.Slate.N} -> Primitives/* .Colours.Slate.N -> #hex
+  {Colours.Family.Level} -> Primitives/* .Colours.Family.Level -> #hex
   #hex 직접값도 허용
-- ColorSemantics.xaml 구조:
+- ColorSemantics.xaml:
     1) <SolidColorBrush x:Key="KeyName">#hex</SolidColorBrush>
     2) <SolidColorBrush x:Key="{ComponentResourceKey ... ResourceId={x:Static c:EColorKeys.KeyName}}"
          Color="{Binding Color, Source={StaticResource KeyName}}"/>
-- ColorGenerator.cs 구조: 사용자가 지정한 형태 그대로 (앱 리소스 우선, 없으면 LoadComponent)
+- ColorGenerator.cs:
+    앱 리소스 우선(TryFindResource) → 없으면 LoadComponent
 """
 
 from __future__ import annotations
@@ -60,20 +61,50 @@ def to_lower_hex(s: str) -> str:
     return s.strip().lower()
 
 
+def deep_merge(a: Dict[str, Any], b: Dict[str, Any]) -> Dict[str, Any]:
+    """dict-deep merge (b overrides a)."""
+    out = dict(a)
+    for k, v in b.items():
+        if k in out and isinstance(out[k], dict) and isinstance(v, dict):
+            out[k] = deep_merge(out[k], v)
+        else:
+            out[k] = v
+    return out
+
+
+def collect_any_section(root: Dict[str, Any], base_key: str) -> Dict[str, Any]:
+    """
+    Accept top-level keys == base_key or base_key/* and deep-merge them.
+    e.g., base_key="Primitives" will merge "Primitives", "Primitives/Default", "Primitives/Alt", ...
+    """
+    merged: Dict[str, Any] = {}
+    found = False
+    for k, v in root.items():
+        if not isinstance(k, str):
+            continue
+        if k == base_key or k.startswith(base_key + "/"):
+            if isinstance(v, dict):
+                merged = deep_merge(merged, v)
+                found = True
+    if not found:
+        return {}
+    return merged
+
+
 # ---------------- Token resolution ----------------
 
 class TokenResolver:
     """
     Resolves values like:
-      - {Primary.600} -> ColorTokens/DIMS.Primary.600 -> (likely) {Colours.Slate.600} -> hex
-      - {Colours.Slate.200} -> Primitives/Default.Colours.Slate.200 -> hex
+      - {Primary.600} -> ColorTokens/* .Primary.600 -> (likely) {Colours.Slate.600} -> hex
+      - {Colours.Slate.200} -> Primitives/* .Colours.Slate.200 -> hex
       - #rrggbb (direct)
     """
 
     def __init__(self, root: Dict[str, Any]) -> None:
         self.root = root
-        self.primitives = root.get("Primitives/Default", {})
-        self.tokens = root.get("ColorTokens/DIMS", {})
+        self.primitives = collect_any_section(root, "Primitives")     # expects Colours/White/Black/Scales...
+        self.tokens = collect_any_section(root, "ColorTokens")        # expects Primary/...
 
     def resolve_value_to_hex(self, val: str) -> str:
         v = val.strip()
@@ -96,7 +127,7 @@ class TokenResolver:
             entry = self.tokens.get("Primary", {}).get(level, {})
             value = entry.get("$value")
             if not value:
-                raise KeyError(f"Missing ColorTokens/DIMS.Primary.{level}")
+                raise KeyError(f"Missing ColorTokens/* .Primary.{level}")
             return self.resolve_value_to_hex(value)
 
         if head == "Colours":
@@ -107,7 +138,7 @@ class TokenResolver:
             entry = fam.get(level, {})
             value = entry.get("$value")
             if not value:
-                raise KeyError(f"Missing Primitives/Default.Colours.{family}.{level}")
+                raise KeyError(f"Missing Primitives/* .Colours.{family}.{level}")
             return to_lower_hex(value)
 
         # allow direct hex in braces e.g. {#aabbcc}
@@ -117,7 +148,15 @@ class TokenResolver:
         raise ValueError(f"Unsupported reference root: {ref}")
 
 
-# ---------------- Semantics flattening ----------------
+# ---------------- Semantics collection & flattening ----------------
+
+def collect_semantics(root: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Accept any top-level key "Semantics" or "Semantics/<suffix>".
+    If multiple present, deep-merge them (later ones override earlier).
+    """
+    return collect_any_section(root, "Semantics") or {}
+
 
 def flatten_semantics(sem_root: Dict[str, Any]) -> List[Tuple[str, str]]:
     """
@@ -157,95 +196,95 @@ def flatten_semantics(sem_root: Dict[str, Any]) -> List[Tuple[str, str]]:
 def gen_color_semantics_xaml(pairs: List[Tuple[str, str]], resolver: TokenResolver, ns: str) -> str:
     stamp = ts()
     lines: List[str] = []
-    lines.append(f"<!-- Auto-generated {stamp} -->")
+    lines.append("<!-- Auto-generated " + stamp + " -->")
     lines.append('<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"')
     lines.append('                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"')
-    lines.append(f'                    xmlns:c="clr-namespace:{ns}">')
+    lines.append('                    xmlns:c="clr-namespace:' + ns + '">')
     lines.append("")
 
     # Base SolidColorBrush keys
     for name, ref in pairs:
         hexv = resolver.resolve_value_to_hex(ref)
-        lines.append(f'    <SolidColorBrush x:Key="{name}">{hexv}</SolidColorBrush>')
+        lines.append('    <SolidColorBrush x:Key="' + name + '">' + hexv + '</SolidColorBrush>')
 
     lines.append("")
 
-    # ComponentResourceKey mirrors
-    template = (
-        '    <SolidColorBrush x:Key="{{ComponentResourceKey TypeInTargetAssembly={{x:Type c:ColorKeys}}, '
-        'ResourceId={{x:Static c:EColorKeys.{key}}}}}" '
-        'Color="{{Binding Color, Source={{StaticResource {key}}}}}" />'
-    )
+    # ComponentResourceKey mirrors (문자열 연결로 중괄호 이스케이프 이슈 회피)
     for name, _ in pairs:
-        lines.append(template.format(key=name))
+        lines.append(
+            '    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, '
+            'ResourceId={x:Static c:EColorKeys.' + name + '}}" '
+            'Color="{Binding Color, Source={StaticResource ' + name + '}}" />'
+        )
 
     lines.append("</ResourceDictionary>")
-    return "\n".join(lines) + "\n"
+    return "\n".join(lines)
 
 
 def gen_color_generator_cs(pairs: List[Tuple[str, str]], ns: str) -> str:
+    # enum items
     enum_items = [name for name, _ in pairs]
-    enum_body = ",\n        ".join(enum_items)
 
-    map_lines: List[str] = []
+    # build C# file without format/f-strings to avoid brace escaping
+    lines: List[str] = []
+    lines.append("using System;")
+    lines.append("using System.Collections.Generic;")
+    lines.append("using System.Windows;")
+    lines.append("using System.Windows.Media;")
+    lines.append("")
+    lines.append("namespace " + ns)
+    lines.append("{")
+    lines.append("    internal static class ColorGenerator")
+    lines.append("    {")
+    lines.append('        private static readonly Uri SemanticsUri =')
+    lines.append('            new Uri("/Presentation.Styles;component/ColorTokens/ColorSemantics.xaml", UriKind.Relative);')
+    lines.append("")
+    lines.append("        // enum 이름과 XAML의 x:Key가 1:1로 동일하다는 전제")
+    lines.append("        private static readonly string[] KeyNames = Enum.GetNames(typeof(EColorKeys));")
+    lines.append("")
+    lines.append("        public static Dictionary<EColorKeys, Brush> Generate()")
+    lines.append("        {")
+    lines.append("            var map = new Dictionary<EColorKeys, Brush>(capacity: KeyNames.Length);")
+    lines.append("            ResourceDictionary? fallbackDict = null;")
+    lines.append("")
+    lines.append("            SolidColorBrush Resolve(string key)")
+    lines.append("            {")
+    lines.append("                // 1) 앱 리소스(병합 포함) 우선")
+    lines.append("                if (Application.Current is not null)")
+    lines.append("                {")
+    lines.append("                    if (Application.Current.TryFindResource(key) is SolidColorBrush b1)")
+    lines.append("                        return b1;")
+    lines.append("                }")
+    lines.append("")
+    lines.append("                // 2) 없으면 패키지 XAML을 로드해서 조회")
+    lines.append("                fallbackDict ??= (ResourceDictionary)Application.LoadComponent(SemanticsUri);")
+    lines.append("                if (fallbackDict.Contains(key) && fallbackDict[key] is SolidColorBrush b2)")
+    lines.append("                    return b2;")
+    lines.append("")
+    lines.append("                // 3) 모든 경로에서 못 찾으면 투명")
+    lines.append("                return new SolidColorBrush(Colors.Transparent);")
+    lines.append("            }")
+    lines.append("")
     for name in enum_items:
-        map_lines.append(f'            map[EColorKeys.{name}] = Resolve(nameof(EColorKeys.{name}));')
-    map_body = "\n".join(map_lines)
-
-    return f"""using System;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Media;
-
-namespace {ns}
-{{
-    internal static class ColorGenerator
-    {{
-        private static readonly Uri SemanticsUri =
-            new Uri("/Presentation.Styles;component/ColorTokens/ColorSemantics.xaml", UriKind.Relative);
-
-        // enum 이름과 XAML의 x:Key가 1:1로 동일하다는 전제
-        private static readonly string[] KeyNames = Enum.GetNames(typeof(EColorKeys));
-
-        public static Dictionary<EColorKeys, Brush> Generate()
-        {{
-            var map = new Dictionary<EColorKeys, Brush>(capacity: KeyNames.Length);
-            ResourceDictionary? fallbackDict = null;
-
-            SolidColorBrush Resolve(string key)
-            {{
-                // 1) 앱 리소스(병합 포함) 우선
-                if (Application.Current is not null)
-                {{
-                    if (Application.Current.TryFindResource(key) is SolidColorBrush b1)
-                        return b1;
-                }}
-
-                // 2) 없으면 패키지 XAML을 로드해서 조회
-                fallbackDict ??= (ResourceDictionary)Application.LoadComponent(SemanticsUri);
-                if (fallbackDict.Contains(key) && fallbackDict[key] is SolidColorBrush b2)
-                    return b2;
-
-                // 3) 모든 경로에서 못 찾으면 투명 (디버깅용으로 바꾸고 싶으면 여기 색만 변경)
-                return new SolidColorBrush(Colors.Transparent);
-            }}
-
-{map_body}
-
-            return map;
-        }}
-    }}
-
-    public static class ColorKeys
-    {{
-    }}
-
-    public enum EColorKeys
-    {{
-        {enum_body}
-    }}
-}}
-"""
+        lines.append("            map[EColorKeys." + name + "] = Resolve(nameof(EColorKeys." + name + "));")
+    lines.append("")
+    lines.append("            return map;")
+    lines.append("        }")
+    lines.append("    }")
+    lines.append("")
+    lines.append("    public static class ColorKeys")
+    lines.append("    {")
+    lines.append("    }")
+    lines.append("")
+    lines.append("    public enum EColorKeys")
+    lines.append("    {")
+    for i, name in enumerate(enum_items):
+        comma = "," if i < len(enum_items) - 1 else ""
+        lines.append("        " + name + comma)
+    lines.append("    }")
+    lines.append("}")
+    lines.append("")
+    return "\n".join(lines)
 
 
 # ---------------- Main ----------------
@@ -254,19 +293,20 @@ def main() -> None:
     args = parse_args()
     data = read_json(args.input)
 
-    # Accept "Semantics/DIMS" (primary); if absent, try "Semantics"
-    semantics = data.get("Semantics/DIMS") or data.get("Semantics")
-    if not isinstance(semantics, dict) or not semantics:
-        raise SystemExit("Semantics/DIMS not found or empty in input JSON.")
+    # 1) Semantics 수집 (Semantics 또는 Semantics/* 모두 허용, 다수면 병합)
+    sem = collect_semantics(data)
+    if not sem:
+        raise SystemExit("No 'Semantics' found (accepts 'Semantics' or 'Semantics/*').")
 
+    # 2) 평탄화 → [(KeyName, "$value")]
+    pairs = flatten_semantics(sem)
+
+    # 3) 생성
     resolver = TokenResolver(data)
-    pairs = flatten_semantics(semantics)  # [(KeyName, "$value" or nested ref)]
-
-    # Generate contents
     xaml = gen_color_semantics_xaml(pairs, resolver, ns=args.namespace)
     cs = gen_color_generator_cs(pairs, ns=args.namespace)
 
-    # Write
+    # 4) 저장
     ensure_dir(args.outdir)
     xaml_path = os.path.join(args.outdir, "ColorSemantics.xaml")
     cs_path = os.path.join(args.outdir, "ColorGenerator.cs")
@@ -276,8 +316,8 @@ def main() -> None:
     with open(cs_path, "w", encoding="utf-8") as f:
         f.write(cs)
 
-    print(f"[ok] Wrote: {xaml_path}")
-    print(f"[ok] Wrote: {cs_path}")
+    print("[ok] Wrote:", xaml_path)
+    print("[ok] Wrote:", cs_path)
 
 
 if __name__ == "__main__":
