@@ -1,25 +1,25 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
 """
-HYSoft Color Codegen
+HYSoft Color Codegen (Semantics → ColorSemantics.xaml, ColorGenerator.cs)
 
-Reads a design-tokens JSON (default: tokens.json) and generates:
-  - ColorSemantics.xaml
-  - ColorGenerator.cs (includes ColorKeys class and EColorKeys enum)
+- Input default: tokens.json  (override with --input)
+- Output files: ColorSemantics.xaml, ColorGenerator.cs  (directory via --outdir)
+- Namespace default: HYSoft.Presentation.Styles.ColorTokens (override with --namespace)
 
-Assumptions:
-- EColorKeys is derived from Semantics (e.g., Semantics/DIMS).
-- Semantics color values can reference:
-    {Primary.600}  -> ColorTokens/DIMS.Primary.600 -> {Colours.Slate.600} -> hex
-    {Colours.Slate.200} -> Primitives/Default.Colours.Slate.200 -> hex
-- Generated XAML matches the requested structure:
-    1) <SolidColorBrush x:Key="...">#hex</SolidColorBrush>
-    2) <SolidColorBrush x:Key="{ComponentResourceKey ...}" Color="{Binding Color, Source={StaticResource ...}}"/>
-
-Usage:
-  python gen_colors.py
-  python gen_colors.py --input design/tokens.json --outdir ./Presentation.Styles/ColorTokens
+Rules
+- EColorKeys = 모든 Semantics(DIMS) 트리의 leaf("$value")를 경로 결합(PascalCase)한 키들
+  예) Button.Primary.Surface => ButtonPrimarySurface
+      TablePrimary.Surface.Title => TablePrimarySurfaceTitle
+- 색상 해석:
+  {Primary.N} -> ColorTokens/DIMS.Primary.N -> (보통) {Colours.Slate.N} -> Primitives/Default.Colours.Slate.N -> #hex
+  {Colours.Family.Level} -> Primitives/Default.Colours.Family.Level -> #hex
+  #hex 직접값도 허용
+- ColorSemantics.xaml 구조:
+    1) <SolidColorBrush x:Key="KeyName">#hex</SolidColorBrush>
+    2) <SolidColorBrush x:Key="{ComponentResourceKey ... ResourceId={x:Static c:EColorKeys.KeyName}}"
+         Color="{Binding Color, Source={StaticResource KeyName}}"/>
+- ColorGenerator.cs 구조: 사용자가 지정한 형태 그대로 (앱 리소스 우선, 없으면 LoadComponent)
 """
 
 from __future__ import annotations
@@ -29,74 +29,77 @@ import os
 from datetime import datetime
 from typing import Any, Dict, List, Tuple
 
+
 # ---------------- CLI ----------------
 
 def parse_args() -> argparse.Namespace:
     ap = argparse.ArgumentParser(description="Generate ColorSemantics.xaml and ColorGenerator.cs from tokens JSON.")
-    ap.add_argument("--input", "-i", default="tokens.json", help="Input tokens JSON file (default: tokens.json)")
-    ap.add_argument("--outdir", "-o", default=".", help="Output directory (default: current dir)")
+    ap.add_argument("-i", "--input", default="tokens.json", help="Input tokens JSON file (default: tokens.json)")
+    ap.add_argument("-o", "--outdir", default=".", help="Output directory (default: current dir)")
+    ap.add_argument("-n", "--namespace", default="HYSoft.Presentation.Styles.ColorTokens",
+                    help="C#/XAML namespace (default: HYSoft.Presentation.Styles.ColorTokens)")
     return ap.parse_args()
+
 
 # ---------------- Utils ----------------
 
 def ts() -> str:
-    # e.g., 2025-09-14 00:33:17
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
 
 def ensure_dir(path: str) -> None:
     os.makedirs(path, exist_ok=True)
+
 
 def read_json(path: str) -> Dict[str, Any]:
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
 
+
 def to_lower_hex(s: str) -> str:
-    s = s.strip()
-    # normalize like "#AABBCC" or "#ffaabbcc" → lower
-    return s.lower()
+    return s.strip().lower()
+
 
 # ---------------- Token resolution ----------------
 
 class TokenResolver:
     """
-    Resolves:
-      {Primary.600}         -> ColorTokens/DIMS -> nested reference -> hex
-      {Colours.Slate.200}   -> Primitives/Default -> hex
+    Resolves values like:
+      - {Primary.600} -> ColorTokens/DIMS.Primary.600 -> (likely) {Colours.Slate.600} -> hex
+      - {Colours.Slate.200} -> Primitives/Default.Colours.Slate.200 -> hex
+      - #rrggbb (direct)
     """
 
     def __init__(self, root: Dict[str, Any]) -> None:
         self.root = root
-
-        # Shortcuts
         self.primitives = root.get("Primitives/Default", {})
-        self.semantics = root.get("Semantics/DIMS", {})
         self.tokens = root.get("ColorTokens/DIMS", {})
 
-    def resolve_ref(self, ref: str) -> str:
-        """
-        Resolve a reference like "{Primary.600}" or "{Colours.Slate.200}" to a hex color "#rrggbb" (lowercase).
-        """
-        ref = ref.strip()
-        if ref.startswith("{") and ref.endswith("}"):
-            ref = ref[1:-1].strip()
+    def resolve_value_to_hex(self, val: str) -> str:
+        v = val.strip()
+        if v.startswith("#"):
+            return to_lower_hex(v)
+        if v.startswith("{") and v.endswith("}"):
+            return self._resolve_ref(v[1:-1].strip())
+        raise ValueError(f"Unsupported value format: {val}")
 
+    def _resolve_ref(self, ref: str) -> str:
         parts = ref.split(".")
         if not parts:
             raise ValueError(f"Bad reference: {ref}")
 
-        if parts[0] == "Primary":
-            # Go through ColorTokens/DIMS -> Primary -> level -> value (which could itself be {Colours.Slate.n})
-            level = parts[1] if len(parts) > 1 else None
-            if not level:
-                raise ValueError(f"Primary reference missing level: {ref}")
-            primary_entry = self.tokens.get("Primary", {}).get(level, {})
-            value = primary_entry.get("$value")
+        head = parts[0]
+        if head == "Primary":
+            if len(parts) != 2:
+                raise ValueError(f"Primary reference must be Primary.<Level>: {ref}")
+            level = parts[1]
+            entry = self.tokens.get("Primary", {}).get(level, {})
+            value = entry.get("$value")
             if not value:
-                raise KeyError(f"Missing ColorTokens/DIMS.Primary.{level} in tokens.")
-            return self._resolve_value(value)
+                raise KeyError(f"Missing ColorTokens/DIMS.Primary.{level}")
+            return self.resolve_value_to_hex(value)
 
-        elif parts[0] == "Colours":
-            # Primitives/Default -> Colours -> Family -> Level
+        if head == "Colours":
             if len(parts) != 3:
                 raise ValueError(f"Colours reference must be Colours.<Family>.<Level>: {ref}")
             family, level = parts[1], parts[2]
@@ -104,73 +107,54 @@ class TokenResolver:
             entry = fam.get(level, {})
             value = entry.get("$value")
             if not value:
-                raise KeyError(f"Missing Primitives/Default.Colours.{family}.{level} in tokens.")
+                raise KeyError(f"Missing Primitives/Default.Colours.{family}.{level}")
             return to_lower_hex(value)
 
-        else:
-            # Could be direct HEX "#xxxxxx" or unsupported path
-            if ref.startswith("#"):
-                return to_lower_hex(ref)
-            raise ValueError(f"Unsupported reference root: {ref}")
+        # allow direct hex in braces e.g. {#aabbcc}
+        if head.startswith("#"):
+            return to_lower_hex(head)
 
-    def _resolve_value(self, val: str) -> str:
-        """
-        val may be:
-          - direct hex "#aabbcc"
-          - nested reference "{Colours.Slate.600}"
-        """
-        val = val.strip()
-        if val.startswith("{") and val.endswith("}"):
-            return to_lower_hex(self.resolve_ref(val))
-        if val.startswith("#"):
-            return to_lower_hex(val)
-        # Unexpected type
-        raise ValueError(f"Unsupported value format: {val}")
+        raise ValueError(f"Unsupported reference root: {ref}")
+
 
 # ---------------- Semantics flattening ----------------
 
-def flatten_semantics(sem: Dict[str, Any]) -> List[Tuple[str, str]]:
+def flatten_semantics(sem_root: Dict[str, Any]) -> List[Tuple[str, str]]:
     """
-    Flatten semantics tree into (KeyName, RefString) pairs in document order.
-    Example:
-      ButtonPrimary.Surface -> {Primary.100}  ==> ("ButtonPrimarySurface", "{Primary.100}")
-      TablePrimary.Surface.Title -> {Primary.700} ==> ("TablePrimarySurfaceTitle", "{Primary.700}")
-    Only leaves (objects that contain "$value") are collected.
+    Walks the Semantics tree and collects leaves with "$value".
+    Key name is concatenation of path segments (PascalCase-ish by JSON keys).
+    Returns list of (KeyName, "$value") in encounter order.
+    If duplicate KeyName appears later, it overrides earlier one.
     """
-    out: List[Tuple[str, str]] = []
+    ordered: List[Tuple[str, str]] = []
+    index_by_name: Dict[str, int] = {}
 
     def walk(node: Any, path: List[str]) -> None:
         if isinstance(node, dict) and "$value" in node:
-            # Leaf
-            key_name = "".join(path)
-            out.append((key_name, node["$value"]))
+            name = "".join(path)
+            val = node["$value"]
+            if name in index_by_name:
+                ordered[index_by_name[name]] = (name, val)
+            else:
+                index_by_name[name] = len(ordered)
+                ordered.append((name, val))
             return
+
         if isinstance(node, dict):
             for k, v in node.items():
-                # skip metadata-y keys that aren't nested colors
                 if k.startswith("$"):
                     continue
                 walk(v, path + [k])
 
-    # the top structure (e.g., {"ButtonPrimary": {...}, "TablePrimary": {...}})
-    for k, v in sem.items():
+    for k, v in sem_root.items():
         walk(v, [k])
 
-    return out
+    return ordered
+
 
 # ---------------- Generators ----------------
 
-def gen_color_semantics_xaml(pairs: List[Tuple[str, str]], resolver: TokenResolver, ns: str = "HYSoft.Presentation.Styles.ColorTokens") -> str:
-    """
-    Generates:
-      <!-- Auto-generated TIMESTAMP -->
-      <ResourceDictionary ... xmlns:c="clr-namespace:HYSoft.Presentation.Styles.ColorTokens">
-          <SolidColorBrush x:Key="Name">#hex</SolidColorBrush>
-          ...
-          <SolidColorBrush x:Key="{ComponentResourceKey ... ResourceId={x:Static c:EColorKeys.Name}}"
-                           Color="{Binding Color, Source={StaticResource Name}}" />
-      </ResourceDictionary>
-    """
+def gen_color_semantics_xaml(pairs: List[Tuple[str, str]], resolver: TokenResolver, ns: str) -> str:
     stamp = ts()
     lines: List[str] = []
     lines.append(f"<!-- Auto-generated {stamp} -->")
@@ -181,39 +165,34 @@ def gen_color_semantics_xaml(pairs: List[Tuple[str, str]], resolver: TokenResolv
 
     # Base SolidColorBrush keys
     for name, ref in pairs:
-        hexv = resolver._resolve_value(ref)
+        hexv = resolver.resolve_value_to_hex(ref)
         lines.append(f'    <SolidColorBrush x:Key="{name}">{hexv}</SolidColorBrush>')
 
     lines.append("")
 
     # ComponentResourceKey mirrors
+    template = (
+        '    <SolidColorBrush x:Key="{{ComponentResourceKey TypeInTargetAssembly={{x:Type c:ColorKeys}}, '
+        'ResourceId={{x:Static c:EColorKeys.{key}}}}}" '
+        'Color="{{Binding Color, Source={{StaticResource {key}}}}}" />'
+    )
     for name, _ in pairs:
-        lines.append(
-            '    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.' + name + '}}" '
-            f'Color="{{Binding Color, Source={{StaticResource {name}}}}}" />'
-        )
+        lines.append(template.format(key=name))
 
     lines.append("</ResourceDictionary>")
     return "\n".join(lines) + "\n"
 
-def gen_color_generator_cs(pairs: List[Tuple[str, str]], ns: str = "HYSoft.Presentation.Styles.ColorTokens") -> str:
-    """
-    Generates ColorGenerator.cs in the requested shape.
-    """
-    stamp = ts()
-    enum_items = [name for name, _ in pairs]
 
-    # Build enum body
+def gen_color_generator_cs(pairs: List[Tuple[str, str]], ns: str) -> str:
+    enum_items = [name for name, _ in pairs]
     enum_body = ",\n        ".join(enum_items)
 
-    # Build mapping section
     map_lines: List[str] = []
     for name in enum_items:
         map_lines.append(f'            map[EColorKeys.{name}] = Resolve(nameof(EColorKeys.{name}));')
     map_body = "\n".join(map_lines)
 
-    return f"""// Auto-generated {stamp}
-using System;
+    return f"""using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
@@ -268,27 +247,26 @@ namespace {ns}
 }}
 """
 
-# ---------------- Main flow ----------------
+
+# ---------------- Main ----------------
 
 def main() -> None:
     args = parse_args()
     data = read_json(args.input)
 
-    # Prepare resolver
-    resolver = TokenResolver(data)
-
-    # 1) Get semantics (EColorKeys source)
-    sem = data.get("Semantics/DIMS", {})
-    if not isinstance(sem, dict) or not sem:
+    # Accept "Semantics/DIMS" (primary); if absent, try "Semantics"
+    semantics = data.get("Semantics/DIMS") or data.get("Semantics")
+    if not isinstance(semantics, dict) or not semantics:
         raise SystemExit("Semantics/DIMS not found or empty in input JSON.")
 
-    pairs = flatten_semantics(sem)  # list of (KeyName, "$value")
+    resolver = TokenResolver(data)
+    pairs = flatten_semantics(semantics)  # [(KeyName, "$value" or nested ref)]
 
-    # 2) Generate outputs
-    xaml = gen_color_semantics_xaml(pairs, resolver)
-    cs = gen_color_generator_cs(pairs)
+    # Generate contents
+    xaml = gen_color_semantics_xaml(pairs, resolver, ns=args.namespace)
+    cs = gen_color_generator_cs(pairs, ns=args.namespace)
 
-    # 3) Write files
+    # Write
     ensure_dir(args.outdir)
     xaml_path = os.path.join(args.outdir, "ColorSemantics.xaml")
     cs_path = os.path.join(args.outdir, "ColorGenerator.cs")
@@ -300,6 +278,7 @@ def main() -> None:
 
     print(f"[ok] Wrote: {xaml_path}")
     print(f"[ok] Wrote: {cs_path}")
+
 
 if __name__ == "__main__":
     main()

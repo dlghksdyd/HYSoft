@@ -1,4 +1,3 @@
-// Auto-generated 2025-09-14 13:19:10
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -46,6 +45,13 @@ namespace HYSoft.Presentation.Styles.ColorTokens
             map[EColorKeys.TablePrimaryBorderContent] = Resolve(nameof(EColorKeys.TablePrimaryBorderContent));
             map[EColorKeys.TablePrimaryTextTitle] = Resolve(nameof(EColorKeys.TablePrimaryTextTitle));
             map[EColorKeys.TablePrimaryTextContent] = Resolve(nameof(EColorKeys.TablePrimaryTextContent));
+            map[EColorKeys.TablePrimarySurfaceContentHover] = Resolve(nameof(EColorKeys.TablePrimarySurfaceContentHover));
+            map[EColorKeys.TextBlockPrimaryText] = Resolve(nameof(EColorKeys.TextBlockPrimaryText));
+            map[EColorKeys.TextBlockPrimaryBorder] = Resolve(nameof(EColorKeys.TextBlockPrimaryBorder));
+            map[EColorKeys.ScrollBarPrimaryBar] = Resolve(nameof(EColorKeys.ScrollBarPrimaryBar));
+            map[EColorKeys.IconPrimaryFill] = Resolve(nameof(EColorKeys.IconPrimaryFill));
+            map[EColorKeys.SectionPrimaryMenu] = Resolve(nameof(EColorKeys.SectionPrimaryMenu));
+            map[EColorKeys.SectionPrimaryContent] = Resolve(nameof(EColorKeys.SectionPrimaryContent));
 
             return map;
         }
@@ -65,6 +71,13 @@ namespace HYSoft.Presentation.Styles.ColorTokens
         TablePrimaryBorderTitle,
         TablePrimaryBorderContent,
         TablePrimaryTextTitle,
-        TablePrimaryTextContent
+        TablePrimaryTextContent,
+        TablePrimarySurfaceContentHover,
+        TextBlockPrimaryText,
+        TextBlockPrimaryBorder,
+        ScrollBarPrimaryBar,
+        IconPrimaryFill,
+        SectionPrimaryMenu,
+        SectionPrimaryContent
     }
 }

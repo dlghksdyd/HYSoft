@@ -1,4 +1,4 @@
-<!-- Auto-generated 2025-09-14 13:19:10 -->
+<!-- Auto-generated 2025-09-14 14:55:56 -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:c="clr-namespace:HYSoft.Presentation.Styles.ColorTokens">
@@ -12,6 +12,13 @@
     <SolidColorBrush x:Key="TablePrimaryBorderContent">#a4b8cd</SolidColorBrush>
     <SolidColorBrush x:Key="TablePrimaryTextTitle">#c5d4e3</SolidColorBrush>
     <SolidColorBrush x:Key="TablePrimaryTextContent">#c5d4e3</SolidColorBrush>
+    <SolidColorBrush x:Key="TablePrimarySurfaceContentHover">#40586d</SolidColorBrush>
+    <SolidColorBrush x:Key="TextBlockPrimaryText">#ebf1f6</SolidColorBrush>
+    <SolidColorBrush x:Key="TextBlockPrimaryBorder">#c5d4e3</SolidColorBrush>
+    <SolidColorBrush x:Key="ScrollBarPrimaryBar">#c5d4e3</SolidColorBrush>
+    <SolidColorBrush x:Key="IconPrimaryFill">#f2f6fa</SolidColorBrush>
+    <SolidColorBrush x:Key="SectionPrimaryMenu">#40586d</SolidColorBrush>
+    <SolidColorBrush x:Key="SectionPrimaryContent">#293b4d</SolidColorBrush>
 
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.ButtonPrimarySurface}}" Color="{Binding Color, Source={StaticResource ButtonPrimarySurface}}" />
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.ButtonPrimaryText}}" Color="{Binding Color, Source={StaticResource ButtonPrimaryText}}" />
@@ -22,4 +29,11 @@
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TablePrimaryBorderContent}}" Color="{Binding Color, Source={StaticResource TablePrimaryBorderContent}}" />
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TablePrimaryTextTitle}}" Color="{Binding Color, Source={StaticResource TablePrimaryTextTitle}}" />
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TablePrimaryTextContent}}" Color="{Binding Color, Source={StaticResource TablePrimaryTextContent}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TablePrimarySurfaceContentHover}}" Color="{Binding Color, Source={StaticResource TablePrimarySurfaceContentHover}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TextBlockPrimaryText}}" Color="{Binding Color, Source={StaticResource TextBlockPrimaryText}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TextBlockPrimaryBorder}}" Color="{Binding Color, Source={StaticResource TextBlockPrimaryBorder}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.ScrollBarPrimaryBar}}" Color="{Binding Color, Source={StaticResource ScrollBarPrimaryBar}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.IconPrimaryFill}}" Color="{Binding Color, Source={StaticResource IconPrimaryFill}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.SectionPrimaryMenu}}" Color="{Binding Color, Source={StaticResource SectionPrimaryMenu}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.SectionPrimaryContent}}" Color="{Binding Color, Source={StaticResource SectionPrimaryContent}}" />
 </ResourceDictionary>

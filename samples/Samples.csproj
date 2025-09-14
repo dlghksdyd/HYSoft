@@ -9,22 +9,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="HySoft.Bundle" Version="1.0.54" />
 		<PackageReference Include="Prism.Wpf" Version="9.0.537" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Reference Include="Communication">
-	    <HintPath>..\dll\Communication.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Data">
-	    <HintPath>..\dll\Data.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Presentation">
-	    <HintPath>..\dll\Presentation.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Presentation.Styles">
-	    <HintPath>..\dll\Presentation.Styles.dll</HintPath>
-	  </Reference>
 	</ItemGroup>
 
 	<ItemGroup>
