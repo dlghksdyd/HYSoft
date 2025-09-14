@@ -1,4 +1,5 @@
 <Project>
+
 	<!-- pack 대상 프로젝트에 한해 XML 주석을 lib/<TFM>에 포함 -->
 	<ItemGroup Condition="'$(IsPackable)'=='true' or '$(GeneratePackageOnBuild)'=='True'">
 		<Content Include="$(PackageOutputPath)$(AssemblyName).xml"
@@ -14,50 +15,48 @@
 
 	<!-- 마지막으로 성공 푸시한 버전을 로드 -->
 	<Target Name="LoadLastPublishedVersion" Condition="'$(NUGET_API_KEY)'!=''">
-		<!-- 기본값 -->
 		<PropertyGroup>
 			<LastPublishedVersion></LastPublishedVersion>
 		</PropertyGroup>
 
-		<!-- 파일이 있으면 읽기 -->
 		<ReadLinesFromFile File="$(PublishedVersionFile)" Condition="Exists('$(PublishedVersionFile)')">
 			<Output TaskParameter="Lines" ItemName="_LastPubVerLines" />
 		</ReadLinesFromFile>
 
-		<!-- 읽은 값을 속성으로 설정 -->
 		<PropertyGroup Condition="'@(_LastPubVerLines)'!=''">
 			<LastPublishedVersion>@(_LastPubVerLines->'%(Identity)')</LastPublishedVersion>
 		</PropertyGroup>
 	</Target>
 
 	<!-- Pack 이후, push 실행 -->
-	<Target Name="PublishNuGetOnPack" AfterTargets="Pack" DependsOnTargets="LoadLastPublishedVersion" Condition="'$(Configuration)'=='Release' and '$(NUGET_API_KEY)'!='' and '$(IsPackable)'=='true' and '$(MSBuildProjectName)'=='Bundle'">
+	<Target Name="PublishNuGetOnPack"
+			AfterTargets="Pack"
+			DependsOnTargets="LoadLastPublishedVersion"
+			Condition="'$(Configuration)'=='Release' and '$(NUGET_API_KEY)'!='' and '$(IsPackable)'=='true' and '$(MSBuildProjectName)'=='Bundle'">
 
-		<!-- 실제 푸시: 버전이 다를 때만 -->
 		<Exec Command="cmd /c set DOTNET_CLI_UI_LANGUAGE=en &amp;&amp; dotnet nuget push &quot;$(PackageOutputPath)$(PackageId).$(Version).nupkg&quot; --api-key $(NUGET_API_KEY) --source https://api.nuget.org/v3/index.json --skip-duplicate" />
 
-		<!-- push 성공 후 현재 버전 기록 (Exec 성공시만 실행됨) -->
-		<WriteLinesToFile Condition="'$(Version)'!='$(LastPublishedVersion)'" File="$(PublishedVersionFile)" Lines="$(Version)" Overwrite="true" />
+		<WriteLinesToFile Condition="'$(Version)'!='$(LastPublishedVersion)'"
+						  File="$(PublishedVersionFile)"
+						  Lines="$(Version)"
+						  Overwrite="true" />
 	</Target>
 
-	<!-- Global Xmlns 생성 -->
+	<!-- Global Xmlns 생성: NuGet 여부와 무관하게 항상 실행 -->
 	<Target Name="Hysoft_GenerateGlobalXmlns"
-	        BeforeTargets="BeforeCompile"
-	        Condition="'$(HysoftXmlnsEnabled)'=='True' or '$(HysoftXmlnsEnabled)'=='true'"
-	        Inputs="@(Compile);$(HysoftXmlns);$(HysoftXmlnsPrefix);$(HysoftXmlnsIncludeAll);$(HysoftXmlnsExclude)"
-	        Outputs="$(IntermediateOutputPath)GlobalXmlns.g.cs">
+			BeforeTargets="BeforeCompile"
+			Condition="'$(HysoftXmlnsEnabled)'=='True' or '$(HysoftXmlnsEnabled)'=='true'"
+			Inputs="@(Compile);$(HysoftXmlns);$(HysoftXmlnsPrefix);$(HysoftXmlnsIncludeAll);$(HysoftXmlnsExclude);$(MSBuildAllProjects)"
+			Outputs="$(IntermediateOutputPath)GlobalXmlns.g.cs">
 
-		<!-- 컴파일 파일 목록 작성 (한 줄에 하나) -->
 		<WriteLinesToFile
-			File="$(IntermediateOutputPath)globalxmlns.filelist.txt"
-			Lines="@(Compile->'%(FullPath)')"
-			Overwrite="true"
-			Encoding="UTF-8" />
+		  File="$(IntermediateOutputPath)globalxmlns.filelist.txt"
+		  Lines="@(Compile->'%(FullPath)')"
+		  Overwrite="true"
+		  Encoding="UTF-8" />
 
-		<!-- 실행 (NoProfile/Bypass) -->
-		<Exec Command="&quot;$(HysoftPwshExe)&quot; -NoProfile -ExecutionPolicy Bypass -File &quot;$(SolutionDir)scripts\Generate-GlobalXmlns.ps1&quot; -Url &quot;$(HysoftXmlns)&quot; -Prefix &quot;$(HysoftXmlnsPrefix)&quot; -IncludeAll:$(HysoftXmlnsIncludeAll) -Exclude &quot;$(HysoftXmlnsExclude)&quot; -FilesList &quot;$(IntermediateOutputPath)globalxmlns.filelist.txt&quot; -OutputFile &quot;$(IntermediateOutputPath)GlobalXmlns.g.cs&quot;" />
+		<Exec Command="&quot;$(HysoftPwshExe)&quot; -NoProfile -ExecutionPolicy Bypass -File &quot;$(HysoftScriptsDir)Generate-GlobalXmlns.ps1&quot; -Url &quot;$(HysoftXmlns)&quot; -Prefix &quot;$(HysoftXmlnsPrefix)&quot; -IncludeAll:$(HysoftXmlnsIncludeAll) -Exclude &quot;$(HysoftXmlnsExclude)&quot; -FilesList &quot;$(IntermediateOutputPath)globalxmlns.filelist.txt&quot; -OutputFile &quot;$(IntermediateOutputPath)GlobalXmlns.g.cs&quot;" />
 
-		<!-- 생성물 컴파일 포함 -->
 		<ItemGroup>
 			<Compile Include="$(IntermediateOutputPath)GlobalXmlns.g.cs">
 				<Visible>false</Visible>
@@ -67,20 +66,20 @@
 		</ItemGroup>
 	</Target>
 
-	<!-- Dll 산출물을 솔루션의 dll 폴더로 복사 -->
-	<Target Name="CopyOutputToSolutionDll" AfterTargets="Build"
-	        Condition="'$(MSBuildProjectName)' != 'Samples' And '$(MSBuildProjectName)' != 'Bundle'">
-		<!-- dll 폴더 보장 -->
-		<MakeDir Directories="$(SolutionDir)dll" Condition="!Exists('$(SolutionDir)dll')" />
-
-		<!-- 주 DLL -->
-		<Copy SourceFiles="$(TargetPath)"
-		      DestinationFolder="$(SolutionDir)dll\" />
-	</Target>
-
+	<!-- Clean 시 생성물 삭제 -->
 	<Target Name="Hysoft_CleanGlobalXmlns" AfterTargets="Clean">
 		<Delete Files="$(IntermediateOutputPath)GlobalXmlns.g.cs" />
 		<Delete Files="$(IntermediateOutputPath)globalxmlns.filelist.txt" />
+	</Target>
+
+	<!-- Dll 산출물을 솔루션의 dll 폴더로 복사 -->
+	<Target Name="CopyOutputToSolutionDll" AfterTargets="Build"
+			Condition="'$(MSBuildProjectName)' != 'Samples' And '$(MSBuildProjectName)' != 'Bundle'">
+
+		<MakeDir Directories="$(SolutionDir)dll" Condition="!Exists('$(SolutionDir)dll')" />
+
+		<Copy SourceFiles="$(TargetPath)"
+			  DestinationFolder="$(SolutionDir)dll\" />
 	</Target>
 
 </Project>

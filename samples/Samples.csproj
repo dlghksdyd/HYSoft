@@ -19,25 +19,19 @@
 		<PackageReference Include="Prism.Wpf" Version="9.0.537" />
 	</ItemGroup>
 
-	<!-- Release: NuGet 패키지 사용 (아이템그룹1) -->
-	<ItemGroup Condition="'$(Configuration)'=='Release'">
-		<PackageReference Include="HySoft.Bundle" Version="1.0.57" />
-	</ItemGroup>
-
-	<!-- Debug: 로컬 DLL 참조 사용 (아이템그룹2) -->
-	<ItemGroup Condition="'$(Configuration)'=='Debug'">
-		<Reference Include="Communication">
-			<HintPath>..\dll\Communication.dll</HintPath>
-		</Reference>
-		<Reference Include="Data">
-			<HintPath>..\dll\Data.dll</HintPath>
-		</Reference>
-		<Reference Include="Presentation">
-			<HintPath>..\dll\Presentation.dll</HintPath>
-		</Reference>
-		<Reference Include="Presentation.Styles">
-			<HintPath>..\dll\Presentation.Styles.dll</HintPath>
-		</Reference>
+	<ItemGroup>
+	  <Reference Include="Communication">
+	    <HintPath>..\dll\Communication.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Data">
+	    <HintPath>..\dll\Data.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Presentation">
+	    <HintPath>..\dll\Presentation.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Presentation.Styles">
+	    <HintPath>..\dll\Presentation.Styles.dll</HintPath>
+	  </Reference>
 	</ItemGroup>
 
 	<ItemGroup>

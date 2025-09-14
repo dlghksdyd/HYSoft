@@ -14,17 +14,36 @@
 		<PackageOutputPath>$(SolutionDir)nuget\</PackageOutputPath>
 	</PropertyGroup>
 
-	<ItemGroup>
-		<None Include="$(SolutionDir)dll\*.dll" Pack="true" PackagePath="lib\net8.0-windows7.0\" />
-	</ItemGroup>
+	<PropertyGroup Condition="'$(MSBuildProjectName)'=='Bundle'">
+		<!-- Bundle 전용 스테이징 디렉터리 -->
+		<BundleStageDir>$(IntermediateOutputPath)bundle_stage\</BundleStageDir>
+		<BundleStageLib>$(BundleStageDir)lib\net8.0-windows\</BundleStageLib>
+	</PropertyGroup>
 
-	<Target Name="CleanSolutionDll_Once" BeforeTargets="Clean" Condition="'$(MSBuildProjectName)'=='Bundle'">
-		<PropertyGroup>
-			<_DllDir>$(SolutionDir)dll</_DllDir>
-		</PropertyGroup>
+	<!-- Pack 전에 스테이징 초기화 + dll\에서 복사 -->
+	<Target Name="Bundle_PrepareStage"
+	        BeforeTargets="Pack"
+	        Condition="'$(MSBuildProjectName)'=='Bundle'">
 
-		<Message Importance="High" Text="Cleaning $(_DllDir)" />
-		<RemoveDir Directories="$(_DllDir)" />
+		<!-- 스테이징 초기화 -->
+		<RemoveDir Directories="$(BundleStageDir)" />
+		<MakeDir Directories="$(BundleStageLib)" />
+
+		<!-- dll\ 의 산출물들 수집 -->
+		<ItemGroup>
+			<_StageDlls Include="$(SolutionDir)dll\*.dll" />
+			<_StageXmls Include="$(SolutionDir)dll\*.xml" />
+			<!-- 필요 시 pdb, json 등 추가 -->
+		</ItemGroup>
+
+		<!-- 스테이징 폴더로 복사 -->
+		<Copy SourceFiles="@(_StageDlls)" DestinationFolder="$(BundleStageLib)" SkipUnchangedFiles="true" />
+		<Copy SourceFiles="@(_StageXmls)" DestinationFolder="$(BundleStageLib)" SkipUnchangedFiles="true" Condition="'@(_StageXmls)'!=''" />
+
+		<!-- 스테이징 안의 파일들을 nupkg에 포함 -->
+		<ItemGroup>
+			<None Include="$(BundleStageLib)**\*.*" Pack="true" PackagePath="\" />
+		</ItemGroup>
 	</Target>
 
 	<!-- 빌드하면 곧바로 Pack까지 수행하고 싶다면 -->
