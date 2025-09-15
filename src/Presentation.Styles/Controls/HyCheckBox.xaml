@@ -10,8 +10,8 @@
         <Setter Property="Padding" Value="4,0,0,0" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="TextPadding" Value="10 0 0 0" />
-        <Setter Property="HoverBackground" Value="White" />
-        <Setter Property="PressedBackground" Value="Gray" />
+        <Setter Property="BackgroundHover" Value="White" />
+        <Setter Property="BackgroundPressed" Value="Gray" />
         <Setter Property="CheckBrush" Value="Black" />
         <Setter Property="CheckThickness" Value="3" />
         <Setter Property="Template">
@@ -83,10 +83,10 @@
 
                         <!--  마우스오버/프레스: TemplateBinding ❌, TemplatedParent 바인딩 ✅  -->
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Box" Property="Background" Value="{Binding HoverBackground, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <Setter TargetName="Box" Property="Background" Value="{Binding BackgroundHover, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="Box" Property="Background" Value="{Binding PressedBackground, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <Setter TargetName="Box" Property="Background" Value="{Binding BackgroundPressed, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Trigger>
 
                         <!--  포커스 표시  -->

@@ -20,20 +20,20 @@ namespace HYSoft.Presentation.Styles.Controls
 
         public string WaterMark
         {
-            get { return (string)GetValue(WaterMarkProperty); }
-            set { SetValue(WaterMarkProperty, value); }
+            get => (string)GetValue(WaterMarkProperty);
+            set => SetValue(WaterMarkProperty, value);
         }
 
         public SolidColorBrush WaterMarkForeground
         {
-            get { return (SolidColorBrush)GetValue(WaterMarkForegroundProperty); }
-            set { SetValue(WaterMarkForegroundProperty, value); }
+            get => (SolidColorBrush)GetValue(WaterMarkForegroundProperty);
+            set => SetValue(WaterMarkForegroundProperty, value);
         }
 
         public CornerRadius CornerRadius
         {
-            get { return (CornerRadius)GetValue(CornerRadiusProperty); }
-            set { SetValue(CornerRadiusProperty, value); }
+            get => (CornerRadius)GetValue(CornerRadiusProperty);
+            set => SetValue(CornerRadiusProperty, value);
         }
 
         private PasswordBox? _passwordBox;
@@ -67,16 +67,16 @@ namespace HYSoft.Presentation.Styles.Controls
 
         private void StylePasswordBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            HyPasswordBox element = sender as HyPasswordBox;
+            var element = sender as HyPasswordBox;
 
             //element._passwordBox.Password = element.Text;
         }
 
         private void _passwordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            PasswordBox element = sender as PasswordBox;
+            var element = sender as PasswordBox;
 
-            this.Text = element.Password;
+            if (element?.Password != null) this.Text = element.Password;
         }
     }
 }

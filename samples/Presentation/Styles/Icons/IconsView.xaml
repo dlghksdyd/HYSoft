@@ -13,12 +13,10 @@
     <Grid>
         <StackPanel>
             <hy:HyIcon
-                Width="48"
-                Height="48"
-                ColorHover="Black"
-                ColorPressed="White"
-                Source="BluetoothRegular"
-                Color="Red" />
+                Width="80"
+                Height="60"
+                ColorPressed="Blue"
+                Source="BluetoothRegular" />
         </StackPanel>
     </Grid>
 </Window>

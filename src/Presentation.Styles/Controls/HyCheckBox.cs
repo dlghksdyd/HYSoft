@@ -84,22 +84,22 @@ namespace HYSoft.Presentation.Styles.Controls
             DependencyProperty.Register(nameof(BoxBorderBrush), typeof(Brush), typeof(HyCheckBox),
                 new PropertyMetadata(Brushes.Gray));
 
-        public Brush HoverBackground
+        public Brush BackgroundHover
         {
-            get => (Brush)GetValue(HoverBackgroundProperty);
-            set => SetValue(HoverBackgroundProperty, value);
+            get => (Brush)GetValue(BackgroundHoverProperty);
+            set => SetValue(BackgroundHoverProperty, value);
         }
-        public static readonly DependencyProperty HoverBackgroundProperty =
-            DependencyProperty.Register(nameof(HoverBackground), typeof(Brush), typeof(HyCheckBox),
+        public static readonly DependencyProperty BackgroundHoverProperty =
+            DependencyProperty.Register(nameof(BackgroundHover), typeof(Brush), typeof(HyCheckBox),
                 new PropertyMetadata(new SolidColorBrush(Color.FromArgb(20, 0, 0, 0))));
 
-        public Brush PressedBackground
+        public Brush BackgroundPressed
         {
-            get => (Brush)GetValue(PressedBackgroundProperty);
-            set => SetValue(PressedBackgroundProperty, value);
+            get => (Brush)GetValue(BackgroundPressedProperty);
+            set => SetValue(BackgroundPressedProperty, value);
         }
-        public static readonly DependencyProperty PressedBackgroundProperty =
-            DependencyProperty.Register(nameof(PressedBackground), typeof(Brush), typeof(HyCheckBox),
+        public static readonly DependencyProperty BackgroundPressedProperty =
+            DependencyProperty.Register(nameof(BackgroundPressed), typeof(Brush), typeof(HyCheckBox),
                 new PropertyMetadata(new SolidColorBrush(Color.FromArgb(40, 0, 0, 0))));
 
         public Brush CheckBrush

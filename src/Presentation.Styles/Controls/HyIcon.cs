@@ -2,20 +2,21 @@
 using System;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 
 namespace HYSoft.Presentation.Styles.Controls
 {
-    public class HyIcon : ButtonBase
+    public class HyIcon : Control
     {
-        private System.Windows.Controls.Image _image;
+        private Image? _image;
 
         // 상태별 캐시
-        private ImageSource _baseSource;
-        private ImageSource _tintedNormal;
-        private ImageSource _tintedHover;
-        private ImageSource _tintedPressed;
+        private ImageSource? _baseSource;
+        private ImageSource? _tintedNormal;
+        private ImageSource? _tintedHover;
+        private ImageSource? _tintedPressed;
 
         static HyIcon()
         {
@@ -37,13 +38,19 @@ namespace HYSoft.Presentation.Styles.Controls
                 nameof(ColorHover),
                 typeof(Brush),
                 typeof(HyIcon),
-                new PropertyMetadata(Brushes.Gray, OnAnyChanged));
+                new PropertyMetadata(OnAnyChanged));
 
             ColorPressedProperty = DependencyProperty.Register(
                 nameof(ColorPressed),
                 typeof(Brush),
                 typeof(HyIcon),
-                new PropertyMetadata(Brushes.DarkGray, OnAnyChanged));
+                new PropertyMetadata(OnAnyChanged));
+
+            IsPressedProperty = DependencyProperty.Register(
+                nameof(IsPressed),
+                typeof(bool),
+                typeof(HyIcon),
+                new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnAnyChanged));
         }
 
         public static readonly DependencyProperty SourceProperty;
@@ -62,17 +69,24 @@ namespace HYSoft.Presentation.Styles.Controls
         }
 
         public static readonly DependencyProperty ColorHoverProperty;
-        public Brush ColorHover
+        public Brush? ColorHover
         {
             get => (Brush)GetValue(ColorHoverProperty);
             set => SetValue(ColorHoverProperty, value);
         }
 
         public static readonly DependencyProperty ColorPressedProperty;
-        public Brush ColorPressed
+        public Brush? ColorPressed
         {
             get => (Brush)GetValue(ColorPressedProperty);
             set => SetValue(ColorPressedProperty, value);
+        }
+
+        public static readonly DependencyProperty IsPressedProperty;
+        public bool IsPressed
+        {
+            get => (bool)GetValue(IsPressedProperty);
+            set => SetValue(IsPressedProperty, value);
         }
 
         public override void OnApplyTemplate()
@@ -100,11 +114,17 @@ namespace HYSoft.Presentation.Styles.Controls
                 return;
             }
 
-            // 색상 변경이면 틴트만 갱신
             if (e.Property == ColorProperty || e.Property == ColorHoverProperty || e.Property == ColorPressedProperty)
             {
                 c.RebuildTintsOnly();
                 c.ApplyCurrentStateSource();
+                return;
+            }
+
+            if (e.Property == IsPressedProperty)
+            {
+                c.ApplyCurrentStateSource();
+                return;
             }
         }
 
@@ -130,15 +150,15 @@ namespace HYSoft.Presentation.Styles.Controls
             else
                 _tintedNormal = _baseSource;
 
-            if (TryGetColor(ColorHover, out var c1))
+            if (ColorHover != null && TryGetColor(ColorHover, out var c1))
                 _tintedHover = IconTintHelper.TintImage(_baseSource, c1);
             else
                 _tintedHover = _tintedNormal;
 
-            if (TryGetColor(ColorPressed, out var c2))
+            if (ColorPressed != null && TryGetColor(ColorPressed, out var c2))
                 _tintedPressed = IconTintHelper.TintImage(_baseSource, c2);
             else
-                _tintedPressed = _tintedNormal;
+                _tintedPressed = _tintedHover ?? _tintedNormal;
         }
 
         private static bool TryGetColor(Brush brush, out Color color)
@@ -169,15 +189,15 @@ namespace HYSoft.Presentation.Styles.Controls
         }
 
         #region 상태 변화 구독
-        private DependencyPropertyDescriptor _isMouseOverDesc;
-        private DependencyPropertyDescriptor _isPressedDesc;
+        private DependencyPropertyDescriptor? _isMouseOverDesc;
+        private DependencyPropertyDescriptor? _isPressedDesc;
 
         private void SubscribeStateChanges()
         {
             _isMouseOverDesc = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(HyIcon));
             _isMouseOverDesc?.AddValueChanged(this, OnStateChanged);
 
-            _isPressedDesc = DependencyPropertyDescriptor.FromProperty(ButtonBase.IsPressedProperty, typeof(HyIcon));
+            _isPressedDesc = DependencyPropertyDescriptor.FromProperty(HyIcon.IsPressedProperty, typeof(HyIcon));
             _isPressedDesc?.AddValueChanged(this, OnStateChanged);
         }
 
@@ -195,7 +215,29 @@ namespace HYSoft.Presentation.Styles.Controls
             }
         }
 
-        private void OnStateChanged(object sender, EventArgs e) => ApplyCurrentStateSource();
+        private void OnStateChanged(object? sender, EventArgs e) => ApplyCurrentStateSource();
         #endregion
+
+        protected override void OnMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+            if (!IsEnabled) return;
+
+            CaptureMouse();
+            SetCurrentValue(IsPressedProperty, true);
+            e.Handled = true;
+        }
+
+        protected override void OnMouseLeftButtonUp(System.Windows.Input.MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonUp(e);
+            if (!IsEnabled) return;
+
+            if (IsMouseCaptured)
+                ReleaseMouseCapture();
+
+            SetCurrentValue(IsPressedProperty, false);
+            e.Handled = true;
+        }
     }
 }
