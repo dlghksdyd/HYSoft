@@ -14,28 +14,32 @@ namespace HYSoft.Presentation.Interactivity
     {
         /// <summary>
         /// UIElement에 바인딩할 EventCollection을 나타내는 Attached Property입니다.
+        /// (여러 Event를 한 번에 부착)
         /// </summary>
-        public static readonly DependencyProperty BindingsProperty =
+        public static readonly DependencyProperty MultiBindingProperty =
             DependencyProperty.RegisterAttached(
-                "Bindings",
+                "MultiBinding",
                 typeof(EventCollection),
                 typeof(EventToCommand),
                 new PropertyMetadata(null, OnBindingsChanged));
 
-        /// <summary>
-        /// 지정된 DependencyObject에 EventCollection을 설정합니다.
-        /// </summary>
-        /// <param name="d">대상 객체</param>
-        /// <param name="value">바인딩할 EventCollection</param>
-        public static void SetBindings(DependencyObject d, EventCollection value) => d.SetValue(BindingsProperty, value);
+        public static void SetMultiBinding(DependencyObject d, EventCollection value) => d.SetValue(MultiBindingProperty, value);
+        public static EventCollection GetMultiBinding(DependencyObject d) => (EventCollection)d.GetValue(MultiBindingProperty);
 
         /// <summary>
-        /// 지정된 DependencyObject에서 EventCollection을 가져옵니다.
+        /// 단일 Event 바인딩용 Attached Property
         /// </summary>
-        /// <param name="d">대상 객체</param>
-        /// <returns>EventCollection</returns>
-        public static EventCollection GetBindings(DependencyObject d) => (EventCollection)d.GetValue(BindingsProperty);
+        public static readonly DependencyProperty BindingProperty =
+            DependencyProperty.RegisterAttached(
+                "Binding",
+                typeof(Event),
+                typeof(EventToCommand),
+                new PropertyMetadata(null, OnBindingChanged));
 
+        public static void SetBinding(DependencyObject d, Event value) => d.SetValue(BindingProperty, value);
+        public static Event GetBinding(DependencyObject d) => (Event)d.GetValue(BindingProperty);
+
+        // 내부: UIElement별로 부착된 Event→Delegate 매핑 저장
         private static readonly DependencyProperty HandlerMapProperty =
             DependencyProperty.RegisterAttached("HandlerMap", typeof(Dictionary<Event, Delegate>), typeof(EventToCommand));
         private static Dictionary<Event, Delegate> GetHandlerMap(DependencyObject d)
@@ -43,6 +47,7 @@ namespace HYSoft.Presentation.Interactivity
         private static void SetHandlerMap(DependencyObject d, Dictionary<Event, Delegate> map)
             => d.SetValue(HandlerMapProperty, map);
 
+        // MultiBindings(INotifyCollectionChanged) 구독 핸들러 저장
         private static readonly DependencyProperty CollectionChangedHandlerProperty =
             DependencyProperty.RegisterAttached(
                 "CollectionChangedHandler",
@@ -50,6 +55,7 @@ namespace HYSoft.Presentation.Interactivity
                 typeof(EventToCommand),
                 new PropertyMetadata(null));
 
+        // ==== MultiBindings 변경 처리 ====
         private static void OnBindingsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is not FrameworkElement ui) return;
@@ -67,7 +73,6 @@ namespace HYSoft.Presentation.Interactivity
 
             if (e.NewValue is EventCollection coll)
             {
-                // ★ 명시적 인터페이스 구현 → 캐스팅 필요
                 var incc = (INotifyCollectionChanged)coll;
 
                 NotifyCollectionChangedEventHandler handler = (s, args) =>
@@ -75,9 +80,8 @@ namespace HYSoft.Presentation.Interactivity
                     if (args.Action == NotifyCollectionChangedAction.Reset)
                     {
                         DetachAll(ui);
-                        if (coll != null)
-                            foreach (var b in coll)
-                                Attach(ui, b);
+                        foreach (var b in coll)
+                            Attach(ui, b);
                         return;
                     }
                     if (args.OldItems != null)
@@ -94,6 +98,19 @@ namespace HYSoft.Presentation.Interactivity
             }
         }
 
+        // ==== 단일 Binding 변경 처리 ====
+        private static void OnBindingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is not UIElement ui) return;
+
+            // 이전 단일 바인딩 Detach
+            if (e.OldValue is Event oldEv) Detach(ui, oldEv);
+
+            // 새 단일 바인딩 Attach
+            if (e.NewValue is Event newEv) Attach(ui, newEv);
+        }
+
+        // ==== attach/detach 공통 로직 ====
         private static void Attach(UIElement ui, Event b)
         {
             if (b?.RoutedEvent == null || b.Command == null) return;
@@ -106,7 +123,7 @@ namespace HYSoft.Presentation.Interactivity
                 SetHandlerMap(ui, map);
             }
 
-            // 2) 이미 같은 Event에 등록되어 있으면 중복 방지
+            // 2) 중복 부착 방지
             if (map.ContainsKey(b)) return;
 
             // 3) 핸들러 생성
