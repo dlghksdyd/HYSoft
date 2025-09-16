@@ -5,15 +5,15 @@ namespace HYSoft.Presentation.DragDrop
 {
     public class DragDataContext : BindableBase, IDragDataContext
     {
-        private UIElement _dragScope = new UIElement();
-        public UIElement DragScope
+        private UIElement? _dragScope = new UIElement();
+        public UIElement? DragScope
         {
             get => _dragScope;
             set => SetProperty(ref _dragScope, value);
         }
 
-        private object _draggedItem;
-        public object DraggedItem
+        private object? _draggedItem;
+        public object? DraggedItem
         {
             get => _draggedItem;
             set => SetProperty(ref _draggedItem, value);
