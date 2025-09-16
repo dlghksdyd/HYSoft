@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0-windows</TargetFramework>
 		<RootNamespace>HYSoft.Presentation.Styles</RootNamespace>
 		<UseWPF>true</UseWPF>
 		<PackageOutputPath>$(ProjectDir)bin\$(Configuration)\</PackageOutputPath>

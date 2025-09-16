@@ -1,0 +1,215 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Presentation</name>
+    </assembly>
+    <members>
+        <member name="T:HYSoft.Presentation.ElementTreeHelper.TreeSearchHelper">
+            <summary>
+            WPF의 시각 트리(VisualTree) 및 논리 트리(LogicalTree)에서
+            특정 조건에 맞는 요소를 탐색하기 위한 유틸리티 메서드를 제공합니다.
+            </summary>
+        </member>
+        <member name="M:HYSoft.Presentation.ElementTreeHelper.TreeSearchHelper.FindAncestor``1(System.Windows.DependencyObject)">
+            <summary>
+            주어진 요소에서 시작하여, 특정 타입의 조상 요소를 찾습니다.
+            </summary>
+            <typeparam name="T">찾고자 하는 조상 요소의 타입.</typeparam>
+            <param name="current">탐색을 시작할 자식 요소.</param>
+            <returns>
+            조상 중 첫 번째로 발견된 <typeparamref name="T"/> 타입의 요소.
+            발견되지 않으면 <c>null</c>.
+            </returns>
+            <remarks>
+            일반적으로 컨트롤 템플릿 내부에서 외부 컨트롤을 찾을 때 유용합니다.
+            </remarks>
+        </member>
+        <member name="M:HYSoft.Presentation.ElementTreeHelper.TreeSearchHelper.FindChild``1(System.Windows.DependencyObject)">
+            <summary>
+            주어진 요소에서 시작하여, 특정 타입의 자식 요소를 재귀적으로 찾습니다.
+            </summary>
+            <typeparam name="T">찾고자 하는 자식 요소의 타입.</typeparam>
+            <param name="current">탐색을 시작할 부모 요소.</param>
+            <returns>
+            자식 트리에서 발견된 첫 번째 <typeparamref name="T"/> 타입의 요소.
+            발견되지 않으면 <c>null</c>.
+            </returns>
+            <remarks>
+            트리 전체를 탐색하므로, 큰 시각 트리에서는 성능에 유의해야 합니다.
+            </remarks>
+        </member>
+        <member name="M:HYSoft.Presentation.ElementTreeHelper.TreeSearchHelper.FindTopElementSharingDataContext``1(System.Windows.FrameworkElement,System.Type)">
+            <summary>
+            주어진 요소와 동일한 DataContext 인스턴스를 공유하는 조상들 중
+            가장 바깥(최상위)의 <see cref="T:System.Windows.FrameworkElement"/>를 찾습니다.
+            </summary>
+            <typeparam name="T">반환받길 원하는 요소 타입(맞지 않으면 null).</typeparam>
+            <param name="current">시작 요소(템플릿 내부의 아무 자식).</param>
+            <param name="dataContextType">시작 요소의 DataContext 타입.</param>
+            <returns>
+            동일한 DataContext를 유지하다가 변경되기 직전의 최상위 요소.
+            <typeparamref name="T"/>로 캐스팅 가능한 경우 해당 요소를 반환하고,
+            없거나 타입 불일치 시 <c>null</c>.
+            </returns>
+            <remarks>
+            MVVM 패턴에서 컨트롤 템플릿 내부의 자식 요소로부터
+            외부 뷰의 루트 컨트롤을 찾아야 할 때 유용합니다.
+            </remarks>
+        </member>
+        <member name="T:HYSoft.Presentation.Interactivity.ElementReferenceBinding">
+             <summary>
+             <see cref="T:System.Windows.UIElement"/> (또는 <see cref="T:System.Windows.FrameworkElement"/>) 자신의 참조를
+             바인딩된 ViewModel 속성에 주입할 수 있도록 지원하는 Attached Property를 제공합니다.
+             </summary>
+             <remarks>
+             MVVM 패턴에서 ViewModel이 특정 UI 요소(예: <see cref="T:System.WeakReference`1"/> 또는 직접 <see cref="T:System.Windows.UIElement"/>)
+             에 대한 참조를 가져야 할 때 사용할 수 있습니다.
+             View와 ViewModel 간의 분리 원칙을 유지하면서도, 필요한 경우 뷰 요소를 안전하게 전달할 수 있습니다.
+            
+             사용 예:
+             <code language="xml">
+             &lt;Grid
+                 xmlns:mvvm="clr-namespace:MLib.Mvvm;assembly=MLib.Mvvm"
+                 mvvm:ElementReferenceBinding.Target="{Binding DragScope, Mode=TwoWay}" /&gt;
+             </code>
+            
+             ViewModel 예:
+             <code language="csharp">
+             public UIElement DragScope { get; set; }
+             // 또는
+             public WeakReference&lt;UIElement&gt; DragScope { get; set; }
+             </code>
+             </remarks>
+        </member>
+        <member name="F:HYSoft.Presentation.Interactivity.ElementReferenceBinding.TargetProperty">
+            <summary>
+            <see cref="F:HYSoft.Presentation.Interactivity.ElementReferenceBinding.TargetProperty"/> Attached Property를 식별합니다.
+            이 프로퍼티는 대상 UI 요소의 참조를 ViewModel의 속성에 바인딩할 때 사용됩니다.
+            </summary>
+        </member>
+        <member name="M:HYSoft.Presentation.Interactivity.ElementReferenceBinding.SetTarget(System.Windows.DependencyObject,System.Object)">
+            <summary>
+            지정된 <see cref="T:System.Windows.DependencyObject"/>에 Target 바인딩 값을 설정합니다.
+            </summary>
+            <param name="d">속성을 설정할 대상 객체</param>
+            <param name="value">바인딩된 값(일반적으로 바인딩 엔진에 의해 제공됨)</param>
+        </member>
+        <member name="M:HYSoft.Presentation.Interactivity.ElementReferenceBinding.GetTarget(System.Windows.DependencyObject)">
+            <summary>
+            지정된 <see cref="T:System.Windows.DependencyObject"/>에서 Target 바인딩 값을 가져옵니다.
+            </summary>
+            <param name="d">속성을 읽어올 대상 객체</param>
+            <returns><see cref="F:HYSoft.Presentation.Interactivity.ElementReferenceBinding.TargetProperty"/>의 현재 값</returns>
+        </member>
+        <member name="T:HYSoft.Presentation.Interactivity.Event">
+            <summary>
+            특정 RoutedEvent와 ICommand를 바인딩하기 위한 정의를 제공합니다.
+            </summary>
+        </member>
+        <member name="F:HYSoft.Presentation.Interactivity.Event.RoutedEventProperty">
+            <summary>
+            바인딩할 RoutedEvent를 나타내는 DependencyProperty입니다.
+            </summary>
+        </member>
+        <member name="F:HYSoft.Presentation.Interactivity.Event.CommandProperty">
+            <summary>
+            실행할 ICommand를 나타내는 DependencyProperty입니다.
+            </summary>
+        </member>
+        <member name="F:HYSoft.Presentation.Interactivity.Event.CommandParameterProperty">
+            <summary>
+            명령 실행 시 전달할 추가 파라미터를 나타내는 DependencyProperty입니다.
+            </summary>
+        </member>
+        <member name="P:HYSoft.Presentation.Interactivity.Event.RoutedEvent">
+            <summary>
+            바인딩할 RoutedEvent를 가져오거나 설정합니다.
+            </summary>
+        </member>
+        <member name="P:HYSoft.Presentation.Interactivity.Event.Command">
+            <summary>
+            바인딩할 ICommand를 가져오거나 설정합니다.
+            </summary>
+        </member>
+        <member name="P:HYSoft.Presentation.Interactivity.Event.CommandParameter">
+            <summary>
+            ICommand 실행 시 전달할 매개변수를 가져오거나 설정합니다.
+            </summary>
+        </member>
+        <member name="M:HYSoft.Presentation.Interactivity.Event.CreateInstanceCore">
+            <inheritdoc/>
+        </member>
+        <member name="T:HYSoft.Presentation.Interactivity.EventCollection">
+            <summary>
+            <see cref="T:HYSoft.Presentation.Interactivity.Event"/> 객체들을 보관하는 FreezableCollection입니다.
+            </summary>
+        </member>
+        <member name="T:HYSoft.Presentation.Interactivity.EventPayload">
+            <summary>
+            RoutedEvent 발생 시 ICommand로 전달되는 실행 컨텍스트 정보입니다.
+            </summary>
+        </member>
+        <member name="P:HYSoft.Presentation.Interactivity.EventPayload.Sender">
+            <summary>
+            이벤트를 발생시킨 원본 Sender를 가져옵니다.
+            </summary>
+        </member>
+        <member name="P:HYSoft.Presentation.Interactivity.EventPayload.Args">
+            <summary>
+            이벤트 인수를 가져옵니다.
+            </summary>
+        </member>
+        <member name="P:HYSoft.Presentation.Interactivity.EventPayload.Parameter">
+            <summary>
+            ICommand 실행 시 전달된 사용자 지정 파라미터를 가져옵니다.
+            </summary>
+        </member>
+        <member name="M:HYSoft.Presentation.Interactivity.EventPayload.#ctor(System.Object,System.EventArgs,System.Object)">
+            <summary>
+            EventPayload를 초기화합니다.
+            </summary>
+            <param name="sender">이벤트 발생 원본</param>
+            <param name="args">이벤트 인수</param>
+            <param name="parameter">사용자 지정 파라미터</param>
+        </member>
+        <member name="T:HYSoft.Presentation.Interactivity.EventToCommand">
+            <summary>
+            RoutedEvent와 ICommand를 연결할 수 있도록 지원하는 Attached Behavior입니다.
+            </summary>
+        </member>
+        <member name="F:HYSoft.Presentation.Interactivity.EventToCommand.MultiBindingProperty">
+            <summary>
+            UIElement에 바인딩할 EventCollection을 나타내는 Attached Property입니다.
+            (여러 Event를 한 번에 부착)
+            </summary>
+        </member>
+        <member name="F:HYSoft.Presentation.Interactivity.EventToCommand.BindingProperty">
+            <summary>
+            단일 Event 바인딩용 Attached Property
+            </summary>
+        </member>
+        <member name="T:HYSoft.Presentation.Modal.ModalBaseView">
+            <summary>
+            ModalBaseView.xaml에 대한 상호 작용 논리
+            </summary>
+            <summary>
+            ModalBaseView
+            </summary>
+        </member>
+        <member name="M:HYSoft.Presentation.Modal.ModalBaseView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:HYSoft.Presentation.Modal.ModalManager.Open(System.Object)">
+            <summary>
+            동기 모달 Open. UI 스레드에서 호출해야 합니다.
+            </summary>
+        </member>
+        <member name="M:HYSoft.Presentation.Modal.ModalManager.Close(System.Object,HYSoft.Presentation.Modal.ModalResult)">
+            <summary>
+            팝업 닫기(+ 모달 결과 전달). 팝업 내부 OK/Cancel 버튼 커맨드 등에서 호출.
+            </summary>
+        </member>
+    </members>
+</doc>

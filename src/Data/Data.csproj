@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0-windows</TargetFramework>
 		<RootNamespace>HYSoft.Data</RootNamespace>
 		<PackageOutputPath>$(ProjectDir)bin\$(Configuration)\</PackageOutputPath>
 		<UseWPF>true</UseWPF>
@@ -15,13 +14,6 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<LangVersion>latest</LangVersion>
 	</PropertyGroup>
-
-	<ItemGroup>
-	  <None Include="..\..\README.md" Link="README.md">
-	    <PackagePath>\</PackagePath>
-	    <Pack>true</Pack>
-	  </None>
-	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.8" />

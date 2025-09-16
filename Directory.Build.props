@@ -6,7 +6,7 @@
 		<Version>$([System.IO.File]::ReadAllText('$(MSBuildThisFileDirectory).to_publish_version').Trim())</Version>
 		<PackageVersion>$(Version)</PackageVersion>
 		<UseWPF>true</UseWPF>
-		<TargetFramework>net8.0-windows</TargetFramework>
+		<TargetFramework>net8.0-windows7.0</TargetFramework>
 
 		<!-- Git 저장소 메타데이터 -->
 		<RepositoryUrl>https://github.com/dlghksdyd/HYSoft</RepositoryUrl>
@@ -23,19 +23,16 @@
 		<HysoftXmlns>http://schemas.hysoft.com/wpf/2025/xaml</HysoftXmlns>
 		<HysoftXmlnsPrefix>hy</HysoftXmlnsPrefix>
 		<HysoftXmlnsIncludeAll>true</HysoftXmlnsIncludeAll>
-		<HysoftXmlnsExclude>HYSoft.Communication.Internal.*;</HysoftXmlnsExclude>
 		<HysoftXmlnsEnabled>true</HysoftXmlnsEnabled>
 
 		<!-- NuGet 페이지에 README 노출 기본값 -->
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 
 		<!-- 스크립트 루트 -->
-		<HysoftScriptsDir>$(SolutionDir)scripts\</HysoftScriptsDir>
+		<HySoftScriptsDir>$(SolutionDir)scripts\</HySoftScriptsDir>
 
-		<!-- pwsh 우선, 없으면 Windows PowerShell -->
-		<HysoftPwshExe Condition="'$(HysoftPwshExe)'=='' and Exists('C:\Program Files\PowerShell\7\pwsh.exe')">C:\Program Files\PowerShell\7\pwsh.exe</HysoftPwshExe>
-		<HysoftPwshExe Condition="'$(HysoftPwshExe)'=='' and Exists('$(LOCALAPPDATA)\Microsoft\WindowsApps\pwsh.exe')">$(LOCALAPPDATA)\Microsoft\WindowsApps\pwsh.exe</HysoftPwshExe>
-		<HysoftPwshExe Condition="'$(HysoftPwshExe)'==''">$(WINDIR)\System32\WindowsPowerShell\v1.0\powershell.exe</HysoftPwshExe>
+		<!-- Windows PowerShell -->
+		<HysoftPwshExe>$(WINDIR)\System32\WindowsPowerShell\v1.0\powershell.exe</HysoftPwshExe>
 	</PropertyGroup>
 
 	<!-- 루트 README를 nupkg에 포함 -->

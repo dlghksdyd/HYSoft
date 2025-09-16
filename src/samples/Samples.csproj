@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UseWPF>true</UseWPF>
+		
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Prism.Wpf" Version="9.0.537" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="Communication">
+	    <HintPath>..\Bundle\Staging\net8.0-windows\Communication.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Data">
+	    <HintPath>..\Bundle\Staging\net8.0-windows\Data.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Presentation">
+	    <HintPath>..\Bundle\Staging\net8.0-windows\Presentation.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Presentation.Styles">
+	    <HintPath>..\Bundle\Staging\net8.0-windows\Presentation.Styles.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+
+</Project>

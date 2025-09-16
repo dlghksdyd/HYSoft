@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0-windows</TargetFramework>
 		<RootNamespace>HYSoft.Presentation</RootNamespace>
 		<UseWPF>true</UseWPF>
 		<PackageOutputPath>$(ProjectDir)bin\$(Configuration)\</PackageOutputPath>
@@ -17,22 +16,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="Converter\**" />
-	  <Compile Remove="Interactivity\NewFolder\**" />
-	  <EmbeddedResource Remove="Converter\**" />
-	  <EmbeddedResource Remove="Interactivity\NewFolder\**" />
-	  <None Remove="Converter\**" />
-	  <None Remove="Interactivity\NewFolder\**" />
-	  <Page Remove="Converter\**" />
-	  <Page Remove="Interactivity\NewFolder\**" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="Prism.Wpf" Version="9.0.537" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\Data\Data.csproj" />
-	</ItemGroup>
-
+	
 </Project>

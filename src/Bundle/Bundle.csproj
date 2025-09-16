@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<!-- 이 프로젝트 자체는 컴파일 산출물이 필요 없음 -->
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+
+		<!-- Nuget 메타데이터 -->
+		<PackageId>HySoft.Bundle</PackageId>
+		<Authors>HySoft</Authors>
+		<Description>Bundled HySoft assemblies</Description>
+		<IsPackable>true</IsPackable>
+		<IncludeBuildOutput>false</IncludeBuildOutput>
+		<PackageOutputPath>$(SolutionDir)nuget\</PackageOutputPath>
+	</PropertyGroup>
+
+	<!-- 팩 전에 스테이징 안의 파일들을 nupkg에 포함 (Bundle 프로젝트만) -->
+	<Target Name="IncludeStagingFiles" Condition="'$(MSBuildProjectName)'=='Bundle'" AfterTargets="Build">
+		<!-- 스테이징 경로 보장 -->
+		<MakeDir Directories="$(HysoftBundleStageLib)" />
+
+		<!-- 스테이징 안의 파일들을 nupkg에 포함 -->
+		<ItemGroup>
+			<None Include="$(HysoftBundleStageLib)**\*.dll" Pack="true" PackagePath="lib/$(TargetFramework)" />
+			<None Include="$(HysoftBundleStageLib)**\*.xml" Pack="true" PackagePath="lib/$(TargetFramework)" />
+		</ItemGroup>
+	</Target>
+
+	<!-- 빌드하면 곧바로 Pack까지 수행 -->
+	<Target Name="PackOnBuild" AfterTargets="IncludeStagingFiles">
+		<MSBuild Projects="$(MSBuildProjectFullPath)" Targets="Pack" />
+	</Target>
+</Project>
