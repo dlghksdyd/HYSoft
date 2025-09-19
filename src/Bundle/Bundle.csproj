@@ -19,8 +19,10 @@
 
 		<!-- 스테이징 안의 파일들을 nupkg에 포함 -->
 		<ItemGroup>
-			<None Include="$(HysoftBundleStageLib)**\*.dll" Pack="true" PackagePath="lib/$(TargetFramework)" />
-			<None Include="$(HysoftBundleStageLib)**\*.xml" Pack="true" PackagePath="lib/$(TargetFramework)" />
+			<None Include="$(HysoftBundleStageLib)*.xml" Pack="true" PackagePath="lib/$(TargetFramework)" />
+			<None Include="$(HysoftBundleStageLib)*.dll" Pack="true" PackagePath="lib/$(TargetFramework)" />
+			<None Include="$(HysoftBundleStageLib)Docs\**\*.exe" Pack="true" PackagePath="lib/$(TargetFramework)" />
+			<None Include="$(HysoftBundleStageLib)Docs\**\*.runtimeconfig.json" Pack="true" PackagePath="lib/$(TargetFramework)" />
 		</ItemGroup>
 	</Target>
 

@@ -1,6 +1,10 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
+using System.Windows.Controls;
+using System.Windows.Input;
 using HYSoft.Presentation.Interactivity;
+using HYSoft.Presentation.Styles.Controls;
 using HYSoft.Presentation.Styles.Icons;
 
 namespace Docs.Mvvm.Styles.Icons
@@ -21,5 +25,21 @@ namespace Docs.Mvvm.Styles.Icons
                 _keys.Add(key);
             }
         }
+
+        private ICommand _searchTextChanged;
+        public ICommand SearchTextChanged => _searchTextChanged ?? new RelayCommand<EventPayload>((p) =>
+        {
+            if (p?.Sender is not HyTextBox textBox) return;
+            var text = textBox.Text.ToLower();
+
+            _keys.Clear();
+            foreach (EIconKeys key in System.Enum.GetValues(typeof(EIconKeys)))
+            {
+                if (key.ToString().ToLower().Contains(text))
+                {
+                    _keys.Add(key);
+                }
+            }
+        });
     }
 }

@@ -7,8 +7,8 @@
     xmlns:local="clr-namespace:Docs"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="HySoft Documentation"
-    Width="800"
-    Height="600"
+    Width="1200"
+    Height="800"
     d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
     WindowStartupLocation="CenterScreen"
     WindowState="Normal"
@@ -26,10 +26,13 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="48" />
-                <RowDefinition Height="40" />
+                <RowDefinition Height="62" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Border Padding="16,4" Background="{hy:Color TitleBarBackground}">
+            <Border
+                Padding="16,4"
+                hy:WindowDragBehavior.EnableDragMove="True"
+                Background="{hy:Color TitleBarBackground}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -73,6 +76,10 @@
                     </hy:HyButton>
                 </Grid>
             </Border>
+            <Border
+                Grid.Row="1"
+                Padding="40,0"
+                Background="{hy:Color NavigationMenuBarBg}" />
             <ContentPresenter Grid.Row="2" Content="{Binding BottomContent}" />
             <ContentPresenter
                 Grid.Row="0"

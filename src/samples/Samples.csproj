@@ -9,22 +9,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Prism.Wpf" Version="9.0.537" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Reference Include="Communication">
-	    <HintPath>..\Bundle\Staging\net8.0-windows7.0\Communication.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Data">
-	    <HintPath>..\Bundle\Staging\net8.0-windows7.0\Data.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Presentation">
-	    <HintPath>..\Bundle\Staging\net8.0-windows7.0\Presentation.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Presentation.Styles">
-	    <HintPath>..\Bundle\Staging\net8.0-windows7.0\Presentation.Styles.dll</HintPath>
-	  </Reference>
+	  <PackageReference Include="HySoft.Bundle" Version="1.0.69" />
 	</ItemGroup>
 
 </Project>

@@ -4,17 +4,16 @@ using HYSoft.Communication.Tcp.Client;
 using HYSoft.Communication.Tcp.Client.Protocol.FileTransfer;
 using HYSoft.Communication.Tcp.Server;
 using HYSoft.Communication.Tcp.Server.Protocol.FileTransfer;
-using Prism.Commands;
-using Prism.Mvvm;
 using System;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using HYSoft.Presentation.Interactivity;
 
 namespace Samples.Communication.Tcp.Client.Protocol.FileTransfer
 {
-    public class FileTransferClientViewModel : BindableBase
+    public class FileTransferClientViewModel: NotifyPropertyChangedBase
     {
         private string _status = "Idle";
         public string Status
@@ -33,7 +32,7 @@ namespace Samples.Communication.Tcp.Client.Protocol.FileTransfer
         private FileTransferClient? _fileClient;
         private readonly string _filePath = "./FileTransferTestFile.txt";
         
-        public ICommand ClientStartCommand => new DelegateCommand(() =>
+        public ICommand ClientStartCommand => new RelayCommand(() =>
         {
             try
             {
@@ -60,7 +59,7 @@ namespace Samples.Communication.Tcp.Client.Protocol.FileTransfer
         });
 
         private ICommand? _clientSendFileCommand;
-        public ICommand ClientSendFileCommand => _clientSendFileCommand ??= new DelegateCommand(async () =>
+        public ICommand ClientSendFileCommand => _clientSendFileCommand ??= new RelayCommand(async () =>
         {
             if (_fileClient is null)
             {

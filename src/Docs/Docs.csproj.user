@@ -8,5 +8,8 @@
     <Compile Update="Mvvm\Styles\Icons\IconsView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Mvvm\Styles\LeftMenuView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

@@ -1,9 +1,9 @@
-﻿using Prism.Mvvm;
-using System.Windows;
+﻿using System.Windows;
+using HYSoft.Presentation.Interactivity;
 
 namespace HYSoft.Presentation.DragDrop
 {
-    public class DragDataContext : BindableBase, IDragDataContext
+    public class DragDataContext : NotifyPropertyChangedBase, IDragDataContext
     {
         private UIElement? _dragScope = new UIElement();
         public UIElement? DragScope

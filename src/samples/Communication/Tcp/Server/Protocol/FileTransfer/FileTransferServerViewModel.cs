@@ -7,10 +7,11 @@ using HYSoft.Communication.Tcp.Server.Protocol.FileTransfer;
 using System.IO;
 using System.Net;
 using System.Windows.Input;
+using HYSoft.Presentation.Interactivity;
 
 namespace Samples.Communication.Tcp.Server.Protocol.FileTransfer
 {
-    public class FileTransferServerViewModel : BindableBase
+    public class FileTransferServerViewModel : NotifyPropertyChangedBase
     {
         private string _status = "Idle";
         public string Status
@@ -29,7 +30,7 @@ namespace Samples.Communication.Tcp.Server.Protocol.FileTransfer
 
         // ---- 명령 ----
         private ICommand? _serverStartCommand;
-        public ICommand ServerStartCommand => _serverStartCommand ??= new DelegateCommand(async () =>
+        public ICommand ServerStartCommand => _serverStartCommand ??= new RelayCommand(async () =>
         {
             try
             {

@@ -25,7 +25,11 @@
                 BorderBrush="{hy:Color BorderDefault}"
                 BorderThickness="1"
                 WaterMark="Search"
-                WaterMarkForeground="{hy:Color TextWatermark}" />
+                WaterMarkForeground="{hy:Color TextWatermark}">
+                <hy:EventToCommand.Binding>
+                    <hy:Event Command="{Binding SearchTextChanged, UpdateSourceTrigger=PropertyChanged}" RoutedEvent="TextBox.TextChanged" />
+                </hy:EventToCommand.Binding>
+            </hy:HyTextBox>
         </Border>
         <hy:HyScrollViewer Grid.Row="1">
             <ItemsControl Grid.Row="1" ItemsSource="{Binding Keys}">
