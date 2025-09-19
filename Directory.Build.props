@@ -5,15 +5,16 @@
 		<Company>HYSoft</Company>
 		<Version>$([System.IO.File]::ReadAllText('$(MSBuildThisFileDirectory).to_publish_version').Trim())</Version>
 		<PackageVersion>$(Version)</PackageVersion>
+		<PackageTags>wpf;ui;mvvm</PackageTags>
+		<Description>WPF Development kit.</Description>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<RepositoryUrl>https://github.com/dlghksdyd/HYSoft</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/dlghksdyd/HYSoft</PackageProjectUrl>
+		<RepositoryType>git</RepositoryType>
 
 		<!-- 개발 환경 -->
 		<UseWPF>true</UseWPF>
 		<TargetFramework>net8.0-windows7.0</TargetFramework>
-
-		<!-- Git 저장소 메타데이터 -->
-		<RepositoryUrl>https://github.com/dlghksdyd/HYSoft</RepositoryUrl>
-		<RepositoryType>git</RepositoryType>
-		<PackageProjectUrl>https://github.com/dlghksdyd/HYSoft</PackageProjectUrl>
 
 		<!-- 문서/언어 기본 -->
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
