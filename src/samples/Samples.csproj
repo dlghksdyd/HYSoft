@@ -9,7 +9,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="HySoft.Bundle" Version="1.0.69" />
+	  <PackageReference Include="HySoft.Bundle" Version="1.0.71" />
 	</ItemGroup>
 
 </Project>

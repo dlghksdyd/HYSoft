@@ -23,6 +23,7 @@
 			<None Include="$(HysoftBundleStageLib)*.dll" Pack="true" PackagePath="lib/$(TargetFramework)" />
 			<None Include="$(HysoftBundleStageLib)Docs\**\*.exe" Pack="true" PackagePath="lib/$(TargetFramework)" />
 			<None Include="$(HysoftBundleStageLib)Docs\**\*.runtimeconfig.json" Pack="true" PackagePath="lib/$(TargetFramework)" />
+			<None Include="$(HysoftBundleStageLib)Resources\**\*" Pack="true" PackagePath="resources" />
 		</ItemGroup>
 	</Target>
 
