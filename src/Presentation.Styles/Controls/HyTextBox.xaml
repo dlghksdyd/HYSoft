@@ -40,7 +40,7 @@
                             <!--  실제 입력 박스  -->
                             <ScrollViewer
                                 x:Name="PART_ContentHost"
-                                Margin="0"
+                                Margin="-2"
                                 Padding="{TemplateBinding Padding}"
                                 HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"

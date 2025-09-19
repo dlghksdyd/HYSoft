@@ -6,13 +6,28 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Docs.Mvvm.Popup;
+using Docs.Mvvm.Styles.Icons;
 using HYSoft.Presentation.Interactivity;
 using HYSoft.Presentation.Modal;
 
 namespace Docs
 {
-    public class MainWindowViewModel
+    public class MainWindowViewModel : NotifyPropertyChangedBase
     {
+        public MainWindowViewModel()
+        {
+            var view = new IconsView();
+            view.DataContext = new IconsViewModel();
+            BottomContent = view;
+        }
+
+        private object _bottomContent;
+        public object BottomContent
+        {
+            get => _bottomContent;
+            set => SetProperty(ref _bottomContent, value);
+        }
+        
         public ICommand ExitAppCommand => new RelayCommand(() =>
         {
             var result = new PopupInfoViewModel()

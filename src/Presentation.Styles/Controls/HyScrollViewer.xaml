@@ -2,6 +2,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:c="clr-namespace:HYSoft.Presentation.Styles.ColorTokens"
+    xmlns:icon="clr-namespace:HYSoft.Presentation.Styles.Icons"
     xmlns:local="clr-namespace:HYSoft.Presentation.Styles.Controls">
 
     <Style x:Key="RepeatButtonTransparent" TargetType="{x:Type RepeatButton}">
@@ -20,8 +21,148 @@
         </Setter>
     </Style>
 
+    <!--  공통 브러시: 필요 시 색 토큰으로 교체  -->
+    <SolidColorBrush x:Key="ScrollButtonBg" Color="#00000000" />
+    <!--  Transparent  -->
+    <SolidColorBrush x:Key="ScrollButtonBgHover" Color="#10000000" />
+    <SolidColorBrush x:Key="ScrollButtonBgPressed" Color="#20000000" />
+    <SolidColorBrush x:Key="ScrollButtonIcon" Color="#7A7A7A" />
+
+    <!--  Up  -->
+    <Style x:Key="RepeatButtonUp" TargetType="{x:Type RepeatButton}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Grid>
+                        <Rectangle x:Name="Bg" Fill="{StaticResource ScrollButtonBg}" />
+                        <Path
+                            x:Name="Icon"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="M 2,6 L 5.5,2 L 9,6"
+                            Stroke="{StaticResource ScrollButtonIcon}"
+                            StrokeEndLineCap="Round"
+                            StrokeLineJoin="Round"
+                            StrokeStartLineCap="Round"
+                            StrokeThickness="2" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bg" Property="Fill" Value="{StaticResource ScrollButtonBgHover}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Bg" Property="Fill" Value="{StaticResource ScrollButtonBgPressed}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Down  -->
+    <Style
+        x:Key="RepeatButtonDown"
+        BasedOn="{StaticResource RepeatButtonUp}"
+        TargetType="{x:Type RepeatButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Grid>
+                        <Rectangle x:Name="Bg" Fill="{StaticResource ScrollButtonBg}" />
+                        <Path
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="M 2,2 L 5.5,6 L 9,2"
+                            Stroke="{StaticResource ScrollButtonIcon}"
+                            StrokeEndLineCap="Round"
+                            StrokeLineJoin="Round"
+                            StrokeStartLineCap="Round"
+                            StrokeThickness="2" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bg" Property="Fill" Value="{StaticResource ScrollButtonBgHover}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Bg" Property="Fill" Value="{StaticResource ScrollButtonBgPressed}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Left  -->
+    <Style
+        x:Key="RepeatButtonLeft"
+        BasedOn="{StaticResource RepeatButtonUp}"
+        TargetType="{x:Type RepeatButton}">
+        <Setter Property="Width" Value="20" />
+        <Setter Property="Height" Value="Auto" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Grid>
+                        <Rectangle x:Name="Bg" Fill="{StaticResource ScrollButtonBg}" />
+                        <Path
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="M 6,2 L 2,5.5 L 6,9"
+                            Stroke="{StaticResource ScrollButtonIcon}"
+                            StrokeEndLineCap="Round"
+                            StrokeLineJoin="Round"
+                            StrokeStartLineCap="Round"
+                            StrokeThickness="2" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bg" Property="Fill" Value="{StaticResource ScrollButtonBgHover}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Bg" Property="Fill" Value="{StaticResource ScrollButtonBgPressed}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Right  -->
+    <Style
+        x:Key="RepeatButtonRight"
+        BasedOn="{StaticResource RepeatButtonLeft}"
+        TargetType="{x:Type RepeatButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Grid>
+                        <Rectangle x:Name="Bg" Fill="{StaticResource ScrollButtonBg}" />
+                        <Path
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="M 2,2 L 6,5.5 L 2,9"
+                            Stroke="{StaticResource ScrollButtonIcon}"
+                            StrokeEndLineCap="Round"
+                            StrokeLineJoin="Round"
+                            StrokeStartLineCap="Round"
+                            StrokeThickness="2" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bg" Property="Fill" Value="{StaticResource ScrollButtonBgHover}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Bg" Property="Fill" Value="{StaticResource ScrollButtonBgPressed}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="ScrollBarThumbVertical" TargetType="{x:Type Thumb}">
-        <Setter Property="Width" Value="8" />
         <Setter Property="IsTabStop" Value="false" />
         <Setter Property="Template">
             <Setter.Value>
@@ -31,8 +172,8 @@
                         Width="{TemplateBinding Width}"
                         Height="{TemplateBinding Height}"
                         Fill="{c:Color ScrollbarThumb}"
-                        RadiusX="5"
-                        RadiusY="5"
+                        RadiusX="3"
+                        RadiusY="3"
                         SnapsToDevicePixels="True" />
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
@@ -50,7 +191,6 @@
     </Style>
 
     <Style x:Key="ScrollBarThumbHorizontal" TargetType="{x:Type Thumb}">
-        <Setter Property="Height" Value="8" />
         <Setter Property="IsTabStop" Value="false" />
         <Setter Property="Template">
             <Setter.Value>
@@ -60,8 +200,8 @@
                         Width="{TemplateBinding Width}"
                         Height="{TemplateBinding Height}"
                         Fill="{c:Color ScrollbarThumb}"
-                        RadiusX="5"
-                        RadiusY="5"
+                        RadiusX="3"
+                        RadiusY="3"
                         SnapsToDevicePixels="True" />
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
@@ -84,35 +224,52 @@
         <Setter Property="Width" Value="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" />
         <Setter Property="MinWidth" Value="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" />
         <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Margin" Value="0" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ScrollBar}">
                     <Border
+                        Padding="2"
                         Background="{c:Color ScrollbarTrack}"
                         BorderBrush="{c:Color ScrollbarBorder}"
                         BorderThickness="1">
-                        <Grid SnapsToDevicePixels="true">
+                        <!--  핵심: 고정 버튼(위/아래)은 Track 바깥의 Auto 행에 배치  -->
+                        <Grid SnapsToDevicePixels="True">
                             <Grid.RowDefinitions>
-                                <RowDefinition MaxHeight="0" />
-                                <RowDefinition Height="0.00001*" />
-                                <RowDefinition MaxHeight="0" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <Track
-                                x:Name="PART_Track"
-                                Grid.Row="1"
-                                Margin="0,4,0,4"
-                                IsDirectionReversed="true"
-                                IsEnabled="{TemplateBinding IsMouseOver}">
-                                <Track.DecreaseRepeatButton>
-                                    <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Style="{StaticResource RepeatButtonTransparent}" />
-                                </Track.DecreaseRepeatButton>
-                                <Track.IncreaseRepeatButton>
-                                    <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Style="{StaticResource RepeatButtonTransparent}" />
-                                </Track.IncreaseRepeatButton>
-                                <Track.Thumb>
-                                    <Thumb Style="{StaticResource ScrollBarThumbVertical}" />
-                                </Track.Thumb>
-                            </Track>
+
+                            <!--  위 고정 화살표 버튼  -->
+                            <RepeatButton
+                                Grid.Row="0"
+                                Margin="0,0,0,8"
+                                Command="{x:Static ScrollBar.LineUpCommand}"
+                                Style="{StaticResource RepeatButtonUp}" />
+
+                            <!--  중앙 트랙: 페이지 이동 영역 + Thumb  -->
+                            <Grid Grid.Row="1">
+                                <!--  페이지 이동용(투명) 버튼이 Thumb 앞/뒤 영역을 차지  -->
+                                <Track x:Name="PART_Track" IsDirectionReversed="True">
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Style="{StaticResource RepeatButtonTransparent}" />
+                                    </Track.DecreaseRepeatButton>
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Style="{StaticResource RepeatButtonTransparent}" />
+                                    </Track.IncreaseRepeatButton>
+                                    <Track.Thumb>
+                                        <Thumb Style="{StaticResource ScrollBarThumbVertical}" />
+                                    </Track.Thumb>
+                                </Track>
+                            </Grid>
+
+                            <!--  아래 고정 화살표 버튼  -->
+                            <RepeatButton
+                                Grid.Row="2"
+                                Margin="0,8,0,0"
+                                Command="{x:Static ScrollBar.LineDownCommand}"
+                                Style="{StaticResource RepeatButtonDown}" />
                         </Grid>
                     </Border>
                 </ControlTemplate>
@@ -131,28 +288,42 @@
                                 Background="{c:Color ScrollbarTrack}"
                                 BorderBrush="{c:Color ScrollbarBorder}"
                                 BorderThickness="1">
-                                <Grid SnapsToDevicePixels="true">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition MaxHeight="0" />
-                                        <RowDefinition Height="0.00001*" />
-                                        <RowDefinition MaxHeight="0" />
-                                    </Grid.RowDefinitions>
-                                    <Track
-                                        x:Name="PART_Track"
-                                        Grid.Row="1"
-                                        Margin="0,4,0,4"
-                                        IsDirectionReversed="true"
-                                        IsEnabled="{TemplateBinding IsMouseOver}">
-                                        <Track.DecreaseRepeatButton>
-                                            <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Style="{StaticResource RepeatButtonTransparent}" />
-                                        </Track.DecreaseRepeatButton>
-                                        <Track.IncreaseRepeatButton>
-                                            <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Style="{StaticResource RepeatButtonTransparent}" />
-                                        </Track.IncreaseRepeatButton>
-                                        <Track.Thumb>
-                                            <Thumb Style="{StaticResource ScrollBarThumbHorizontal}" />
-                                        </Track.Thumb>
-                                    </Track>
+                                <Grid SnapsToDevicePixels="True">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--  왼쪽 고정 화살표  -->
+                                    <RepeatButton
+                                        Grid.Column="0"
+                                        Command="{x:Static ScrollBar.LineLeftCommand}"
+                                        Style="{StaticResource RepeatButtonLeft}" />
+
+                                    <!--  중앙 트랙  -->
+                                    <Grid Grid.Column="1">
+                                        <Track
+                                            x:Name="PART_Track"
+                                            Margin="4,0,4,0"
+                                            IsDirectionReversed="True">
+                                            <Track.DecreaseRepeatButton>
+                                                <RepeatButton Command="{x:Static ScrollBar.PageLeftCommand}" Style="{StaticResource RepeatButtonTransparent}" />
+                                            </Track.DecreaseRepeatButton>
+                                            <Track.IncreaseRepeatButton>
+                                                <RepeatButton Command="{x:Static ScrollBar.PageRightCommand}" Style="{StaticResource RepeatButtonTransparent}" />
+                                            </Track.IncreaseRepeatButton>
+                                            <Track.Thumb>
+                                                <Thumb Style="{StaticResource ScrollBarThumbHorizontal}" />
+                                            </Track.Thumb>
+                                        </Track>
+                                    </Grid>
+
+                                    <!--  오른쪽 고정 화살표  -->
+                                    <RepeatButton
+                                        Grid.Column="2"
+                                        Command="{x:Static ScrollBar.LineRightCommand}"
+                                        Style="{StaticResource RepeatButtonRight}" />
                                 </Grid>
                             </Border>
                         </ControlTemplate>

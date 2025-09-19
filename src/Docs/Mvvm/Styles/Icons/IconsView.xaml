@@ -44,7 +44,11 @@
                                 <RowDefinition />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            <hy:HyIcon Grid.Row="0" Source="{Binding}" />
+                            <hy:HyIcon
+                                Grid.Row="0"
+                                Width="32"
+                                Height="32"
+                                Source="{Binding}" />
                             <TextBlock Grid.Row="1" Text="{Binding}" />
                         </Grid>
                     </DataTemplate>
