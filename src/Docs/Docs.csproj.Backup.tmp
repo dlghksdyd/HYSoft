@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Communication">
+      <HintPath>..\Bundle\Staging\net8.0-windows7.0\Communication.dll</HintPath>
+    </Reference>
+    <Reference Include="Data">
+      <HintPath>..\Bundle\Staging\net8.0-windows7.0\Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Presentation">
+      <HintPath>..\Bundle\Staging\net8.0-windows7.0\Presentation.dll</HintPath>
+    </Reference>
+    <Reference Include="Presentation.Styles">
+      <HintPath>..\Bundle\Staging\net8.0-windows7.0\Presentation.Styles.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Popup\" />
+  </ItemGroup>
+
+</Project>

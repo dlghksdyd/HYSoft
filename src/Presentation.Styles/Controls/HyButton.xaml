@@ -5,17 +5,17 @@
     xmlns:local="clr-namespace:HYSoft.Presentation.Styles.Controls">
 
     <Style TargetType="{x:Type local:HyButton}">
-        <Setter Property="Foreground" Value="{c:Color ButtonPrimaryText}" />
+        <Setter Property="Foreground" Value="{c:Color ButtonPrimaryFg}" />
         <Setter Property="FontSize" Value="20" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="Background" Value="{c:Color ButtonPrimarySurface}" />
         <Setter Property="BorderBrush" Value="{c:Color ButtonPrimaryBorder}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="Background" Value="{c:Color ButtonPrimaryBg}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:HyButton}">

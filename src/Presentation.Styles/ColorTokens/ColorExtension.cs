@@ -34,7 +34,7 @@ namespace HYSoft.Presentation.Styles.ColorTokens
         private Dictionary<EColorKeys, Brush>? _map;
 
         private static ColorPalette? _current;
-        public static ColorPalette Current => _current = Initialize();
+        public static ColorPalette Current => _current ??= Initialize();
 
         public Brush GetBrush(EColorKeys key)
         {
@@ -43,8 +43,6 @@ namespace HYSoft.Presentation.Styles.ColorTokens
 
         private static ColorPalette Initialize()
         {
-            if (_current is not null) return _current;
-
             var p = new ColorPalette
             {
                 _map = ColorGenerator.Generate()
@@ -54,5 +52,13 @@ namespace HYSoft.Presentation.Styles.ColorTokens
         }
 
         protected override Freezable CreateInstanceCore() => new ColorPalette();
+    }
+
+    public static class HyColor
+    {
+        public static Brush GetBrush(EColorKeys key)
+        {
+            return ColorPalette.Current.GetBrush(key);
+        }
     }
 }

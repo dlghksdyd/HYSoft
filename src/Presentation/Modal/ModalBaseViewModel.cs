@@ -1,17 +1,11 @@
-﻿using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
+﻿using HYSoft.Presentation.Interactivity;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Media;
 
 namespace HYSoft.Presentation.Modal
 {
-    public class ModalBaseViewModel(Brush background) : BindableBase
+    public class ModalBaseViewModel(Brush background) : NotifyPropertyChangedBase
     {
         private ObservableCollection<ModalInfo> _popupList = [];
         public ObservableCollection<ModalInfo> PopupList
@@ -37,7 +31,7 @@ namespace HYSoft.Presentation.Modal
         }
     }
 
-    public class ModalInfo : BindableBase
+    public class ModalInfo : NotifyPropertyChangedBase
     {
         private object? _content;
         public object? Content

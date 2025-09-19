@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
@@ -25,6 +22,27 @@ namespace HYSoft.Presentation.Modal
             View = new ModalBaseView();
             ViewModel = new ModalBaseViewModel(background);
             View.DataContext = ViewModel;
+        }
+
+        public static void Configure(string backgroundHex)
+        {
+            if (string.IsNullOrWhiteSpace(backgroundHex))
+                throw new ArgumentNullException(nameof(backgroundHex));
+
+            try
+            {
+                var color = (Color)ColorConverter.ConvertFromString(backgroundHex)!;
+                var brush = new SolidColorBrush(color);
+                Configure(brush);
+            }
+            catch (FormatException)
+            {
+                throw new ArgumentException($"배경 색상 문자열이 올바르지 않습니다. 입력값: '{backgroundHex}'", nameof(backgroundHex));
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException($"배경 색상 변환 중 오류 발생: {backgroundHex}", nameof(backgroundHex), ex);
+            }
         }
 
         public static void RegisterView<TView, TViewModel>()

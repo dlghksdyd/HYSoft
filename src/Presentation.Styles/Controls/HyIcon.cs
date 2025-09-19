@@ -225,7 +225,6 @@ namespace HYSoft.Presentation.Styles.Controls
 
             CaptureMouse();
             SetCurrentValue(IsPressedProperty, true);
-            e.Handled = true;
         }
 
         protected override void OnMouseLeftButtonUp(System.Windows.Input.MouseButtonEventArgs e)
@@ -237,7 +236,6 @@ namespace HYSoft.Presentation.Styles.Controls
                 ReleaseMouseCapture();
 
             SetCurrentValue(IsPressedProperty, false);
-            e.Handled = true;
         }
     }
 }

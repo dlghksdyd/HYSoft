@@ -1,39 +1,230 @@
-<!-- Auto-generated 2025-09-14 15:36:10 -->
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:c="clr-namespace:HYSoft.Presentation.Styles.ColorTokens">
+<!--  Auto-generated 2025-09-19 09:32:23  -->
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:c="clr-namespace:HYSoft.Presentation.Styles.ColorTokens">
 
-    <SolidColorBrush x:Key="ButtonPrimarySurface">#ebf1f6</SolidColorBrush>
-    <SolidColorBrush x:Key="ButtonPrimaryText">#293b4d</SolidColorBrush>
-    <SolidColorBrush x:Key="ButtonPrimaryBorder">#839db4</SolidColorBrush>
-    <SolidColorBrush x:Key="TablePrimarySurfaceTitle">#1d2c3b</SolidColorBrush>
-    <SolidColorBrush x:Key="TablePrimarySurfaceContent">#293b4d</SolidColorBrush>
-    <SolidColorBrush x:Key="TablePrimaryBorderTitle">#a4b8cd</SolidColorBrush>
-    <SolidColorBrush x:Key="TablePrimaryBorderContent">#a4b8cd</SolidColorBrush>
-    <SolidColorBrush x:Key="TablePrimaryTextTitle">#c5d4e3</SolidColorBrush>
-    <SolidColorBrush x:Key="TablePrimaryTextContent">#c5d4e3</SolidColorBrush>
-    <SolidColorBrush x:Key="TablePrimarySurfaceContentHover">#40586d</SolidColorBrush>
-    <SolidColorBrush x:Key="TextBlockPrimaryText">#ebf1f6</SolidColorBrush>
-    <SolidColorBrush x:Key="TextBlockPrimaryBorder">#c5d4e3</SolidColorBrush>
-    <SolidColorBrush x:Key="ScrollBarPrimaryBar">#c5d4e3</SolidColorBrush>
-    <SolidColorBrush x:Key="IconPrimaryFill">#f2f6fa</SolidColorBrush>
-    <SolidColorBrush x:Key="SectionPrimaryMenu">#40586d</SolidColorBrush>
-    <SolidColorBrush x:Key="SectionPrimaryContent">#293b4d</SolidColorBrush>
+    <SolidColorBrush x:Key="TextPrimary">#6e6e6e</SolidColorBrush>
+    <SolidColorBrush x:Key="TextSecondary">#1d2c3b</SolidColorBrush>
+    <SolidColorBrush x:Key="TextTertiary">#293b4d</SolidColorBrush>
+    <SolidColorBrush x:Key="TextDisabled">#40586d</SolidColorBrush>
+    <SolidColorBrush x:Key="TextInverse">#f2f6fa</SolidColorBrush>
+    <SolidColorBrush x:Key="TextLink">#0672cb</SolidColorBrush>
+    <SolidColorBrush x:Key="TextError">#bb2a33</SolidColorBrush>
+    <SolidColorBrush x:Key="TextSuccess">#436f00</SolidColorBrush>
+    <SolidColorBrush x:Key="TextWarning">#6d3a00</SolidColorBrush>
+    <SolidColorBrush x:Key="TextInfo">#0468a1</SolidColorBrush>
+    <SolidColorBrush x:Key="TextWatermark">#d2d2d2</SolidColorBrush>
+    <SolidColorBrush x:Key="IconDefault">#1d2c3b</SolidColorBrush>
+    <SolidColorBrush x:Key="IconInverse">#ebf1f6</SolidColorBrush>
+    <SolidColorBrush x:Key="IconDisabled">#40586d</SolidColorBrush>
+    <SolidColorBrush x:Key="IconSuccess">#4f7d00</SolidColorBrush>
+    <SolidColorBrush x:Key="IconWarning">#925400</SolidColorBrush>
+    <SolidColorBrush x:Key="IconError">#d0353f</SolidColorBrush>
+    <SolidColorBrush x:Key="IconInfo">#0d76b2</SolidColorBrush>
+    <SolidColorBrush x:Key="SurfaceBase">#ffffff</SolidColorBrush>
+    <SolidColorBrush x:Key="SurfaceSubtle">#ebf1f6</SolidColorBrush>
+    <SolidColorBrush x:Key="SurfaceElevated">#f2f6fa</SolidColorBrush>
+    <SolidColorBrush x:Key="SurfaceInverse">#0a0e14</SolidColorBrush>
+    <SolidColorBrush x:Key="SurfaceOverlay">#0a0e14</SolidColorBrush>
+    <SolidColorBrush x:Key="BorderSubtle">#c5d4e3</SolidColorBrush>
+    <SolidColorBrush x:Key="BorderDefault">#6e6e6e</SolidColorBrush>
+    <SolidColorBrush x:Key="BorderStrong">#839db4</SolidColorBrush>
+    <SolidColorBrush x:Key="BorderDivider">#c5d4e3</SolidColorBrush>
+    <SolidColorBrush x:Key="BorderFocus">#1282d6</SolidColorBrush>
+    <SolidColorBrush x:Key="BorderError">#e4424d</SolidColorBrush>
+    <SolidColorBrush x:Key="BorderSuccess">#5d8c00</SolidColorBrush>
+    <SolidColorBrush x:Key="BorderWarning">#b36f00</SolidColorBrush>
+    <SolidColorBrush x:Key="ButtonPrimaryFg">#f2f6fa</SolidColorBrush>
+    <SolidColorBrush x:Key="ButtonPrimaryBg">#0672cb</SolidColorBrush>
+    <SolidColorBrush x:Key="ButtonPrimaryBorder">#0063b8</SolidColorBrush>
+    <SolidColorBrush x:Key="ButtonSecondaryFg">#6e6e6e</SolidColorBrush>
+    <SolidColorBrush x:Key="ButtonSecondaryBg">#ffffff</SolidColorBrush>
+    <SolidColorBrush x:Key="ButtonSecondaryBorder">#6e6e6e</SolidColorBrush>
+    <SolidColorBrush x:Key="ButtonTertiaryFg">#0063b8</SolidColorBrush>
+    <SolidColorBrush x:Key="ButtonTertiaryBg">#f2f6fa</SolidColorBrush>
+    <SolidColorBrush x:Key="ButtonTertiaryBorder">#c5d4e3</SolidColorBrush>
+    <SolidColorBrush x:Key="ButtonDestructiveFg">#f2f6fa</SolidColorBrush>
+    <SolidColorBrush x:Key="ButtonDestructiveBg">#d0353f</SolidColorBrush>
+    <SolidColorBrush x:Key="ButtonDestructiveBorder">#bb2a33</SolidColorBrush>
+    <SolidColorBrush x:Key="InputBg">#f2f6fa</SolidColorBrush>
+    <SolidColorBrush x:Key="InputFg">#0a0e14</SolidColorBrush>
+    <SolidColorBrush x:Key="InputPlaceholder">#293b4d</SolidColorBrush>
+    <SolidColorBrush x:Key="InputBorder">#a4b8cd</SolidColorBrush>
+    <SolidColorBrush x:Key="InputHelperText">#293b4d</SolidColorBrush>
+    <SolidColorBrush x:Key="InputErrorText">#bb2a33</SolidColorBrush>
+    <SolidColorBrush x:Key="FeedbackInfoFg">#002d4b</SolidColorBrush>
+    <SolidColorBrush x:Key="FeedbackInfoBg">#daf5fd</SolidColorBrush>
+    <SolidColorBrush x:Key="FeedbackInfoBorder">#61c1eb</SolidColorBrush>
+    <SolidColorBrush x:Key="FeedbackSuccessFg">#193100</SolidColorBrush>
+    <SolidColorBrush x:Key="FeedbackSuccessBg">#e9f5ce</SolidColorBrush>
+    <SolidColorBrush x:Key="FeedbackSuccessBorder">#9bc438</SolidColorBrush>
+    <SolidColorBrush x:Key="FeedbackWarningFg">#442200</SolidColorBrush>
+    <SolidColorBrush x:Key="FeedbackWarningBg">#feefcb</SolidColorBrush>
+    <SolidColorBrush x:Key="FeedbackWarningBorder">#e6ac28</SolidColorBrush>
+    <SolidColorBrush x:Key="FeedbackErrorFg">#590a0f</SolidColorBrush>
+    <SolidColorBrush x:Key="FeedbackErrorBg">#ffecee</SolidColorBrush>
+    <SolidColorBrush x:Key="FeedbackErrorBorder">#ff99a1</SolidColorBrush>
+    <SolidColorBrush x:Key="BadgeNeutralFg">#0a0e14</SolidColorBrush>
+    <SolidColorBrush x:Key="BadgeNeutralBg">#ebf1f6</SolidColorBrush>
+    <SolidColorBrush x:Key="BadgeNeutralBorder">#c5d4e3</SolidColorBrush>
+    <SolidColorBrush x:Key="BadgeInfoFg">#002d4b</SolidColorBrush>
+    <SolidColorBrush x:Key="BadgeInfoBg">#daf5fd</SolidColorBrush>
+    <SolidColorBrush x:Key="BadgeInfoBorder">#61c1eb</SolidColorBrush>
+    <SolidColorBrush x:Key="BadgeSuccessFg">#193100</SolidColorBrush>
+    <SolidColorBrush x:Key="BadgeSuccessBg">#e9f5ce</SolidColorBrush>
+    <SolidColorBrush x:Key="BadgeSuccessBorder">#9bc438</SolidColorBrush>
+    <SolidColorBrush x:Key="BadgeWarningFg">#442200</SolidColorBrush>
+    <SolidColorBrush x:Key="BadgeWarningBg">#feefcb</SolidColorBrush>
+    <SolidColorBrush x:Key="BadgeWarningBorder">#e6ac28</SolidColorBrush>
+    <SolidColorBrush x:Key="BadgeErrorFg">#590a0f</SolidColorBrush>
+    <SolidColorBrush x:Key="BadgeErrorBg">#ffecee</SolidColorBrush>
+    <SolidColorBrush x:Key="BadgeErrorBorder">#ff99a1</SolidColorBrush>
+    <SolidColorBrush x:Key="BadgeHighlightFg">#40155c</SolidColorBrush>
+    <SolidColorBrush x:Key="BadgeHighlightBg">#fbebff</SolidColorBrush>
+    <SolidColorBrush x:Key="BadgeHighlightBorder">#db9eff</SolidColorBrush>
+    <SolidColorBrush x:Key="TableHeaderBg">#ebf1f6</SolidColorBrush>
+    <SolidColorBrush x:Key="TableRowBg">#f2f6fa</SolidColorBrush>
+    <SolidColorBrush x:Key="TableRowHover">#ebf1f6</SolidColorBrush>
+    <SolidColorBrush x:Key="TableRowSelected">#eafaff</SolidColorBrush>
+    <SolidColorBrush x:Key="TableRowActive">#d9f5fd</SolidColorBrush>
+    <SolidColorBrush x:Key="TableBorder">#c5d4e3</SolidColorBrush>
+    <SolidColorBrush x:Key="TableStripe">#f2f6fa</SolidColorBrush>
+    <SolidColorBrush x:Key="NavigationSidebarBg">#f2f6fa</SolidColorBrush>
+    <SolidColorBrush x:Key="NavigationSidebarItemFg">#141d28</SolidColorBrush>
+    <SolidColorBrush x:Key="NavigationSidebarItemBgActive">#eafaff</SolidColorBrush>
+    <SolidColorBrush x:Key="NavigationSidebarItemBgHover">#ebf1f6</SolidColorBrush>
+    <SolidColorBrush x:Key="NavigationSidebarBorder">#c5d4e3</SolidColorBrush>
+    <SolidColorBrush x:Key="NavigationTabFg">#1d2c3b</SolidColorBrush>
+    <SolidColorBrush x:Key="NavigationTabIndicator">#0672cb</SolidColorBrush>
+    <SolidColorBrush x:Key="NavigationMenuBarBg">#1282d6</SolidColorBrush>
+    <SolidColorBrush x:Key="NavigationMenuBarFg">#eafaff</SolidColorBrush>
+    <SolidColorBrush x:Key="NavigationMenuBarBorder">#002a58</SolidColorBrush>
+    <SolidColorBrush x:Key="SelectionBg">#eafaff</SolidColorBrush>
+    <SolidColorBrush x:Key="SelectionBorder">#1282d6</SolidColorBrush>
+    <SolidColorBrush x:Key="SelectionFg">#00468b</SolidColorBrush>
+    <SolidColorBrush x:Key="SelectionInverseFg">#f2f6fa</SolidColorBrush>
+    <SolidColorBrush x:Key="ScrollbarTrack">#f0f0f0</SolidColorBrush>
+    <SolidColorBrush x:Key="ScrollbarThumb">#b6b6b6</SolidColorBrush>
+    <SolidColorBrush x:Key="ScrollbarBorder">#e1e1e1</SolidColorBrush>
+    <SolidColorBrush x:Key="TitleBarBackground">#293b4d</SolidColorBrush>
+    <SolidColorBrush x:Key="TitleBarText">#f2f6fa</SolidColorBrush>
+    <SolidColorBrush x:Key="TitleBarBorder">#c5d4e3</SolidColorBrush>
+    <SolidColorBrush x:Key="PopupTitleSurface">#293b4d</SolidColorBrush>
+    <SolidColorBrush x:Key="PopupTitleText">#ebf1f6</SolidColorBrush>
+    <SolidColorBrush x:Key="PopupBorder">#7e7e7e</SolidColorBrush>
+    <SolidColorBrush x:Key="PopupContentSurface">#f8f8f9</SolidColorBrush>
+    <SolidColorBrush x:Key="PopupContentText">#6E6E6E</SolidColorBrush>
 
-    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.ButtonPrimarySurface}}" Color="{Binding Color, Source={StaticResource ButtonPrimarySurface}}" />
-    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.ButtonPrimaryText}}" Color="{Binding Color, Source={StaticResource ButtonPrimaryText}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TextPrimary}}" Color="{Binding Color, Source={StaticResource TextPrimary}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TextSecondary}}" Color="{Binding Color, Source={StaticResource TextSecondary}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TextTertiary}}" Color="{Binding Color, Source={StaticResource TextTertiary}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TextDisabled}}" Color="{Binding Color, Source={StaticResource TextDisabled}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TextInverse}}" Color="{Binding Color, Source={StaticResource TextInverse}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TextLink}}" Color="{Binding Color, Source={StaticResource TextLink}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TextError}}" Color="{Binding Color, Source={StaticResource TextError}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TextSuccess}}" Color="{Binding Color, Source={StaticResource TextSuccess}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TextWarning}}" Color="{Binding Color, Source={StaticResource TextWarning}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TextInfo}}" Color="{Binding Color, Source={StaticResource TextInfo}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TextWatermark}}" Color="{Binding Color, Source={StaticResource TextWatermark}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.IconDefault}}" Color="{Binding Color, Source={StaticResource IconDefault}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.IconInverse}}" Color="{Binding Color, Source={StaticResource IconInverse}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.IconDisabled}}" Color="{Binding Color, Source={StaticResource IconDisabled}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.IconSuccess}}" Color="{Binding Color, Source={StaticResource IconSuccess}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.IconWarning}}" Color="{Binding Color, Source={StaticResource IconWarning}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.IconError}}" Color="{Binding Color, Source={StaticResource IconError}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.IconInfo}}" Color="{Binding Color, Source={StaticResource IconInfo}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.SurfaceBase}}" Color="{Binding Color, Source={StaticResource SurfaceBase}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.SurfaceSubtle}}" Color="{Binding Color, Source={StaticResource SurfaceSubtle}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.SurfaceElevated}}" Color="{Binding Color, Source={StaticResource SurfaceElevated}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.SurfaceInverse}}" Color="{Binding Color, Source={StaticResource SurfaceInverse}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.SurfaceOverlay}}" Color="{Binding Color, Source={StaticResource SurfaceOverlay}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.BorderSubtle}}" Color="{Binding Color, Source={StaticResource BorderSubtle}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.BorderDefault}}" Color="{Binding Color, Source={StaticResource BorderDefault}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.BorderStrong}}" Color="{Binding Color, Source={StaticResource BorderStrong}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.BorderDivider}}" Color="{Binding Color, Source={StaticResource BorderDivider}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.BorderFocus}}" Color="{Binding Color, Source={StaticResource BorderFocus}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.BorderError}}" Color="{Binding Color, Source={StaticResource BorderError}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.BorderSuccess}}" Color="{Binding Color, Source={StaticResource BorderSuccess}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.BorderWarning}}" Color="{Binding Color, Source={StaticResource BorderWarning}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.ButtonPrimaryFg}}" Color="{Binding Color, Source={StaticResource ButtonPrimaryFg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.ButtonPrimaryBg}}" Color="{Binding Color, Source={StaticResource ButtonPrimaryBg}}" />
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.ButtonPrimaryBorder}}" Color="{Binding Color, Source={StaticResource ButtonPrimaryBorder}}" />
-    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TablePrimarySurfaceTitle}}" Color="{Binding Color, Source={StaticResource TablePrimarySurfaceTitle}}" />
-    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TablePrimarySurfaceContent}}" Color="{Binding Color, Source={StaticResource TablePrimarySurfaceContent}}" />
-    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TablePrimaryBorderTitle}}" Color="{Binding Color, Source={StaticResource TablePrimaryBorderTitle}}" />
-    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TablePrimaryBorderContent}}" Color="{Binding Color, Source={StaticResource TablePrimaryBorderContent}}" />
-    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TablePrimaryTextTitle}}" Color="{Binding Color, Source={StaticResource TablePrimaryTextTitle}}" />
-    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TablePrimaryTextContent}}" Color="{Binding Color, Source={StaticResource TablePrimaryTextContent}}" />
-    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TablePrimarySurfaceContentHover}}" Color="{Binding Color, Source={StaticResource TablePrimarySurfaceContentHover}}" />
-    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TextBlockPrimaryText}}" Color="{Binding Color, Source={StaticResource TextBlockPrimaryText}}" />
-    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TextBlockPrimaryBorder}}" Color="{Binding Color, Source={StaticResource TextBlockPrimaryBorder}}" />
-    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.ScrollBarPrimaryBar}}" Color="{Binding Color, Source={StaticResource ScrollBarPrimaryBar}}" />
-    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.IconPrimaryFill}}" Color="{Binding Color, Source={StaticResource IconPrimaryFill}}" />
-    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.SectionPrimaryMenu}}" Color="{Binding Color, Source={StaticResource SectionPrimaryMenu}}" />
-    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.SectionPrimaryContent}}" Color="{Binding Color, Source={StaticResource SectionPrimaryContent}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.ButtonSecondaryFg}}" Color="{Binding Color, Source={StaticResource ButtonSecondaryFg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.ButtonSecondaryBg}}" Color="{Binding Color, Source={StaticResource ButtonSecondaryBg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.ButtonSecondaryBorder}}" Color="{Binding Color, Source={StaticResource ButtonSecondaryBorder}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.ButtonTertiaryFg}}" Color="{Binding Color, Source={StaticResource ButtonTertiaryFg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.ButtonTertiaryBg}}" Color="{Binding Color, Source={StaticResource ButtonTertiaryBg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.ButtonTertiaryBorder}}" Color="{Binding Color, Source={StaticResource ButtonTertiaryBorder}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.ButtonDestructiveFg}}" Color="{Binding Color, Source={StaticResource ButtonDestructiveFg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.ButtonDestructiveBg}}" Color="{Binding Color, Source={StaticResource ButtonDestructiveBg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.ButtonDestructiveBorder}}" Color="{Binding Color, Source={StaticResource ButtonDestructiveBorder}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.InputBg}}" Color="{Binding Color, Source={StaticResource InputBg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.InputFg}}" Color="{Binding Color, Source={StaticResource InputFg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.InputPlaceholder}}" Color="{Binding Color, Source={StaticResource InputPlaceholder}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.InputBorder}}" Color="{Binding Color, Source={StaticResource InputBorder}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.InputHelperText}}" Color="{Binding Color, Source={StaticResource InputHelperText}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.InputErrorText}}" Color="{Binding Color, Source={StaticResource InputErrorText}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.FeedbackInfoFg}}" Color="{Binding Color, Source={StaticResource FeedbackInfoFg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.FeedbackInfoBg}}" Color="{Binding Color, Source={StaticResource FeedbackInfoBg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.FeedbackInfoBorder}}" Color="{Binding Color, Source={StaticResource FeedbackInfoBorder}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.FeedbackSuccessFg}}" Color="{Binding Color, Source={StaticResource FeedbackSuccessFg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.FeedbackSuccessBg}}" Color="{Binding Color, Source={StaticResource FeedbackSuccessBg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.FeedbackSuccessBorder}}" Color="{Binding Color, Source={StaticResource FeedbackSuccessBorder}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.FeedbackWarningFg}}" Color="{Binding Color, Source={StaticResource FeedbackWarningFg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.FeedbackWarningBg}}" Color="{Binding Color, Source={StaticResource FeedbackWarningBg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.FeedbackWarningBorder}}" Color="{Binding Color, Source={StaticResource FeedbackWarningBorder}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.FeedbackErrorFg}}" Color="{Binding Color, Source={StaticResource FeedbackErrorFg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.FeedbackErrorBg}}" Color="{Binding Color, Source={StaticResource FeedbackErrorBg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.FeedbackErrorBorder}}" Color="{Binding Color, Source={StaticResource FeedbackErrorBorder}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.BadgeNeutralFg}}" Color="{Binding Color, Source={StaticResource BadgeNeutralFg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.BadgeNeutralBg}}" Color="{Binding Color, Source={StaticResource BadgeNeutralBg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.BadgeNeutralBorder}}" Color="{Binding Color, Source={StaticResource BadgeNeutralBorder}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.BadgeInfoFg}}" Color="{Binding Color, Source={StaticResource BadgeInfoFg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.BadgeInfoBg}}" Color="{Binding Color, Source={StaticResource BadgeInfoBg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.BadgeInfoBorder}}" Color="{Binding Color, Source={StaticResource BadgeInfoBorder}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.BadgeSuccessFg}}" Color="{Binding Color, Source={StaticResource BadgeSuccessFg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.BadgeSuccessBg}}" Color="{Binding Color, Source={StaticResource BadgeSuccessBg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.BadgeSuccessBorder}}" Color="{Binding Color, Source={StaticResource BadgeSuccessBorder}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.BadgeWarningFg}}" Color="{Binding Color, Source={StaticResource BadgeWarningFg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.BadgeWarningBg}}" Color="{Binding Color, Source={StaticResource BadgeWarningBg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.BadgeWarningBorder}}" Color="{Binding Color, Source={StaticResource BadgeWarningBorder}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.BadgeErrorFg}}" Color="{Binding Color, Source={StaticResource BadgeErrorFg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.BadgeErrorBg}}" Color="{Binding Color, Source={StaticResource BadgeErrorBg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.BadgeErrorBorder}}" Color="{Binding Color, Source={StaticResource BadgeErrorBorder}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.BadgeHighlightFg}}" Color="{Binding Color, Source={StaticResource BadgeHighlightFg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.BadgeHighlightBg}}" Color="{Binding Color, Source={StaticResource BadgeHighlightBg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.BadgeHighlightBorder}}" Color="{Binding Color, Source={StaticResource BadgeHighlightBorder}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TableHeaderBg}}" Color="{Binding Color, Source={StaticResource TableHeaderBg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TableRowBg}}" Color="{Binding Color, Source={StaticResource TableRowBg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TableRowHover}}" Color="{Binding Color, Source={StaticResource TableRowHover}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TableRowSelected}}" Color="{Binding Color, Source={StaticResource TableRowSelected}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TableRowActive}}" Color="{Binding Color, Source={StaticResource TableRowActive}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TableBorder}}" Color="{Binding Color, Source={StaticResource TableBorder}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TableStripe}}" Color="{Binding Color, Source={StaticResource TableStripe}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.NavigationSidebarBg}}" Color="{Binding Color, Source={StaticResource NavigationSidebarBg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.NavigationSidebarItemFg}}" Color="{Binding Color, Source={StaticResource NavigationSidebarItemFg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.NavigationSidebarItemBgActive}}" Color="{Binding Color, Source={StaticResource NavigationSidebarItemBgActive}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.NavigationSidebarItemBgHover}}" Color="{Binding Color, Source={StaticResource NavigationSidebarItemBgHover}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.NavigationSidebarBorder}}" Color="{Binding Color, Source={StaticResource NavigationSidebarBorder}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.NavigationTabFg}}" Color="{Binding Color, Source={StaticResource NavigationTabFg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.NavigationTabIndicator}}" Color="{Binding Color, Source={StaticResource NavigationTabIndicator}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.NavigationMenuBarBg}}" Color="{Binding Color, Source={StaticResource NavigationMenuBarBg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.NavigationMenuBarFg}}" Color="{Binding Color, Source={StaticResource NavigationMenuBarFg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.NavigationMenuBarBorder}}" Color="{Binding Color, Source={StaticResource NavigationMenuBarBorder}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.SelectionBg}}" Color="{Binding Color, Source={StaticResource SelectionBg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.SelectionBorder}}" Color="{Binding Color, Source={StaticResource SelectionBorder}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.SelectionFg}}" Color="{Binding Color, Source={StaticResource SelectionFg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.SelectionInverseFg}}" Color="{Binding Color, Source={StaticResource SelectionInverseFg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.ScrollbarTrack}}" Color="{Binding Color, Source={StaticResource ScrollbarTrack}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.ScrollbarThumb}}" Color="{Binding Color, Source={StaticResource ScrollbarThumb}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.ScrollbarBorder}}" Color="{Binding Color, Source={StaticResource ScrollbarBorder}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TitleBarBackground}}" Color="{Binding Color, Source={StaticResource TitleBarBackground}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TitleBarText}}" Color="{Binding Color, Source={StaticResource TitleBarText}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TitleBarBorder}}" Color="{Binding Color, Source={StaticResource TitleBarBorder}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.PopupTitleSurface}}" Color="{Binding Color, Source={StaticResource PopupTitleSurface}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.PopupTitleText}}" Color="{Binding Color, Source={StaticResource PopupTitleText}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.PopupBorder}}" Color="{Binding Color, Source={StaticResource PopupBorder}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.PopupContentSurface}}" Color="{Binding Color, Source={StaticResource PopupContentSurface}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.PopupContentText}}" Color="{Binding Color, Source={StaticResource PopupContentText}}" />
 </ResourceDictionary>

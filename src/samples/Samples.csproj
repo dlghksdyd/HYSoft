@@ -14,16 +14,16 @@
 
 	<ItemGroup>
 	  <Reference Include="Communication">
-	    <HintPath>..\Bundle\Staging\net8.0-windows\Communication.dll</HintPath>
+	    <HintPath>..\Bundle\Staging\net8.0-windows7.0\Communication.dll</HintPath>
 	  </Reference>
 	  <Reference Include="Data">
-	    <HintPath>..\Bundle\Staging\net8.0-windows\Data.dll</HintPath>
+	    <HintPath>..\Bundle\Staging\net8.0-windows7.0\Data.dll</HintPath>
 	  </Reference>
 	  <Reference Include="Presentation">
-	    <HintPath>..\Bundle\Staging\net8.0-windows\Presentation.dll</HintPath>
+	    <HintPath>..\Bundle\Staging\net8.0-windows7.0\Presentation.dll</HintPath>
 	  </Reference>
 	  <Reference Include="Presentation.Styles">
-	    <HintPath>..\Bundle\Staging\net8.0-windows\Presentation.Styles.dll</HintPath>
+	    <HintPath>..\Bundle\Staging\net8.0-windows7.0\Presentation.Styles.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
 

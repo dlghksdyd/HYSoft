@@ -1,0 +1,82 @@
+﻿<Window
+    x:Class="Docs.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
+    xmlns:local="clr-namespace:Docs"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="HySoft Documentation"
+    Width="1400"
+    Height="800"
+    d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
+    WindowStartupLocation="CenterScreen"
+    WindowState="Normal"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <WindowChrome.WindowChrome>
+        <WindowChrome
+            CaptionHeight="0"
+            CornerRadius="0"
+            GlassFrameThickness="0"
+            ResizeBorderThickness="5"
+            UseAeroCaptionButtons="False" />
+    </WindowChrome.WindowChrome>
+    <Border BorderBrush="{hy:Color BorderDefault}" BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48" />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Border Padding="16,4" Background="{hy:Color TitleBarBackground}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <hy:HyIcon
+                        Grid.Column="0"
+                        Source="Apps"
+                        Color="{hy:Color TitleBarText}" />
+                    <TextBlock
+                        Grid.Column="2"
+                        VerticalAlignment="Center"
+                        FontSize="{hy:FontSize Lg}"
+                        FontWeight="Bold"
+                        Foreground="{hy:Color TitleBarText}"
+                        Text="HySoft Documentation" />
+                    <hy:HyButton
+                        Grid.Column="4"
+                        Width="40"
+                        Height="40"
+                        BorderThickness="0"
+                        Command="{Binding ExitAppCommand}">
+                        <hy:HyButton.Style>
+                            <Style TargetType="hy:HyButton">
+                                <Setter Property="Background" Value="Transparent" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#33ffffff" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </hy:HyButton.Style>
+                        <hy:HyIcon
+                            Width="32"
+                            Height="32"
+                            Source="Close"
+                            Color="{hy:Color TitleBarText}" />
+                    </hy:HyButton>
+                </Grid>
+            </Border>
+            <ContentPresenter
+                Grid.Row="0"
+                Grid.RowSpan="3"
+                Content="{x:Static hy:ModalManager.View}" />
+        </Grid>
+    </Border>
+</Window>

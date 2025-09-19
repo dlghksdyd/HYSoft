@@ -18,8 +18,9 @@
                 <ControlTemplate TargetType="{x:Type local:HyTextBox}">
                     <Border
                         x:Name="xBorder"
-                        Grid.Column="1"
                         Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}">
                         <Grid>
                             <!--  Watermark  -->

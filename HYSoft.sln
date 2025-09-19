@@ -32,6 +32,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bundle", "src\Bundle\Bundle
 		{FF18FA95-86AA-D903-DD53-7E230BF602D0} = {FF18FA95-86AA-D903-DD53-7E230BF602D0}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Docs", "src\Docs\Docs.csproj", "{38016D65-8D9E-4D89-A77D-E0243DA3BFC9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6540503F-997B-4A95-344E-5F64D5B3F5ED} = {6540503F-997B-4A95-344E-5F64D5B3F5ED}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +67,10 @@ Global
 		{6540503F-997B-4A95-344E-5F64D5B3F5ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6540503F-997B-4A95-344E-5F64D5B3F5ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6540503F-997B-4A95-344E-5F64D5B3F5ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38016D65-8D9E-4D89-A77D-E0243DA3BFC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38016D65-8D9E-4D89-A77D-E0243DA3BFC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38016D65-8D9E-4D89-A77D-E0243DA3BFC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38016D65-8D9E-4D89-A77D-E0243DA3BFC9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

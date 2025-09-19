@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Docs</name>
+    </assembly>
+    <members>
+        <member name="T:Docs.App">
+            <summary>
+            Interaction logic for App.xaml
+            </summary>
+            <summary>
+            App
+            </summary>
+        </member>
+        <member name="M:Docs.App.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:Docs.App.Main">
+            <summary>
+            Application Entry Point.
+            </summary>
+        </member>
+        <member name="T:Docs.MainWindow">
+            <summary>
+            Interaction logic for MainWindow.xaml
+            </summary>
+            <summary>
+            MainWindow
+            </summary>
+        </member>
+        <member name="M:Docs.MainWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Docs.Mvvm.Popup.PopupInfoView">
+            <summary>
+            PopupInfoView.xaml에 대한 상호 작용 논리
+            </summary>
+            <summary>
+            PopupInfoView
+            </summary>
+        </member>
+        <member name="M:Docs.Mvvm.Popup.PopupInfoView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Docs.Mvvm.Styles.Icons.IconsView">
+            <summary>
+            IconsView.xaml에 대한 상호 작용 논리
+            </summary>
+            <summary>
+            IconsView
+            </summary>
+        </member>
+        <member name="M:Docs.Mvvm.Styles.Icons.IconsView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+    </members>
+</doc>
