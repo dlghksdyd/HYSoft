@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
-using Docs.Mvvm.Popup;
+﻿using Docs.Mvvm.Popup;
 using Docs.Mvvm.Styles.Icons;
 using HYSoft.Presentation.Interactivity;
 using HYSoft.Presentation.Modal;
+using System.Windows;
+using System.Windows.Input;
 
 namespace Docs
 {
@@ -21,8 +16,8 @@ namespace Docs
             BottomContent = view;
         }
 
-        private object _bottomContent;
-        public object BottomContent
+        private object? _bottomContent;
+        public object? BottomContent
         {
             get => _bottomContent;
             set => SetProperty(ref _bottomContent, value);

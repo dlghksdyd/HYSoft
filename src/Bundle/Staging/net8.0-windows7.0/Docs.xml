@@ -63,13 +63,26 @@
         </member>
         <member name="T:Docs.Mvvm.Styles.LeftMenuView">
             <summary>
-            LeftMenuView.xaml에 대한 상호 작용 논리
+            Interaction logic for LeftMenuView.xaml
             </summary>
             <summary>
             LeftMenuView
             </summary>
         </member>
         <member name="M:Docs.Mvvm.Styles.LeftMenuView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Docs.Mvvm.Styles.StylesView">
+            <summary>
+            Interaction logic for StylesView.xaml
+            </summary>
+            <summary>
+            StylesView
+            </summary>
+        </member>
+        <member name="M:Docs.Mvvm.Styles.StylesView.InitializeComponent">
             <summary>
             InitializeComponent
             </summary>

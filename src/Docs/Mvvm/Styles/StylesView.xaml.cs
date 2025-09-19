@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Docs.Mvvm.Styles
 {
     /// <summary>
-    /// Interaction logic for LeftMenuView.xaml
+    /// Interaction logic for StylesView.xaml
     /// </summary>
-    public partial class LeftMenuView : UserControl
+    public partial class StylesView : UserControl
     {
-        public LeftMenuView()
+        public StylesView()
         {
             InitializeComponent();
         }
