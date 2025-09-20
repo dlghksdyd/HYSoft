@@ -13,16 +13,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Docs.Mvvm.Styles.Icons
+namespace Docs.Mvvm.LeftMenu
 {
     /// <summary>
-    /// IconsView.xaml에 대한 상호 작용 논리
+    /// Interaction logic for LeftMenuView.xaml
     /// </summary>
-    public partial class IconsView : UserControl
+    public partial class LeftMenuView : UserControl
     {
-        public IconsView()
+        public LeftMenuView()
         {
             InitializeComponent();
+
+            this.DataContext = new LeftMenuViewModel();
         }
     }
 }

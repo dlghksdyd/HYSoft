@@ -1,10 +1,10 @@
 ﻿<UserControl
-    x:Class="Docs.Mvvm.Styles.Icons.IconsView"
+    x:Class="Docs.Mvvm.Styles.IconsView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
-    xmlns:local="clr-namespace:Docs.Mvvm.Styles.Icons"
+    xmlns:local="clr-namespace:Docs.Mvvm.Styles"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:Background="{hy:Color SurfaceBase}"
     d:DataContext="{d:DesignInstance local:IconsViewModel,

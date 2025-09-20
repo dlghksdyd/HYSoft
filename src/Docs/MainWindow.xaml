@@ -6,6 +6,7 @@
     xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
     xmlns:local="clr-namespace:Docs"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mvvm="clr-namespace:Docs.Mvvm"
     Title="HySoft Documentation"
     Width="1200"
     Height="800"
@@ -80,7 +81,7 @@
                 Grid.Row="1"
                 Padding="40,0"
                 Background="{hy:Color NavigationMenuBarBg}" />
-            <ContentPresenter Grid.Row="2" Content="{Binding BottomContent}" />
+            <mvvm:BottomContentsView Grid.Row="2"></mvvm:BottomContentsView>
             <ContentPresenter
                 Grid.Row="0"
                 Grid.RowSpan="3"

@@ -35,6 +35,32 @@
             InitializeComponent
             </summary>
         </member>
+        <member name="T:Docs.Mvvm.BottomContentsView">
+            <summary>
+            BottomContents.xaml에 대한 상호 작용 논리
+            </summary>
+            <summary>
+            BottomContentsView
+            </summary>
+        </member>
+        <member name="M:Docs.Mvvm.BottomContentsView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Docs.Mvvm.LeftMenu.LeftMenuView">
+            <summary>
+            Interaction logic for LeftMenuView.xaml
+            </summary>
+            <summary>
+            LeftMenuView
+            </summary>
+        </member>
+        <member name="M:Docs.Mvvm.LeftMenu.LeftMenuView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
         <member name="T:Docs.Mvvm.Popup.PopupInfoView">
             <summary>
             PopupInfoView.xaml에 대한 상호 작용 논리
@@ -48,7 +74,7 @@
             InitializeComponent
             </summary>
         </member>
-        <member name="T:Docs.Mvvm.Styles.Icons.IconsView">
+        <member name="T:Docs.Mvvm.Styles.IconsView">
             <summary>
             IconsView.xaml에 대한 상호 작용 논리
             </summary>
@@ -56,33 +82,7 @@
             IconsView
             </summary>
         </member>
-        <member name="M:Docs.Mvvm.Styles.Icons.IconsView.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
-        </member>
-        <member name="T:Docs.Mvvm.Styles.LeftMenuView">
-            <summary>
-            Interaction logic for LeftMenuView.xaml
-            </summary>
-            <summary>
-            LeftMenuView
-            </summary>
-        </member>
-        <member name="M:Docs.Mvvm.Styles.LeftMenuView.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
-        </member>
-        <member name="T:Docs.Mvvm.Styles.StylesView">
-            <summary>
-            Interaction logic for StylesView.xaml
-            </summary>
-            <summary>
-            StylesView
-            </summary>
-        </member>
-        <member name="M:Docs.Mvvm.Styles.StylesView.InitializeComponent">
+        <member name="M:Docs.Mvvm.Styles.IconsView.InitializeComponent">
             <summary>
             InitializeComponent
             </summary>

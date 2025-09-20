@@ -2,16 +2,16 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
+    <Compile Update="Mvvm\BottomContentsView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Mvvm\Popup\PopupInfoView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Mvvm\Styles\Icons\IconsView.xaml.cs">
+    <Compile Update="Mvvm\Styles\IconsView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Mvvm\Styles\LeftMenuView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Mvvm\Styles\StylesView.xaml.cs">
+    <Compile Update="Mvvm\LeftMenu\LeftMenuView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

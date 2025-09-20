@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="Docs.Mvvm.BottomContentsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Docs.Mvvm"
+             xmlns:leftMenu="clr-namespace:Docs.Mvvm.LeftMenu"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance local:BottomContentsViewModel}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <leftMenu:LeftMenuView Grid.Column="0" />
+        <ContentPresenter Grid.Column="1" Content="{Binding Content}" />
+    </Grid>
+</UserControl>

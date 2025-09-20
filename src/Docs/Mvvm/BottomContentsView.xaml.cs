@@ -13,16 +13,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Docs.Mvvm.Styles
+namespace Docs.Mvvm
 {
     /// <summary>
-    /// Interaction logic for StylesView.xaml
+    /// BottomContents.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class StylesView : UserControl
+    public partial class BottomContentsView : UserControl
     {
-        public StylesView()
+        public BottomContentsView()
         {
             InitializeComponent();
+
+            this.DataContext = new BottomContentsViewModel();
         }
     }
 }

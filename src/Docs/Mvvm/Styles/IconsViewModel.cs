@@ -7,7 +7,7 @@ using HYSoft.Presentation.Interactivity;
 using HYSoft.Presentation.Styles.Controls;
 using HYSoft.Presentation.Styles.Icons;
 
-namespace Docs.Mvvm.Styles.Icons
+namespace Docs.Mvvm.Styles
 {
     public class IconsViewModel : NotifyPropertyChangedBase
     {
@@ -20,7 +20,7 @@ namespace Docs.Mvvm.Styles.Icons
 
         public IconsViewModel()
         {
-            foreach (EIconKeys key in System.Enum.GetValues(typeof(EIconKeys)))
+            foreach (EIconKeys key in Enum.GetValues(typeof(EIconKeys)))
             {
                 _keys.Add(key);
             }
@@ -33,7 +33,7 @@ namespace Docs.Mvvm.Styles.Icons
             var text = textBox.Text.ToLower();
 
             _keys.Clear();
-            foreach (EIconKeys key in System.Enum.GetValues(typeof(EIconKeys)))
+            foreach (EIconKeys key in Enum.GetValues(typeof(EIconKeys)))
             {
                 if (key.ToString().ToLower().Contains(text))
                 {

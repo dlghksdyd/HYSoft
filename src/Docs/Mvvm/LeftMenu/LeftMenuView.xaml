@@ -1,0 +1,55 @@
+﻿<UserControl
+    x:Class="Docs.Mvvm.LeftMenu.LeftMenuView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Docs.Mvvm.LeftMenu"
+    xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance local:LeftMenuViewModel, IsDesignTimeCreatable=True}"
+    d:DesignHeight="450"
+    d:DesignWidth="300"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type local:MenuItemContainer}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Margin="0 4 0 4" Text="{Binding Title}" Foreground="{hy:Color TextPrimary}" FontSize="{hy:FontSize Lg}" FontWeight="Bold"></TextBlock>
+                <ItemsControl Grid.Row="1" ItemsSource="{Binding Items}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0">
+                                        <hy:HyIcon Source="ExpandMore" Color="{hy:Color TextPrimary}"></hy:HyIcon>
+                                        <!--<hy:HyIcon Source="NavigateNext" Color="{hy:Color TextPrimary}"></hy:HyIcon>-->
+                                    </Grid>
+                                    <TextBlock Grid.Column="1" Text="{Binding Title}" Foreground="{hy:Color TextPrimary}" FontSize="{hy:FontSize Md}"></TextBlock>
+                                </Grid>
+                                <ItemsControl Grid.Row="1" ItemsSource="{Binding SubItems}">
+
+                                </ItemsControl>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+    <hy:HyScrollViewer>
+        <Border Padding="20">
+            <ContentPresenter Content="{Binding Container}"></ContentPresenter>
+        </Border>
+    </hy:HyScrollViewer>
+</UserControl>
