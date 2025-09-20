@@ -23,8 +23,6 @@ namespace Docs.Mvvm.LeftMenu
         public LeftMenuView()
         {
             InitializeComponent();
-
-            this.DataContext = new LeftMenuViewModel();
         }
     }
 }

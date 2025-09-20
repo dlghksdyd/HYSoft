@@ -3,17 +3,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
              xmlns:local="clr-namespace:Docs.Mvvm"
              xmlns:leftMenu="clr-namespace:Docs.Mvvm.LeftMenu"
              mc:Ignorable="d" 
-             d:DataContext="{d:DesignInstance local:BottomContentsViewModel}"
+             d:DataContext="{d:DesignInstance local:BottomContentsViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type leftMenu:LeftMenuViewModel}">
+            <leftMenu:LeftMenuView DataContext="{Binding}"></leftMenu:LeftMenuView>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid d:Background="{hy:Color SurfaceBase}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <leftMenu:LeftMenuView Grid.Column="0" />
+        <ContentPresenter Grid.Column="0" Content="{Binding Menu}" />
         <ContentPresenter Grid.Column="1" Content="{Binding Content}" />
     </Grid>
 </UserControl>

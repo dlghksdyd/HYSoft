@@ -1,10 +1,13 @@
 ﻿using HYSoft.Presentation.Styles.Icons;
+using HYSoft.Presentation.Styles.Lib;
 using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace HYSoft.Presentation.Styles.Controls
 {
@@ -24,9 +27,9 @@ namespace HYSoft.Presentation.Styles.Controls
 
             SourceProperty = DependencyProperty.Register(
                 nameof(Source),
-                typeof(EIconKeys),
+                typeof(EIconKeys?),
                 typeof(HyIcon),
-                new PropertyMetadata(default(EIconKeys), OnAnyChanged));
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender, OnAnyChanged));
 
             ColorProperty = DependencyProperty.Register(
                 nameof(Color),
@@ -54,10 +57,9 @@ namespace HYSoft.Presentation.Styles.Controls
         }
 
         public static readonly DependencyProperty SourceProperty;
-        [TypeConverter(typeof(EnumConverter))]
-        public EIconKeys Source
+        public EIconKeys? Source
         {
-            get => (EIconKeys)GetValue(SourceProperty);
+            get => (EIconKeys?)GetValue(SourceProperty);
             set => SetValue(SourceProperty, value);
         }
 
@@ -89,6 +91,11 @@ namespace HYSoft.Presentation.Styles.Controls
             set => SetValue(IsPressedProperty, value);
         }
 
+        public HyIcon()
+        {
+            
+        }
+
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -102,7 +109,7 @@ namespace HYSoft.Presentation.Styles.Controls
 
             SubscribeStateChanges();
         }
-
+        
         private static void OnAnyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var c = (HyIcon)d;
@@ -131,8 +138,22 @@ namespace HYSoft.Presentation.Styles.Controls
         private void RebuildBaseAndTints()
         {
             // 원본 로드
-            try { _baseSource = IconGenerator.GetIcon(Source); }
-            catch { _baseSource = null; }
+            try
+            {
+                if (Source is not null)
+                {
+                    EIconKeys key = Source ?? EIconKeys.Add;
+                    _baseSource = IconGenerator.GetIcon(key);
+                }
+                else
+                {
+                    _baseSource = null;
+                }
+            }
+            catch
+            {
+                _baseSource = null;
+            }
 
             RebuildTintsOnly();
         }
@@ -189,11 +210,19 @@ namespace HYSoft.Presentation.Styles.Controls
         }
 
         #region 상태 변화 구독
+        private DependencyPropertyDescriptor? _sourceDesc;
         private DependencyPropertyDescriptor? _isMouseOverDesc;
         private DependencyPropertyDescriptor? _isPressedDesc;
 
         private void SubscribeStateChanges()
         {
+            _sourceDesc = DependencyPropertyDescriptor.FromProperty(SourceProperty, typeof(HyIcon));
+            _sourceDesc?.AddValueChanged(this, (s, e) =>
+            {
+                RebuildBaseAndTints();
+                ApplyCurrentStateSource();
+            });
+
             _isMouseOverDesc = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(HyIcon));
             _isMouseOverDesc?.AddValueChanged(this, OnStateChanged);
 
@@ -203,6 +232,12 @@ namespace HYSoft.Presentation.Styles.Controls
 
         private void UnsubscribeStateChanges()
         {
+            if (_sourceDesc != null)
+            {
+                _sourceDesc.RemoveValueChanged(this, (s, e) => { });
+                _sourceDesc = null;
+            }
+
             if (_isMouseOverDesc != null)
             {
                 _isMouseOverDesc.RemoveValueChanged(this, OnStateChanged);

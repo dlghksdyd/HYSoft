@@ -4,6 +4,20 @@
              xmlns:local="clr-namespace:Docs"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <!-- TextBlock 전역 -->
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Pretendard" />
+        </Style>
+
+        <!-- Control 전역 -->
+        <Style TargetType="Control">
+            <Setter Property="FontFamily" Value="Pretendard" />
+        </Style>
+
+        <!-- FlowDocument, RichTextBox 등은 TextElement를 따릅니다 -->
+        <Style TargetType="TextElement">
+            <Setter Property="FontFamily" Value="Pretendard" />
+        </Style>
+
     </Application.Resources>
 </Application>

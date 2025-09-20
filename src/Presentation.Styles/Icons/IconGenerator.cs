@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -15,7 +17,6 @@ namespace HYSoft.Presentation.Styles.Icons
             if (!IconKeys.IconMap.TryGetValue(iconKey, out var relativePath))
                 throw new ArgumentOutOfRangeException(nameof(iconKey), iconKey, "Unknown icon key");
 
-            // 런타임 어셈블리명 가져오기
             var asmName = typeof(IconGenerator).Assembly.GetName().Name;
             var component = string.IsNullOrEmpty(asmName) ? string.Empty : asmName + ";component/";
 

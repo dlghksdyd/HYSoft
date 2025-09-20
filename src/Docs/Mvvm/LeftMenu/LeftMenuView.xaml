@@ -11,45 +11,50 @@
     d:DesignWidth="300"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <DataTemplate DataType="{x:Type local:MenuItemContainer}">
+        <DataTemplate DataType="{x:Type local:MenuItem}">
             <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Margin="0 4 0 4" Text="{Binding Title}" Foreground="{hy:Color TextPrimary}" FontSize="{hy:FontSize Lg}" FontWeight="Bold"></TextBlock>
-                <ItemsControl Grid.Row="1" ItemsSource="{Binding Items}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <Grid Grid.Row="0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                        <ColumnDefinition></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid Grid.Column="0">
-                                        <hy:HyIcon Source="ExpandMore" Color="{hy:Color TextPrimary}"></hy:HyIcon>
-                                        <!--<hy:HyIcon Source="NavigateNext" Color="{hy:Color TextPrimary}"></hy:HyIcon>-->
-                                    </Grid>
-                                    <TextBlock Grid.Column="1" Text="{Binding Title}" Foreground="{hy:Color TextPrimary}" FontSize="{hy:FontSize Md}"></TextBlock>
-                                </Grid>
-                                <ItemsControl Grid.Row="1" ItemsSource="{Binding SubItems}">
-
-                                </ItemsControl>
-                            </Grid>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                <Grid Margin="0 0 0 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" Height="24" Margin="0 0 0 8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" Margin="0 0 4 0">
+                            <hy:HyIcon Width="20" Height="20" Source="ExpandMore" Color="{hy:Color TextPrimary}" Cursor="Hand"></hy:HyIcon>
+                        </Grid>
+                        <TextBlock Cursor="Hand" VerticalAlignment="Center" Grid.Column="1" Text="{Binding Title}" Foreground="{hy:Color TextPrimary}" FontSize="{hy:FontSize Md}">
+                            <hy:EventToCommand.Binding>
+                                <hy:Event 
+                                    RoutedEvent="{x:Static TextBlock.MouseLeftButtonUpEvent}" 
+                                    Command="{Binding Path=DataContext.Context.UpdateContent, RelativeSource={RelativeSource AncestorType={x:Type local:LeftMenuView}}}"
+                                    CommandParameter="{Binding ViewType}"></hy:Event>
+                            </hy:EventToCommand.Binding>
+                        </TextBlock>
+                    </Grid>
+                    <ItemsControl Grid.Row="1" ItemsSource="{Binding SubItems}" Margin="28 0 0 0">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ContentPresenter Content="{Binding}"></ContentPresenter>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
             </Grid>
         </DataTemplate>
     </UserControl.Resources>
     <hy:HyScrollViewer>
         <Border Padding="20">
-            <ContentPresenter Content="{Binding Container}"></ContentPresenter>
+            <ItemsControl ItemsSource="{Binding MenuItems}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <ContentPresenter Content="{Binding}"></ContentPresenter>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </Border>
     </hy:HyScrollViewer>
 </UserControl>
