@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using HYSoft.Presentation.Interactivity;
 
 namespace Docs.Mvvm.LeftMenu
@@ -33,6 +34,16 @@ namespace Docs.Mvvm.LeftMenu
             set => SetProperty(ref _subItems, value);
         }
 
+        public bool IsSubItemExist => SubItems.ToList().Count != 0;
+
+        private bool _isExpand = false;
+
+        public bool IsExpand
+        {
+            get => _isExpand;
+            set => SetProperty(ref _isExpand, value);
+        }
+        
         public void AddSubItem(string title, Type viewType)
         {
             var item = new MenuItem();
@@ -40,5 +51,20 @@ namespace Docs.Mvvm.LeftMenu
             item.ViewType = viewType;
             SubItems.Add(item);
         }
+
+        public ICommand SelectMenuCommand => new RelayCommand(() =>
+        {
+
+        });
+        
+        public ICommand ExpandMenuCommand => new RelayCommand(() =>
+        {
+            IsExpand = true;
+        });
+
+        public ICommand CollapseMenuCommand => new RelayCommand(() =>
+        {
+            IsExpand = false;
+        });
     }
 }

@@ -1,4 +1,5 @@
-﻿using Docs.Mvvm.Styles;
+﻿using Docs.Mvvm.Popup;
+using Docs.Mvvm.Styles;
 using HYSoft.Presentation.Interactivity;
 using System;
 using System.Collections.Generic;
@@ -8,40 +9,45 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Docs.Mvvm.LeftMenu
 {
     public class LeftMenuViewModel : NotifyPropertyChangedBase
     {
-        public IBottomSharedContext Context { get; set; }
+        public IBottomSharedContext SharedContext { get; set; }
 
         public LeftMenuViewModel()
         {
+            SharedContext = new BottomSharedContext();
+
             if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             {
-                InitializeMenuItems(); // 디자인 타임 샘플 데이터
+                SetMenuItems_Styles(); // 디자인 타임 샘플 데이터
+            }
+            else
+            {
+                throw new InvalidOperationException("반드시 sharedContext를 파라미터에 넣어줘야 합니다.");
             }
         }
 
-        public LeftMenuViewModel(IBottomSharedContext context)
+        public LeftMenuViewModel(IBottomSharedContext sharedContext)
         {
-            Context = context;
+            SharedContext = sharedContext;
 
-            InitializeMenuItems();
+            SetMenuItems_Styles();
         }
 
-        private void InitializeMenuItems()
+        private void SetMenuItems_Styles()
         {
+            MenuItems.Clear();
+
             var item = new MenuItem()
             {
                 Title = "Icons",
                 ViewType = typeof(IconsView)
             };
-            item.AddSubItem("Test1", typeof(IconsView));
-            item.SubItems.Last().AddSubItem("Test3", typeof(IconsView));
-            item.SubItems.Last().AddSubItem("Test4", typeof(IconsView));
-
-            item.AddSubItem("Test2", typeof(IconsView));
             MenuItems.Add(item);
         }
         

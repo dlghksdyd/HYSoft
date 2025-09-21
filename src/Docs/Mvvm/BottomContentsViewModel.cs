@@ -21,8 +21,9 @@ namespace Docs.Mvvm
             _sharedContext.UpdateContent = new RelayCommand<EventPayload>((p) =>
             {
                 if (p is null) return;
-                if (p.Parameter is not Type type) return;
-                Content = Activator.CreateInstance(type);
+                if (p.Parameter is not MenuItem item) return;
+                item.ExpandMenuCommand.Execute(null);
+                Content = Activator.CreateInstance(item.ViewType);
             });
         }
         

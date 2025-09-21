@@ -15,27 +15,39 @@
             <Grid>
                 <Grid Margin="0 0 0 0">
                     <Grid.RowDefinitions>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0" Height="24" Margin="0 0 0 8">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0" Margin="0 0 4 0">
-                            <hy:HyIcon Width="20" Height="20" Source="ExpandMore" Color="{hy:Color TextPrimary}" Cursor="Hand"></hy:HyIcon>
+                        <Grid Grid.Column="0" Width="20" Margin="0 0 4 0">
+                            <hy:HyIcon Width="20" Height="20" Source="Dot" Color="{hy:Color TextPrimary}" Visibility="{Binding IsSubItemExist, Converter={StaticResource BoolToVisibilityReverseConverter}}"></hy:HyIcon>
+                            <Grid Visibility="{Binding IsSubItemExist, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <hy:HyIcon Width="20" Height="20" Source="ExpandMore" Color="{hy:Color TextPrimary}" Cursor="Hand" Visibility="{Binding IsExpand, Converter={StaticResource BoolToVisibilityConverter}}">
+                                    <hy:EventToCommand.Binding>
+                                        <hy:Event RoutedEvent="{x:Static hy:HyIcon.MouseLeftButtonUpEvent}" Command="{Binding CollapseMenuCommand}"></hy:Event>
+                                    </hy:EventToCommand.Binding>
+                                </hy:HyIcon>
+                                <hy:HyIcon Width="20" Height="20" Source="NavigateNext" Color="{hy:Color TextPrimary}" Cursor="Hand" Visibility="{Binding IsExpand, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+                                    <hy:EventToCommand.Binding>
+                                        <hy:Event RoutedEvent="{x:Static hy:HyIcon.MouseLeftButtonUpEvent}" Command="{Binding ExpandMenuCommand}"></hy:Event>
+                                    </hy:EventToCommand.Binding>
+                                </hy:HyIcon>
+                            </Grid>
                         </Grid>
                         <TextBlock Cursor="Hand" VerticalAlignment="Center" Grid.Column="1" Text="{Binding Title}" Foreground="{hy:Color TextPrimary}" FontSize="{hy:FontSize Md}">
                             <hy:EventToCommand.Binding>
                                 <hy:Event 
                                     RoutedEvent="{x:Static TextBlock.MouseLeftButtonUpEvent}" 
-                                    Command="{Binding Path=DataContext.Context.UpdateContent, RelativeSource={RelativeSource AncestorType={x:Type local:LeftMenuView}}}"
-                                    CommandParameter="{Binding ViewType}"></hy:Event>
+                                    Command="{Binding Path=DataContext.SharedContext.UpdateContent, RelativeSource={RelativeSource AncestorType={x:Type local:LeftMenuView}}}"
+                                    CommandParameter="{Binding}"></hy:Event>
                             </hy:EventToCommand.Binding>
                         </TextBlock>
                     </Grid>
-                    <ItemsControl Grid.Row="1" ItemsSource="{Binding SubItems}" Margin="28 0 0 0">
+                    <ItemsControl Visibility="{Binding IsExpand, Converter={StaticResource BoolToVisibilityConverter}}" Grid.Row="1" ItemsSource="{Binding SubItems}" Margin="28 0 0 0">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <ContentPresenter Content="{Binding}"></ContentPresenter>
@@ -46,15 +58,25 @@
             </Grid>
         </DataTemplate>
     </UserControl.Resources>
-    <hy:HyScrollViewer>
-        <Border Padding="20">
-            <ItemsControl ItemsSource="{Binding MenuItems}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <ContentPresenter Content="{Binding}"></ContentPresenter>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </Border>
-    </hy:HyScrollViewer>
+    <Border Padding="20">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="Content" Foreground="{hy:Color TextPrimary}" FontSize="{hy:FontSize Lg}" Margin="0 0 0 8"></TextBlock>
+            <hy:HyScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <Border Padding="0 0 20 0">
+                <ItemsControl ItemsSource="{Binding MenuItems}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ContentPresenter Content="{Binding}"></ContentPresenter>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                </Border>
+            </hy:HyScrollViewer>
+        </Grid>
+    </Border>
+
 </UserControl>
