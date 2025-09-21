@@ -11,10 +11,14 @@ namespace Docs.Mvvm
     public interface IBottomSharedContext
     {
         ICommand? UpdateContent { get; set; }
+        
+        ICommand? UpdateLeftMenu { get; set; }
     }
 
     public class BottomSharedContext : IBottomSharedContext
     {
         public ICommand? UpdateContent { get; set; }
+
+        public ICommand? UpdateLeftMenu { get; set; }
     }
 }

@@ -64,7 +64,7 @@
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Text="Content" Foreground="{hy:Color TextPrimary}" FontSize="{hy:FontSize Lg}" Margin="0 0 0 8"></TextBlock>
+            <TextBlock Visibility="{Binding IsContentVisibility, Converter={StaticResource BoolToVisibilityConverter}}" Grid.Row="0" Text="Content" Foreground="{hy:Color TextPrimary}" FontSize="{hy:FontSize Lg}" Margin="0 0 0 8"></TextBlock>
             <hy:HyScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                 <Border Padding="0 0 20 0">
                 <ItemsControl ItemsSource="{Binding MenuItems}">

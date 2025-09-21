@@ -10,6 +10,9 @@ namespace HYSoft.Presentation.Interactivity
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
+        protected void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
+            => OnPropertyChanged(propertyName);
+
         protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string? propertyName = null)
         {
             if (Equals(storage, value))

@@ -4,6 +4,7 @@ using HYSoft.Presentation.Interactivity;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -36,7 +37,17 @@ namespace Docs.Mvvm.LeftMenu
         {
             SharedContext = sharedContext;
 
-            SetMenuItems_Styles();
+            SharedContext.UpdateLeftMenu = new RelayCommand<EventPayload>((p) =>
+            {
+                if (p?.Parameter is not ELeftMenuType type) return;
+
+                if (type == ELeftMenuType.Styles)
+                {
+                    SetMenuItems_Styles();
+                }
+            });
+
+            MenuItems.CollectionChanged += MenuItems_CollectionChanged;
         }
 
         private void SetMenuItems_Styles()
@@ -57,5 +68,14 @@ namespace Docs.Mvvm.LeftMenu
             get => _menuItems;
             set => SetProperty(ref _menuItems, value);
         }
+
+        private void MenuItems_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            // 아이템 추가/삭제 시 항상 알림 발생
+            RaisePropertyChanged(nameof(IsContentVisibility));
+        }
+
+        public bool IsContentVisibility => MenuItems.ToList().Count != 0;
+
     }
 }

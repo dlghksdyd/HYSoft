@@ -8,18 +8,37 @@
              xmlns:leftMenu="clr-namespace:Docs.Mvvm.LeftMenu"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance local:BottomContentsViewModel, IsDesignTimeCreatable=True}"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="1000">
     <UserControl.Resources>
         <DataTemplate DataType="{x:Type leftMenu:LeftMenuViewModel}">
             <leftMenu:LeftMenuView DataContext="{Binding}"></leftMenu:LeftMenuView>
         </DataTemplate>
     </UserControl.Resources>
-    <Grid d:Background="{hy:Color SurfaceBase}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <ContentPresenter Grid.Column="0" Content="{Binding Menu}" />
-        <ContentPresenter Grid.Column="1" Content="{Binding Content}" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="62"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Border
+            Grid.Row="0"
+            Padding="40,0"
+            Background="{hy:Color NavigationMenuBarBg}">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="Styles" FontSize="{hy:FontSize lg}" FontWeight="Bold" Foreground="{hy:Color NavigationMenuBarFg}" Cursor="Hand">
+                    <hy:EventToCommand.Binding>
+                        <hy:Event RoutedEvent="{x:Static TextBlock.MouseLeftButtonUpEvent}" Command="{Binding SharedContext.UpdateLeftMenu}" CommandParameter="{x:Static leftMenu:ELeftMenuType.Styles}"></hy:Event>
+                    </hy:EventToCommand.Binding>
+                </TextBlock>
+            </StackPanel>
+        </Border>
+        <Grid Grid.Row="1" d:Background="{hy:Color SurfaceBase}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <ContentPresenter Grid.Column="0" Content="{Binding Menu}" />
+            <ContentPresenter Grid.Column="1" Content="{Binding Content}" />
+        </Grid>
     </Grid>
+
 </UserControl>

@@ -12,13 +12,13 @@ namespace Docs.Mvvm
 {
     public class BottomContentsViewModel : NotifyPropertyChangedBase
     {
-        private readonly IBottomSharedContext _sharedContext = new BottomSharedContext();
+        public IBottomSharedContext SharedContext { get; } = new BottomSharedContext();
 
         public BottomContentsViewModel()
         {
-            Menu = new LeftMenuViewModel(_sharedContext);
+            Menu = new LeftMenuViewModel(SharedContext);
 
-            _sharedContext.UpdateContent = new RelayCommand<EventPayload>((p) =>
+            SharedContext.UpdateContent = new RelayCommand<EventPayload>((p) =>
             {
                 if (p is null) return;
                 if (p.Parameter is not MenuItem item) return;
