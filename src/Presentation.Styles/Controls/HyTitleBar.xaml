@@ -18,12 +18,11 @@
                         SnapsToDevicePixels="True">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <ContentPresenter Grid.Column="0" Content="{TemplateBinding Content}" />
-                            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
                                 <local:HyButton
                                     Margin="{TemplateBinding IconMargin}"
                                     Padding="{TemplateBinding IconPadding}"
