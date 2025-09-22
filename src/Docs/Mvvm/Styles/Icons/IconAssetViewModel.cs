@@ -7,10 +7,12 @@ using HYSoft.Presentation.Interactivity;
 using HYSoft.Presentation.Styles.Controls;
 using HYSoft.Presentation.Styles.Icons;
 
-namespace Docs.Mvvm.Styles
+namespace Docs.Mvvm.Styles.Icons
 {
-    public class IconsViewModel : NotifyPropertyChangedBase
+    public class IconAssetViewModel : NotifyPropertyChangedBase
     {
+        public IBottomSharedContext SharedContext { get; }
+
         private ObservableCollection<EIconKeys> _keys = new ObservableCollection<EIconKeys>();
         public ObservableCollection<EIconKeys> Keys
         {
@@ -18,8 +20,10 @@ namespace Docs.Mvvm.Styles
             set => SetProperty(ref _keys, value);
         }
 
-        public IconsViewModel()
+        public IconAssetViewModel(IBottomSharedContext context)
         {
+            SharedContext = context;
+            
             foreach (EIconKeys key in Enum.GetValues(typeof(EIconKeys)))
             {
                 _keys.Add(key);

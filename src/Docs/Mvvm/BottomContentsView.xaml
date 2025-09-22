@@ -1,32 +1,43 @@
-﻿<UserControl x:Class="Docs.Mvvm.BottomContentsView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
-             xmlns:local="clr-namespace:Docs.Mvvm"
-             xmlns:leftMenu="clr-namespace:Docs.Mvvm.LeftMenu"
-             mc:Ignorable="d" 
-             d:DataContext="{d:DesignInstance local:BottomContentsViewModel, IsDesignTimeCreatable=True}"
-             d:DesignHeight="600" d:DesignWidth="1000">
+﻿<UserControl
+    x:Class="Docs.Mvvm.BottomContentsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
+    xmlns:leftMenu="clr-namespace:Docs.Mvvm.LeftMenu"
+    xmlns:local="clr-namespace:Docs.Mvvm"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance local:BottomContentsViewModel,
+                                     IsDesignTimeCreatable=True}"
+    d:DesignHeight="600"
+    d:DesignWidth="1000"
+    mc:Ignorable="d">
     <UserControl.Resources>
         <DataTemplate DataType="{x:Type leftMenu:LeftMenuViewModel}">
-            <leftMenu:LeftMenuView DataContext="{Binding}"></leftMenu:LeftMenuView>
+            <leftMenu:LeftMenuView DataContext="{Binding}" />
         </DataTemplate>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="62"></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="62" />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Border
             Grid.Row="0"
             Padding="40,0"
             Background="{hy:Color NavigationMenuBarBg}">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                <TextBlock Text="Styles" FontSize="{hy:FontSize lg}" FontWeight="Bold" Foreground="{hy:Color NavigationMenuBarFg}" Cursor="Hand">
+            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                <TextBlock
+                    Cursor="Hand"
+                    FontSize="{hy:FontSize lg}"
+                    FontWeight="Bold"
+                    Foreground="{hy:Color NavigationMenuBarFg}"
+                    Text="Styles">
                     <hy:EventToCommand.Binding>
-                        <hy:Event RoutedEvent="{x:Static TextBlock.MouseLeftButtonUpEvent}" Command="{Binding SharedContext.UpdateLeftMenu}" CommandParameter="{x:Static leftMenu:ELeftMenuType.Styles}"></hy:Event>
+                        <hy:Event
+                            Command="{Binding SharedContext.UpdateLeftMenuItemCommand}"
+                            CommandParameter="{x:Static leftMenu:ELeftMenuType.Styles}"
+                            RoutedEvent="{x:Static TextBlock.MouseLeftButtonUpEvent}" />
                     </hy:EventToCommand.Binding>
                 </TextBlock>
             </StackPanel>
@@ -37,7 +48,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <ContentPresenter Grid.Column="0" Content="{Binding Menu}" />
-            <ContentPresenter Grid.Column="1" Content="{Binding Content}" />
+            <ContentPresenter Grid.Column="1" Content="{Binding SharedContext.Content}" />
         </Grid>
     </Grid>
 

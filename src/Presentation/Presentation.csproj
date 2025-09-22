@@ -14,5 +14,9 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<LangVersion>latest</LangVersion>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="HySoft.Bundle" Version="1.0.73" />
+	</ItemGroup>
 	
 </Project>
