@@ -52,8 +52,10 @@
                                     Margin="{TemplateBinding IconMargin}"
                                     Padding="{TemplateBinding IconPadding}"
                                     VerticalAlignment="Center"
-                                    BorderThickness="0"
-                                    Command="{TemplateBinding ExitAppCommand}">
+                                    BorderThickness="0">
+                                    <b:EventToCommand.Binding>
+                                        <b:Event Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ExitAppCommand}" RoutedEvent="{x:Static local:HyButton.MouseLeftButtonUpEvent}" />
+                                    </b:EventToCommand.Binding>
                                     <local:HyButton.Style>
                                         <Style TargetType="local:HyButton">
                                             <Setter Property="Background" Value="Transparent" />
