@@ -28,9 +28,7 @@ namespace Docs.Mvvm.Styles.Icons
 
         public ICommand SelectIconAssetMenuCommand => new RelayCommand<EventPayload>((p) =>
         {
-            var item = SharedContext.FindMenuItem(typeof(IconAssetView));
-            if (item is null) return;
-            SharedContext.SelectMenuItemCommand.Execute(new EventPayload(null, null, item));
+            SharedContext.SelectMenuItem(typeof(IconAssetView));
         });
     }
 }

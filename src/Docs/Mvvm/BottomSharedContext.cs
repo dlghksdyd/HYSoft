@@ -21,7 +21,7 @@ namespace Docs.Mvvm
         // 왼쪽 메뉴 아이템
         ObservableCollection<MenuItem> MenuItems { get; set; }
         public bool IsContentVisibility { get; }
-        public MenuItem? FindMenuItem(Type viewType);
+        public void SelectMenuItem(Type viewType);
 
         // 커맨드
         ICommand UpdateLeftMenuItemCommand { get; }
@@ -53,7 +53,14 @@ namespace Docs.Mvvm
         public bool IsContentVisibility => MenuItems.ToList().Count != 0;
         public MenuItem? SelectedMenu { get; set; }
 
-        public MenuItem? FindMenuItem(Type viewType)
+        public void SelectMenuItem(Type viewType)
+        {
+            var item = FindMenuItem(viewType);
+            if (item is null) return;
+            SelectMenuItemCommand.Execute(new EventPayload(null, null, item));
+        }
+        
+        private MenuItem? FindMenuItem(Type viewType)
         {
             foreach (var item in MenuItems)
             {
@@ -88,16 +95,6 @@ namespace Docs.Mvvm
 
             return null;
         }
-        
-        public void SetMenuItems_Styles()
-        {
-            MenuItems.Clear();
-
-            var item = AddItem("Icons", null);
-            item.AddSubItem("Getting Started", typeof(GettingStartedView));
-            item.AddSubItem("Icon Asset", typeof(IconAssetView));
-        }
-
 
         private MenuItem AddItem(string title, Type? viewType)
         {
@@ -105,6 +102,7 @@ namespace Docs.Mvvm
             {
                 Title = title,
                 ViewType = viewType,
+                Parent = null,
             };
             MenuItems.Add(item);
 
@@ -142,6 +140,19 @@ namespace Docs.Mvvm
                 SetMenuItems_Styles();
             }
         });
+
+        private void SetMenuItems_Styles()
+        {
+            MenuItems.Clear();
+
+            var item1 = AddItem("Icons", null);
+            item1.AddSubItem("Getting Started", typeof(GettingStartedView));
+            item1.AddSubItem("Icon Asset", typeof(IconAssetView));
+
+            var item2 = AddItem("Colors", null);
+            item2.AddSubItem("Getting Started", null);
+            item2.AddSubItem("Color Tokens", null);
+        }
 
         #endregion
 

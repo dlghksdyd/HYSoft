@@ -35,30 +35,58 @@
                                 Width="20"
                                 Height="20"
                                 Source="Dot"
-                                Visibility="{Binding IsSubItemExist, Converter={StaticResource BoolToVisibilityReverseConverter}}"
-                                Color="{hy:Color TextPrimary}" />
+                                Visibility="{Binding IsSubItemExist, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+                                <hy:HyIcon.Style>
+                                    <Style TargetType="hy:HyIcon">
+                                        <Setter Property="Color" Value="{hy:Color TextPrimary}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                <Setter Property="Color" Value="Black" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </hy:HyIcon.Style>
+                            </hy:HyIcon>
                             <Grid Visibility="{Binding IsSubItemExist, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <hy:HyIcon
                                     Width="20"
                                     Height="20"
                                     Cursor="Hand"
                                     Source="ExpandMore"
-                                    Visibility="{Binding IsExpand, Converter={StaticResource BoolToVisibilityConverter}}"
-                                    Color="{hy:Color TextPrimary}">
+                                    Visibility="{Binding IsExpand, Converter={StaticResource BoolToVisibilityConverter}}">
                                     <hy:EventToCommand.Binding>
                                         <hy:Event Command="{Binding CollapseMenuCommand}" RoutedEvent="{x:Static hy:HyIcon.MouseLeftButtonUpEvent}" />
                                     </hy:EventToCommand.Binding>
+                                    <hy:HyIcon.Style>
+                                        <Style TargetType="hy:HyIcon">
+                                            <Setter Property="Color" Value="{hy:Color TextPrimary}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter Property="Color" Value="Black" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </hy:HyIcon.Style>
                                 </hy:HyIcon>
                                 <hy:HyIcon
                                     Width="20"
                                     Height="20"
                                     Cursor="Hand"
                                     Source="NavigateNext"
-                                    Visibility="{Binding IsExpand, Converter={StaticResource BoolToVisibilityReverseConverter}}"
-                                    Color="{hy:Color TextPrimary}">
+                                    Visibility="{Binding IsExpand, Converter={StaticResource BoolToVisibilityReverseConverter}}">
                                     <hy:EventToCommand.Binding>
                                         <hy:Event Command="{Binding ExpandMenuCommand}" RoutedEvent="{x:Static hy:HyIcon.MouseLeftButtonUpEvent}" />
                                     </hy:EventToCommand.Binding>
+                                    <hy:HyIcon.Style>
+                                        <Style TargetType="hy:HyIcon">
+                                            <Setter Property="Color" Value="{hy:Color TextPrimary}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter Property="Color" Value="Black" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </hy:HyIcon.Style>
                                 </hy:HyIcon>
                             </Grid>
                         </Grid>
