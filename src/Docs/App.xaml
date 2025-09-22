@@ -1,27 +1,28 @@
-﻿<Application x:Class="Docs.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Docs"
-             xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
-             StartupUri="MainWindow.xaml">
+﻿<Application
+    x:Class="Docs.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
+    xmlns:local="clr-namespace:Docs"
+    StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <!-- TextBlock 전역 -->
+        <!--  TextBlock 전역  -->
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Pretendard" />
         </Style>
 
-        <!-- Control 전역 -->
+        <!--  Control 전역  -->
         <Style TargetType="Control">
             <Setter Property="FontFamily" Value="Pretendard" />
         </Style>
 
-        <!-- FlowDocument, RichTextBox 등은 TextElement를 따릅니다 -->
+        <!--  FlowDocument, RichTextBox 등은 TextElement를 따릅니다  -->
         <Style TargetType="TextElement">
             <Setter Property="FontFamily" Value="Pretendard" />
         </Style>
 
-        <hy:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"></hy:BoolToVisibilityConverter>
-        <hy:BoolToVisibilityReverseConverter x:Key="BoolToVisibilityReverseConverter"></hy:BoolToVisibilityReverseConverter>
+        <hy:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <hy:BoolToVisibilityReverseConverter x:Key="BoolToVisibilityReverseConverter" />
 
     </Application.Resources>
 </Application>

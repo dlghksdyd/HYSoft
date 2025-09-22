@@ -1,55 +1,77 @@
-﻿using System;
+﻿using HYSoft.Presentation.Interactivity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Shell;
+using System.Windows.Threading;
 
-namespace HYSoft.Presentation.Interactivity
+namespace HYSoft.Presentation.Styles.Controls
 {
-    public static class WindowDragBehavior
+    public class HyTitleBar : ContentControl
     {
-        public static readonly DependencyProperty EnableDragMoveProperty =
-            DependencyProperty.RegisterAttached(
-                "EnableDragMove",
-                typeof(bool),
-                typeof(WindowDragBehavior),
-                new PropertyMetadata(false, OnEnableDragMoveChanged));
-
-        public static void SetEnableDragMove(DependencyObject element, bool value)
-            => element.SetValue(EnableDragMoveProperty, value);
-
-        public static bool GetEnableDragMove(DependencyObject element)
-            => (bool)element.GetValue(EnableDragMoveProperty);
-
-        private static void OnEnableDragMoveChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        static HyTitleBar()
         {
-            if (d is UIElement ui)
-            {
-                if ((bool)e.NewValue)
-                {
-                    ui.PreviewMouseLeftButtonDown += OnMouseLeftButtonDown;
-                    ui.MouseRightButtonUp += OnMouseRightButtonUp;
-
-                    CreateWindowChrome(ui);
-                }
-                else
-                {
-                    ui.PreviewMouseLeftButtonDown -= OnMouseLeftButtonDown;
-                    ui.MouseRightButtonUp -= OnMouseRightButtonUp;
-                }
-            }
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(HyTitleBar),
+                new FrameworkPropertyMetadata(typeof(HyTitleBar)));
         }
 
-        private static void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        public static readonly DependencyProperty IconSizeProperty =
+            DependencyProperty.Register(
+                nameof(IconSize),
+                typeof(double),
+                typeof(HyTitleBar),
+                new FrameworkPropertyMetadata(32.0,
+                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public double IconSize
         {
-            if (sender is not DependencyObject d) return;
+            get => (double)GetValue(IconSizeProperty);
+            set => SetValue(IconSizeProperty, value);
+        }
+
+        public static readonly DependencyProperty ExitAppCommandProperty =
+            DependencyProperty.Register(
+                nameof(ExitAppCommand),
+                typeof(ICommand),
+                typeof(HyTitleBar),
+                new PropertyMetadata(null));
+
+        public ICommand? ExitAppCommand
+        {
+            get => (ICommand?)GetValue(ExitAppCommandProperty);
+            set => SetValue(ExitAppCommandProperty, value);
+        }
+
+        public ICommand MinimizeAppCommand => new RelayCommand<EventPayload>((p) =>
+        {
+            if (p.Sender is not DependencyObject d) return;
+
+            var window = Window.GetWindow(d);
+            if (window == null) return;
+            
+            SystemCommands.MinimizeWindow(window);
+        });
+
+
+        public ICommand MaximizeAppCommand => new RelayCommand<EventPayload>((p) =>
+        {
+            if (p.Sender is not DependencyObject d) return;
+
             var window = Window.GetWindow(d);
             if (window == null) return;
 
-            // 더블클릭 (최대화/복원)
+            if (p.Args is not MouseButtonEventArgs e) return;
+
             if (e.ClickCount == 2)
             {
                 if (window.WindowState == WindowState.Maximized)
@@ -72,18 +94,45 @@ namespace HYSoft.Presentation.Interactivity
                     return;
             }
 
-            try { window.DragMove(); } catch { /* ignore */ }
+            try
+            {
+                if (window.WindowState == WindowState.Normal)
+                    window.DragMove();
+            }
+            catch
+            {
+                /* ignore */
+            }
+        });
+
+        public static readonly DependencyProperty IconPaddingProperty =
+            DependencyProperty.Register(
+                nameof(IconPadding),
+                typeof(Thickness),
+                typeof(HyTitleBar),
+                new FrameworkPropertyMetadata(
+                    new Thickness(0),
+                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Thickness IconPadding
+        {
+            get => (Thickness)GetValue(IconPaddingProperty);
+            set => SetValue(IconPaddingProperty, value);
         }
 
-        // 우클릭: 시스템 메뉴
-        private static void OnMouseRightButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            if (sender is not DependencyObject d) return;
-            var window = Window.GetWindow(d);
-            if (window == null) return;
+        public static readonly DependencyProperty IconMarginProperty =
+            DependencyProperty.Register(
+                nameof(IconMargin),
+                typeof(Thickness),
+                typeof(HyTitleBar),
+                new FrameworkPropertyMetadata(
+                    new Thickness(0),
+                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
 
-            var p = e.GetPosition(window);
-            SystemCommands.ShowSystemMenu(window, window.PointToScreen(p));
+        public Thickness IconMargin
+        {
+            get => (Thickness)GetValue(IconMarginProperty);
+            set => SetValue(IconMarginProperty, value);
         }
 
         private static T? FindAncestor<T>(DependencyObject current) where T : DependencyObject
@@ -93,14 +142,19 @@ namespace HYSoft.Presentation.Interactivity
                 if (current is T t) return t;
                 current = VisualTreeHelper.GetParent(current);
             }
+
             return null;
         }
 
         private static WindowChrome _chrome;
-        private static HwndSource? _hwndSource;
-        private static void CreateWindowChrome(UIElement ui)
+        private HwndSource? _hwndSource;
+        public override void OnApplyTemplate()
         {
-            var window = Window.GetWindow(ui);
+            base.OnApplyTemplate();
+
+            return;
+            
+            var window = Window.GetWindow(this);
             if (window == null) return;
 
             // WindowChrome 삽입
@@ -116,17 +170,17 @@ namespace HYSoft.Presentation.Interactivity
                     UseAeroCaptionButtons = false,
                 };
                 WindowChrome.SetWindowChrome(window, _chrome);
-
-                // WndProc hook 추가
-                window.SourceInitialized += (s, e) =>
-                {
-                    _hwndSource = (HwndSource)PresentationSource.FromVisual(window);
-                    _hwndSource?.AddHook(WndProc);
-                };
             }
+
+            // WndProc hook 추가
+            window.SourceInitialized += (s, e) =>
+            {
+                _hwndSource = (HwndSource)PresentationSource.FromVisual(window);
+                _hwndSource?.AddHook(WndProc);
+            };
         }
-        
-        private static IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             const int WM_GETMINMAXINFO = 0x0024;
 

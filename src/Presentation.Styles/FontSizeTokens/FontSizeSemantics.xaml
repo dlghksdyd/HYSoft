@@ -10,7 +10,7 @@
     <sys:Double x:Key="Md">16</sys:Double>
     <sys:Double x:Key="Lg">20</sys:Double>
     <sys:Double x:Key="Xl">24</sys:Double>
-    <sys:Double x:Key="2Xl">32</sys:Double>
+    <sys:Double x:Key="_2Xl">32</sys:Double>
 
     <sys:Double x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type f:FontSizeKeys}, ResourceId={x:Static f:EFontSizeKeys.Xs}}" />
     <sys:Double x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type f:FontSizeKeys}, ResourceId={x:Static f:EFontSizeKeys.Sm}}" />
