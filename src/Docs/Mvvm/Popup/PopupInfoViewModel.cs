@@ -41,23 +41,18 @@ namespace Docs.Mvvm.Popup
             set => SetProperty(ref _isCancel, value);
         }
 
-        private string _okStr = "확인";
+        private string _okStr = "Ok";
         public string OkStr
         {
             get => _okStr;
             set => SetProperty(ref _okStr, value);
         }
 
-        private string _cancelStr = "취소";
+        private string _cancelStr = "Cancel";
         public string CancelStr
         {
             get => _cancelStr;
             set => SetProperty(ref _cancelStr, value);
-        }
-        
-        public ModalResult Open()
-        {
-            return ModalManager.Open(this);
         }
         
         public ICommand OkCommand => new RelayCommand(() =>

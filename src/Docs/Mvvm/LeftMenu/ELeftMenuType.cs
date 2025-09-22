@@ -8,6 +8,8 @@ namespace Docs.Mvvm.LeftMenu
 {
     public enum ELeftMenuType
     {
-        Styles,
+        UiSupport,
+        DbSupport,
+        Communication,
     }
 }

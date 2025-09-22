@@ -91,6 +91,7 @@
                             </Grid>
                         </Grid>
                         <TextBlock
+                            x:Name="TitleTextBlock"
                             Grid.Column="1"
                             VerticalAlignment="Center"
                             Cursor="Hand"
@@ -117,6 +118,7 @@
                         </TextBlock>
                     </Grid>
                     <ItemsControl
+                        x:Name="ItemsControl"
                         Grid.Row="1"
                         Margin="28,0,0,0"
                         ItemsSource="{Binding SubItems}"

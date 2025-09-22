@@ -28,15 +28,44 @@
             Background="{hy:Color NavigationMenuBarBg}">
             <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                 <TextBlock
+                    Margin="0,0,60,0"
                     Cursor="Hand"
                     FontSize="{hy:FontSize lg}"
                     FontWeight="Bold"
                     Foreground="{hy:Color NavigationMenuBarFg}"
-                    Text="Styles">
+                    Text="UI Support">
                     <hy:EventToCommand.Binding>
                         <hy:Event
                             Command="{Binding SharedContext.UpdateLeftMenuItemCommand}"
-                            CommandParameter="{x:Static leftMenu:ELeftMenuType.Styles}"
+                            CommandParameter="{x:Static leftMenu:ELeftMenuType.UiSupport}"
+                            RoutedEvent="{x:Static TextBlock.MouseLeftButtonUpEvent}" />
+                    </hy:EventToCommand.Binding>
+                </TextBlock>
+                <TextBlock
+                    Margin="0,0,60,0"
+                    Cursor="Hand"
+                    FontSize="{hy:FontSize lg}"
+                    FontWeight="Bold"
+                    Foreground="{hy:Color NavigationMenuBarFg}"
+                    Text="DB Support">
+                    <hy:EventToCommand.Binding>
+                        <hy:Event
+                            Command="{Binding SharedContext.UpdateLeftMenuItemCommand}"
+                            CommandParameter="{x:Static leftMenu:ELeftMenuType.DbSupport}"
+                            RoutedEvent="{x:Static TextBlock.MouseLeftButtonUpEvent}" />
+                    </hy:EventToCommand.Binding>
+                </TextBlock>
+                <TextBlock
+                    Margin="0,0,60,0"
+                    Cursor="Hand"
+                    FontSize="{hy:FontSize lg}"
+                    FontWeight="Bold"
+                    Foreground="{hy:Color NavigationMenuBarFg}"
+                    Text="Communication">
+                    <hy:EventToCommand.Binding>
+                        <hy:Event
+                            Command="{Binding SharedContext.UpdateLeftMenuItemCommand}"
+                            CommandParameter="{x:Static leftMenu:ELeftMenuType.Communication}"
                             RoutedEvent="{x:Static TextBlock.MouseLeftButtonUpEvent}" />
                     </hy:EventToCommand.Binding>
                 </TextBlock>

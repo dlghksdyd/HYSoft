@@ -12,11 +12,11 @@ namespace Docs
     {
         public ICommand ExitAppCommand => new RelayCommand(() =>
         {
-            var result = new PopupInfoViewModel()
+            var result = ModalManager.Open(new PopupInfoViewModel()
             {
-                Title = "프로그램 종료",
-                Message = "프로그램을 종료하시겠습니까?",
-            }.Open();
+                Title = "Exit",
+                Message = "Is this application shutdown?",
+            });
 
             if (result == ModalResult.Ok)
             {

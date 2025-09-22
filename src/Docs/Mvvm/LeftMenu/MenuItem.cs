@@ -1,12 +1,13 @@
-﻿using System;
+﻿using HYSoft.Presentation.Interactivity;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
-using HYSoft.Presentation.Interactivity;
 
 namespace Docs.Mvvm.LeftMenu
 {
@@ -56,12 +57,16 @@ namespace Docs.Mvvm.LeftMenu
             set => SetProperty(ref _isSelected, value);
         }
         
-        public MenuItem AddSubItem(string title, Type? viewType)
+        public MenuItem AddSubItem(string title, Type? viewType, bool isExpand = false)
         {
             var item = new MenuItem();
             item.Title = title;
             item.ViewType = viewType;
             item.Parent = this;
+
+            if (isExpand)
+                ExpandMenuCommand.Execute(null);
+            
             SubItems.Add(item);
 
             return item;

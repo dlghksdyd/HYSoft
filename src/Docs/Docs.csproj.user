@@ -8,10 +8,7 @@
     <Compile Update="Mvvm\Popup\PopupInfoView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Mvvm\Styles\Icons\GettingStartedView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Mvvm\Styles\Icons\IconAssetView.xaml.cs">
+    <Compile Update="Mvvm\Styles\Components\IconView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Mvvm\LeftMenu\LeftMenuView.xaml.cs">

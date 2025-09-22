@@ -7,9 +7,9 @@ using HYSoft.Presentation.Interactivity;
 using HYSoft.Presentation.Styles.Controls;
 using HYSoft.Presentation.Styles.Icons;
 
-namespace Docs.Mvvm.Styles.Icons
+namespace Docs.Mvvm.Styles.Components
 {
-    public class IconAssetViewModel : NotifyPropertyChangedBase
+    public class IconViewModel : NotifyPropertyChangedBase
     {
         public IBottomSharedContext SharedContext { get; }
 
@@ -20,7 +20,18 @@ namespace Docs.Mvvm.Styles.Icons
             set => SetProperty(ref _keys, value);
         }
 
-        public IconAssetViewModel(IBottomSharedContext context)
+        /// <summary>
+        /// 디자인 타임용
+        /// </summary>
+        public IconViewModel()
+        {
+            foreach (EIconKeys key in Enum.GetValues(typeof(EIconKeys)))
+            {
+                _keys.Add(key);
+            }
+        }
+
+        public IconViewModel(IBottomSharedContext context)
         {
             SharedContext = context;
             

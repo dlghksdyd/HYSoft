@@ -1,0 +1,135 @@
+﻿<UserControl
+    x:Class="Docs.Mvvm.Styles.Components.IconView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
+    xmlns:local="clr-namespace:Docs.Mvvm.Styles.Components"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Background="{hy:Color SurfaceBase}"
+    d:DataContext="{d:DesignInstance local:IconViewModel,
+                                     IsDesignTimeCreatable=True}"
+    d:DesignHeight="900"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Border Margin="20">
+        <hy:HyScrollViewer>
+            <StackPanel Margin="0,0,10,0" Orientation="Vertical">
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="1. Getting Started" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Md}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="- Include xmlns:hy=&quot;http://schemas.hysoft.com/wpf/2025/xaml&quot; in your XAML file." />
+                <RichTextBox
+                    Margin="0,0,0,8"
+                    Padding="8"
+                    FontSize="{hy:FontSize Sm}">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="&lt;UserControl&gt;" />
+                            <LineBreak />
+                            <Run Text="    x:Class=&quot;Docs.Mvvm.UiSupport.Icons.GettingStartedView&quot;" />
+                            <LineBreak />
+                            <Run Text="    xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;" />
+                            <LineBreak />
+                            <Run Text="    xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;" />
+                            <LineBreak />
+                            <Run Text="    xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;" />
+                            <LineBreak />
+
+                            <!--  강조  -->
+                            <Run
+                                FontWeight="Bold"
+                                Foreground="{hy:Color TextError}"
+                                Text="    xmlns:hy=&quot;http://schemas.hysoft.com/wpf/2025/xaml&quot;" />
+
+                            <LineBreak />
+                            <Run Text="    xmlns:local=&quot;clr-namespace:Docs.Mvvm.UiSupport.Icons&quot;" />
+                            <LineBreak />
+                            <Run Text="    xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;" />
+                            <LineBreak />
+                            <Run Text="    mc:Ignorable=&quot;d&quot;&gt;" />
+                            <LineBreak />
+                            <Run Text="&lt;/UserControl&gt;" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Md}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="- Use HyIcon Component in XAML" />
+                <RichTextBox
+                    Margin="0,0,0,16"
+                    Padding="8"
+                    FontSize="{hy:FontSize Sm}">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="&lt;hy:HyIcon Source=&quot;" />
+                            <Run
+                                FontStyle="Italic"
+                                Foreground="{hy:Color TextError}"
+                                Text="[icon_asset_key]" />
+                            <Run Text="&quot; Color=&quot;Black&quot; ColorHover=&quot;Blue&quot;" />
+                            <Run Text=" ColorPressed=&quot;Aquamarine&quot;/&gt;" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="2. Icon Assets" />
+                <Border Grid.Row="0">
+                    <hy:HyTextBox
+                        Width="250"
+                        Height="32"
+                        HorizontalAlignment="Left"
+                        BorderBrush="{hy:Color BorderDefault}"
+                        BorderThickness="1"
+                        WaterMark="Search Icon Asset Key"
+                        WaterMarkForeground="{hy:Color TextWatermark}">
+                        <hy:EventToCommand.Binding>
+                            <hy:Event Command="{Binding SearchTextChanged, UpdateSourceTrigger=PropertyChanged}" RoutedEvent="TextBox.TextChanged" />
+                        </hy:EventToCommand.Binding>
+                    </hy:HyTextBox>
+                </Border>
+                <ItemsControl ItemsSource="{Binding Keys}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="16">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <hy:HyIcon
+                                    Grid.Row="0"
+                                    Width="32"
+                                    Height="32"
+                                    Source="{Binding}" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    HorizontalAlignment="Center"
+                                    Text="{Binding}"
+                                    TextWrapping="Wrap" />
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </hy:HyScrollViewer>
+    </Border>
+</UserControl>

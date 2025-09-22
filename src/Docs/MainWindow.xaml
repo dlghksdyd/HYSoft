@@ -15,14 +15,6 @@
     WindowState="Normal"
     WindowStyle="None"
     mc:Ignorable="d">
-    <WindowChrome.WindowChrome>
-        <WindowChrome
-            CaptionHeight="0"
-            CornerRadius="0"
-            GlassFrameThickness="0"
-            ResizeBorderThickness="5"
-            UseAeroCaptionButtons="False" />
-    </WindowChrome.WindowChrome>
     <Border BorderBrush="{hy:Color BorderDefault}" BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>

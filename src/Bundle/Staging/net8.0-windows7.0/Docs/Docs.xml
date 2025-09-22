@@ -80,35 +80,22 @@
             InitializeComponent
             </summary>
         </member>
-        <member name="T:Docs.Mvvm.Styles.Icons.GettingStartedView">
+        <member name="T:Docs.Mvvm.Styles.Components.IconView">
             <summary>
-            Interaction logic for GettingStartedView.xaml
+            IconView.xaml에 대한 상호 작용 논리
             </summary>
             <summary>
-            GettingStartedView
+            IconView
             </summary>
         </member>
-        <member name="M:Docs.Mvvm.Styles.Icons.GettingStartedView.InitializeComponent">
+        <member name="M:Docs.Mvvm.Styles.Components.IconView.InitializeComponent">
             <summary>
             InitializeComponent
             </summary>
         </member>
-        <member name="M:Docs.Mvvm.Styles.Icons.GettingStartedViewModel.#ctor">
+        <member name="M:Docs.Mvvm.Styles.Components.IconViewModel.#ctor">
             <summary>
-            디자인 타임 용
-            </summary>
-        </member>
-        <member name="T:Docs.Mvvm.Styles.Icons.IconAssetView">
-            <summary>
-            IconAssetView.xaml에 대한 상호 작용 논리
-            </summary>
-            <summary>
-            IconAssetView
-            </summary>
-        </member>
-        <member name="M:Docs.Mvvm.Styles.Icons.IconAssetView.InitializeComponent">
-            <summary>
-            InitializeComponent
+            디자인 타임용
             </summary>
         </member>
         <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">

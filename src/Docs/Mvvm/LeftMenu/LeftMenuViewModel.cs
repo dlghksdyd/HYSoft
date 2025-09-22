@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Docs.Mvvm.Styles.Icons;
 
 namespace Docs.Mvvm.LeftMenu
 {
@@ -27,7 +26,7 @@ namespace Docs.Mvvm.LeftMenu
         public LeftMenuViewModel()
         {
             SharedContext = new BottomSharedContext();
-            SharedContext.UpdateLeftMenuItemCommand.Execute(new EventPayload(null, null, ELeftMenuType.Styles));
+            SharedContext.UpdateLeftMenuItemCommand.Execute(new EventPayload(null, null, ELeftMenuType.UiSupport));
         }
 
         public LeftMenuViewModel(IBottomSharedContext sharedContext)

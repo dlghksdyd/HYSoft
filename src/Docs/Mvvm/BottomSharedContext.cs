@@ -1,5 +1,4 @@
 ﻿using Docs.Mvvm.LeftMenu;
-using Docs.Mvvm.Styles.Icons;
 using HYSoft.Presentation.Interactivity;
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls.Ribbon.Primitives;
 using System.Windows.Input;
+using Docs.Mvvm.Styles.Components;
 
 namespace Docs.Mvvm
 {
@@ -96,7 +96,7 @@ namespace Docs.Mvvm
             return null;
         }
 
-        private MenuItem AddItem(string title, Type? viewType)
+        private MenuItem AddItem(string title, Type? viewType, bool isExpand = false)
         {
             var item = new MenuItem()
             {
@@ -104,6 +104,9 @@ namespace Docs.Mvvm
                 ViewType = viewType,
                 Parent = null,
             };
+            if (isExpand)
+                item.ExpandMenuCommand.Execute(null);
+            
             MenuItems.Add(item);
 
             return item;
@@ -130,31 +133,46 @@ namespace Docs.Mvvm
             if (item.ViewType is null) Content = null;
             else Content = Activator.CreateInstance(item.ViewType, this);
         });
-
+        
         public ICommand UpdateLeftMenuItemCommand => new RelayCommand<EventPayload>((p) =>
         {
             if (p?.Parameter is not ELeftMenuType type) return;
 
-            if (type == ELeftMenuType.Styles)
+            if (type == ELeftMenuType.UiSupport)
             {
                 SetMenuItems_Styles();
             }
         });
 
+        #endregion
+
         private void SetMenuItems_Styles()
         {
             MenuItems.Clear();
 
-            var item1 = AddItem("Icons", null);
-            item1.AddSubItem("Getting Started", typeof(GettingStartedView));
-            item1.AddSubItem("Icon Asset", typeof(IconAssetView));
+            var item1 = AddItem("Colors", null, true);
+            item1.AddSubItem("Default Tokens", null);
+            item1.AddSubItem("Custom Tokens", null);
 
-            var item2 = AddItem("Colors", null);
-            item2.AddSubItem("Getting Started", null);
-            item2.AddSubItem("Color Tokens", null);
+            var item2 = AddItem("Fonts", null, true);
+            item2.AddSubItem("Font Size", null);
+
+            var item3 = AddItem("Components", null, true);
+            item3.AddSubItem("Button", null);
+            item3.AddSubItem("CheckBox", null);
+            item3.AddSubItem("Icon", typeof(IconView));
+            item3.AddSubItem("PasswordBox", null);
+            item3.AddSubItem("RadioButton", null);
+            item3.AddSubItem("ScrollViewer", null);
+            item3.AddSubItem("TextBox", null);
+            item3.AddSubItem("TitleBar", null);
+
+            AddItem("Adorner", null, true);
+            AddItem("Converter", null, true);
+            AddItem("DragDrop", null, true);
+            AddItem("UI Tree Helper", null, true);
+            AddItem("Interactivity", null, true);
+            AddItem("Modal", null, true);
         }
-
-        #endregion
-
     }
 }
