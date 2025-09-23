@@ -5,13 +5,13 @@
     xmlns:icon="clr-namespace:HYSoft.Presentation.Styles.Icons"
     xmlns:local="clr-namespace:HYSoft.Presentation.Styles.Controls">
 
-    <Style x:Key="RepeatButtonTransparent" TargetType="{x:Type RepeatButton}">
+    <Style x:Key="RepeatButtonTransparent" TargetType="{x:Type local:HyRepeatButton}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Focusable" Value="false" />
         <Setter Property="IsTabStop" Value="false" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                <ControlTemplate TargetType="{x:Type local:HyRepeatButton}">
                     <Rectangle
                         Width="{TemplateBinding Width}"
                         Height="{TemplateBinding Height}"
@@ -29,12 +29,12 @@
     <SolidColorBrush x:Key="ScrollButtonIcon" Color="#7A7A7A" />
 
     <!--  Up  -->
-    <Style x:Key="RepeatButtonUp" TargetType="{x:Type RepeatButton}">
+    <Style x:Key="RepeatButtonUp" TargetType="{x:Type local:HyRepeatButton}">
         <Setter Property="Focusable" Value="False" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                <ControlTemplate TargetType="{x:Type local:HyRepeatButton}">
                     <Grid>
                         <Rectangle x:Name="Bg" Fill="{StaticResource ScrollButtonBg}" />
                         <Path
@@ -65,10 +65,10 @@
     <Style
         x:Key="RepeatButtonDown"
         BasedOn="{StaticResource RepeatButtonUp}"
-        TargetType="{x:Type RepeatButton}">
+        TargetType="{x:Type local:HyRepeatButton}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                <ControlTemplate TargetType="{x:Type local:HyRepeatButton}">
                     <Grid>
                         <Rectangle x:Name="Bg" Fill="{StaticResource ScrollButtonBg}" />
                         <Path
@@ -98,12 +98,12 @@
     <Style
         x:Key="RepeatButtonLeft"
         BasedOn="{StaticResource RepeatButtonUp}"
-        TargetType="{x:Type RepeatButton}">
+        TargetType="{x:Type local:HyRepeatButton}">
         <Setter Property="Width" Value="20" />
         <Setter Property="Height" Value="Auto" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                <ControlTemplate TargetType="{x:Type local:HyRepeatButton}">
                     <Grid>
                         <Rectangle x:Name="Bg" Fill="{StaticResource ScrollButtonBg}" />
                         <Path
@@ -133,10 +133,10 @@
     <Style
         x:Key="RepeatButtonRight"
         BasedOn="{StaticResource RepeatButtonLeft}"
-        TargetType="{x:Type RepeatButton}">
+        TargetType="{x:Type local:HyRepeatButton}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                <ControlTemplate TargetType="{x:Type local:HyRepeatButton}">
                     <Grid>
                         <Rectangle x:Name="Bg" Fill="{StaticResource ScrollButtonBg}" />
                         <Path
@@ -162,18 +162,17 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ScrollBarThumbVertical" TargetType="{x:Type Thumb}">
+    <Style x:Key="ScrollBarThumbVertical" TargetType="{x:Type local:HyThumb}">
         <Setter Property="IsTabStop" Value="false" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Rectangle
+                <ControlTemplate TargetType="{x:Type local:HyThumb}">
+                    <Border
                         x:Name="xVerticalThumRectangle"
                         Width="{TemplateBinding Width}"
                         Height="{TemplateBinding Height}"
-                        Fill="{c:Color ScrollbarThumb}"
-                        RadiusX="3"
-                        RadiusY="3"
+                        Background="{TemplateBinding ThumbColor}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
                         SnapsToDevicePixels="True" />
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
@@ -190,18 +189,18 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ScrollBarThumbHorizontal" TargetType="{x:Type Thumb}">
+    <Style x:Key="ScrollBarThumbHorizontal" TargetType="{x:Type local:HyThumb}">
         <Setter Property="IsTabStop" Value="false" />
+        <Setter Property="ThumbColor" Value="{c:Color ScrollbarThumb}" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Rectangle
+                <ControlTemplate TargetType="{x:Type local:HyThumb}">
+                    <Border
                         x:Name="xHorizontalThumRectangle"
                         Width="{TemplateBinding Width}"
                         Height="{TemplateBinding Height}"
-                        Fill="{c:Color ScrollbarThumb}"
-                        RadiusX="3"
-                        RadiusY="3"
+                        Background="{TemplateBinding ThumbColor}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
                         SnapsToDevicePixels="True" />
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
@@ -218,21 +217,24 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ScrollBarStyle" TargetType="{x:Type ScrollBar}">
+    <Style x:Key="ScrollBarStyle" TargetType="{x:Type local:HyScrollBar}">
         <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false" />
         <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
         <Setter Property="Width" Value="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" />
         <Setter Property="MinWidth" Value="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" />
-        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Margin" Value="0" />
+        <Setter Property="Background" Value="{c:Color ScrollbarTrack}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{c:Color ScrollbarBorder}" />
+        <Setter Property="Padding" Value="2" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ScrollBar}">
+                <ControlTemplate TargetType="{x:Type local:HyScrollBar}">
                     <Border
-                        Padding="2"
-                        Background="{c:Color ScrollbarTrack}"
-                        BorderBrush="{c:Color ScrollbarBorder}"
-                        BorderThickness="1">
+                        Padding="{TemplateBinding Padding}"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
                         <!--  핵심: 고정 버튼(위/아래)은 Track 바깥의 Auto 행에 배치  -->
                         <Grid SnapsToDevicePixels="True">
                             <Grid.RowDefinitions>
@@ -242,34 +244,39 @@
                             </Grid.RowDefinitions>
 
                             <!--  위 고정 화살표 버튼  -->
-                            <RepeatButton
+                            <local:HyRepeatButton
                                 Grid.Row="0"
                                 Margin="0,0,0,8"
                                 Command="{x:Static ScrollBar.LineUpCommand}"
-                                Style="{StaticResource RepeatButtonUp}" />
+                                Style="{StaticResource RepeatButtonUp}"
+                                Visibility="{TemplateBinding RepeatButtonVisibility}" />
 
                             <!--  중앙 트랙: 페이지 이동 영역 + Thumb  -->
                             <Grid Grid.Row="1">
                                 <!--  페이지 이동용(투명) 버튼이 Thumb 앞/뒤 영역을 차지  -->
                                 <Track x:Name="PART_Track" IsDirectionReversed="True">
                                     <Track.DecreaseRepeatButton>
-                                        <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Style="{StaticResource RepeatButtonTransparent}" />
+                                        <local:HyRepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Style="{StaticResource RepeatButtonTransparent}" />
                                     </Track.DecreaseRepeatButton>
                                     <Track.IncreaseRepeatButton>
-                                        <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Style="{StaticResource RepeatButtonTransparent}" />
+                                        <local:HyRepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Style="{StaticResource RepeatButtonTransparent}" />
                                     </Track.IncreaseRepeatButton>
                                     <Track.Thumb>
-                                        <Thumb Style="{StaticResource ScrollBarThumbVertical}" />
+                                        <local:HyThumb
+                                            CornerRadius="{TemplateBinding ThumbCornerRadius}"
+                                            Style="{StaticResource ScrollBarThumbVertical}"
+                                            ThumbColor="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ThumbColor}" />
                                     </Track.Thumb>
                                 </Track>
                             </Grid>
 
                             <!--  아래 고정 화살표 버튼  -->
-                            <RepeatButton
+                            <local:HyRepeatButton
                                 Grid.Row="2"
                                 Margin="0,8,0,0"
                                 Command="{x:Static ScrollBar.LineDownCommand}"
-                                Style="{StaticResource RepeatButtonDown}" />
+                                Style="{StaticResource RepeatButtonDown}"
+                                Visibility="{TemplateBinding RepeatButtonVisibility}" />
                         </Grid>
                     </Border>
                 </ControlTemplate>
@@ -281,13 +288,18 @@
                 <Setter Property="MinWidth" Value="0" />
                 <Setter Property="Height" Value="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarHeightKey}}" />
                 <Setter Property="MinHeight" Value="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarHeightKey}}" />
+                <Setter Property="Background" Value="{c:Color ScrollbarTrack}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="BorderBrush" Value="{c:Color ScrollbarBorder}" />
+                <Setter Property="Padding" Value="2" />
                 <Setter Property="Template">
                     <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type ScrollBar}">
+                        <ControlTemplate TargetType="{x:Type local:HyScrollBar}">
                             <Border
-                                Background="{c:Color ScrollbarTrack}"
-                                BorderBrush="{c:Color ScrollbarBorder}"
-                                BorderThickness="1">
+                                Padding="{TemplateBinding Padding}"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
                                 <Grid SnapsToDevicePixels="True">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
@@ -296,10 +308,11 @@
                                     </Grid.ColumnDefinitions>
 
                                     <!--  왼쪽 고정 화살표  -->
-                                    <RepeatButton
+                                    <local:HyRepeatButton
                                         Grid.Column="0"
                                         Command="{x:Static ScrollBar.LineLeftCommand}"
-                                        Style="{StaticResource RepeatButtonLeft}" />
+                                        Style="{StaticResource RepeatButtonLeft}"
+                                        Visibility="{TemplateBinding RepeatButtonVisibility}" />
 
                                     <!--  중앙 트랙  -->
                                     <Grid Grid.Column="1">
@@ -308,22 +321,26 @@
                                             Margin="4,0,4,0"
                                             IsDirectionReversed="True">
                                             <Track.DecreaseRepeatButton>
-                                                <RepeatButton Command="{x:Static ScrollBar.PageLeftCommand}" Style="{StaticResource RepeatButtonTransparent}" />
+                                                <local:HyRepeatButton Command="{x:Static ScrollBar.PageLeftCommand}" Style="{StaticResource RepeatButtonTransparent}" />
                                             </Track.DecreaseRepeatButton>
                                             <Track.IncreaseRepeatButton>
-                                                <RepeatButton Command="{x:Static ScrollBar.PageRightCommand}" Style="{StaticResource RepeatButtonTransparent}" />
+                                                <local:HyRepeatButton Command="{x:Static ScrollBar.PageRightCommand}" Style="{StaticResource RepeatButtonTransparent}" />
                                             </Track.IncreaseRepeatButton>
                                             <Track.Thumb>
-                                                <Thumb Style="{StaticResource ScrollBarThumbHorizontal}" />
+                                                <local:HyThumb
+                                                    CornerRadius="{TemplateBinding ThumbCornerRadius}"
+                                                    Style="{StaticResource ScrollBarThumbHorizontal}"
+                                                    ThumbColor="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ThumbColor}" />
                                             </Track.Thumb>
                                         </Track>
                                     </Grid>
 
                                     <!--  오른쪽 고정 화살표  -->
-                                    <RepeatButton
+                                    <local:HyRepeatButton
                                         Grid.Column="2"
                                         Command="{x:Static ScrollBar.LineRightCommand}"
-                                        Style="{StaticResource RepeatButtonRight}" />
+                                        Style="{StaticResource RepeatButtonRight}"
+                                        Visibility="{TemplateBinding RepeatButtonVisibility}" />
                                 </Grid>
                             </Border>
                         </ControlTemplate>
@@ -337,6 +354,8 @@
     <Style TargetType="{x:Type local:HyScrollViewer}">
         <Setter Property="Padding" Value="0" />
         <Setter Property="Background" Value="Transparent" />
+        <Setter Property="ScrollBarSize" Value="20" />
+        <Setter Property="ScrollBarPadding" Value="2" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:HyScrollViewer}">
@@ -351,42 +370,60 @@
                         </Grid.RowDefinitions>
 
                         <!--  콘텐츠  -->
-                        <ScrollContentPresenter
-                            x:Name="PART_ScrollContentPresenter"
+                        <Border
                             Grid.Row="0"
                             Grid.Column="0"
-                            CanContentScroll="{TemplateBinding CanContentScroll}"
-                            CanHorizontallyScroll="False"
-                            CanVerticallyScroll="False"
-                            Content="{TemplateBinding Content}"
-                            ContentTemplate="{TemplateBinding ContentTemplate}" />
+                            Padding="{TemplateBinding Padding}"
+                            Background="{TemplateBinding Background}">
+                            <ScrollContentPresenter
+                                x:Name="PART_ScrollContentPresenter"
+                                CanContentScroll="{TemplateBinding CanContentScroll}"
+                                CanHorizontallyScroll="False"
+                                CanVerticallyScroll="False"
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}" />
+                        </Border>
 
                         <!--  수직 스크롤바  -->
-                        <ScrollBar
+                        <local:HyScrollBar
                             x:Name="PART_VerticalScrollBar"
                             Grid.Row="0"
                             Grid.Column="1"
-                            Width="20"
+                            Width="{TemplateBinding ScrollBarSize}"
+                            Padding="{TemplateBinding ScrollBarPadding}"
                             AutomationProperties.AutomationId="VerticalScrollBar"
+                            Background="{TemplateBinding ScrollBarBackground}"
+                            BorderBrush="{TemplateBinding ScrollBarBorderBrush}"
+                            BorderThickness="{TemplateBinding ScrollBarBorderThickness}"
                             Maximum="{TemplateBinding ScrollableHeight}"
                             Minimum="0"
                             Orientation="Vertical"
+                            RepeatButtonVisibility="{TemplateBinding RepeatButtonVisibility}"
                             Style="{StaticResource ScrollBarStyle}"
+                            ThumbColor="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ThumbColor}"
+                            ThumbCornerRadius="{TemplateBinding ThumbCornerRadius}"
                             ViewportSize="{TemplateBinding ViewportHeight}"
                             Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
                             Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
 
                         <!--  수평 스크롤바  -->
-                        <ScrollBar
+                        <local:HyScrollBar
                             x:Name="PART_HorizontalScrollBar"
                             Grid.Row="1"
                             Grid.Column="0"
-                            Height="20"
+                            Height="{TemplateBinding ScrollBarSize}"
+                            Padding="{TemplateBinding ScrollBarPadding}"
                             AutomationProperties.AutomationId="HorizontalScrollBar"
+                            Background="{TemplateBinding ScrollBarBackground}"
+                            BorderBrush="{TemplateBinding ScrollBarBorderBrush}"
+                            BorderThickness="{TemplateBinding ScrollBarBorderThickness}"
                             Maximum="{TemplateBinding ScrollableWidth}"
                             Minimum="0"
                             Orientation="Horizontal"
+                            RepeatButtonVisibility="{TemplateBinding RepeatButtonVisibility}"
                             Style="{StaticResource ScrollBarStyle}"
+                            ThumbColor="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ThumbColor}"
+                            ThumbCornerRadius="{TemplateBinding ThumbCornerRadius}"
                             ViewportSize="{TemplateBinding ViewportWidth}"
                             Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
                             Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource Mode=TemplatedParent}}" />

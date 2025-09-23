@@ -4,6 +4,11 @@
         <name>Presentation.Styles</name>
     </assembly>
     <members>
+        <member name="P:HYSoft.Presentation.Styles.Controls.HyScrollViewer.ScrollBarSize">
+            <summary>
+            스크롤바 두께 (세로 스크롤바의 Width, 가로 스크롤바의 Height)
+            </summary>
+        </member>
         <member name="P:HYSoft.Presentation.Styles.Icons.IconExtension.Color">
             <summary>
             직접 색 지정 (#RRGGBB 문자열 또는 Color). 지정 시 ColorKey보다 우선.
