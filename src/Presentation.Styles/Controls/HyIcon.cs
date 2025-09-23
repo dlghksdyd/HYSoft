@@ -54,6 +54,12 @@ namespace HYSoft.Presentation.Styles.Controls
                 typeof(bool),
                 typeof(HyIcon),
                 new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnAnyChanged));
+
+            CornerRadiusProperty = DependencyProperty.Register(
+                nameof(CornerRadius),
+                typeof(CornerRadius),
+                typeof(HyIcon),
+                new FrameworkPropertyMetadata(new CornerRadius(0), FrameworkPropertyMetadataOptions.AffectsRender));
         }
 
         public static readonly DependencyProperty SourceProperty;
@@ -89,6 +95,13 @@ namespace HYSoft.Presentation.Styles.Controls
         {
             get => (bool)GetValue(IsPressedProperty);
             set => SetValue(IsPressedProperty, value);
+        }
+
+        public static readonly DependencyProperty CornerRadiusProperty;
+        public CornerRadius CornerRadius
+        {
+            get => (CornerRadius)GetValue(CornerRadiusProperty);
+            set => SetValue(CornerRadiusProperty, value);
         }
 
         public HyIcon()
