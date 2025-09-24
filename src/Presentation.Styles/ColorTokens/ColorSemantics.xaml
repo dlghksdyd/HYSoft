@@ -25,7 +25,7 @@
     <SolidColorBrush x:Key="SurfaceBase">#ffffff</SolidColorBrush>
     <SolidColorBrush x:Key="SurfaceSubtle">#ebf1f6</SolidColorBrush>
     <SolidColorBrush x:Key="SurfaceElevated">#f2f6fa</SolidColorBrush>
-    <SolidColorBrush x:Key="SurfaceInverse">#0a0e14</SolidColorBrush>
+    <SolidColorBrush x:Key="SurfaceInverse">#1D2C3B</SolidColorBrush>
     <SolidColorBrush x:Key="SurfaceOverlay">#0a0e14</SolidColorBrush>
     <SolidColorBrush x:Key="BorderSubtle">#c5d4e3</SolidColorBrush>
     <SolidColorBrush x:Key="BorderDefault">#6e6e6e</SolidColorBrush>
