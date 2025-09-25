@@ -21,8 +21,9 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding CornerRadius}">
-                        <Grid>
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Focusable="False">
+                        <Grid x:Name="Root">
                             <!--  Watermark  -->
                             <TextBlock
                                 x:Name="WatermarkText"
@@ -55,7 +56,6 @@
                         <Trigger Property="Text" Value="">
                             <Setter TargetName="WatermarkText" Property="Visibility" Value="Visible" />
                         </Trigger>
-
                         <!--  비활성화: 투명도 낮춤  -->
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="xBorder" Property="Opacity" Value="0.7" />
