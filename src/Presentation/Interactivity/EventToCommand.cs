@@ -12,8 +12,8 @@ namespace HYSoft.Presentation.Interactivity
     /// </summary>
     public static class EventToCommand
     {
-        
-        
+
+
         /// <summary>
         /// UIElement에 바인딩할 EventCollection을 나타내는 Attached Property입니다.
         /// (여러 Event를 한 번에 부착)
@@ -48,6 +48,14 @@ namespace HYSoft.Presentation.Interactivity
             => (Dictionary<Event, Delegate>)d.GetValue(HandlerMapProperty);
         private static void SetHandlerMap(DependencyObject d, Dictionary<Event, Delegate> map)
             => d.SetValue(HandlerMapProperty, map);
+
+        private static readonly DependencyProperty ExecutingSetProperty =
+            DependencyProperty.RegisterAttached("ExecutingSet",
+                typeof(HashSet<Event>), typeof(EventToCommand));
+        private static HashSet<Event> GetExecutingSet(DependencyObject d) =>
+            (HashSet<Event>)(d.GetValue(ExecutingSetProperty) ?? new HashSet<Event>());
+        private static void SetExecutingSet(DependencyObject d, HashSet<Event> set) =>
+            d.SetValue(ExecutingSetProperty, set);
 
         // MultiBindings(INotifyCollectionChanged) 구독 핸들러 저장
         private static readonly DependencyProperty CollectionChangedHandlerProperty =
@@ -117,27 +125,45 @@ namespace HYSoft.Presentation.Interactivity
         {
             if (b?.RoutedEvent == null || b.Command == null) return;
 
-            // 1) 맵 확보
             var map = GetHandlerMap(ui);
             if (map == null)
             {
                 map = new Dictionary<Event, Delegate>();
                 SetHandlerMap(ui, map);
             }
-
-            // 2) 중복 부착 방지
             if (map.ContainsKey(b)) return;
 
-            // 3) 핸들러 생성
+            // 2) 안전한 핸들러
             RoutedEventHandler handler = (s, e) =>
             {
-                object param = new EventPayload(s, e, b.CommandParameter);
-                if (b.Command.CanExecute(param))
-                    b.Command.Execute(param);
+                var executing = GetExecutingSet(ui);
+                if (executing.Contains(b)) return; // 재진입 차단
+                executing.Add(b);
+                try
+                {
+                    object param = new EventPayload(s, e, b.CommandParameter);
+
+                    if (b.Command is RoutedCommand rc)
+                    {
+                        if (!rc.CanExecute(param, ui)) return;
+                        rc.Execute(param, ui);
+                    }
+                    else
+                    {
+                        if (!b.Command.CanExecute(param)) return;
+
+                        b.Command.Execute(param);
+                    }
+                }
+                finally
+                {
+                    executing.Remove(b);
+                }
             };
 
-            // 4) UI에 add + 맵에 저장
-            ui.AddHandler(b.RoutedEvent, handler, handledEventsToo: true);
+            bool handledToo = false;
+            ui.AddHandler(b.RoutedEvent, handler, handledToo);
+
             map[b] = handler;
         }
 
