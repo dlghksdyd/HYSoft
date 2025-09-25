@@ -2,6 +2,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyButton.xaml" />
         <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyCheckBox.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyComboBox.xaml" />
         <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyIcon.xaml" />
         <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyPasswordBox.xaml" />
         <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyRadioButton.xaml" />

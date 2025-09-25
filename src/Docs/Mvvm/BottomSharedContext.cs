@@ -160,6 +160,7 @@ namespace Docs.Mvvm
             var item3 = AddItem("Components", null, true);
             item3.AddSubItem("Button", null);
             item3.AddSubItem("CheckBox", null);
+            item3.AddSubItem("ComboBox", null);
             item3.AddSubItem("Icon", typeof(IconView));
             item3.AddSubItem("PasswordBox", null);
             item3.AddSubItem("RadioButton", null);

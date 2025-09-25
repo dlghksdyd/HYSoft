@@ -4,6 +4,21 @@
         <name>Presentation</name>
     </assembly>
     <members>
+        <member name="T:HYSoft.Presentation.Converters.CornerRadiusToClipExpandConverter">
+            <summary>
+            inputs:
+              [0] double width
+              [1] double height
+              [2] CornerRadius cr (TopLeft만 사용)
+              [3] double expand (옵션, 기본 0)  => 사각형을 상하좌우로 expand 만큼 확장
+            output: RectangleGeometry (r=r=cr.TopLeft)
+            </summary>
+        </member>
+        <member name="T:HYSoft.Presentation.Converters.DoublePlusMarginConverter">
+            <summary>
+            values[0] + (values[1] * 2) 를 반환하는 컨버터
+            </summary>
+        </member>
         <member name="T:HYSoft.Presentation.ElementTreeHelper.TreeSearchHelper">
             <summary>
             WPF의 시각 트리(VisualTree) 및 논리 트리(LogicalTree)에서
