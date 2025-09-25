@@ -161,7 +161,7 @@ namespace HYSoft.Presentation.Interactivity
                 }
             };
 
-            bool handledToo = false;
+            bool handledToo = true;
             ui.AddHandler(b.RoutedEvent, handler, handledToo);
 
             map[b] = handler;
