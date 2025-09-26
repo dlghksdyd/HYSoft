@@ -76,6 +76,8 @@ namespace HYSoft.Presentation.Modal
             if (!dispatcher.CheckAccess())
                 throw new InvalidOperationException("PopupManager.Open must be called on the UI thread.");
 
+            View?.Focus();
+
             // 결과 대기용 TCS 준비
             var tcs = new TaskCompletionSource<ModalResult>(TaskCreationOptions.RunContinuationsAsynchronously);
             _pending[viewmodel] = tcs;
