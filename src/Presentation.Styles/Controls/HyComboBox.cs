@@ -14,6 +14,20 @@ namespace HYSoft.Presentation.Styles.Controls
         static HyComboBox()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(HyComboBox), new FrameworkPropertyMetadata(typeof(HyComboBox)));
+
+            EventManager.RegisterClassHandler(
+                typeof(HyComboBox),
+                UIElement.LostFocusEvent,
+                new RoutedEventHandler(OnLostFocusHandler),
+                true);
+        }
+
+        private static void OnLostFocusHandler(object sender, RoutedEventArgs e)
+        {
+            if (sender is HyComboBox cb && cb.IsKeyboardFocusWithin)
+            {
+                e.Handled = true;
+            }
         }
 
         public static readonly DependencyProperty CornerRadiusProperty =
@@ -84,6 +98,7 @@ namespace HYSoft.Presentation.Styles.Controls
             get => (double)GetValue(PopupVerticalOffsetProperty);
             set => SetValue(PopupVerticalOffsetProperty, value);
         }
+
     }
 
     public class HyToggleButton : ToggleButton

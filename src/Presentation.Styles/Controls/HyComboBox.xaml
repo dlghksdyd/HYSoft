@@ -92,7 +92,7 @@
     <SolidColorBrush x:Key="ComboBox.Disabled.Editable.Button.Border" Color="Transparent" />
     <Style x:Key="ComboBoxToggleButton" TargetType="{x:Type local:HyToggleButton}">
         <Setter Property="IsTabStop" Value="false" />
-        <Setter Property="Focusable" Value="false" />
+        <Setter Property="Focusable" Value="True" />
         <Setter Property="ClickMode" Value="Press" />
         <Setter Property="Background" Value="{StaticResource ComboBox.Static.Background}" />
         <Setter Property="BorderBrush" Value="{StaticResource ComboBox.Static.Border}" />
@@ -393,6 +393,14 @@
             </ContentPresenter>
         </Grid>
         <ControlTemplate.Triggers>
+            <!--  콤보박스가 포커스를 얻거나 내부에 포커스가 들어오면 토글버튼으로 집중시킴  -->
+            <Trigger Property="IsKeyboardFocused" Value="True">
+                <Setter TargetName="templateRoot" Property="FocusManager.FocusedElement" Value="{Binding ElementName=toggleButton}" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter TargetName="templateRoot" Property="FocusManager.FocusedElement" Value="{Binding ElementName=toggleButton}" />
+            </Trigger>
+
             <Trigger Property="HasItems" Value="false">
                 <Setter TargetName="dropDownBorder" Property="Height" Value="95" />
             </Trigger>
@@ -409,6 +417,7 @@
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
+
     <Style TargetType="{x:Type local:HyComboBox}">
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
         <Setter Property="Background" Value="{StaticResource ComboBox.Static.Background}" />

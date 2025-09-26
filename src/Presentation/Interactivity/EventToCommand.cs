@@ -12,8 +12,6 @@ namespace HYSoft.Presentation.Interactivity
     /// </summary>
     public static class EventToCommand
     {
-
-
         /// <summary>
         /// UIElement에 바인딩할 EventCollection을 나타내는 Attached Property입니다.
         /// (여러 Event를 한 번에 부착)
@@ -161,7 +159,7 @@ namespace HYSoft.Presentation.Interactivity
                 }
             };
 
-            bool handledToo = true;
+            bool handledToo = b.HandledToo;
             ui.AddHandler(b.RoutedEvent, handler, handledToo);
 
             map[b] = handler;

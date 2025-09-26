@@ -31,6 +31,13 @@ namespace HYSoft.Presentation.Interactivity
         public static readonly DependencyProperty CommandParameterProperty =
             DependencyProperty.Register(nameof(CommandParameter), typeof(object), typeof(Event));
 
+        public static readonly DependencyProperty HandledTooProperty =
+            DependencyProperty.Register(
+                nameof(HandledToo),
+                typeof(bool),
+                typeof(Event),
+                new PropertyMetadata(false));
+
         /// <summary>
         /// 바인딩할 RoutedEvent를 가져오거나 설정합니다.
         /// </summary>
@@ -38,6 +45,12 @@ namespace HYSoft.Presentation.Interactivity
         {
             get => (RoutedEvent)GetValue(RoutedEventProperty);
             set => SetValue(RoutedEventProperty, value);
+        }
+
+        public bool HandledToo
+        {
+            get => (bool)GetValue(HandledTooProperty);
+            set => SetValue(HandledTooProperty, value);
         }
 
         /// <summary>
