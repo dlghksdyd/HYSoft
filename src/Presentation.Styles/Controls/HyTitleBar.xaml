@@ -24,13 +24,15 @@
                             <ContentPresenter Grid.Column="0" Content="{TemplateBinding Content}" />
                             <StackPanel Grid.Column="1" Orientation="Horizontal">
                                 <local:HyButton
+                                    x:Name="MinimizeButton"
                                     Margin="{TemplateBinding IconMargin}"
                                     Padding="{TemplateBinding IconPadding}"
                                     VerticalAlignment="Center"
-                                    BorderThickness="0">
+                                    BorderThickness="0"
+                                    Tag="{Binding RelativeSource={RelativeSource AncestorType=local:HyTitleBar}, Path=MinimizeAppCommand}">
                                     <b:EventToCommand.Binding>
                                         <b:Event
-                                            Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=MinimizeAppCommand}"
+                                            Command="{Binding ElementName=MinimizeButton, Path=Tag}"
                                             HandledToo="True"
                                             RoutedEvent="{x:Static local:HyButton.MouseLeftButtonUpEvent}" />
                                     </b:EventToCommand.Binding>
@@ -51,13 +53,15 @@
                                         Color="{TemplateBinding Foreground}" />
                                 </local:HyButton>
                                 <local:HyButton
+                                    x:Name="ExitButton"
                                     Margin="{TemplateBinding IconMargin}"
                                     Padding="{TemplateBinding IconPadding}"
                                     VerticalAlignment="Center"
-                                    BorderThickness="0">
+                                    BorderThickness="0"
+                                    Tag="{Binding RelativeSource={RelativeSource AncestorType=local:HyTitleBar}, Path=ExitAppCommand}">
                                     <b:EventToCommand.Binding>
                                         <b:Event
-                                            Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ExitAppCommand}"
+                                            Command="{Binding ElementName=ExitButton, Path=Tag}"
                                             HandledToo="True"
                                             RoutedEvent="{x:Static local:HyButton.MouseLeftButtonUpEvent}" />
                                     </b:EventToCommand.Binding>

@@ -40,5 +40,31 @@ namespace HYSoft.Presentation.Styles.Controls
             get => (string)GetValue(TextProperty);
             set => SetValue(TextProperty, value);
         }
+
+        public static readonly DependencyProperty Argument1Property =
+            DependencyProperty.Register(
+                nameof(Argument1),
+                typeof(object),
+                typeof(HyTextBlock),
+                new FrameworkPropertyMetadata(null)); // 필요시 BindsTwoWayByDefault 등 옵션 추가
+
+        public object? Argument1
+        {
+            get => GetValue(Argument1Property);
+            set => SetValue(Argument1Property, value);
+        }
+
+        public static readonly DependencyProperty Argument2Property =
+            DependencyProperty.Register(
+                nameof(Argument2),
+                typeof(object),
+                typeof(HyTextBlock),
+                new FrameworkPropertyMetadata(null));
+
+        public object? Argument2
+        {
+            get => GetValue(Argument2Property);
+            set => SetValue(Argument2Property, value);
+        }
     }
 }

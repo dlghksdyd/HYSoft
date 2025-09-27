@@ -48,6 +48,32 @@ namespace HYSoft.Presentation.Styles.Controls
             set => SetValue(CanKoreanProperty, value);
         }
 
+        public static readonly DependencyProperty Argument1Property =
+            DependencyProperty.Register(
+                nameof(Argument1),
+                typeof(object),
+                typeof(HyTextBox),
+                new FrameworkPropertyMetadata(null));
+
+        public object? Argument1
+        {
+            get => GetValue(Argument1Property);
+            set => SetValue(Argument1Property, value);
+        }
+
+        public static readonly DependencyProperty Argument2Property =
+            DependencyProperty.Register(
+                nameof(Argument2),
+                typeof(object),
+                typeof(HyTextBox),
+                new FrameworkPropertyMetadata(null));
+
+        public object? Argument2
+        {
+            get => GetValue(Argument2Property);
+            set => SetValue(Argument2Property, value);
+        }
+
         static HyTextBox()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(HyTextBox), new FrameworkPropertyMetadata(typeof(HyTextBox)));
