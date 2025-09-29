@@ -1,14 +1,22 @@
-﻿using System;
+﻿using HYSoft.Presentation.Bindings;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace HYSoft.Presentation.Interactivity
 {
     /// <summary>
     /// RoutedEvent와 ICommand를 연결할 수 있도록 지원하는 Attached Behavior입니다.
+    /// - 단일 바인딩: EventToCommand.Binding
+    /// - 다중 바인딩: EventToCommand.MultiBinding (EventCollection)
+    /// 
+    /// Event는 MultiDataTrigger.Condition 스타일로 바뀌어
+    /// Command/CommandParameter "직접 값"과
+    /// CommandBinding/CommandParameterBinding(BindingBase) 를 분리 보관합니다.
     /// </summary>
     public static class EventToCommand
     {
@@ -121,8 +129,28 @@ namespace HYSoft.Presentation.Interactivity
         // ==== attach/detach 공통 로직 ====
         private static void Attach(UIElement ui, Event b)
         {
-            if (b?.RoutedEvent == null || b.Command == null) return;
+            if (b?.RoutedEvent == null) return;
 
+            // 요소별 인스턴스를 갖도록 클론 (Freezable이니 안전)
+            var ev = (Event)b.Clone();
+
+            // === 1) Command/Parameter 바인딩 적용 ===
+            // Event는 BindingBase를 저장만 하므로 실제 바인딩을 ev의 DP에 단다.
+            if (ev.CommandBinding is BindingBase cb)
+            {
+                BindingOperations.SetBinding(ev, Event.CommandProperty, cb);
+                // RelativeSource/ElementName를 ui 기준으로 재해석
+                BindingManager.SetBindingSource(ui, ev, Event.CommandProperty);
+            }
+
+            if (ev.CommandParameterBinding is BindingBase pb)
+            {
+                BindingOperations.SetBinding(ev, Event.CommandParameterProperty, pb);
+                BindingManager.SetBindingSource(ui, ev, Event.CommandParameterProperty);
+            }
+
+            // 직접 값만 쓴 경우(ev.Command == null일 수 있음) MultiBinding에서도
+            // 이후 데이터 갱신으로 값이 들어올 수 있으니, 핸들러는 우선 붙여준다.
             var map = GetHandlerMap(ui);
             if (map == null)
             {
@@ -131,37 +159,43 @@ namespace HYSoft.Presentation.Interactivity
             }
             if (map.ContainsKey(b)) return;
 
-            // 2) 안전한 핸들러
-            RoutedEventHandler handler = (s, e) =>
+            EnsureExecutingSet(ui);
+
+            // === 2) 안전한 핸들러 ===
+            // 실행 시점마다 ev.Command/CommandParameter의 현재 값을 사용
+            RoutedEventHandler handler = (s, eArgs) =>
             {
                 var executing = GetExecutingSet(ui);
-                if (executing.Contains(b)) return; // 재진입 차단
-                executing.Add(b);
+                if (executing.Contains(ev)) return; // 재진입 차단 (ev 기준)
+                executing.Add(ev);
                 try
                 {
-                    object param = new EventPayload(s, e, b.CommandParameter);
+                    var cmd = ev.Command;
+                    if (cmd == null) return; // 아직 바인딩이 안 풀렸을 수도 있음
 
-                    if (b.Command is RoutedCommand rc)
+                    object param = new EventPayload(s, eArgs, ev.CommandParameter);
+
+                    if (cmd is RoutedCommand rc)
                     {
                         if (!rc.CanExecute(param, ui)) return;
                         rc.Execute(param, ui);
                     }
                     else
                     {
-                        if (!b.Command.CanExecute(param)) return;
-
-                        b.Command.Execute(param);
+                        if (!cmd.CanExecute(param)) return;
+                        cmd.Execute(param);
                     }
                 }
                 finally
                 {
-                    executing.Remove(b);
+                    executing.Remove(ev);
                 }
             };
 
-            bool handledToo = b.HandledToo;
-            ui.AddHandler(b.RoutedEvent, handler, handledToo);
+            bool handledToo = ev.HandledToo;
+            ui.AddHandler(ev.RoutedEvent, handler, handledToo);
 
+            // 원본 Event(b) ↔︎ 핸들러 저장 (Detach 키는 b 사용)
             map[b] = handler;
         }
 
@@ -187,6 +221,16 @@ namespace HYSoft.Presentation.Interactivity
                     ui.RemoveHandler(kv.Key.RoutedEvent, kv.Value);
 
             map.Clear();
+        }
+
+        private static void EnsureExecutingSet(DependencyObject d)
+        {
+            var set = d.GetValue(ExecutingSetProperty) as HashSet<Event>;
+            if (set == null)
+            {
+                set = new HashSet<Event>();
+                SetExecutingSet(d, set);
+            }
         }
     }
 }

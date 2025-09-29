@@ -18,6 +18,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation", "src\Presentation\Presentation.csproj", "{D256A7CB-F8E5-4B46-8F1F-8E4E306F29B3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation.Styles", "src\Presentation.Styles\Presentation.Styles.csproj", "{1BAD6909-9C22-43BF-A2E0-624C44FBC3BC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D256A7CB-F8E5-4B46-8F1F-8E4E306F29B3} = {D256A7CB-F8E5-4B46-8F1F-8E4E306F29B3}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples", "src\samples\Samples.csproj", "{0EB1B7B4-F90C-30B5-43FC-662A16A24189}"
 	ProjectSection(ProjectDependencies) = postProject

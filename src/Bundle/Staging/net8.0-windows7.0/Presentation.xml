@@ -119,40 +119,27 @@
         <member name="T:HYSoft.Presentation.Interactivity.Event">
             <summary>
             특정 RoutedEvent와 ICommand를 바인딩하기 위한 정의를 제공합니다.
-            </summary>
-        </member>
-        <member name="F:HYSoft.Presentation.Interactivity.Event.RoutedEventProperty">
-            <summary>
-            바인딩할 RoutedEvent를 나타내는 DependencyProperty입니다.
-            </summary>
-        </member>
-        <member name="F:HYSoft.Presentation.Interactivity.Event.CommandProperty">
-            <summary>
-            실행할 ICommand를 나타내는 DependencyProperty입니다.
-            </summary>
-        </member>
-        <member name="F:HYSoft.Presentation.Interactivity.Event.CommandParameterProperty">
-            <summary>
-            명령 실행 시 전달할 추가 파라미터를 나타내는 DependencyProperty입니다.
-            </summary>
-        </member>
-        <member name="P:HYSoft.Presentation.Interactivity.Event.RoutedEvent">
-            <summary>
-            바인딩할 RoutedEvent를 가져오거나 설정합니다.
+            - 값 직접 지정: Command / CommandParameter
+            - 바인딩 지정:  CommandBinding / CommandParameterBinding (BindingBase)
+            를 분리 보관합니다.
             </summary>
         </member>
         <member name="P:HYSoft.Presentation.Interactivity.Event.Command">
-            <summary>
-            바인딩할 ICommand를 가져오거나 설정합니다.
-            </summary>
+            <summary>값을 직접 지정하는 경우 사용 (Binding이 아닌 경우)</summary>
         </member>
         <member name="P:HYSoft.Presentation.Interactivity.Event.CommandParameter">
+            <summary>값을 직접 지정하는 경우 사용 (Binding이 아닌 경우)</summary>
+        </member>
+        <member name="P:HYSoft.Presentation.Interactivity.Event.CommandBinding">
             <summary>
-            ICommand 실행 시 전달할 매개변수를 가져오거나 설정합니다.
+            {Binding}/{MultiBinding}/{PriorityBinding} 등 바인딩을 그대로 보관합니다.
+            실제 적용은 EventToCommand.Attach 단계에서 수행하세요.
             </summary>
         </member>
-        <member name="M:HYSoft.Presentation.Interactivity.Event.CreateInstanceCore">
-            <inheritdoc/>
+        <member name="P:HYSoft.Presentation.Interactivity.Event.CommandParameterBinding">
+            <summary>
+            CommandParameter용 바인딩을 보관합니다.
+            </summary>
         </member>
         <member name="T:HYSoft.Presentation.Interactivity.EventCollection">
             <summary>
@@ -190,6 +177,12 @@
         <member name="T:HYSoft.Presentation.Interactivity.EventToCommand">
             <summary>
             RoutedEvent와 ICommand를 연결할 수 있도록 지원하는 Attached Behavior입니다.
+            - 단일 바인딩: EventToCommand.Binding
+            - 다중 바인딩: EventToCommand.MultiBinding (EventCollection)
+            
+            Event는 MultiDataTrigger.Condition 스타일로 바뀌어
+            Command/CommandParameter "직접 값"과
+            CommandBinding/CommandParameterBinding(BindingBase) 를 분리 보관합니다.
             </summary>
         </member>
         <member name="F:HYSoft.Presentation.Interactivity.EventToCommand.MultiBindingProperty">

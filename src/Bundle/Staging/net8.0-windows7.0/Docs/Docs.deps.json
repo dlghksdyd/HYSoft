@@ -11,7 +11,7 @@
           "Communication": "1.0.79.0",
           "Data": "1.0.79.0",
           "Presentation": "1.0.79.0",
-          "Presentation.Styles": "1.0.79.0"
+          "Presentation.Styles": "1.0.78.0"
         },
         "runtime": {
           "Docs.dll": {}
@@ -41,11 +41,11 @@
           }
         }
       },
-      "Presentation.Styles/1.0.79.0": {
+      "Presentation.Styles/1.0.78.0": {
         "runtime": {
           "Presentation.Styles.dll": {
-            "assemblyVersion": "1.0.79.0",
-            "fileVersion": "1.0.79.0"
+            "assemblyVersion": "1.0.78.0",
+            "fileVersion": "1.0.78.0"
           }
         }
       }
@@ -72,7 +72,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Presentation.Styles/1.0.79.0": {
+    "Presentation.Styles/1.0.78.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""

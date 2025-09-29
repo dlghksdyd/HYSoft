@@ -74,6 +74,19 @@ namespace HYSoft.Presentation.Styles.Controls
             set => SetValue(Argument2Property, value);
         }
 
+        public static readonly DependencyProperty Argument3Property =
+            DependencyProperty.Register(
+                nameof(Argument3),
+                typeof(object),
+                typeof(HyTextBox),
+                new FrameworkPropertyMetadata(null));
+
+        public object? Argument3
+        {
+            get => GetValue(Argument3Property);
+            set => SetValue(Argument3Property, value);
+        }
+
         static HyTextBox()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(HyTextBox), new FrameworkPropertyMetadata(typeof(HyTextBox)));
