@@ -7,6 +7,7 @@
         <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyPasswordBox.xaml" />
         <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyRadioButton.xaml" />
         <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyScrollViewer.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyTemplateControl.xaml" />
         <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyTextBlock.xaml" />
         <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyTextBox.xaml" />
         <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyTitleBar.xaml" />
