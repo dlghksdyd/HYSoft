@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:b="clr-namespace:HYSoft.Presentation.Interactivity;assembly=Presentation"
     xmlns:c="clr-namespace:HYSoft.Presentation.Styles.ColorTokens"
+    xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
     xmlns:local="clr-namespace:HYSoft.Presentation.Styles.Controls">
     <Style TargetType="{x:Type local:HyTitleBar}">
         <Setter Property="Background" Value="{c:Color TitleBarBackground}" />
@@ -29,12 +30,12 @@
                                     Padding="{TemplateBinding IconPadding}"
                                     VerticalAlignment="Center"
                                     BorderThickness="0">
-                                    <b:EventToCommand.Binding>
-                                        <b:Event
+                                    <hy:EventToCommand.Binding>
+                                        <hy:Event
                                             Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=MinimizeAppCommand}"
                                             HandledToo="True"
                                             RoutedEvent="{x:Static local:HyButton.MouseLeftButtonUpEvent}" />
-                                    </b:EventToCommand.Binding>
+                                    </hy:EventToCommand.Binding>
                                     <local:HyButton.Style>
                                         <Style TargetType="local:HyButton">
                                             <Setter Property="Background" Value="Transparent" />
@@ -57,12 +58,12 @@
                                     Padding="{TemplateBinding IconPadding}"
                                     VerticalAlignment="Center"
                                     BorderThickness="0">
-                                    <b:EventToCommand.Binding>
-                                        <b:Event
+                                    <hy:EventToCommand.Binding>
+                                        <hy:Event
                                             Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ExitAppCommand}"
                                             HandledToo="True"
                                             RoutedEvent="{x:Static local:HyButton.MouseLeftButtonUpEvent}" />
-                                    </b:EventToCommand.Binding>
+                                    </hy:EventToCommand.Binding>
                                     <local:HyButton.Style>
                                         <Style TargetType="local:HyButton">
                                             <Setter Property="Background" Value="Transparent" />

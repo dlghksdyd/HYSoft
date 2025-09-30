@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls.Ribbon.Primitives;
 using System.Windows.Input;
 using Docs.Mvvm.Styles.Components;
+using HYSoft.Presentation.Interactivity.CommandBehaviors;
 
 namespace Docs.Mvvm
 {

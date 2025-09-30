@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using HYSoft.Presentation.Interactivity.CommandBehaviors;
 
 namespace Docs.Mvvm.LeftMenu
 {

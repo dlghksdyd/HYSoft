@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace HYSoft.Presentation.Interactivity
+namespace HYSoft.Presentation.Interactivity.CommandBehaviors
 {
     /// <summary>
     /// RoutedEvent와 ICommand를 연결할 수 있도록 지원하는 Attached Behavior입니다.

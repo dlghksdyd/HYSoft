@@ -4,7 +4,7 @@ using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Data;
 
-namespace HYSoft.Presentation.Interactivity
+namespace HYSoft.Presentation.Interactivity.CommandBehaviors
 {
     /// <summary>
     /// 특정 RoutedEvent와 ICommand를 바인딩하기 위한 정의를 제공합니다.

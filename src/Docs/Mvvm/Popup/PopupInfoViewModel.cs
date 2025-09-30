@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using HYSoft.Presentation.Interactivity;
+using HYSoft.Presentation.Interactivity.CommandBehaviors;
 using HYSoft.Presentation.Modal;
 
 namespace Docs.Mvvm.Popup

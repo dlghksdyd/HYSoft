@@ -4,6 +4,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Windows.Controls;
 using System.Windows.Input;
 using HYSoft.Presentation.Interactivity;
+using HYSoft.Presentation.Interactivity.CommandBehaviors;
 using HYSoft.Presentation.Styles.Controls;
 using HYSoft.Presentation.Styles.Icons;
 

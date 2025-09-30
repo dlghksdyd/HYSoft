@@ -14,6 +14,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Shell;
 using System.Windows.Threading;
+using HYSoft.Presentation.Interactivity.CommandBehaviors;
 
 namespace HYSoft.Presentation.Styles.Controls
 {

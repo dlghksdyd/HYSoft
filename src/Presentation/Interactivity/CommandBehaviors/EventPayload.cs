@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HYSoft.Presentation.Interactivity
+namespace HYSoft.Presentation.Interactivity.CommandBehaviors
 {
     /// <summary>
     /// RoutedEvent 발생 시 ICommand로 전달되는 실행 컨텍스트 정보입니다.

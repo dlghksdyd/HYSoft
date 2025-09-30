@@ -71,6 +71,86 @@
             외부 뷰의 루트 컨트롤을 찾아야 할 때 유용합니다.
             </remarks>
         </member>
+        <member name="T:HYSoft.Presentation.Interactivity.CommandBehaviors.Event">
+            <summary>
+            특정 RoutedEvent와 ICommand를 바인딩하기 위한 정의를 제공합니다.
+            - 값 직접 지정: Command / CommandParameter
+            - 바인딩 지정:  CommandBinding / CommandParameterBinding (BindingBase)
+            를 분리 보관합니다.
+            </summary>
+        </member>
+        <member name="P:HYSoft.Presentation.Interactivity.CommandBehaviors.Event.Command">
+            <summary>값을 직접 지정하는 경우 사용 (Binding이 아닌 경우)</summary>
+        </member>
+        <member name="P:HYSoft.Presentation.Interactivity.CommandBehaviors.Event.CommandParameter">
+            <summary>값을 직접 지정하는 경우 사용 (Binding이 아닌 경우)</summary>
+        </member>
+        <member name="P:HYSoft.Presentation.Interactivity.CommandBehaviors.Event.CommandBinding">
+            <summary>
+            {Binding}/{MultiBinding}/{PriorityBinding} 등 바인딩을 그대로 보관합니다.
+            실제 적용은 EventToCommand.Attach 단계에서 수행하세요.
+            </summary>
+        </member>
+        <member name="P:HYSoft.Presentation.Interactivity.CommandBehaviors.Event.CommandParameterBinding">
+            <summary>
+            CommandParameter용 바인딩을 보관합니다.
+            </summary>
+        </member>
+        <member name="T:HYSoft.Presentation.Interactivity.CommandBehaviors.EventCollection">
+            <summary>
+            <see cref="T:HYSoft.Presentation.Interactivity.CommandBehaviors.Event"/> 객체들을 보관하는 FreezableCollection입니다.
+            </summary>
+        </member>
+        <member name="T:HYSoft.Presentation.Interactivity.CommandBehaviors.EventPayload">
+            <summary>
+            RoutedEvent 발생 시 ICommand로 전달되는 실행 컨텍스트 정보입니다.
+            </summary>
+        </member>
+        <member name="P:HYSoft.Presentation.Interactivity.CommandBehaviors.EventPayload.Sender">
+            <summary>
+            이벤트를 발생시킨 원본 Sender를 가져옵니다.
+            </summary>
+        </member>
+        <member name="P:HYSoft.Presentation.Interactivity.CommandBehaviors.EventPayload.Args">
+            <summary>
+            이벤트 인수를 가져옵니다.
+            </summary>
+        </member>
+        <member name="P:HYSoft.Presentation.Interactivity.CommandBehaviors.EventPayload.Parameter">
+            <summary>
+            ICommand 실행 시 전달된 사용자 지정 파라미터를 가져옵니다.
+            </summary>
+        </member>
+        <member name="M:HYSoft.Presentation.Interactivity.CommandBehaviors.EventPayload.#ctor(System.Object,System.EventArgs,System.Object)">
+            <summary>
+            EventPayload를 초기화합니다.
+            </summary>
+            <param name="sender">이벤트 발생 원본</param>
+            <param name="args">이벤트 인수</param>
+            <param name="parameter">사용자 지정 파라미터</param>
+        </member>
+        <member name="T:HYSoft.Presentation.Interactivity.CommandBehaviors.EventToCommand">
+            <summary>
+            RoutedEvent와 ICommand를 연결할 수 있도록 지원하는 Attached Behavior입니다.
+            - 단일 바인딩: EventToCommand.Binding
+            - 다중 바인딩: EventToCommand.MultiBinding (EventCollection)
+            
+            Event는 MultiDataTrigger.Condition 스타일로 바뀌어
+            Command/CommandParameter "직접 값"과
+            CommandBinding/CommandParameterBinding(BindingBase) 를 분리 보관합니다.
+            </summary>
+        </member>
+        <member name="F:HYSoft.Presentation.Interactivity.CommandBehaviors.EventToCommand.MultiBindingProperty">
+            <summary>
+            UIElement에 바인딩할 EventCollection을 나타내는 Attached Property입니다.
+            (여러 Event를 한 번에 부착)
+            </summary>
+        </member>
+        <member name="F:HYSoft.Presentation.Interactivity.CommandBehaviors.EventToCommand.BindingProperty">
+            <summary>
+            단일 Event 바인딩용 Attached Property
+            </summary>
+        </member>
         <member name="T:HYSoft.Presentation.Interactivity.ElementReferenceBinding">
              <summary>
              <see cref="T:System.Windows.UIElement"/> (또는 <see cref="T:System.Windows.FrameworkElement"/>) 자신의 참조를
@@ -115,86 +195,6 @@
             </summary>
             <param name="d">속성을 읽어올 대상 객체</param>
             <returns><see cref="F:HYSoft.Presentation.Interactivity.ElementReferenceBinding.TargetProperty"/>의 현재 값</returns>
-        </member>
-        <member name="T:HYSoft.Presentation.Interactivity.Event">
-            <summary>
-            특정 RoutedEvent와 ICommand를 바인딩하기 위한 정의를 제공합니다.
-            - 값 직접 지정: Command / CommandParameter
-            - 바인딩 지정:  CommandBinding / CommandParameterBinding (BindingBase)
-            를 분리 보관합니다.
-            </summary>
-        </member>
-        <member name="P:HYSoft.Presentation.Interactivity.Event.Command">
-            <summary>값을 직접 지정하는 경우 사용 (Binding이 아닌 경우)</summary>
-        </member>
-        <member name="P:HYSoft.Presentation.Interactivity.Event.CommandParameter">
-            <summary>값을 직접 지정하는 경우 사용 (Binding이 아닌 경우)</summary>
-        </member>
-        <member name="P:HYSoft.Presentation.Interactivity.Event.CommandBinding">
-            <summary>
-            {Binding}/{MultiBinding}/{PriorityBinding} 등 바인딩을 그대로 보관합니다.
-            실제 적용은 EventToCommand.Attach 단계에서 수행하세요.
-            </summary>
-        </member>
-        <member name="P:HYSoft.Presentation.Interactivity.Event.CommandParameterBinding">
-            <summary>
-            CommandParameter용 바인딩을 보관합니다.
-            </summary>
-        </member>
-        <member name="T:HYSoft.Presentation.Interactivity.EventCollection">
-            <summary>
-            <see cref="T:HYSoft.Presentation.Interactivity.Event"/> 객체들을 보관하는 FreezableCollection입니다.
-            </summary>
-        </member>
-        <member name="T:HYSoft.Presentation.Interactivity.EventPayload">
-            <summary>
-            RoutedEvent 발생 시 ICommand로 전달되는 실행 컨텍스트 정보입니다.
-            </summary>
-        </member>
-        <member name="P:HYSoft.Presentation.Interactivity.EventPayload.Sender">
-            <summary>
-            이벤트를 발생시킨 원본 Sender를 가져옵니다.
-            </summary>
-        </member>
-        <member name="P:HYSoft.Presentation.Interactivity.EventPayload.Args">
-            <summary>
-            이벤트 인수를 가져옵니다.
-            </summary>
-        </member>
-        <member name="P:HYSoft.Presentation.Interactivity.EventPayload.Parameter">
-            <summary>
-            ICommand 실행 시 전달된 사용자 지정 파라미터를 가져옵니다.
-            </summary>
-        </member>
-        <member name="M:HYSoft.Presentation.Interactivity.EventPayload.#ctor(System.Object,System.EventArgs,System.Object)">
-            <summary>
-            EventPayload를 초기화합니다.
-            </summary>
-            <param name="sender">이벤트 발생 원본</param>
-            <param name="args">이벤트 인수</param>
-            <param name="parameter">사용자 지정 파라미터</param>
-        </member>
-        <member name="T:HYSoft.Presentation.Interactivity.EventToCommand">
-            <summary>
-            RoutedEvent와 ICommand를 연결할 수 있도록 지원하는 Attached Behavior입니다.
-            - 단일 바인딩: EventToCommand.Binding
-            - 다중 바인딩: EventToCommand.MultiBinding (EventCollection)
-            
-            Event는 MultiDataTrigger.Condition 스타일로 바뀌어
-            Command/CommandParameter "직접 값"과
-            CommandBinding/CommandParameterBinding(BindingBase) 를 분리 보관합니다.
-            </summary>
-        </member>
-        <member name="F:HYSoft.Presentation.Interactivity.EventToCommand.MultiBindingProperty">
-            <summary>
-            UIElement에 바인딩할 EventCollection을 나타내는 Attached Property입니다.
-            (여러 Event를 한 번에 부착)
-            </summary>
-        </member>
-        <member name="F:HYSoft.Presentation.Interactivity.EventToCommand.BindingProperty">
-            <summary>
-            단일 Event 바인딩용 Attached Property
-            </summary>
         </member>
         <member name="T:HYSoft.Presentation.Modal.ModalBaseView">
             <summary>

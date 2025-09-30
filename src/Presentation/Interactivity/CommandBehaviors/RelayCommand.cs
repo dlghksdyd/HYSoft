@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace HYSoft.Presentation.Interactivity
+namespace HYSoft.Presentation.Interactivity.CommandBehaviors
 {
     public class RelayCommand : ICommand
     {

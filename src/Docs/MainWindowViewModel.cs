@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Input;
 using Docs.Mvvm;
 using Docs.Mvvm.Styles;
+using HYSoft.Presentation.Interactivity.CommandBehaviors;
 
 namespace Docs
 {
