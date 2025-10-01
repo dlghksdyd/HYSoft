@@ -28,6 +28,23 @@ namespace HYSoft.Presentation.Styles.Controls
 
         #region DATA / CONTENT
 
+        public int Column
+        {
+            get => (int)GetValue(ColumnProperty);
+            set => SetValue(ColumnProperty, value);
+        }
+
+        public static readonly DependencyProperty ColumnProperty =
+            DependencyProperty.Register(
+                nameof(Column),
+                typeof(int),
+                typeof(HyTemplateControl),
+                new FrameworkPropertyMetadata(
+                    0, // 기본값
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.AffectsArrange |
+                    FrameworkPropertyMetadataOptions.AffectsParentArrange));
+
         public object? Content
         {
             get => GetValue(ContentProperty);
@@ -77,6 +94,15 @@ namespace HYSoft.Presentation.Styles.Controls
         }
         public static readonly DependencyProperty ValueProperty =
             DependencyProperty.Register(nameof(Value), typeof(object), typeof(HyTemplateControl),
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        public object? Value2
+        {
+            get => GetValue(Value2Property);
+            set => SetValue(Value2Property, value);
+        }
+        public static readonly DependencyProperty Value2Property =
+            DependencyProperty.Register(nameof(Value2), typeof(object), typeof(HyTemplateControl),
                 new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public string? Header
@@ -173,6 +199,30 @@ namespace HYSoft.Presentation.Styles.Controls
         }
         public static readonly DependencyProperty IsValidProperty =
             DependencyProperty.Register(nameof(IsValid), typeof(bool), typeof(HyTemplateControl), new PropertyMetadata(true));
+
+        public bool IsModifying
+        {
+            get => (bool)GetValue(IsModifyingProperty);
+            set => SetValue(IsModifyingProperty, value);
+        }
+        public static readonly DependencyProperty IsModifyingProperty =
+            DependencyProperty.Register(
+                nameof(IsModifying),
+                typeof(bool),
+                typeof(HyTemplateControl),
+                new FrameworkPropertyMetadata(false));
+
+        public bool IsCreating
+        {
+            get => (bool)GetValue(IsCreatingProperty);
+            set => SetValue(IsCreatingProperty, value);
+        }
+        public static readonly DependencyProperty IsCreatingProperty =
+            DependencyProperty.Register(
+                nameof(IsCreating),
+                typeof(bool),
+                typeof(HyTemplateControl),
+                new FrameworkPropertyMetadata(false));
 
         #endregion
 
@@ -314,6 +364,32 @@ namespace HYSoft.Presentation.Styles.Controls
                 typeof(ICommand),
                 typeof(HyTemplateControl));
 
+        public ICommand? DeleteCommand
+        {
+            get => (ICommand?)GetValue(DeleteCommandProperty);
+            set => SetValue(DeleteCommandProperty, value);
+        }
+
+        public ICommand? SaveCommand
+        {
+            get => (ICommand?)GetValue(SaveCommandProperty);
+            set => SetValue(SaveCommandProperty, value);
+        }
+
+        public static readonly DependencyProperty SaveCommandProperty =
+            DependencyProperty.Register(
+                nameof(SaveCommand),
+                typeof(ICommand),
+                typeof(HyTemplateControl));
+
+
+        public static readonly DependencyProperty DeleteCommandProperty =
+            DependencyProperty.Register(
+                nameof(DeleteCommand),
+                typeof(ICommand),
+                typeof(HyTemplateControl));
+
+
         public object? CommandParameter
         {
             get => GetValue(CommandParameterProperty);
@@ -322,6 +398,22 @@ namespace HYSoft.Presentation.Styles.Controls
         public static readonly DependencyProperty CommandParameterProperty =
             DependencyProperty.Register(nameof(CommandParameter), typeof(object), typeof(HyTemplateControl));
 
+        #endregion
+
+        #region Events
+        
+        public RoutedEvent TriggerEvent
+        {
+            get => (RoutedEvent)GetValue(TriggerEventProperty);
+            set => SetValue(TriggerEventProperty, value);
+        }
+        public static readonly DependencyProperty TriggerEventProperty =
+            DependencyProperty.Register(
+                nameof(TriggerEvent),
+                typeof(RoutedEvent),
+                typeof(HyTemplateControl),
+                new FrameworkPropertyMetadata());
+        
         #endregion
     }
 }
