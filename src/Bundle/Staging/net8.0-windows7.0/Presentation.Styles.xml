@@ -9,6 +9,21 @@
             스크롤바 두께 (세로 스크롤바의 Width, 가로 스크롤바의 Height)
             </summary>
         </member>
+        <member name="P:HYSoft.Presentation.Styles.Controls.HyTemplateControl.CanKorean">
+            <summary>
+            한글 입력 허용 여부 (기본값: true)
+            </summary>
+        </member>
+        <member name="P:HYSoft.Presentation.Styles.Controls.HyTemplateControl.CanPaste">
+            <summary>
+            붙여넣기 허용 여부 (기본값: true)
+            </summary>
+        </member>
+        <member name="P:HYSoft.Presentation.Styles.Controls.HyTemplateControl.IsOnlyNumber">
+            <summary>
+            숫자만 입력 허용 여부 (기본값: false)
+            </summary>
+        </member>
         <member name="P:HYSoft.Presentation.Styles.Icons.IconExtension.Color">
             <summary>
             직접 색 지정 (#RRGGBB 문자열 또는 Color). 지정 시 ColorKey보다 우선.
@@ -32,6 +47,36 @@
         <member name="T:HYSoft.Presentation.Styles.Icons.IconKeys">
             <summary>
             아이콘 키 → 리소스 상대경로 매핑 (자동 생성)
+            </summary>
+        </member>
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
             </summary>
         </member>
     </members>

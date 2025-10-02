@@ -87,6 +87,14 @@ namespace HYSoft.Presentation.Styles.Controls
             set => SetValue(Argument3Property, value);
         }
 
+        public static readonly DependencyProperty IsOnlyNumberProperty;
+
+        public bool IsOnlyNumber
+        {
+            get => (bool)GetValue(IsOnlyNumberProperty);
+            set => SetValue(IsOnlyNumberProperty, value);
+        }
+
         static HyTextBox()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(HyTextBox), new FrameworkPropertyMetadata(typeof(HyTextBox)));
@@ -96,6 +104,49 @@ namespace HYSoft.Presentation.Styles.Controls
             CornerRadiusProperty = DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(HyTextBox), new FrameworkPropertyMetadata());
             CanPasteProperty = DependencyProperty.Register(nameof(CanPaste), typeof(bool), typeof(HyTextBox), new PropertyMetadata(true, OnCanPasteChanged));
             CanKoreanProperty = DependencyProperty.Register(nameof(CanKorean), typeof(bool), typeof(HyTextBox), new PropertyMetadata(true, OnCanKoreanChanged));
+            IsOnlyNumberProperty = DependencyProperty.Register(
+                nameof(IsOnlyNumber), typeof(bool), typeof(HyTextBox), new PropertyMetadata(false, OnIsOnlyNumberChanged));
+        }
+
+        private static void OnIsOnlyNumberChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is HyTextBox tb)
+            {
+                if ((bool)e.NewValue == true)
+                {
+                    tb.PreviewTextInput += TbOnPreviewTextInputAllowOnlyNumber;
+                    DataObject.AddPastingHandler(tb, OnPasteAllowOnlyNumber);
+                }
+                else
+                {
+                    tb.PreviewTextInput -= TbOnPreviewTextInputAllowOnlyNumber;
+                    DataObject.RemovePastingHandler(tb, OnPasteAllowOnlyNumber);
+                }
+            }
+        }
+
+        private static void TbOnPreviewTextInputAllowOnlyNumber(object sender, TextCompositionEventArgs e)
+        {
+            if (!e.Text.All(char.IsDigit))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private static void OnPasteAllowOnlyNumber(object sender, DataObjectPastingEventArgs e)
+        {
+            if (e.DataObject.GetDataPresent(DataFormats.Text))
+            {
+                string text = e.DataObject.GetData(DataFormats.Text) as string;
+                if (!string.IsNullOrEmpty(text) && !text.All(char.IsDigit))
+                {
+                    e.CancelCommand();
+                }
+            }
+            else
+            {
+                e.CancelCommand();
+            }
         }
 
         private static void OnCanPasteChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

@@ -214,6 +214,58 @@ namespace HYSoft.Presentation.Styles.Controls
 
         #endregion
 
+        #region INPUT BEHAVIOR
+        
+        /// <summary>
+        /// 한글 입력 허용 여부 (기본값: true)
+        /// </summary>
+        public bool CanKorean
+        {
+            get => (bool)GetValue(CanKoreanProperty);
+            set => SetValue(CanKoreanProperty, value);
+        }
+
+        public static readonly DependencyProperty CanKoreanProperty =
+            DependencyProperty.Register(
+                nameof(CanKorean),
+                typeof(bool),
+                typeof(HyTemplateControl),
+                new PropertyMetadata(true));
+
+        /// <summary>
+        /// 붙여넣기 허용 여부 (기본값: true)
+        /// </summary>
+        public bool CanPaste
+        {
+            get => (bool)GetValue(CanPasteProperty);
+            set => SetValue(CanPasteProperty, value);
+        }
+
+        public static readonly DependencyProperty CanPasteProperty =
+            DependencyProperty.Register(
+                nameof(CanPaste),
+                typeof(bool),
+                typeof(HyTemplateControl),
+                new PropertyMetadata(true));
+
+        /// <summary>
+        /// 숫자만 입력 허용 여부 (기본값: false)
+        /// </summary>
+        public bool IsOnlyNumber
+        {
+            get => (bool)GetValue(IsOnlyNumberProperty);
+            set => SetValue(IsOnlyNumberProperty, value);
+        }
+
+        public static readonly DependencyProperty IsOnlyNumberProperty =
+            DependencyProperty.Register(
+                nameof(IsOnlyNumber),
+                typeof(bool),
+                typeof(HyTemplateControl),
+                new PropertyMetadata(false));
+
+        #endregion
+
         #region STATE
 
         public EComponentType ComponentType
