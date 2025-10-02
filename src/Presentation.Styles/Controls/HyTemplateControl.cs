@@ -16,6 +16,18 @@ using System.Windows.Media;
 
 namespace HYSoft.Presentation.Styles.Controls
 {
+    public enum EComponentType
+    {
+        None,
+        TextBox,
+        ComboBox,
+        CheckBox,
+        RadioButton,
+        DatePicker,
+        NumericUpDown,
+        Custom // 확장용
+    }
+
     [ContentProperty(nameof(Content))]
     public class HyTemplateControl : Control
     {
@@ -72,6 +84,34 @@ namespace HYSoft.Presentation.Styles.Controls
                 typeof(DataTemplate),
                 typeof(HyTemplateControl),
                 new FrameworkPropertyMetadata(null));
+
+        public IEnumerable? ItemsSource
+        {
+            get => (IEnumerable?)GetValue(ItemsSourceProperty);
+            set => SetValue(ItemsSourceProperty, value);
+        }
+
+        public static readonly DependencyProperty ItemsSourceProperty =
+            DependencyProperty.Register(
+                nameof(ItemsSource),
+                typeof(IEnumerable),
+                typeof(HyTemplateControl),
+                new FrameworkPropertyMetadata(null));
+
+        public object? SelectedItem
+        {
+            get => GetValue(SelectedItemProperty);
+            set => SetValue(SelectedItemProperty, value);
+        }
+
+        public static readonly DependencyProperty SelectedItemProperty =
+            DependencyProperty.Register(
+                nameof(SelectedItem),
+                typeof(object),
+                typeof(HyTemplateControl),
+                new FrameworkPropertyMetadata(
+                    null,
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public string? Text
         {
@@ -175,6 +215,27 @@ namespace HYSoft.Presentation.Styles.Controls
         #endregion
 
         #region STATE
+
+        public EComponentType ComponentType
+        {
+            get => (EComponentType)GetValue(ComponentTypeProperty);
+            set => SetValue(ComponentTypeProperty, value);
+        }
+
+        public static readonly DependencyProperty ComponentTypeProperty =
+            DependencyProperty.Register(
+                nameof(ComponentType),
+                typeof(EComponentType),
+                typeof(HyTemplateControl),
+                new FrameworkPropertyMetadata(EComponentType.None));
+
+        public bool IsEditable
+        {
+            get => (bool)GetValue(IsEditableProperty);
+            set => SetValue(IsEditableProperty, value);
+        }
+        public static readonly DependencyProperty IsEditableProperty =
+            DependencyProperty.Register(nameof(IsEditable), typeof(bool), typeof(HyTemplateControl), new PropertyMetadata(false));
 
         public bool IsReadOnly
         {

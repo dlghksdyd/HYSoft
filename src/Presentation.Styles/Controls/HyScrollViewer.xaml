@@ -319,7 +319,7 @@
                                         <Track
                                             x:Name="PART_Track"
                                             Margin="4,0,4,0"
-                                            IsDirectionReversed="True">
+                                            IsDirectionReversed="False">
                                             <Track.DecreaseRepeatButton>
                                                 <local:HyRepeatButton Command="{x:Static ScrollBar.PageLeftCommand}" Style="{StaticResource RepeatButtonTransparent}" />
                                             </Track.DecreaseRepeatButton>
