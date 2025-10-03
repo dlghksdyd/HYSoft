@@ -4,6 +4,21 @@
         <name>Presentation.Styles</name>
     </assembly>
     <members>
+        <member name="P:HYSoft.Presentation.Styles.Controls.HyRadioButton.EllipseBackground">
+            <summary>라디오 원 배경(채우기) 브러시</summary>
+        </member>
+        <member name="P:HYSoft.Presentation.Styles.Controls.HyRadioButton.EllipseForeground">
+            <summary>라디오 원 전경(아이콘/체크 점 등) 브러시</summary>
+        </member>
+        <member name="P:HYSoft.Presentation.Styles.Controls.HyRadioButton.EllipseBorderThickness">
+            <summary>라디오 원 테두리 두께 (StrokeThickness)</summary>
+        </member>
+        <member name="P:HYSoft.Presentation.Styles.Controls.HyRadioButton.EllipseBorderBrush">
+            <summary>라디오 원 테두리 브러시 (Stroke)</summary>
+        </member>
+        <member name="P:HYSoft.Presentation.Styles.Controls.HyRadioButton.EllipseHover">
+            <summary>마우스 Hover 시 적용할 원의 색상</summary>
+        </member>
         <member name="P:HYSoft.Presentation.Styles.Controls.HyScrollViewer.ScrollBarSize">
             <summary>
             스크롤바 두께 (세로 스크롤바의 Width, 가로 스크롤바의 Height)
