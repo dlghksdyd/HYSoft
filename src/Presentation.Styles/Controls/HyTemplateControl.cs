@@ -337,6 +337,19 @@ namespace HYSoft.Presentation.Styles.Controls
                 typeof(HyTemplateControl),
                 new FrameworkPropertyMetadata(false));
 
+        public static readonly DependencyProperty ParentIsMouseOverProperty =
+            DependencyProperty.Register(
+                nameof(ParentIsMouseOver),
+                typeof(bool),
+                typeof(HyTemplateControl),
+                new FrameworkPropertyMetadata(false));
+
+        public bool ParentIsMouseOver
+        {
+            get => (bool)GetValue(ParentIsMouseOverProperty);
+            set => SetValue(ParentIsMouseOverProperty, value);
+        }
+
         #endregion
 
         #region VISUAL
