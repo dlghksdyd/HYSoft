@@ -432,6 +432,23 @@ namespace HYSoft.Presentation.Styles.Controls
                 typeof(HyTemplateControl),
                 new FrameworkPropertyMetadata(Visibility.Visible, FrameworkPropertyMetadataOptions.AffectsRender));
 
+        public Thickness Padding2
+        {
+            get => (Thickness)GetValue(Padding2Property);
+            set => SetValue(Padding2Property, value);
+        }
+
+        public static readonly DependencyProperty Padding2Property =
+            DependencyProperty.Register(
+                nameof(Padding2),
+                typeof(Thickness),
+                typeof(HyTemplateControl),
+                new FrameworkPropertyMetadata(
+                    new Thickness(0),
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.AffectsArrange |
+                    FrameworkPropertyMetadataOptions.AffectsRender));
+
         #endregion
 
         #region COMMANDS PARAMETER

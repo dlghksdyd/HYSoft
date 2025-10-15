@@ -127,7 +127,7 @@ namespace HYSoft.Presentation.Styles.Controls
 
         private static void TbOnPreviewTextInputAllowOnlyNumber(object sender, TextCompositionEventArgs e)
         {
-            if (!e.Text.All(char.IsDigit))
+            if (!e.Text.All(char.IsDigit) && e.Text != ".")
             {
                 e.Handled = true;
             }
