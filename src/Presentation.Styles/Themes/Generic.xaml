@@ -11,5 +11,6 @@
         <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyTextBlock.xaml" />
         <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyTextBox.xaml" />
         <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyTitleBar.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyDatePicker.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

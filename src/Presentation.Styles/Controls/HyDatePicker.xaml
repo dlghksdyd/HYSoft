@@ -1,0 +1,193 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:c="clr-namespace:HYSoft.Presentation.Styles.ColorTokens"
+    xmlns:f="clr-namespace:HYSoft.Presentation.Styles.FontSizeTokens"
+    xmlns:local="clr-namespace:HYSoft.Presentation.Styles.Controls">
+    <!--  DatePicker styling to match hy components  -->
+    <Style x:Key="HyDatePickerButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Margin" Value="16" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border
+                        x:Name="Bd"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="4"
+                        Cursor="Hand">
+                        <local:HyIcon Foreground="{TemplateBinding Foreground}" Source="CalendarMonth" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="#33ffffff" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="#55ffffff" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.6" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Updated: make DatePickerTextBox fill column and center watermark with same color as background  -->
+    <Style TargetType="local:HyDatePickerTextBox">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="16,8,8,8" />
+        <Setter Property="Foreground" Value="{c:Color TextInverse}" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="{f:FontSize Lg}" />
+        <Setter Property="CaretBrush" Value="{c:Color TextInverse}" />
+        <Setter Property="SelectionBrush" Value="{c:Color TextLink}" />
+        <Setter Property="WatermarkForeground" Value="{c:Color SurfaceBase}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:HyDatePickerTextBox">
+                    <Grid>
+                        <!--  Content Host should fill the entire cell  -->
+                        <ScrollViewer
+                            x:Name="PART_ContentHost"
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Background="{TemplateBinding Background}"
+                            HorizontalScrollBarVisibility="Hidden"
+                            VerticalScrollBarVisibility="Hidden" />
+
+                        <!--  Centered watermark and same color as background  -->
+                        <ContentControl
+                            x:Name="PART_Watermark"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Content="{TemplateBinding Watermark}"
+                            Focusable="False"
+                            Foreground="{TemplateBinding WatermarkForeground}"
+                            IsHitTestVisible="False" />
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="WatermarkStates">
+                                <VisualState x:Name="Unwatermarked">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PART_Watermark"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Watermarked">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PART_Watermark"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="local:HyCalendar">
+        <Setter Property="Background" Value="{c:Color SurfaceBase}" />
+        <Setter Property="BorderBrush" Value="{c:Color BorderDefault}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Foreground" Value="{c:Color TextInverse}" />
+    </Style>
+
+    <Style TargetType="local:HyDatePicker">
+        <Setter Property="Foreground" Value="{c:Color TextInverse}" />
+        <Setter Property="FontSize" Value="{f:FontSize Lg}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <!--  Default WatermarkForeground for date picker  -->
+        <Setter Property="WatermarkForeground" Value="{c:Color SurfaceBase}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:HyDatePicker">
+                    <Grid>
+                        <Border
+                            x:Name="Bd"
+                            Background="{c:Color SurfaceBase}"
+                            BorderBrush="{c:Color BorderDefault}"
+                            BorderThickness="1"
+                            CornerRadius="4">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <local:HyDatePickerTextBox
+                                    Grid.Column="0"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Watermark="{TemplateBinding Watermark}"
+                                    WatermarkForeground="{TemplateBinding WatermarkForeground}"
+                                    IsEditable="{TemplateBinding IsEditable}" />
+                                <Button
+                                    x:Name="PART_Button"
+                                    Grid.Column="1"
+                                    FontSize="{TemplateBinding FontSize}"
+                                    Style="{StaticResource HyDatePickerButtonStyle}" />
+                            </Grid>
+                        </Border>
+
+                        <!--  Popup for calendar  -->
+                        <Popup
+                            x:Name="PART_Popup"
+                            AllowsTransparency="True"
+                            IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                            Placement="Bottom"
+                            PlacementTarget="{Binding ElementName=Bd}"
+                            StaysOpen="False">
+                            <Popup.LayoutTransform>
+                                <ScaleTransform ScaleX="2" ScaleY="2" />
+                            </Popup.LayoutTransform>
+                            <Border
+                                Background="{c:Color SurfaceBase}"
+                                BorderBrush="{c:Color BorderDefault}"
+                                BorderThickness="1"
+                                CornerRadius="4">
+                                <local:HyCalendar
+                                    x:Name="PART_Calendar"
+                                    DisplayDateEnd="{TemplateBinding DisplayDateEnd}"
+                                    DisplayDateStart="{TemplateBinding DisplayDateStart}"
+                                    IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}"
+                                    SelectedDate="{Binding SelectedDate, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                    Style="{TemplateBinding CalendarStyle}" />
+                            </Border>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="{c:Color TextLink}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="{c:Color TextLink}" />
+                            <Setter TargetName="Bd" Property="BorderThickness" Value="2" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Bd" Property="Opacity" Value="0.6" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
