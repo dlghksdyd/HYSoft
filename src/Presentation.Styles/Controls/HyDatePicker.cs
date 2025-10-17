@@ -2,6 +2,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
+using System;
+using System.Globalization;
 
 namespace HYSoft.Presentation.Styles.Controls
 {
@@ -55,6 +57,34 @@ namespace HYSoft.Presentation.Styles.Controls
         {
             get => (Brush?)GetValue(WatermarkForegroundProperty);
             set => SetValue(WatermarkForegroundProperty, value);
+        }
+
+        // Size (Width/Height) of the calendar toggle button
+        public static readonly DependencyProperty ButtonSizeProperty =
+            DependencyProperty.Register(
+                nameof(ButtonSize),
+                typeof(double),
+                typeof(HyDatePicker),
+                new FrameworkPropertyMetadata(24d, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public double ButtonSize
+        {
+            get => (double)GetValue(ButtonSizeProperty);
+            set => SetValue(ButtonSizeProperty, value);
+        }
+
+        // Scale factor applied to the popup calendar
+        public static readonly DependencyProperty CalendarScaleProperty =
+            DependencyProperty.Register(
+                nameof(CalendarScale),
+                typeof(double),
+                typeof(HyDatePicker),
+                new FrameworkPropertyMetadata(2.0, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public double CalendarScale
+        {
+            get => (double)GetValue(CalendarScaleProperty);
+            set => SetValue(CalendarScaleProperty, value);
         }
         
         public static readonly DependencyProperty CornerRadiusProperty =
@@ -124,7 +154,7 @@ namespace HYSoft.Presentation.Styles.Controls
     }
 
     // Minimal custom Calendar for styling/aliasing usage in XAML
-    public class HyCalendar : Calendar
+    public class HyCalendar : System.Windows.Controls.Calendar
     {
         static HyCalendar()
         {
@@ -193,6 +223,70 @@ namespace HYSoft.Presentation.Styles.Controls
             if (d is HyDatePickerTextBox tb && e.NewValue is bool b)
             {
                 tb.IsReadOnly = !b;
+            }
+        }
+
+        // SelectedDate DP for binding date value with the parent DatePicker
+        public static readonly DependencyProperty SelectedDateProperty =
+            DependencyProperty.Register(
+                nameof(SelectedDate),
+                typeof(DateTime?),
+                typeof(HyDatePickerTextBox),
+                new FrameworkPropertyMetadata(
+                    null,
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                    OnSelectedDateChanged));
+
+        public DateTime? SelectedDate
+        {
+            get => (DateTime?)GetValue(SelectedDateProperty);
+            set => SetValue(SelectedDateProperty, value);
+        }
+
+        private static void OnSelectedDateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is not HyDatePickerTextBox tb) return;
+
+            tb._isUpdatingText = true;
+            try
+            {
+                if (e.NewValue is DateTime dt)
+                {
+                    // Use current culture short date pattern
+                    tb.Text = dt.ToString(CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern);
+                }
+                else
+                {
+                    tb.Text = string.Empty;
+                }
+            }
+            finally
+            {
+                tb._isUpdatingText = false;
+            }
+        }
+
+        private bool _isUpdatingText;
+
+        protected override void OnTextChanged(TextChangedEventArgs e)
+        {
+            base.OnTextChanged(e);
+
+            if (_isUpdatingText)
+                return;
+
+            if (!IsEditable)
+                return;
+
+            if (string.IsNullOrWhiteSpace(Text))
+            {
+                SetCurrentValue(SelectedDateProperty, null);
+                return;
+            }
+
+            if (DateTime.TryParse(Text, CultureInfo.CurrentCulture, DateTimeStyles.None, out var parsed))
+            {
+                SetCurrentValue(SelectedDateProperty, parsed);
             }
         }
 

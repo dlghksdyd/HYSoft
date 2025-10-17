@@ -110,7 +110,7 @@
                         <Border
                             x:Name="splitBorder"
                             Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"
-                            Margin="8"
+                            Margin="4"
                             HorizontalAlignment="Right"
                             BorderThickness="0"
                             SnapsToDevicePixels="true">

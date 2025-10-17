@@ -9,7 +9,6 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Margin" Value="16" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -36,12 +35,11 @@
         </Setter>
     </Style>
 
-    <!--  Updated: make DatePickerTextBox fill column and center watermark with same color as background  -->
+    <!--  HyDatePickerTextBox template  -->
     <Style TargetType="local:HyDatePickerTextBox">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Padding" Value="16,8,8,8" />
-        <Setter Property="Foreground" Value="{c:Color TextInverse}" />
+        <Setter Property="Padding" Value="0" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
@@ -61,6 +59,9 @@
                             HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                             Background="{TemplateBinding Background}"
+                            Content="{TemplateBinding SelectedDate}"
+                            FontSize="{TemplateBinding FontSize}"
+                            Foreground="{TemplateBinding Foreground}"
                             HorizontalScrollBarVisibility="Hidden"
                             VerticalScrollBarVisibility="Hidden" />
 
@@ -74,8 +75,10 @@
                             VerticalContentAlignment="Center"
                             Content="{TemplateBinding Watermark}"
                             Focusable="False"
+                            FontSize="{TemplateBinding FontSize}"
                             Foreground="{TemplateBinding WatermarkForeground}"
-                            IsHitTestVisible="False" />
+                            IsHitTestVisible="False"
+                            Opacity="0" />
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="WatermarkStates">
                                 <VisualState x:Name="Unwatermarked">
@@ -99,6 +102,18 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                     </Grid>
+
+                    <!--  Triggers: show watermark when no value  -->
+                    <ControlTemplate.Triggers>
+                        <!--  Prefer SelectedDate because Text is culture-formatted in code-behind  -->
+                        <DataTrigger Binding="{Binding SelectedDate, RelativeSource={RelativeSource TemplatedParent}}" Value="{x:Null}">
+                            <Setter TargetName="PART_Watermark" Property="Opacity" Value="1" />
+                        </DataTrigger>
+                        <!--  Also handle empty Text just in case  -->
+                        <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource TemplatedParent}}" Value="">
+                            <Setter TargetName="PART_Watermark" Property="Opacity" Value="1" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -112,12 +127,16 @@
     </Style>
 
     <Style TargetType="local:HyDatePicker">
-        <Setter Property="Foreground" Value="{c:Color TextInverse}" />
+        <Setter Property="Foreground" Value="{c:Color TextPrimary}" />
         <Setter Property="FontSize" Value="{f:FontSize Lg}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <!--  Default WatermarkForeground for date picker  -->
-        <Setter Property="WatermarkForeground" Value="{c:Color SurfaceBase}" />
+        <Setter Property="WatermarkForeground" Value="{c:Color TextPrimary}" />
+        <!--  Default calendar button size  -->
+        <Setter Property="ButtonSize" Value="24" />
+        <!--  Default calendar scale  -->
+        <Setter Property="CalendarScale" Value="2" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:HyDatePicker">
@@ -135,14 +154,20 @@
                                 </Grid.ColumnDefinitions>
                                 <local:HyDatePickerTextBox
                                     Grid.Column="0"
+                                    Padding="{TemplateBinding Padding}"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
+                                    FontSize="{TemplateBinding FontSize}"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    IsEditable="{TemplateBinding IsEditable}"
+                                    SelectedDate="{Binding SelectedDate, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
                                     Watermark="{TemplateBinding Watermark}"
-                                    WatermarkForeground="{TemplateBinding WatermarkForeground}"
-                                    IsEditable="{TemplateBinding IsEditable}" />
+                                    WatermarkForeground="{TemplateBinding WatermarkForeground}" />
                                 <Button
                                     x:Name="PART_Button"
                                     Grid.Column="1"
+                                    Width="{TemplateBinding ButtonSize}"
+                                    Height="{TemplateBinding ButtonSize}"
                                     FontSize="{TemplateBinding FontSize}"
                                     Style="{StaticResource HyDatePickerButtonStyle}" />
                             </Grid>
@@ -157,7 +182,7 @@
                             PlacementTarget="{Binding ElementName=Bd}"
                             StaysOpen="False">
                             <Popup.LayoutTransform>
-                                <ScaleTransform ScaleX="2" ScaleY="2" />
+                                <ScaleTransform ScaleX="{Binding CalendarScale, RelativeSource={RelativeSource TemplatedParent}}" ScaleY="{Binding CalendarScale, RelativeSource={RelativeSource TemplatedParent}}" />
                             </Popup.LayoutTransform>
                             <Border
                                 Background="{c:Color SurfaceBase}"
