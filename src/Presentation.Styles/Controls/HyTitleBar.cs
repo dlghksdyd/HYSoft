@@ -153,8 +153,6 @@ namespace HYSoft.Presentation.Styles.Controls
         {
             base.OnApplyTemplate();
 
-            return;
-            
             var window = Window.GetWindow(this);
             if (window == null) return;
 
