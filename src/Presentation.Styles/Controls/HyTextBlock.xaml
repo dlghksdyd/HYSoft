@@ -21,6 +21,7 @@
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             FontFamily="{TemplateBinding FontFamily}"
                             FontSize="{TemplateBinding FontSize}"
+                            FontStretch="{TemplateBinding FontStretch}"
                             FontWeight="{TemplateBinding FontWeight}"
                             Foreground="{TemplateBinding Foreground}"
                             Text="{TemplateBinding Text}" />
