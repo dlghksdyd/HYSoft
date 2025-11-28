@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Threading;
+using System.Linq; // added for CloseAll
 
 namespace HYSoft.Presentation.Modal
 {
@@ -105,6 +106,33 @@ namespace HYSoft.Presentation.Modal
                 tcs.TrySetResult(result);
 
             ViewModel.ClosePopup(viewmodel);
+        }
+
+        /// <summary>
+        /// 모든 모달을 닫습니다. 아직 결과가 설정되지 않은 대기중 모달은 지정된 결과로 완료됩니다.
+        /// </summary>
+        public static void CloseAll(ModalResult result = ModalResult.None)
+        {
+            if (ViewModel == null) return;
+
+            // 완료되지 않은 TCS 모두 처리
+            foreach (var kv in _pending.ToList())
+            {
+                if (_pending.Remove(kv.Key, out var tcs))
+                {
+                    tcs.TrySetResult(result);
+                }
+            }
+
+            // 열린 팝업 모두 제거
+            var contents = ViewModel.PopupList?.Select(p => p.Content).Where(c => c != null).ToList();
+            if (contents != null)
+            {
+                foreach (var vm in contents)
+                {
+                    ViewModel.ClosePopup(vm!);
+                }
+            }
         }
     }
 }
