@@ -12,7 +12,7 @@ namespace HYSoft.Presentation.Interactivity.CommandBehaviors
     /// <summary>
     /// RoutedEvent와 ICommand를 연결할 수 있도록 지원하는 Attached Behavior입니다.
     /// - 단일 바인딩: EventToCommand.Binding
-    /// - 다중 바인딩: EventToCommand.MultiBinding (EventCollection)
+    /// - 다중 바인딩: EventToCommand.MultiBinding (FreezableCollection<Event>)
     /// 
     /// Event는 MultiDataTrigger.Condition 스타일로 바뀌어
     /// Command/CommandParameter "직접 값"과
@@ -68,18 +68,18 @@ namespace HYSoft.Presentation.Interactivity.CommandBehaviors
         }
 
         /// <summary>
-        /// UIElement에 바인딩할 EventCollection을 나타내는 Attached Property입니다.
+        /// UIElement에 바인딩할 Event 모음(FreezableCollection<Event>)을 나타내는 Attached Property입니다.
         /// (여러 Event를 한 번에 부착)
         /// </summary>
         public static readonly DependencyProperty MultiBindingProperty =
             DependencyProperty.RegisterAttached(
                 "MultiBinding",
-                typeof(EventCollection),
+                typeof(FreezableCollection<Event>),
                 typeof(EventToCommand),
                 new PropertyMetadata(null, OnBindingsChanged));
 
-        public static void SetMultiBinding(DependencyObject d, EventCollection value) => d.SetValue(MultiBindingProperty, value);
-        public static EventCollection GetMultiBinding(DependencyObject d) => (EventCollection)d.GetValue(MultiBindingProperty);
+        public static void SetMultiBinding(DependencyObject d, FreezableCollection<Event> value) => d.SetValue(MultiBindingProperty, value);
+        public static FreezableCollection<Event> GetMultiBinding(DependencyObject d) => (FreezableCollection<Event>)d.GetValue(MultiBindingProperty);
 
         /// <summary>
         /// 단일 Event 바인딩용 Attached Property
@@ -153,7 +153,7 @@ namespace HYSoft.Presentation.Interactivity.CommandBehaviors
                 d.ClearValue(CollectionChangedHandlerProperty);
             }
 
-            if (e.NewValue is EventCollection coll)
+            if (e.NewValue is FreezableCollection<Event> coll)
             {
                 var incc = (INotifyCollectionChanged)coll;
 

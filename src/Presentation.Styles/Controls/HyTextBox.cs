@@ -95,6 +95,13 @@ namespace HYSoft.Presentation.Styles.Controls
             set => SetValue(IsOnlyNumberProperty, value);
         }
 
+        // Track whether handlers are attached to prevent duplicates
+        private bool _isOnlyNumberHandlersAttached;
+        private bool _canPasteHandlersAttached;
+        private bool _canKoreanHandlersAttached;
+        private CommandBinding? _pasteBinding;
+        private bool _cleanupHooked;
+
         static HyTextBox()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(HyTextBox), new FrameworkPropertyMetadata(typeof(HyTextBox)));
@@ -108,19 +115,75 @@ namespace HYSoft.Presentation.Styles.Controls
                 nameof(IsOnlyNumber), typeof(bool), typeof(HyTextBox), new PropertyMetadata(false, OnIsOnlyNumberChanged));
         }
 
+        public HyTextBox()
+        {
+            // Ensure cleanup when the control is unloaded from the visual tree
+            Loaded += (_, __) =>
+            {
+                if (!_cleanupHooked)
+                {
+                    Unloaded += OnUnloadedCleanup;
+                    _cleanupHooked = true;
+                }
+            };
+        }
+
+        private void OnUnloadedCleanup(object? sender, RoutedEventArgs e)
+        {
+            // Detach everything that may hold references to this control
+            if (_isOnlyNumberHandlersAttached)
+            {
+                PreviewTextInput -= TbOnPreviewTextInputAllowOnlyNumber;
+                DataObject.RemovePastingHandler(this, OnPasteAllowOnlyNumber);
+                _isOnlyNumberHandlersAttached = false;
+            }
+
+            if (_canPasteHandlersAttached)
+            {
+                PreviewKeyDown -= TbOnPreviewKeyDownBlockPaste;
+                DataObject.RemovePastingHandler(this, OnPasting);
+                PreviewDragOver -= TbOnPreviewDragEventBlock;
+                PreviewDrop -= TbOnPreviewDragEventBlock;
+                AllowDrop = true;
+                _canPasteHandlersAttached = false;
+            }
+
+            if (_pasteBinding is not null)
+            {
+                CommandBindings.Remove(_pasteBinding);
+                _pasteBinding = null;
+            }
+
+            if (_canKoreanHandlersAttached)
+            {
+                PreviewTextInput -= TbOnPreviewTextInputBlockKorean;
+                // Restore IME to default (enabled)
+                InputMethod.SetIsInputMethodEnabled(this, true);
+                _canKoreanHandlersAttached = false;
+            }
+        }
+
         private static void OnIsOnlyNumberChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is HyTextBox tb)
             {
                 if ((bool)e.NewValue == true)
                 {
-                    tb.PreviewTextInput += TbOnPreviewTextInputAllowOnlyNumber;
-                    DataObject.AddPastingHandler(tb, OnPasteAllowOnlyNumber);
+                    if (!tb._isOnlyNumberHandlersAttached)
+                    {
+                        tb.PreviewTextInput += TbOnPreviewTextInputAllowOnlyNumber;
+                        DataObject.AddPastingHandler(tb, OnPasteAllowOnlyNumber);
+                        tb._isOnlyNumberHandlersAttached = true;
+                    }
                 }
                 else
                 {
-                    tb.PreviewTextInput -= TbOnPreviewTextInputAllowOnlyNumber;
-                    DataObject.RemovePastingHandler(tb, OnPasteAllowOnlyNumber);
+                    if (tb._isOnlyNumberHandlersAttached)
+                    {
+                        tb.PreviewTextInput -= TbOnPreviewTextInputAllowOnlyNumber;
+                        DataObject.RemovePastingHandler(tb, OnPasteAllowOnlyNumber);
+                        tb._isOnlyNumberHandlersAttached = false;
+                    }
                 }
             }
         }
@@ -155,32 +218,49 @@ namespace HYSoft.Presentation.Styles.Controls
             {
                 if ((bool)e.NewValue == false)
                 {
-                    // Paste 명령 무력화
-                    var pasteBinding = new CommandBinding(ApplicationCommands.Paste,
-                        (_, ee) => ee.Handled = true,
-                        (_, ce) => ce.CanExecute = false);
-                    tb.CommandBindings.Add(pasteBinding);
+                    // Paste command disable (avoid adding multiple times)
+                    if (tb._pasteBinding is null)
+                    {
+                        tb._pasteBinding = new CommandBinding(ApplicationCommands.Paste,
+                            (_, ee) => ee.Handled = true,
+                            (_, ce) => ce.CanExecute = false);
+                        tb.CommandBindings.Add(tb._pasteBinding);
+                    }
 
-                    // Ctrl+V 직접 차단
-                    tb.PreviewKeyDown += TbOnPreviewKeyDownBlockPaste;
+                    if (!tb._canPasteHandlersAttached)
+                    {
+                        // Block Ctrl+V / Shift+Insert
+                        tb.PreviewKeyDown += TbOnPreviewKeyDownBlockPaste;
 
-                    // 붙여넣기 이벤트 차단
-                    DataObject.AddPastingHandler(tb, OnPasting);
+                        // Block paste event
+                        DataObject.AddPastingHandler(tb, OnPasting);
 
-                    // 드래그-드롭 차단
-                    tb.AllowDrop = false;
-                    tb.PreviewDragOver += TbOnPreviewDragEventBlock;
-                    tb.PreviewDrop += TbOnPreviewDragEventBlock;
+                        // Block drag and drop
+                        tb.AllowDrop = false;
+                        tb.PreviewDragOver += TbOnPreviewDragEventBlock;
+                        tb.PreviewDrop += TbOnPreviewDragEventBlock;
+
+                        tb._canPasteHandlersAttached = true;
+                    }
                 }
                 else
                 {
-                    // 해제
-                    tb.PreviewKeyDown -= TbOnPreviewKeyDownBlockPaste;
-                    DataObject.RemovePastingHandler(tb, OnPasting);
-                    tb.PreviewDragOver -= TbOnPreviewDragEventBlock;
-                    tb.PreviewDrop -= TbOnPreviewDragEventBlock;
+                    // Unset
+                    if (tb._canPasteHandlersAttached)
+                    {
+                        tb.PreviewKeyDown -= TbOnPreviewKeyDownBlockPaste;
+                        DataObject.RemovePastingHandler(tb, OnPasting);
+                        tb.PreviewDragOver -= TbOnPreviewDragEventBlock;
+                        tb.PreviewDrop -= TbOnPreviewDragEventBlock;
+                        tb.AllowDrop = true;
+                        tb._canPasteHandlersAttached = false;
+                    }
 
-                    tb.AllowDrop = true;
+                    if (tb._pasteBinding is not null)
+                    {
+                        tb.CommandBindings.Remove(tb._pasteBinding);
+                        tb._pasteBinding = null;
+                    }
                 }
             }
         }
@@ -210,14 +290,22 @@ namespace HYSoft.Presentation.Styles.Controls
             {
                 if ((bool)e.NewValue == false)
                 {
-                    // IME 차단
+                    // IME disable
                     InputMethod.SetIsInputMethodEnabled(tb, false);
-                    tb.PreviewTextInput += TbOnPreviewTextInputBlockKorean;
+                    if (!tb._canKoreanHandlersAttached)
+                    {
+                        tb.PreviewTextInput += TbOnPreviewTextInputBlockKorean;
+                        tb._canKoreanHandlersAttached = true;
+                    }
                 }
                 else
                 {
                     InputMethod.SetIsInputMethodEnabled(tb, true);
-                    tb.PreviewTextInput -= TbOnPreviewTextInputBlockKorean;
+                    if (tb._canKoreanHandlersAttached)
+                    {
+                        tb.PreviewTextInput -= TbOnPreviewTextInputBlockKorean;
+                        tb._canKoreanHandlersAttached = false;
+                    }
                 }
             }
         }

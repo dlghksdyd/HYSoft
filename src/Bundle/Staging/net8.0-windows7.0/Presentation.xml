@@ -129,28 +129,13 @@
             <param name="args">이벤트 인수</param>
             <param name="parameter">사용자 지정 파라미터</param>
         </member>
-        <member name="T:HYSoft.Presentation.Interactivity.CommandBehaviors.EventToCommand">
-            <summary>
-            RoutedEvent와 ICommand를 연결할 수 있도록 지원하는 Attached Behavior입니다.
-            - 단일 바인딩: EventToCommand.Binding
-            - 다중 바인딩: EventToCommand.MultiBinding (EventCollection)
-            
-            Event는 MultiDataTrigger.Condition 스타일로 바뀌어
-            Command/CommandParameter "직접 값"과
-            CommandBinding/CommandParameterBinding(BindingBase) 를 분리 보관합니다.
-            </summary>
-        </member>
+        <!-- Badly formed XML comment ignored for member "T:HYSoft.Presentation.Interactivity.CommandBehaviors.EventToCommand" -->
         <member name="T:HYSoft.Presentation.Interactivity.CommandBehaviors.EventToCommand.RoutedEventCommandHandler">
             <summary>
             핸들러에서 강한 캡처를 피하기 위한 약한 참조 기반 핸들러 래퍼
             </summary>
         </member>
-        <member name="F:HYSoft.Presentation.Interactivity.CommandBehaviors.EventToCommand.MultiBindingProperty">
-            <summary>
-            UIElement에 바인딩할 EventCollection을 나타내는 Attached Property입니다.
-            (여러 Event를 한 번에 부착)
-            </summary>
-        </member>
+        <!-- Badly formed XML comment ignored for member "F:HYSoft.Presentation.Interactivity.CommandBehaviors.EventToCommand.MultiBindingProperty" -->
         <member name="F:HYSoft.Presentation.Interactivity.CommandBehaviors.EventToCommand.BindingProperty">
             <summary>
             단일 Event 바인딩용 Attached Property

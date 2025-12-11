@@ -130,5 +130,12 @@ namespace HYSoft.Presentation.Interactivity.CommandBehaviors
 
         // ===== Freezable =====================================================
         protected override Freezable CreateInstanceCore() => new Event();
+
+        // Prevent WPF from freezing this Freezable so that bindings/values can be set/cleared at runtime.
+        protected override bool FreezeCore(bool isChecking)
+        {
+            // Returning false tells WPF this object cannot be frozen.
+            return false;
+        }
     }
 }
