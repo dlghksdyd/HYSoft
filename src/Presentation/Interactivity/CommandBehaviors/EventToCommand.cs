@@ -21,6 +21,53 @@ namespace HYSoft.Presentation.Interactivity.CommandBehaviors
     public static class EventToCommand
     {
         /// <summary>
+        /// 핸들러에서 강한 캡처를 피하기 위한 약한 참조 기반 핸들러 래퍼
+        /// </summary>
+        private sealed class RoutedEventCommandHandler
+        {
+            private readonly WeakReference<UIElement> _uiRef;
+            private readonly WeakReference<Event> _eventRef;
+
+            public RoutedEventCommandHandler(UIElement ui, Event ev)
+            {
+                _uiRef = new WeakReference<UIElement>(ui);
+                _eventRef = new WeakReference<Event>(ev);
+            }
+
+            public void Handle(object? sender, RoutedEventArgs eArgs)
+            {
+                if (!_uiRef.TryGetTarget(out var ui)) return;
+                if (!_eventRef.TryGetTarget(out var ev)) return;
+
+                var executing = GetExecutingSet(ui);
+                if (executing.Contains(ev)) return; // 재진입 차단 (ev 기준)
+                executing.Add(ev);
+                try
+                {
+                    var cmd = ev.Command;
+                    if (cmd == null) return; // 아직 바인딩이 안 풀렸을 수도 있음
+
+                    object param = new EventPayload(sender, eArgs, ev.CommandParameter);
+
+                    if (cmd is RoutedCommand rc)
+                    {
+                        if (!rc.CanExecute(param, ui)) return;
+                        rc.Execute(param, ui);
+                    }
+                    else
+                    {
+                        if (!cmd.CanExecute(param)) return;
+                        cmd.Execute(param);
+                    }
+                }
+                finally
+                {
+                    executing.Remove(ev);
+                }
+            }
+        }
+
+        /// <summary>
         /// UIElement에 바인딩할 EventCollection을 나타내는 Attached Property입니다.
         /// (여러 Event를 한 번에 부착)
         /// </summary>
@@ -54,6 +101,14 @@ namespace HYSoft.Presentation.Interactivity.CommandBehaviors
             => (Dictionary<Event, Delegate>)d.GetValue(HandlerMapProperty);
         private static void SetHandlerMap(DependencyObject d, Dictionary<Event, Delegate> map)
             => d.SetValue(HandlerMapProperty, map);
+
+        // 내부: 원본 Event → 클론된 Event 인스턴스 매핑 (바인딩 유지용 강한 참조)
+        private static readonly DependencyProperty ClonedEventMapProperty =
+            DependencyProperty.RegisterAttached("ClonedEventMap", typeof(Dictionary<Event, Event>), typeof(EventToCommand));
+        private static Dictionary<Event, Event> GetClonedEventMap(DependencyObject d)
+            => (Dictionary<Event, Event>)d.GetValue(ClonedEventMapProperty);
+        private static void SetClonedEventMap(DependencyObject d, Dictionary<Event, Event> map)
+            => d.SetValue(ClonedEventMapProperty, map);
 
         private static readonly DependencyProperty ExecutingSetProperty =
             DependencyProperty.RegisterAttached("ExecutingSet",
@@ -171,82 +226,84 @@ namespace HYSoft.Presentation.Interactivity.CommandBehaviors
 
             // 직접 값만 쓴 경우(ev.Command == null일 수 있음) MultiBinding에서도
             // 이후 데이터 갱신으로 값이 들어올 수 있으니, 핸들러는 우선 붙여준다.
-            var map = GetHandlerMap(ui);
-            if (map == null)
+            var handlerMap = GetHandlerMap(ui);
+            if (handlerMap == null)
             {
-                map = new Dictionary<Event, Delegate>();
-                SetHandlerMap(ui, map);
+                handlerMap = new Dictionary<Event, Delegate>();
+                SetHandlerMap(ui, handlerMap);
             }
-            if (map.ContainsKey(b)) return;
+            if (handlerMap.ContainsKey(b)) return;
+
+            var cloneMap = GetClonedEventMap(ui);
+            if (cloneMap == null)
+            {
+                cloneMap = new Dictionary<Event, Event>();
+                SetClonedEventMap(ui, cloneMap);
+            }
 
             EnsureExecutingSet(ui);
 
-            // === 2) 안전한 핸들러 ===
-            // 실행 시점마다 ev.Command/CommandParameter의 현재 값을 사용
-            RoutedEventHandler handler = (s, eArgs) =>
-            {
-                var executing = GetExecutingSet(ui);
-                if (executing.Contains(ev)) return; // 재진입 차단 (ev 기준)
-                executing.Add(ev);
-                try
-                {
-                    var cmd = ev.Command;
-                    if (cmd == null) return; // 아직 바인딩이 안 풀렸을 수도 있음
-
-                    object param = new EventPayload(s, eArgs, ev.CommandParameter);
-
-                    if (cmd is RoutedCommand rc)
-                    {
-                        if (!rc.CanExecute(param, ui)) return;
-                        rc.Execute(param, ui);
-                    }
-                    else
-                    {
-                        if (!cmd.CanExecute(param)) return;
-                        cmd.Execute(param);
-                    }
-                }
-                finally
-                {
-                    executing.Remove(ev);
-                }
-            };
+            // === 2) 안전한 핸들러 (약한 참조 기반) ===
+            var handlerObj = new RoutedEventCommandHandler(ui, ev);
+            RoutedEventHandler handler = handlerObj.Handle;
 
             bool handledToo = ev.HandledToo;
             ui.AddHandler(ev.RoutedEvent, handler, handledToo);
 
             // 원본 Event(b) ↔︎ 핸들러 저장 (Detach 키는 b 사용)
-            map[b] = handler;
+            handlerMap[b] = handler;
+            // 원본 Event(b) ↔︎ 클론(ev) 저장 (강한 참조로 바인딩 생명 유지)
+            cloneMap[b] = ev;
         }
 
         private static void Detach(UIElement ui, Event b)
         {
             if (b == null) return;
-            var map = GetHandlerMap(ui);
-            if (map != null && map.TryGetValue(b, out var handler) && b.RoutedEvent != null)
+            var handlerMap = GetHandlerMap(ui);
+            if (handlerMap != null && handlerMap.TryGetValue(b, out var handler) && b.RoutedEvent != null)
             {
                 ui.RemoveHandler(b.RoutedEvent, handler);
-                map.Remove(b);
+                handlerMap.Remove(b);
             }
 
-            // 바인딩으로 생성된 클론 인스턴스(ev)는 로컬로만 유지되므로
-            // 여기서는 원본 b의 바인딩을 건 적이 없다. 다만 잠재적 참조를 줄이기 위해
-            // 값-기반 속성은 정리해준다.
+            var cloneMap = GetClonedEventMap(ui);
+            if (cloneMap != null && cloneMap.TryGetValue(b, out var ev))
+            {
+                // 바인딩 제거 및 맵에서 삭제
+                ev.ClearValue(Event.CommandProperty);
+                ev.ClearValue(Event.CommandParameterProperty);
+                cloneMap.Remove(b);
+            }
+
+            // 잠재적 참조를 줄이기 위해 원본의 값-기반 속성 정리
             b.ClearValue(Event.CommandProperty);
             b.ClearValue(Event.CommandParameterProperty);
         }
 
         private static void DetachAll(UIElement ui)
         {
-            var map = GetHandlerMap(ui);
-            if (map == null) return;
+            var handlerMap = GetHandlerMap(ui);
+            var cloneMap = GetClonedEventMap(ui);
+            if (handlerMap == null && cloneMap == null) return;
 
-            // 사본을 돌면서 안전하게 제거
-            foreach (var kv in map.ToArray())
-                if (kv.Key?.RoutedEvent != null)
-                    ui.RemoveHandler(kv.Key.RoutedEvent, kv.Value);
+            if (handlerMap != null)
+            {
+                // 사본을 돌면서 안전하게 제거
+                foreach (var kv in handlerMap.ToArray())
+                    if (kv.Key?.RoutedEvent != null)
+                        ui.RemoveHandler(kv.Key.RoutedEvent, kv.Value);
+                handlerMap.Clear();
+            }
 
-            map.Clear();
+            if (cloneMap != null)
+            {
+                foreach (var kv in cloneMap.ToArray())
+                {
+                    kv.Value?.ClearValue(Event.CommandProperty);
+                    kv.Value?.ClearValue(Event.CommandParameterProperty);
+                }
+                cloneMap.Clear();
+            }
         }
 
         private static void EnsureExecutingSet(DependencyObject d)
@@ -287,6 +344,7 @@ namespace HYSoft.Presentation.Interactivity.CommandBehaviors
 
             // 내부 상태 정리 (맵/실행셋만 정리). AP는 유지.
             ui.ClearValue(HandlerMapProperty);
+            ui.ClearValue(ClonedEventMapProperty);
             ui.ClearValue(ExecutingSetProperty);
         }
 
@@ -299,27 +357,30 @@ namespace HYSoft.Presentation.Interactivity.CommandBehaviors
 
             // 현재 AP 값을 바탕으로 재구축
             var multi = GetMultiBinding(ui);
-            if (multi != null && existingCollectionHandler == null)
+            if (multi != null)
             {
                 // 컬렉션 구독 복원 (중복 방지: existingCollectionHandler 체크)
-                var incc = (INotifyCollectionChanged)multi;
-                NotifyCollectionChangedEventHandler handler = (s2, args) =>
+                if (existingCollectionHandler == null)
                 {
-                    if (args.Action == NotifyCollectionChangedAction.Reset)
+                    var incc = (INotifyCollectionChanged)multi;
+                    NotifyCollectionChangedEventHandler handler = (s2, args) =>
                     {
-                        DetachAll(ui);
-                        foreach (var b in multi)
-                            Attach(ui, b);
-                        return;
-                    }
-                    if (args.OldItems != null)
-                        foreach (Event b in args.OldItems) Detach(ui, b);
-                    if (args.NewItems != null)
-                        foreach (Event b in args.NewItems) Attach(ui, b);
-                };
+                        if (args.Action == NotifyCollectionChangedAction.Reset)
+                        {
+                            DetachAll(ui);
+                            foreach (var b in multi)
+                                Attach(ui, b);
+                            return;
+                        }
+                        if (args.OldItems != null)
+                            foreach (Event b in args.OldItems) Detach(ui, b);
+                        if (args.NewItems != null)
+                            foreach (Event b in args.NewItems) Attach(ui, b);
+                    };
 
-                incc.CollectionChanged += handler;
-                ui.SetValue(CollectionChangedHandlerProperty, handler);
+                    incc.CollectionChanged += handler;
+                    ui.SetValue(CollectionChangedHandlerProperty, handler);
+                }
 
                 // 핸들러 재부착: Attach 내부에서 map.ContainsKey로 중복 방지
                 foreach (var b in multi) Attach(ui, b);

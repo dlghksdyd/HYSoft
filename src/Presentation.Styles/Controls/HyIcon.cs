@@ -21,6 +21,11 @@ namespace HYSoft.Presentation.Styles.Controls
         private ImageSource? _tintedHover;
         private ImageSource? _tintedPressed;
 
+        // 값 변경 이벤트 핸들러 참조(제거를 위해 강한 참조 유지)
+        private EventHandler? _sourceChangedHandler;
+        private EventHandler? _isMouseOverChangedHandler;
+        private EventHandler? _isPressedChangedHandler;
+
         static HyIcon()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(HyIcon), new FrameworkPropertyMetadata(typeof(HyIcon)));
@@ -106,7 +111,8 @@ namespace HYSoft.Presentation.Styles.Controls
 
         public HyIcon()
         {
-            
+            // Unloaded 시 반드시 구독 해제
+            Unloaded += OnUnloaded;
         }
 
         public override void OnApplyTemplate()
@@ -229,42 +235,55 @@ namespace HYSoft.Presentation.Styles.Controls
 
         private void SubscribeStateChanges()
         {
+            // 핸들러 생성 및 저장 (RemoveValueChanged에서 동일 인스턴스를 사용해야 함)
+            _sourceChangedHandler ??= OnSourceChanged;
+            _isMouseOverChangedHandler ??= OnStateChanged;
+            _isPressedChangedHandler ??= OnStateChanged;
+
             _sourceDesc = DependencyPropertyDescriptor.FromProperty(SourceProperty, typeof(HyIcon));
-            _sourceDesc?.AddValueChanged(this, (s, e) =>
-            {
-                RebuildBaseAndTints();
-                ApplyCurrentStateSource();
-            });
+            _sourceDesc?.AddValueChanged(this, _sourceChangedHandler);
 
             _isMouseOverDesc = DependencyPropertyDescriptor.FromProperty(UIElement.IsMouseOverProperty, typeof(HyIcon));
-            _isMouseOverDesc?.AddValueChanged(this, OnStateChanged);
+            _isMouseOverDesc?.AddValueChanged(this, _isMouseOverChangedHandler);
 
             _isPressedDesc = DependencyPropertyDescriptor.FromProperty(HyIcon.IsPressedProperty, typeof(HyIcon));
-            _isPressedDesc?.AddValueChanged(this, OnStateChanged);
+            _isPressedDesc?.AddValueChanged(this, _isPressedChangedHandler);
         }
 
         private void UnsubscribeStateChanges()
         {
-            if (_sourceDesc != null)
+            if (_sourceDesc != null && _sourceChangedHandler != null)
             {
-                _sourceDesc.RemoveValueChanged(this, (s, e) => { });
+                _sourceDesc.RemoveValueChanged(this, _sourceChangedHandler);
                 _sourceDesc = null;
             }
 
-            if (_isMouseOverDesc != null)
+            if (_isMouseOverDesc != null && _isMouseOverChangedHandler != null)
             {
-                _isMouseOverDesc.RemoveValueChanged(this, OnStateChanged);
+                _isMouseOverDesc.RemoveValueChanged(this, _isMouseOverChangedHandler);
                 _isMouseOverDesc = null;
             }
-            if (_isPressedDesc != null)
+            if (_isPressedDesc != null && _isPressedChangedHandler != null)
             {
-                _isPressedDesc.RemoveValueChanged(this, OnStateChanged);
+                _isPressedDesc.RemoveValueChanged(this, _isPressedChangedHandler);
                 _isPressedDesc = null;
             }
         }
 
+        private void OnSourceChanged(object? sender, EventArgs e)
+        {
+            RebuildBaseAndTints();
+            ApplyCurrentStateSource();
+        }
+
         private void OnStateChanged(object? sender, EventArgs e) => ApplyCurrentStateSource();
         #endregion
+
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            // Visual Tree에서 제거될 때 강한 핸들러 제거로 누수 방지
+            UnsubscribeStateChanges();
+        }
 
         protected override void OnMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs e)
         {

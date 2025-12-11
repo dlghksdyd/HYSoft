@@ -140,6 +140,11 @@
             CommandBinding/CommandParameterBinding(BindingBase) 를 분리 보관합니다.
             </summary>
         </member>
+        <member name="T:HYSoft.Presentation.Interactivity.CommandBehaviors.EventToCommand.RoutedEventCommandHandler">
+            <summary>
+            핸들러에서 강한 캡처를 피하기 위한 약한 참조 기반 핸들러 래퍼
+            </summary>
+        </member>
         <member name="F:HYSoft.Presentation.Interactivity.CommandBehaviors.EventToCommand.MultiBindingProperty">
             <summary>
             UIElement에 바인딩할 EventCollection을 나타내는 Attached Property입니다.
