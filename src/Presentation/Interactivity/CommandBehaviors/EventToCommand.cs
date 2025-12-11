@@ -71,6 +71,17 @@ namespace HYSoft.Presentation.Interactivity.CommandBehaviors
                 typeof(EventToCommand),
                 new PropertyMetadata(null));
 
+        // 요소 Unloaded 훅 등록 여부
+        private static readonly DependencyProperty CleanupHookedProperty =
+            DependencyProperty.RegisterAttached(
+                "CleanupHooked",
+                typeof(bool),
+                typeof(EventToCommand),
+                new PropertyMetadata(false));
+
+        private static bool GetCleanupHooked(DependencyObject d) => (bool)d.GetValue(CleanupHookedProperty);
+        private static void SetCleanupHooked(DependencyObject d, bool value) => d.SetValue(CleanupHookedProperty, value);
+
         // ==== MultiBindings 변경 처리 ====
         private static void OnBindingsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -111,6 +122,12 @@ namespace HYSoft.Presentation.Interactivity.CommandBehaviors
 
                 // 초기 attach
                 foreach (var b in coll) Attach(ui, b);
+
+                EnsureCleanupHook(ui);
+            }
+            else
+            {
+                EnsureCleanupHook(ui);
             }
         }
 
@@ -124,6 +141,9 @@ namespace HYSoft.Presentation.Interactivity.CommandBehaviors
 
             // 새 단일 바인딩 Attach
             if (e.NewValue is Event newEv) Attach(ui, newEv);
+
+            if (ui is FrameworkElement fe)
+                EnsureCleanupHook(fe);
         }
 
         // ==== attach/detach 공통 로직 ====
@@ -208,6 +228,12 @@ namespace HYSoft.Presentation.Interactivity.CommandBehaviors
                 ui.RemoveHandler(b.RoutedEvent, handler);
                 map.Remove(b);
             }
+
+            // 바인딩으로 생성된 클론 인스턴스(ev)는 로컬로만 유지되므로
+            // 여기서는 원본 b의 바인딩을 건 적이 없다. 다만 잠재적 참조를 줄이기 위해
+            // 값-기반 속성은 정리해준다.
+            b.ClearValue(Event.CommandProperty);
+            b.ClearValue(Event.CommandParameterProperty);
         }
 
         private static void DetachAll(UIElement ui)
@@ -231,6 +257,39 @@ namespace HYSoft.Presentation.Interactivity.CommandBehaviors
                 set = new HashSet<Event>();
                 SetExecutingSet(d, set);
             }
+        }
+
+        private static void EnsureCleanupHook(FrameworkElement ui)
+        {
+            if (GetCleanupHooked(ui)) return;
+
+            // WeakEventManager를 사용하여 Unloaded에 대한 핸들러를 약한 참조로 등록
+            System.Windows.WeakEventManager<FrameworkElement, RoutedEventArgs>.AddHandler(ui, nameof(ui.Unloaded), OnElementUnloaded);
+            SetCleanupHooked(ui, true);
+        }
+
+        private static void OnElementUnloaded(object? sender, RoutedEventArgs e)
+        {
+            if (sender is not FrameworkElement ui) return;
+
+            // 모든 핸들러 제거
+            DetachAll(ui);
+
+            // 컬렉션 변경 핸들러 해제
+            var handlerObj = ui.GetValue(CollectionChangedHandlerProperty) as NotifyCollectionChangedEventHandler;
+            var coll = GetMultiBinding(ui) as System.Collections.Specialized.INotifyCollectionChanged;
+            if (handlerObj != null && coll != null)
+            {
+                coll.CollectionChanged -= handlerObj;
+                ui.ClearValue(CollectionChangedHandlerProperty);
+            }
+
+            // 내부 상태 정리
+            ui.ClearValue(HandlerMapProperty);
+            ui.ClearValue(ExecutingSetProperty);
+            ui.ClearValue(BindingProperty);
+            ui.ClearValue(MultiBindingProperty);
+            ui.ClearValue(CleanupHookedProperty);
         }
     }
 }
