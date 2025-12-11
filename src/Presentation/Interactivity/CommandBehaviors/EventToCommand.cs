@@ -263,8 +263,9 @@ namespace HYSoft.Presentation.Interactivity.CommandBehaviors
         {
             if (GetCleanupHooked(ui)) return;
 
-            // WeakEventManager를 사용하여 Unloaded에 대한 핸들러를 약한 참조로 등록
+            // WeakEventManager를 사용하여 Unloaded/Loaded에 대한 핸들러를 약한 참조로 등록
             System.Windows.WeakEventManager<FrameworkElement, RoutedEventArgs>.AddHandler(ui, nameof(ui.Unloaded), OnElementUnloaded);
+            System.Windows.WeakEventManager<FrameworkElement, RoutedEventArgs>.AddHandler(ui, nameof(ui.Loaded), OnElementLoaded);
             SetCleanupHooked(ui, true);
         }
 
@@ -275,7 +276,7 @@ namespace HYSoft.Presentation.Interactivity.CommandBehaviors
             // 모든 핸들러 제거
             DetachAll(ui);
 
-            // 컬렉션 변경 핸들러 해제
+            // 컬렉션 변경 핸들러만 해제 (AP 값은 유지하여 Loaded 시 재구축 가능하게 함)
             var handlerObj = ui.GetValue(CollectionChangedHandlerProperty) as NotifyCollectionChangedEventHandler;
             var coll = GetMultiBinding(ui) as System.Collections.Specialized.INotifyCollectionChanged;
             if (handlerObj != null && coll != null)
@@ -284,12 +285,52 @@ namespace HYSoft.Presentation.Interactivity.CommandBehaviors
                 ui.ClearValue(CollectionChangedHandlerProperty);
             }
 
-            // 내부 상태 정리
+            // 내부 상태 정리 (맵/실행셋만 정리). AP는 유지.
             ui.ClearValue(HandlerMapProperty);
             ui.ClearValue(ExecutingSetProperty);
-            ui.ClearValue(BindingProperty);
-            ui.ClearValue(MultiBindingProperty);
-            ui.ClearValue(CleanupHookedProperty);
+        }
+
+        private static void OnElementLoaded(object? sender, RoutedEventArgs e)
+        {
+            if (sender is not FrameworkElement ui) return;
+
+            // 이미 초기 로딩 단계에서 컬렉션 구독이 설정되어 있으면 중복 구독 방지
+            var existingCollectionHandler = ui.GetValue(CollectionChangedHandlerProperty) as NotifyCollectionChangedEventHandler;
+
+            // 현재 AP 값을 바탕으로 재구축
+            var multi = GetMultiBinding(ui);
+            if (multi != null && existingCollectionHandler == null)
+            {
+                // 컬렉션 구독 복원 (중복 방지: existingCollectionHandler 체크)
+                var incc = (INotifyCollectionChanged)multi;
+                NotifyCollectionChangedEventHandler handler = (s2, args) =>
+                {
+                    if (args.Action == NotifyCollectionChangedAction.Reset)
+                    {
+                        DetachAll(ui);
+                        foreach (var b in multi)
+                            Attach(ui, b);
+                        return;
+                    }
+                    if (args.OldItems != null)
+                        foreach (Event b in args.OldItems) Detach(ui, b);
+                    if (args.NewItems != null)
+                        foreach (Event b in args.NewItems) Attach(ui, b);
+                };
+
+                incc.CollectionChanged += handler;
+                ui.SetValue(CollectionChangedHandlerProperty, handler);
+
+                // 핸들러 재부착: Attach 내부에서 map.ContainsKey로 중복 방지
+                foreach (var b in multi) Attach(ui, b);
+            }
+
+            var single = GetBinding(ui);
+            if (single != null)
+            {
+                // Attach 내부 중복 방지 로직(map.ContainsKey)으로 안전
+                Attach(ui, single);
+            }
         }
     }
 }
