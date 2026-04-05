@@ -1,19 +1,20 @@
-﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Threading;
 using HYSoft.Presentation.Interactivity;
+using HYSoft.Presentation.Interactivity.CommandBehaviors;
 using HYSoft.Presentation.Modal;
 
-namespace Samples.Presentation.Modal
+namespace TestApp.Samples.Modal
 {
     public class ModalInfoViewModel : NotifyPropertyChangedBase
     {
-        public ICommand OkCommand => new RelayCommand(() =>
+        private ICommand? _okCommand;
+        public ICommand OkCommand => _okCommand ??= new RelayCommand(() =>
         {
             ModalManager.Close(this, ModalResult.Ok);
         });
 
-        public ICommand CancelCommand => new RelayCommand(() =>
+        private ICommand? _cancelCommand;
+        public ICommand CancelCommand => _cancelCommand ??= new RelayCommand(() =>
         {
             ModalManager.Close(this, ModalResult.Cancel);
         });

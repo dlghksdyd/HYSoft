@@ -1,19 +1,15 @@
-﻿#nullable enable
-using Samples;
-using HYSoft.Communication.Tcp.Client;
-using HYSoft.Communication.Tcp.Client.Protocol.FileTransfer;
-using HYSoft.Communication.Tcp.Server;
-using HYSoft.Communication.Tcp.Server.Protocol.FileTransfer;
 using System;
 using System.IO;
 using System.Net;
-using System.Threading.Tasks;
 using System.Windows.Input;
+using HYSoft.Communication.Tcp.Client;
+using HYSoft.Communication.Tcp.Client.Protocol.FileTransfer;
 using HYSoft.Presentation.Interactivity;
+using HYSoft.Presentation.Interactivity.CommandBehaviors;
 
-namespace Samples.Communication.Tcp.Client.Protocol.FileTransfer
+namespace TestApp.Samples.FileTransfer
 {
-    public class FileTransferClientViewModel: NotifyPropertyChangedBase
+    public class FileTransferClientViewModel : NotifyPropertyChangedBase
     {
         private string _status = "Idle";
         public string Status
@@ -22,21 +18,14 @@ namespace Samples.Communication.Tcp.Client.Protocol.FileTransfer
             set => SetProperty(ref _status, value);
         }
 
-        private bool _isClientReady;
-        public bool IsClientReady
-        {
-            get => _isClientReady;
-            set => SetProperty(ref _isClientReady, value);
-        }
-
         private FileTransferClient? _fileClient;
         private readonly string _filePath = "./FileTransferTestFile.txt";
-        
-        public ICommand ClientStartCommand => new RelayCommand(() =>
+
+        private ICommand? _clientStartCommand;
+        public ICommand ClientStartCommand => _clientStartCommand ??= new RelayCommand(() =>
         {
             try
             {
-                // 클라이언트 옵션 구성
                 var clientOptions = new TcpClientOptions(IPAddress.Parse("127.0.0.1"), 20000)
                 {
                     NoDelay = true,
@@ -46,14 +35,11 @@ namespace Samples.Communication.Tcp.Client.Protocol.FileTransfer
                     SendTimeout = TimeSpan.FromSeconds(10),
                     ReceiveTimeout = TimeSpan.FromSeconds(10)
                 };
-                // 파일 전송 클라이언트 준비
                 _fileClient = new FileTransferClient(clientOptions);
-                
-                Status = $"Client ready for 127.0.0.1:20000";
+                Status = "Client ready for 127.0.0.1:20000";
             }
             catch (Exception ex)
             {
-                IsClientReady = false;
                 Status = $"Client init failed: {ex.Message}";
             }
         });
@@ -61,7 +47,7 @@ namespace Samples.Communication.Tcp.Client.Protocol.FileTransfer
         private ICommand? _clientSendFileCommand;
         public ICommand ClientSendFileCommand => _clientSendFileCommand ??= new RelayCommand(async () =>
         {
-            if (_fileClient is null)
+            if (_fileClient == null)
             {
                 Status = "Client not ready. Run ClientStart first.";
                 return;
@@ -70,9 +56,7 @@ namespace Samples.Communication.Tcp.Client.Protocol.FileTransfer
             try
             {
                 Status = $"Sending: {Path.GetFileName(_filePath)} ...";
-                
                 await _fileClient.SendFileAsync(_filePath);
-                
                 Status = $"Send complete: {Path.GetFileName(_filePath)}";
             }
             catch (Exception ex)

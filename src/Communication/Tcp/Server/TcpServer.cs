@@ -1,6 +1,5 @@
-﻿#nullable enable
+#nullable enable
 using System;
-using System.Buffers;
 using System.Collections.Concurrent;
 using System.Linq;
 using System.Net;
@@ -11,51 +10,28 @@ using System.Threading.Tasks;
 namespace HYSoft.Communication.Tcp.Server
 {
     /// <summary>
-    /// 비동기 TCP 서버. 연결/해제/수신 이벤트 제공, 개별 송신/브로드캐스트 지원.
+    /// 비동기 TCP 서버.
     /// </summary>
     public sealed class TcpServer
     {
-        /// <summary>
-        /// 이 인스턴스가 이미 해제(Dispose)되었는지 여부를 나타냅니다.
-        /// </summary>
         public bool IsDisposed { get; private set; }
-
-        /// <summary>
-        /// 서버 인스턴스의 고유 식별자입니다.
-        /// </summary>
         public readonly Guid Guid = Guid.NewGuid();
 
         private readonly TcpServerOptions _options;
-
-        // 리스너 및 제어
         private Socket? _listener;
-
-        // 시작/중지 동시성 제어
-        private readonly SemaphoreSlim _startStopLock = new(1, 1);
-
-        // Accept 루프 제어
+        private readonly SemaphoreSlim _startStopLock = new SemaphoreSlim(1, 1);
         private CancellationTokenSource? _acceptCts;
         private Task? _acceptTask;
 
-        /// <summary>
-        /// 현재 연결되어 있는 클라이언트 수를 반환합니다.
-        /// </summary>
         public int ConnectedCount => _clients.Count;
 
-        /// <summary>
-        /// 현재 연결된 클라이언트의 스냅샷을 (클라이언트 ID, 원격 EndPoint) 배열로 반환합니다.
-        /// </summary>
-        /// <returns>(Client Id, Remote EndPoint) 쌍의 배열.</returns>
         public (Guid Id, EndPoint? Remote)[] GetClientsSnapshot()
             => _clients.Values.Select(c => (c.Id, c.RemoteEndPoint)).ToArray();
 
-        private readonly ConcurrentDictionary<Guid, TcpClientContext> _clients = new();
+        private readonly ConcurrentDictionary<Guid, TcpClientContext> _clients = new ConcurrentDictionary<Guid, TcpClientContext>();
 
         #region Events
 
-        /// <summary>
-        /// 클라이언트로부터 데이터가 수신되었을 때 발생하는 이벤트입니다.
-        /// </summary>
         public event TcpDataReceivedEventHandler? DataReceived;
 
         private void RaiseDataReceived(TcpClientContext ctx, byte[] data)
@@ -65,22 +41,18 @@ namespace HYSoft.Communication.Tcp.Server
                 var dataCtx = new TcpDataReceivedContext(this, ctx.Id, data);
                 DataReceived?.Invoke(dataCtx);
             }
-            catch { /* ignore */ }
+            catch { }
         }
 
         #endregion
 
         #region Log
 
-        /// <summary>
-        /// 오류 발생 시 호출되는 외부 로깅 델리게이트입니다.
-        /// <para>첫 번째 매개변수는 예외, 두 번째 매개변수는 설명 메시지입니다.</para>
-        /// </summary>
-        public Action<Exception, string>? LogError { get; init; }
+        public Action<Exception, string>? LogError { get; set; }
 
         private void Log(Exception ex, string msg)
         {
-            try { LogError?.Invoke(ex, msg); } catch { /* ignored */ }
+            try { LogError?.Invoke(ex, msg); } catch { }
         }
 
         #endregion
@@ -88,13 +60,12 @@ namespace HYSoft.Communication.Tcp.Server
         private TcpServer(TcpServerOptions options)
         {
             _options = options ?? throw new ArgumentNullException(nameof(options));
-
             ValidateOptions();
         }
 
         private void ValidateOptions()
         {
-            if (_options.Port is < 1 or > 65535) throw new ArgumentOutOfRangeException(nameof(_options.Port));
+            if (_options.Port < 1 || _options.Port > 65535) throw new ArgumentOutOfRangeException(nameof(_options.Port));
             if (_options.BackLog <= 0) throw new ArgumentOutOfRangeException(nameof(_options.BackLog));
             if (_options.ReceiveBufferSize <= 0) throw new ArgumentOutOfRangeException(nameof(_options.ReceiveBufferSize));
             if (_options.SendBufferSize <= 0) throw new ArgumentOutOfRangeException(nameof(_options.SendBufferSize));
@@ -109,17 +80,17 @@ namespace HYSoft.Communication.Tcp.Server
             if (IsDisposed) return;
             IsDisposed = true;
 
-            try { StopAsync().GetAwaiter().GetResult(); } catch { /* ignored */ }
-            try { _acceptCts?.Dispose(); } catch { /* ignored */ }
-            try { _startStopLock.Dispose(); } catch { /* ignored */ }
+            try { StopAsync().GetAwaiter().GetResult(); } catch { }
+            try { _acceptCts?.Dispose(); } catch { }
+            try { _startStopLock.Dispose(); } catch { }
 
             foreach (var kv in _clients)
             {
                 if (_clients.TryRemove(kv.Key, out var ctx))
                 {
-                    try { ctx.Cts.Cancel(); } catch { /* ignored */ }
-                    try { ctx.Cts.Dispose(); } catch { /* ignored */ }
-                    try { ctx.SendLock.Dispose(); } catch { /* ignored */ }
+                    try { ctx.Cts.Cancel(); } catch { }
+                    try { ctx.Cts.Dispose(); } catch { }
+                    try { ctx.SendLock.Dispose(); } catch { }
                     CloseSocketSafe(ctx.Socket);
                 }
             }
@@ -130,19 +101,13 @@ namespace HYSoft.Communication.Tcp.Server
             if (IsDisposed) throw new ObjectDisposedException(nameof(TcpServer));
         }
 
-        /// <summary>
-        /// 서버를 시작하고 클라이언트 연결 수락 루프를 비동기적으로 실행합니다.
-        /// </summary>
-        /// <returns>비동기 작업을 나타내는 <see cref="Task"/>.</returns>
         public async Task StartAsync()
         {
             await _startStopLock.WaitAsync().ConfigureAwait(false);
             try
             {
                 ThrowIfDisposed();
-
-                if (_listener is not null)
-                    return; // 이미 시작됨
+                if (_listener != null) return;
 
                 var sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
                 {
@@ -153,23 +118,17 @@ namespace HYSoft.Communication.Tcp.Server
 
                 try
                 {
-                    // 빠른 재시작 허용
                     sock.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-
-                    // 소켓을 지정된 IP 주소와 포트에 바인딩
                     sock.Bind(new IPEndPoint(_options.ListenAddress, _options.Port));
-
-                    // 클라이언트 연결을 대기 시작
                     sock.Listen(_options.BackLog);
 
-                    // 상태 저장 & Accept 루프 시작
                     _listener = sock;
                     _acceptCts = new CancellationTokenSource();
                     _acceptTask = AcceptLoopAsync(_acceptCts.Token);
                 }
                 catch
                 {
-                    try { sock.Dispose(); } catch { /* ignore */ }
+                    try { sock.Dispose(); } catch { }
                     throw;
                 }
             }
@@ -179,35 +138,25 @@ namespace HYSoft.Communication.Tcp.Server
             }
         }
 
-        /// <summary>
-        /// 서버를 중지하고 모든 클라이언트 연결을 종료합니다.
-        /// </summary>
-        /// <returns>비동기 작업을 나타내는 <see cref="Task"/>.</returns>
         public async Task StopAsync()
         {
             await _startStopLock.WaitAsync().ConfigureAwait(false);
             try
             {
                 var listener = _listener;
-                if (listener is null)
-                    return; // 이미 중지됨
+                if (listener == null) return;
 
-                // Accept 루프 취소
                 _acceptCts?.Cancel();
-
-                // 리스너 닫기
                 CloseSocketSafe(listener);
                 _listener = null;
 
-                // Accept 루프 종료 대기
-                if (_acceptTask is not null)
+                if (_acceptTask != null)
                 {
                     try { await _acceptTask.ConfigureAwait(false); }
-                    catch { /* ignore */ }
+                    catch { }
                     _acceptTask = null;
                 }
 
-                // 모든 클라이언트 종료
                 foreach (var kv in _clients)
                 {
                     if (_clients.TryRemove(kv.Key, out var ctx))
@@ -221,11 +170,6 @@ namespace HYSoft.Communication.Tcp.Server
             }
         }
 
-        /// <summary>
-        /// 지정한 클라이언트 연결을 강제로 끊습니다.
-        /// </summary>
-        /// <param name="clientId">연결을 끊을 클라이언트의 ID.</param>
-        /// <returns>연결이 존재하여 정상적으로 제거되면 <c>true</c>, 그렇지 않으면 <c>false</c>.</returns>
         public bool Disconnect(Guid clientId)
         {
             if (_clients.TryRemove(clientId, out var ctx))
@@ -236,69 +180,54 @@ namespace HYSoft.Communication.Tcp.Server
             return false;
         }
 
-        /// <summary>
-        /// 지정한 클라이언트에 데이터를 비동기적으로 전송합니다.
-        /// </summary>
-        /// <param name="clientId">대상 클라이언트 ID.</param>
-        /// <param name="data">전송할 데이터 버퍼.</param>
-        /// <param name="ct">전송 작업을 취소하기 위한 토큰(선택).</param>
-        /// <returns>성공 시 <c>true</c>, 실패 시 <c>false</c>를 반환합니다.</returns>
-        public async Task<bool> SendAsync(Guid clientId, ReadOnlyMemory<byte> data, CancellationToken ct = default)
+        public async Task<bool> SendAsync(Guid clientId, byte[] data, CancellationToken ct = default)
         {
             if (data.Length == 0) return true;
             if (!_clients.TryGetValue(clientId, out var ctx)) return false;
 
-            // 연결 CTS와 호출자 CT를 링크해서 CloseClient의 Cancel을 즉시 반영
-            using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(ct, ctx.Cts.Token);
-            var token = linkedCts.Token;
-
-            await ctx.SendLock.WaitAsync(token).ConfigureAwait(false);
-            try
+            using (var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(ct, ctx.Cts.Token))
             {
-                var sock = ctx.Socket;
-                int offset = 0;
-                while (offset < data.Length)
+                var token = linkedCts.Token;
+                await ctx.SendLock.WaitAsync(token).ConfigureAwait(false);
+                try
                 {
-                    int sent = await sock.SendAsync(data.Slice(offset), SocketFlags.None, token).ConfigureAwait(false);
-                    if (sent <= 0) throw new SocketException((int)SocketError.ConnectionReset);
-                    offset += sent;
+                    var sock = ctx.Socket;
+                    int offset = 0;
+                    while (offset < data.Length)
+                    {
+                        int sent = await Task.Factory.FromAsync(
+                            sock.BeginSend(data, offset, data.Length - offset, SocketFlags.None, null, null),
+                            sock.EndSend).ConfigureAwait(false);
+                        if (sent <= 0) throw new SocketException((int)SocketError.ConnectionReset);
+                        offset += sent;
+                    }
+                    return true;
                 }
-                return true;
-            }
-            catch (SocketException ex)
-            {
-                Log(ex, $"Send socket error ({ex.SocketErrorCode})");
-                try { ctx.Cts.Cancel(); } catch { /* ignored */ }
-                return false;
-            }
-            catch (OperationCanceledException)
-            {
-                // CloseClient에서 Cancel되었거나 외부 CT 취소
-                return false;
-            }
-            catch (Exception ex)
-            {
-                Log(ex, "Send unexpected");
-                try { ctx.Cts.Cancel(); } catch { /* ignored */ }
-                return false;
-            }
-            finally
-            {
-                ctx.SendLock.Release();
+                catch (SocketException ex)
+                {
+                    Log(ex, $"Send socket error ({ex.SocketErrorCode})");
+                    try { ctx.Cts.Cancel(); } catch { }
+                    return false;
+                }
+                catch (OperationCanceledException) { return false; }
+                catch (Exception ex)
+                {
+                    Log(ex, "Send unexpected");
+                    try { ctx.Cts.Cancel(); } catch { }
+                    return false;
+                }
+                finally
+                {
+                    ctx.SendLock.Release();
+                }
             }
         }
 
-        /// <summary>
-        /// 현재 연결된 모든 클라이언트에게 데이터를 브로드캐스트합니다.
-        /// </summary>
-        /// <param name="data">전송할 데이터 버퍼.</param>
-        /// <param name="ct">전송 작업을 취소하기 위한 토큰(선택).</param>
-        /// <returns>성공적으로 전송된 클라이언트 수를 반환합니다.</returns>
-        public async Task<int> BroadcastAsync(ReadOnlyMemory<byte> data, CancellationToken ct = default)
+        public async Task<int> BroadcastAsync(byte[] data, CancellationToken ct = default)
         {
             if (data.Length == 0) return 0;
 
-            var targets = _clients.Values.ToArray(); // snapshot
+            var targets = _clients.Values.ToArray();
             var tasks = new Task<bool>[targets.Length];
             for (int i = 0; i < targets.Length; i++)
                 tasks[i] = SendAsync(targets[i].Id, data, ct);
@@ -315,19 +244,14 @@ namespace HYSoft.Communication.Tcp.Server
                 Socket clientSock;
                 try
                 {
-                    // 최대 클라이언트 수 제한
                     if (_clients.Count >= _options.MaxClients)
                     {
-                        await Task.Delay(100, token).ConfigureAwait(false); // backoff
+                        await Task.Delay(100).ConfigureAwait(false);
                         continue;
                     }
 
-                    clientSock = await listener.AcceptAsync(token).ConfigureAwait(false);
-                }
-                catch (OperationCanceledException ex)
-                {
-                    Log(ex, $"AcceptLoop: {ex.Message}");
-                    break;
+                    clientSock = await Task.Factory.FromAsync(listener.BeginAccept, listener.EndAccept, null)
+                        .ConfigureAwait(false);
                 }
                 catch (ObjectDisposedException ex)
                 {
@@ -336,27 +260,22 @@ namespace HYSoft.Communication.Tcp.Server
                 }
                 catch (Exception ex)
                 {
+                    if (token.IsCancellationRequested) break;
                     Log(ex, "AcceptLoop: unexpected exception");
-
-                    // 딜레이를 줘서 Busy waiting 방지
-                    await Task.Delay(100, token).ConfigureAwait(false);
+                    await Task.Delay(100).ConfigureAwait(false);
                     continue;
                 }
 
                 try
                 {
-                    // TCP KeepAlive 활성화
                     clientSock.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
-
                     clientSock.NoDelay = _options.NoDelay;
                     clientSock.ReceiveBufferSize = _options.ReceiveBufferSize;
                     clientSock.SendBufferSize = _options.SendBufferSize;
 
                     var ctx = new TcpClientContext(clientSock);
-
                     if (!_clients.TryAdd(ctx.Id, ctx))
                     {
-                        // 등록 실패 시 바로 닫기
                         CloseSocketSafe(clientSock);
                         continue;
                     }
@@ -366,7 +285,6 @@ namespace HYSoft.Communication.Tcp.Server
                 catch (Exception ex)
                 {
                     Log(ex, "AcceptLoop: unexpected exception");
-
                     CloseSocketSafe(clientSock);
                 }
             }
@@ -375,91 +293,87 @@ namespace HYSoft.Communication.Tcp.Server
         private async Task HandleClientAsync(TcpClientContext ctx, CancellationToken serverToken)
         {
             var sock = ctx.Socket;
-            using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(serverToken, ctx.Cts.Token);
-            var token = linkedCts.Token;
-
-            // 고정 크기 버퍼(풀링/파이프 등은 필요 시 확장)
-            var buffer = new byte[_options.ReceiveBufferSize > 0 ? Math.Min(_options.ReceiveBufferSize, 128 * 1024) : 8192];
-            if (buffer.Length == 0) buffer = new byte[8192];
-
-            try
+            using (var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(serverToken, ctx.Cts.Token))
             {
-                while (!token.IsCancellationRequested)
+                var token = linkedCts.Token;
+                var buffer = new byte[_options.ReceiveBufferSize > 0 ? Math.Min(_options.ReceiveBufferSize, 128 * 1024) : 8192];
+
+                try
                 {
-                    int received = await sock.ReceiveAsync(buffer, SocketFlags.None, token).ConfigureAwait(false);
-                    if (received <= 0) break;
+                    while (!token.IsCancellationRequested)
+                    {
+                        int received = await Task.Factory.FromAsync(
+                            sock.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, null, null),
+                            sock.EndReceive).ConfigureAwait(false);
+                        if (received <= 0) break;
 
-                    // 이벤트로 전달할 때는 메시지 수명 문제 방지를 위해 복사본 사용
-                    var copy = new byte[received];
-                    Buffer.BlockCopy(buffer, 0, copy, 0, received);
-
-                    RaiseDataReceived(ctx, copy);
+                        var copy = new byte[received];
+                        Buffer.BlockCopy(buffer, 0, copy, 0, received);
+                        RaiseDataReceived(ctx, copy);
+                    }
                 }
-            }
-            catch (OperationCanceledException) { /* 정상 취소 */ }
-            catch (ObjectDisposedException) { /* 소켓 종료 */ }
-            catch (SocketException ex)
-            {
-                Log(ex, $"Receive socket error ({ex.SocketErrorCode})");
-            }
-            catch (Exception ex)
-            {
-                Log(ex, "Receive unexpected");
-            }
-            finally
-            {
-                // 딕셔너리에서 제거 & 연결 종료 알림
-                if (_clients.TryRemove(ctx.Id, out _))
+                catch (OperationCanceledException) { }
+                catch (ObjectDisposedException) { }
+                catch (SocketException ex)
                 {
-                    CloseClient(ctx);
+                    Log(ex, $"Receive socket error ({ex.SocketErrorCode})");
+                }
+                catch (Exception ex)
+                {
+                    Log(ex, "Receive unexpected");
+                }
+                finally
+                {
+                    if (_clients.TryRemove(ctx.Id, out _))
+                        CloseClient(ctx);
                 }
             }
         }
 
         private void CloseClient(TcpClientContext ctx)
         {
-            // 모든 작업 취소 신호
-            try { ctx.Cts.Cancel(); } catch { /* ignored */ }
+            try { ctx.Cts.Cancel(); } catch { }
 
-            // 보내기 임계구역이 끝나길 잠깐 기다렸다가(최대 1초) 락 확보 후 Dispose
-            // - 확보 실패 시 Dispose 생략 (레이스 방지 우선)
             bool sendLockAcquired = false;
-            try
-            {
-                sendLockAcquired = ctx.SendLock.Wait(TimeSpan.FromSeconds(1));
-            }
-            catch { /* ignore */ }
+            try { sendLockAcquired = ctx.SendLock.Wait(TimeSpan.FromSeconds(1)); }
+            catch { }
             finally
             {
                 if (sendLockAcquired)
                 {
-                    try { ctx.SendLock.Dispose(); } catch { /* ignored */ }
+                    try { ctx.SendLock.Dispose(); } catch { }
                 }
-                // 확보 실패 시 Dispose 하지 않음
             }
 
-            // 소켓 종료
             CloseSocketSafe(ctx.Socket);
-
-            // CTS 정리
-            try { ctx.Cts.Dispose(); } catch { /* ignored */ }
+            try { ctx.Cts.Dispose(); } catch { }
         }
 
         private static void CloseSocketSafe(Socket? s)
         {
             if (s == null) return;
-            try { s.Shutdown(SocketShutdown.Both); } catch { /* ignore */ }
-            try { s.Dispose(); } catch { /* ignore */ }
+            try { s.Shutdown(SocketShutdown.Both); } catch { }
+            try { s.Dispose(); } catch { }
         }
     }
 
-    internal sealed class TcpClientContext(Socket socket)
+    internal sealed class TcpClientContext
     {
-        public Guid Id { get; } = Guid.NewGuid();
-        public Socket Socket { get; } = socket ?? throw new ArgumentNullException(nameof(socket));
-        public EndPoint? RemoteEndPoint { get; } = socket.RemoteEndPoint;
-        public DateTime ConnectedAtUtc { get; } = DateTime.UtcNow;
-        public CancellationTokenSource Cts { get; } = new();
-        public SemaphoreSlim SendLock { get; } = new(1, 1);
+        public Guid Id { get; }
+        public Socket Socket { get; }
+        public EndPoint? RemoteEndPoint { get; }
+        public DateTime ConnectedAtUtc { get; }
+        public CancellationTokenSource Cts { get; }
+        public SemaphoreSlim SendLock { get; }
+
+        public TcpClientContext(Socket socket)
+        {
+            Socket = socket ?? throw new ArgumentNullException(nameof(socket));
+            Id = Guid.NewGuid();
+            RemoteEndPoint = socket.RemoteEndPoint;
+            ConnectedAtUtc = DateTime.UtcNow;
+            Cts = new CancellationTokenSource();
+            SendLock = new SemaphoreSlim(1, 1);
+        }
     }
 }

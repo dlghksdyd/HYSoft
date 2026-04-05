@@ -1,15 +1,16 @@
-﻿<Window
-    x:Class="Samples.Presentation.Modal.ModalView"
+<Window
+    x:Class="TestApp.Samples.Modal.ModalSampleView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
-    xmlns:local="clr-namespace:Samples.Presentation.Modal"
+    xmlns:local="clr-namespace:TestApp.Samples.Modal"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Modal Sample"
     Width="800"
     Height="450"
-    d:DataContext="{d:DesignInstance local:ModalViewModel}"
+    WindowStartupLocation="CenterScreen"
+    d:DataContext="{d:DesignInstance local:ModalSampleViewModel}"
     mc:Ignorable="d">
     <Grid>
         <Button
