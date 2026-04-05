@@ -21,6 +21,8 @@ namespace HYSoft.Communication.Tcp.Client
         public TcpClientOptions(IPAddress host, int port)
         {
             Host = host ?? throw new ArgumentNullException(nameof(host));
+            if (port < 1 || port > 65535)
+                throw new ArgumentOutOfRangeException(nameof(port), "Port must be between 1 and 65535.");
             Port = port;
         }
 

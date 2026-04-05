@@ -68,6 +68,11 @@
                             <Setter TargetName="PART_Bullet" Property="Fill" Value="{Binding EllipseHover, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Trigger>
 
+                        <!--  키보드 포커스  -->
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="PART_Bullet" Property="StrokeDashArray" Value="1 1" />
+                        </Trigger>
+
                         <!--  비활성화: 투명도 낮춤  -->
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="PART_Bullet" Property="Opacity" Value="0.5" />

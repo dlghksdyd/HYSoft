@@ -50,6 +50,11 @@
                             <Setter TargetName="StateOverlay" Property="Background" Value="#20000000" />
                         </Trigger>
 
+                        <!--  Keyboard Focus  -->
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="StateOverlay" Property="Background" Value="#15000000" />
+                        </Trigger>
+
                         <!--  Disabled  -->
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value="0.5" />

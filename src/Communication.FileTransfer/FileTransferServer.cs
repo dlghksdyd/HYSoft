@@ -114,6 +114,14 @@ namespace HYSoft.Communication.FileTransfer
                         s.FileName = SanitizeFileName(fileName);
                         s.FullPath = Path.Combine(s.StorageRoot, s.FileName);
 
+                        // Path traversal 최종 검증
+                        string resolvedPath = Path.GetFullPath(s.FullPath);
+                        if (!resolvedPath.StartsWith(Path.GetFullPath(s.StorageRoot), StringComparison.OrdinalIgnoreCase))
+                        {
+                            s.State = SessionState.Error;
+                            break;
+                        }
+
                         long startOffset = 0;
                         Directory.CreateDirectory(Path.GetDirectoryName(s.FullPath)!);
                         if (File.Exists(s.FullPath)) TryDeleteQuiet(s.FullPath);
@@ -194,6 +202,10 @@ namespace HYSoft.Communication.FileTransfer
 
         private static string SanitizeFileName(string name)
         {
+            // Path traversal 방지
+            name = name.Replace("..", "__");
+            name = name.Replace("/", "_");
+            name = name.Replace("\\", "_");
             foreach (var c in Path.GetInvalidFileNameChars())
                 name = name.Replace(c, '_');
             return name.Trim();

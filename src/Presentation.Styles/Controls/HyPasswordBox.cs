@@ -30,6 +30,18 @@ namespace HYSoft.Presentation.Styles.Controls
 
         private PasswordBox? _passwordBox;
 
+        public HyPasswordBox()
+        {
+            Unloaded += (_, __) =>
+            {
+                if (_passwordBox != null)
+                {
+                    _passwordBox.PasswordChanged -= _passwordBox_PasswordChanged;
+                    _passwordBox = null;
+                }
+            };
+        }
+
         static HyPasswordBox()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(HyPasswordBox), new FrameworkPropertyMetadata(typeof(HyPasswordBox)));

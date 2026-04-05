@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Markup;
-using System.Windows.Media;
-using System.Windows.Markup.Primitives;
 
 namespace HYSoft.Presentation.Styles.FontSizeTokens
 {
@@ -25,7 +21,7 @@ namespace HYSoft.Presentation.Styles.FontSizeTokens
         {
             var palette = FontSizePalette.Current;
 
-            return palette.GetBrush(Key);
+            return palette.GetFontSize(Key);
         }
     }
 
@@ -36,21 +32,18 @@ namespace HYSoft.Presentation.Styles.FontSizeTokens
         private static FontSizePalette? _current;
         public static FontSizePalette Current => _current ??= Initialize();
 
-        public double GetBrush(EFontSizeKeys key)
+        public double GetFontSize(EFontSizeKeys key)
         {
-            return _map is null ? 16.0 : _map[key];
+            if (_map is null) return 16.0;
+            return _map.TryGetValue(key, out var size) ? size : 16.0;
         }
 
         private static FontSizePalette Initialize()
         {
-            if (_current is not null) return _current;
-
-            var p = new FontSizePalette
+            return new FontSizePalette
             {
                 _map = FontSizeGenerator.Generate()
             };
-
-            return p;
         }
 
         protected override Freezable CreateInstanceCore() => new FontSizePalette();

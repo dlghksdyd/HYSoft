@@ -14,6 +14,9 @@ namespace HYSoft.Presentation.Converters
             double h = values[1] is double dh ? dh : 0;
             CornerRadius cr = values[2] is CornerRadius c ? c : new CornerRadius(0);
 
+            if (w <= 0 || h <= 0)
+                return Geometry.Empty;
+
             double r = cr.TopLeft; // 유니폼 반경 사용
             // 반경이 크기를 넘지 않도록 클램프
             r = Math.Max(0, Math.Min(r, Math.Min(w, h) / 2.0));

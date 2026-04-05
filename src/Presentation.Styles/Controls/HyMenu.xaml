@@ -138,18 +138,39 @@
 
     <!-- HyMenuItem: TopLevelHeader template (has submenu) -->
     <ControlTemplate x:Key="HyMenuItemTopLevelHeaderTemplate" TargetType="{x:Type local:HyMenuItem}">
-        <Border
-            x:Name="Root"
-            Background="Transparent"
-            CornerRadius="{TemplateBinding CornerRadius}"
-            Padding="12,6"
-            SnapsToDevicePixels="True">
-            <ContentPresenter
-                VerticalAlignment="Center"
-                ContentSource="Header"
-                RecognizesAccessKey="True"
-                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-        </Border>
+        <Grid>
+            <Border
+                x:Name="Root"
+                Background="Transparent"
+                CornerRadius="{TemplateBinding CornerRadius}"
+                Padding="12,6"
+                SnapsToDevicePixels="True">
+                <ContentPresenter
+                    VerticalAlignment="Center"
+                    ContentSource="Header"
+                    RecognizesAccessKey="True"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            </Border>
+            <Popup
+                x:Name="PART_Popup"
+                AllowsTransparency="True"
+                Focusable="False"
+                IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                Placement="Bottom"
+                PopupAnimation="Fade">
+                <Border
+                    Background="{c:Color SurfaceElevated}"
+                    BorderBrush="{c:Color BorderSubtle}"
+                    BorderThickness="1"
+                    CornerRadius="4"
+                    Padding="0,4">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="8" Opacity="0.2" ShadowDepth="2" Color="#000000" />
+                    </Border.Effect>
+                    <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Cycle" />
+                </Border>
+            </Popup>
+        </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsHighlighted" Value="True">
                 <Setter TargetName="Root" Property="Background" Value="{c:Color NavigationItemBgHover}" />
@@ -162,42 +183,63 @@
 
     <!-- HyMenuItem: SubmenuHeader template (has submenu arrow) -->
     <ControlTemplate x:Key="HyMenuItemSubmenuHeaderTemplate" TargetType="{x:Type local:HyMenuItem}">
-        <Border
-            x:Name="Root"
-            Background="Transparent"
-            CornerRadius="{TemplateBinding CornerRadius}"
-            Padding="{TemplateBinding Padding}"
-            SnapsToDevicePixels="True">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="16" SharedSizeGroup="Icon" />
-                    <ColumnDefinition Width="8" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="16" />
-                    <ColumnDefinition Width="Auto" SharedSizeGroup="Shortcut" />
-                </Grid.ColumnDefinitions>
-                <ContentPresenter
-                    x:Name="Icon"
-                    Grid.Column="0"
-                    Width="16"
-                    Height="16"
-                    VerticalAlignment="Center"
-                    ContentSource="Icon"
-                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                <ContentPresenter
-                    Grid.Column="2"
-                    VerticalAlignment="Center"
-                    ContentSource="Header"
-                    RecognizesAccessKey="True"
-                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                <Path
-                    Grid.Column="4"
-                    VerticalAlignment="Center"
-                    Data="M 0 0 L 4 4 L 0 8"
-                    Fill="{TemplateBinding Foreground}"
-                    SnapsToDevicePixels="False" />
-            </Grid>
-        </Border>
+        <Grid>
+            <Border
+                x:Name="Root"
+                Background="Transparent"
+                CornerRadius="{TemplateBinding CornerRadius}"
+                Padding="{TemplateBinding Padding}"
+                SnapsToDevicePixels="True">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="16" SharedSizeGroup="Icon" />
+                        <ColumnDefinition Width="8" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="16" />
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Shortcut" />
+                    </Grid.ColumnDefinitions>
+                    <ContentPresenter
+                        x:Name="Icon"
+                        Grid.Column="0"
+                        Width="16"
+                        Height="16"
+                        VerticalAlignment="Center"
+                        ContentSource="Icon"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    <ContentPresenter
+                        Grid.Column="2"
+                        VerticalAlignment="Center"
+                        ContentSource="Header"
+                        RecognizesAccessKey="True"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    <Path
+                        Grid.Column="4"
+                        VerticalAlignment="Center"
+                        Data="M 0 0 L 4 4 L 0 8"
+                        Fill="{TemplateBinding Foreground}"
+                        SnapsToDevicePixels="False" />
+                </Grid>
+            </Border>
+            <Popup
+                x:Name="PART_Popup"
+                AllowsTransparency="True"
+                Focusable="False"
+                IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                Placement="Right"
+                PopupAnimation="Fade">
+                <Border
+                    Background="{c:Color SurfaceElevated}"
+                    BorderBrush="{c:Color BorderSubtle}"
+                    BorderThickness="1"
+                    CornerRadius="4"
+                    Padding="0,4">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="8" Opacity="0.2" ShadowDepth="2" Color="#000000" />
+                    </Border.Effect>
+                    <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Cycle" />
+                </Border>
+            </Popup>
+        </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="Icon" Value="{x:Null}">
                 <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />

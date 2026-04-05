@@ -38,7 +38,8 @@ namespace HYSoft.Presentation.Styles.ColorTokens
 
         public Brush GetBrush(EColorKeys key)
         {
-            return _map is null ? new SolidColorBrush(Colors.Transparent) : _map[key];
+            if (_map is null) return new SolidColorBrush(Colors.Transparent);
+            return _map.TryGetValue(key, out var brush) ? brush : new SolidColorBrush(Colors.Transparent);
         }
 
         private static ColorPalette Initialize()

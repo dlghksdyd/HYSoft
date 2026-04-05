@@ -33,10 +33,10 @@ namespace HYSoft.Presentation.Converters
             double vert = height;
 
             // 반경 가져오기
-            double rtl = Math.Max(0, cr.TopLeft + 1);
-            double rtr = Math.Max(0, cr.TopRight + 1);
-            double rbr = Math.Max(0, cr.BottomRight + 1);
-            double rbl = Math.Max(0, cr.BottomLeft + 1);
+            double rtl = Math.Max(0, cr.TopLeft);
+            double rtr = Math.Max(0, cr.TopRight);
+            double rbr = Math.Max(0, cr.BottomRight);
+            double rbl = Math.Max(0, cr.BottomLeft);
 
             // 반경 과대 시 클램프: 좌우 합/상하 합이 변 길이를 넘지 않도록 조정
             // 가로(상/하 변)

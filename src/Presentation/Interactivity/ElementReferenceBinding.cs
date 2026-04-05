@@ -170,9 +170,9 @@ namespace HYSoft.Presentation.Interactivity
             {
                 prop.SetValue(source, valueToSet);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // 무시 (쓰기 실패 시 조용히 패스)
+                System.Diagnostics.Debug.WriteLine($"[ElementReferenceBinding] Failed to set '{prop.Name}': {ex.Message}");
             }
         }
     }
