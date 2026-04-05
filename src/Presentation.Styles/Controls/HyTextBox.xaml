@@ -4,8 +4,8 @@
     xmlns:local="clr-namespace:HYSoft.Presentation.Styles.Controls">
     <Style TargetType="{x:Type local:HyTextBox}">
         <Setter Property="Background" Value="White" />
-        <Setter Property="WaterMark" Value="" />
-        <Setter Property="WaterMarkForeground" Value="Gray" />
+        <Setter Property="Watermark" Value="" />
+        <Setter Property="WatermarkForeground" Value="{x:Null}" />
         <Setter Property="CornerRadius" Value="4" />
         <Setter Property="Padding" Value="10" />
         <Setter Property="Margin" Value="0" />
@@ -33,9 +33,9 @@
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                 FontSize="{TemplateBinding FontSize}"
                                 FontWeight="{TemplateBinding FontWeight}"
-                                Foreground="{TemplateBinding WaterMarkForeground}"
+                                Foreground="{TemplateBinding WatermarkForeground}"
                                 IsHitTestVisible="False"
-                                Text="{TemplateBinding WaterMark}"
+                                Text="{TemplateBinding Watermark}"
                                 Visibility="Hidden" />
 
                             <!--  실제 입력 박스  -->

@@ -1,0 +1,109 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:c="clr-namespace:HYSoft.Presentation.Styles.ColorTokens"
+    xmlns:local="clr-namespace:HYSoft.Presentation.Styles.Controls">
+
+    <Style TargetType="{x:Type local:HyToast}">
+        <Setter Property="Background" Value="{c:Color FeedbackInfoBg}" />
+        <Setter Property="Foreground" Value="{c:Color FeedbackInfoFg}" />
+        <Setter Property="Padding" Value="12,8" />
+        <Setter Property="MinWidth" Value="280" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:HyToast}">
+                    <Border
+                        x:Name="Root"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Padding="{TemplateBinding Padding}"
+                        MinWidth="{TemplateBinding MinWidth}"
+                        SnapsToDevicePixels="True">
+                        <Border.Effect>
+                            <DropShadowEffect
+                                BlurRadius="12"
+                                Direction="270"
+                                Opacity="0.25"
+                                ShadowDepth="4"
+                                Color="#000000" />
+                        </Border.Effect>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                x:Name="PART_Icon"
+                                Grid.Column="0"
+                                Text="&#x2139;"
+                                FontSize="14"
+                                Foreground="{TemplateBinding Foreground}"
+                                VerticalAlignment="Center"
+                                Margin="0,0,8,0" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Text="{TemplateBinding Message}"
+                                Foreground="{TemplateBinding Foreground}"
+                                VerticalAlignment="Center"
+                                TextWrapping="Wrap" />
+                            <Button
+                                x:Name="PART_CloseButton"
+                                Grid.Column="2"
+                                Content="&#x2715;"
+                                FontSize="10"
+                                Margin="8,0,0,0"
+                                VerticalAlignment="Center"
+                                Cursor="Hand"
+                                Focusable="False">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type Button}">
+                                                    <Border Background="Transparent" Padding="2">
+                                                        <ContentPresenter
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center" />
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType=local:HyToast}}" />
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="ShowCloseButton" Value="False">
+                            <Setter TargetName="PART_CloseButton" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="IsOpen" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="ToastType" Value="Info">
+                <Setter Property="Background" Value="{c:Color FeedbackInfoBg}" />
+                <Setter Property="Foreground" Value="{c:Color FeedbackInfoFg}" />
+            </Trigger>
+            <Trigger Property="ToastType" Value="Success">
+                <Setter Property="Background" Value="{c:Color FeedbackSuccessBg}" />
+                <Setter Property="Foreground" Value="{c:Color FeedbackSuccessFg}" />
+            </Trigger>
+            <Trigger Property="ToastType" Value="Warning">
+                <Setter Property="Background" Value="{c:Color FeedbackWarningBg}" />
+                <Setter Property="Foreground" Value="{c:Color FeedbackWarningFg}" />
+            </Trigger>
+            <Trigger Property="ToastType" Value="Error">
+                <Setter Property="Background" Value="{c:Color FeedbackErrorBg}" />
+                <Setter Property="Foreground" Value="{c:Color FeedbackErrorFg}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

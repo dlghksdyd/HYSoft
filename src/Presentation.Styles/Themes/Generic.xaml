@@ -12,5 +12,26 @@
         <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyTextBox.xaml" />
         <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyTitleBar.xaml" />
         <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyDatePicker.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyWindow.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyDialog.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyTabControl.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyDataGrid.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyListBox.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyMenu.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyToolTip.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyExpander.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyProgressBar.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/HySlider.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyTreeView.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyBadge.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyToast.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyToggleSwitch.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyNumericUpDown.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyToolBar.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyStatusBar.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyPaginator.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyGridSplitter.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyBreadcrumb.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyRichTextBox.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

@@ -1,33 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Input;
 using System.Windows.Media;
 
 namespace HYSoft.Presentation.Styles.Controls
 {
     public class HyPasswordBox : TextBox
     {
-        public static readonly DependencyProperty WaterMarkProperty;
-        public static readonly DependencyProperty WaterMarkForegroundProperty;
+        public static readonly DependencyProperty WatermarkProperty;
+        public static readonly DependencyProperty WatermarkForegroundProperty;
         public static readonly DependencyProperty CornerRadiusProperty;
 
-        public string WaterMark
+        public string Watermark
         {
-            get => (string)GetValue(WaterMarkProperty);
-            set => SetValue(WaterMarkProperty, value);
+            get => (string)GetValue(WatermarkProperty);
+            set => SetValue(WatermarkProperty, value);
         }
 
-        public SolidColorBrush WaterMarkForeground
+        public SolidColorBrush WatermarkForeground
         {
-            get => (SolidColorBrush)GetValue(WaterMarkForegroundProperty);
-            set => SetValue(WaterMarkForegroundProperty, value);
+            get => (SolidColorBrush)GetValue(WatermarkForegroundProperty);
+            set => SetValue(WatermarkForegroundProperty, value);
         }
 
         public CornerRadius CornerRadius
@@ -42,8 +34,8 @@ namespace HYSoft.Presentation.Styles.Controls
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(HyPasswordBox), new FrameworkPropertyMetadata(typeof(HyPasswordBox)));
 
-            WaterMarkProperty = DependencyProperty.Register("WaterMark", typeof(string), typeof(HyPasswordBox), new FrameworkPropertyMetadata());
-            WaterMarkForegroundProperty = DependencyProperty.Register("WaterMarkForeground", typeof(SolidColorBrush), typeof(HyPasswordBox), new FrameworkPropertyMetadata());
+            WatermarkProperty = DependencyProperty.Register("Watermark", typeof(string), typeof(HyPasswordBox), new FrameworkPropertyMetadata());
+            WatermarkForegroundProperty = DependencyProperty.Register("WatermarkForeground", typeof(SolidColorBrush), typeof(HyPasswordBox), new FrameworkPropertyMetadata());
             CornerRadiusProperty = DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(HyPasswordBox), new FrameworkPropertyMetadata());
         }
 
@@ -51,15 +43,12 @@ namespace HYSoft.Presentation.Styles.Controls
         {
             base.OnApplyTemplate();
 
-            // 이전 핸들러 정리
-            this.TextChanged -= StylePasswordBox_TextChanged;
             if (_passwordBox != null)
                 _passwordBox.PasswordChanged -= _passwordBox_PasswordChanged;
 
             this.IsTabStop = false;
 
             _passwordBox = GetTemplateChild("xPasswordBox") as PasswordBox;
-            this.TextChanged += StylePasswordBox_TextChanged;
 
             if (_passwordBox != null)
             {
@@ -67,18 +56,10 @@ namespace HYSoft.Presentation.Styles.Controls
             }
         }
 
-        private void StylePasswordBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            var element = sender as HyPasswordBox;
-
-            //element._passwordBox.Password = element.Text;
-        }
-
         private void _passwordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            var element = sender as PasswordBox;
-
-            if (element?.Password != null) this.Text = element.Password;
+            if (sender is PasswordBox pb && pb.Password != null)
+                this.Text = pb.Password;
         }
     }
 }

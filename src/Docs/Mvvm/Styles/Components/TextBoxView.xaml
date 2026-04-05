@@ -19,7 +19,7 @@
                     <FlowDocument>
                         <Paragraph>
                             <Run Text="&lt;hy:HyTextBox " />
-                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="WaterMark=&quot;Enter text&quot; CanKorean=&quot;False&quot; IsOnlyNumber=&quot;True&quot;" />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="Watermark=&quot;Enter text&quot; CanKorean=&quot;False&quot; IsOnlyNumber=&quot;True&quot;" />
                             <Run Text=" /&gt;" />
                         </Paragraph>
                     </FlowDocument>
@@ -29,25 +29,25 @@
 
                 <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="Default with Watermark" />
                 <hy:HyTextBox Width="300" Height="32" HorizontalAlignment="Left" Margin="0,0,0,16"
-                    WaterMark="Enter text here" WaterMarkForeground="{hy:Color TextWatermark}"
+                    Watermark="Enter text here" WatermarkForeground="{hy:Color TextWatermark}"
                     BorderBrush="{hy:Color BorderDefault}" BorderThickness="1" />
 
                 <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="IsOnlyNumber=True (numeric only)" />
                 <hy:HyTextBox Width="300" Height="32" HorizontalAlignment="Left" Margin="0,0,0,16"
-                    WaterMark="Numbers only" IsOnlyNumber="True"
-                    WaterMarkForeground="{hy:Color TextWatermark}"
+                    Watermark="Numbers only" IsOnlyNumber="True"
+                    WatermarkForeground="{hy:Color TextWatermark}"
                     BorderBrush="{hy:Color BorderDefault}" BorderThickness="1" />
 
                 <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="CanKorean=False (block Korean IME)" />
                 <hy:HyTextBox Width="300" Height="32" HorizontalAlignment="Left" Margin="0,0,0,16"
-                    WaterMark="Korean input blocked" CanKorean="False"
-                    WaterMarkForeground="{hy:Color TextWatermark}"
+                    Watermark="Korean input blocked" CanKorean="False"
+                    WatermarkForeground="{hy:Color TextWatermark}"
                     BorderBrush="{hy:Color BorderDefault}" BorderThickness="1" />
 
                 <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="CanPaste=False (paste blocked)" />
                 <hy:HyTextBox Width="300" Height="32" HorizontalAlignment="Left" Margin="0,0,0,16"
-                    WaterMark="Paste disabled" CanPaste="False"
-                    WaterMarkForeground="{hy:Color TextWatermark}"
+                    Watermark="Paste disabled" CanPaste="False"
+                    WatermarkForeground="{hy:Color TextWatermark}"
                     BorderBrush="{hy:Color BorderDefault}" BorderThickness="1" />
 
                 <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="CornerRadius" />
@@ -61,8 +61,8 @@
                 <TextBlock Margin="0,16,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="3. Properties" />
                 <RichTextBox Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
                     <FlowDocument>
-                        <Paragraph><Run FontWeight="Bold" Text="WaterMark" /><Run Text=" (string) - Placeholder text" /></Paragraph>
-                        <Paragraph><Run FontWeight="Bold" Text="WaterMarkForeground" /><Run Text=" (SolidColorBrush) - Placeholder color" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Watermark" /><Run Text=" (string) - Placeholder text" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="WatermarkForeground" /><Run Text=" (SolidColorBrush) - Placeholder color" /></Paragraph>
                         <Paragraph><Run FontWeight="Bold" Text="CornerRadius" /><Run Text=" (CornerRadius) - Border radius" /></Paragraph>
                         <Paragraph><Run FontWeight="Bold" Text="IsOnlyNumber" /><Run Text=" (bool) - Restrict to numeric input. Default: false" /></Paragraph>
                         <Paragraph><Run FontWeight="Bold" Text="CanKorean" /><Run Text=" (bool) - Allow Korean IME. Default: true" /></Paragraph>

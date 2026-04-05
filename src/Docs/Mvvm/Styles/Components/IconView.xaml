@@ -92,8 +92,8 @@
                         HorizontalAlignment="Left"
                         BorderBrush="{hy:Color BorderDefault}"
                         BorderThickness="1"
-                        WaterMark="Search Icon Asset Key"
-                        WaterMarkForeground="{hy:Color TextWatermark}">
+                        Watermark="Search Icon Asset Key"
+                        WatermarkForeground="{hy:Color TextWatermark}">
                         <hy:EventToCommand.Binding>
                             <hy:Event Command="{Binding SearchTextChanged, UpdateSourceTrigger=PropertyChanged}" RoutedEvent="TextBox.TextChanged" />
                         </hy:EventToCommand.Binding>

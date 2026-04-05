@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -12,22 +8,22 @@ namespace HYSoft.Presentation.Styles.Controls
 {
     public class HyTextBox : TextBox
     {
-        public static readonly DependencyProperty WaterMarkProperty;
-        public static readonly DependencyProperty WaterMarkForegroundProperty;
+        public static readonly DependencyProperty WatermarkProperty;
+        public static readonly DependencyProperty WatermarkForegroundProperty;
         public static readonly DependencyProperty CornerRadiusProperty;
         public static readonly DependencyProperty CanPasteProperty;
         public static readonly DependencyProperty CanKoreanProperty;
 
-        public string WaterMark
+        public string Watermark
         {
-            get { return (string)GetValue(WaterMarkProperty); }
-            set { SetValue(WaterMarkProperty, value); }
+            get { return (string)GetValue(WatermarkProperty); }
+            set { SetValue(WatermarkProperty, value); }
         }
 
-        public SolidColorBrush WaterMarkForeground
+        public SolidColorBrush WatermarkForeground
         {
-            get { return (SolidColorBrush)GetValue(WaterMarkForegroundProperty); }
-            set { SetValue(WaterMarkForegroundProperty, value); }
+            get { return (SolidColorBrush)GetValue(WatermarkForegroundProperty); }
+            set { SetValue(WatermarkForegroundProperty, value); }
         }
 
         public CornerRadius CornerRadius
@@ -46,45 +42,6 @@ namespace HYSoft.Presentation.Styles.Controls
         {
             get => (bool)GetValue(CanKoreanProperty);
             set => SetValue(CanKoreanProperty, value);
-        }
-
-        public static readonly DependencyProperty Argument1Property =
-            DependencyProperty.Register(
-                nameof(Argument1),
-                typeof(object),
-                typeof(HyTextBox),
-                new FrameworkPropertyMetadata(null));
-
-        public object? Argument1
-        {
-            get => GetValue(Argument1Property);
-            set => SetValue(Argument1Property, value);
-        }
-
-        public static readonly DependencyProperty Argument2Property =
-            DependencyProperty.Register(
-                nameof(Argument2),
-                typeof(object),
-                typeof(HyTextBox),
-                new FrameworkPropertyMetadata(null));
-
-        public object? Argument2
-        {
-            get => GetValue(Argument2Property);
-            set => SetValue(Argument2Property, value);
-        }
-
-        public static readonly DependencyProperty Argument3Property =
-            DependencyProperty.Register(
-                nameof(Argument3),
-                typeof(object),
-                typeof(HyTextBox),
-                new FrameworkPropertyMetadata(null));
-
-        public object? Argument3
-        {
-            get => GetValue(Argument3Property);
-            set => SetValue(Argument3Property, value);
         }
 
         public static readonly DependencyProperty IsOnlyNumberProperty;
@@ -106,8 +63,8 @@ namespace HYSoft.Presentation.Styles.Controls
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(HyTextBox), new FrameworkPropertyMetadata(typeof(HyTextBox)));
 
-            WaterMarkProperty = DependencyProperty.Register("WaterMark", typeof(string), typeof(HyTextBox), new FrameworkPropertyMetadata());
-            WaterMarkForegroundProperty = DependencyProperty.Register("WaterMarkForeground", typeof(SolidColorBrush), typeof(HyTextBox), new FrameworkPropertyMetadata());
+            WatermarkProperty = DependencyProperty.Register("Watermark", typeof(string), typeof(HyTextBox), new FrameworkPropertyMetadata());
+            WatermarkForegroundProperty = DependencyProperty.Register("WatermarkForeground", typeof(SolidColorBrush), typeof(HyTextBox), new FrameworkPropertyMetadata());
             CornerRadiusProperty = DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(HyTextBox), new FrameworkPropertyMetadata());
             CanPasteProperty = DependencyProperty.Register(nameof(CanPaste), typeof(bool), typeof(HyTextBox), new PropertyMetadata(true, OnCanPasteChanged));
             CanKoreanProperty = DependencyProperty.Register(nameof(CanKorean), typeof(bool), typeof(HyTextBox), new PropertyMetadata(true, OnCanKoreanChanged));
@@ -201,7 +158,7 @@ namespace HYSoft.Presentation.Styles.Controls
             if (e.DataObject.GetDataPresent(DataFormats.Text))
             {
                 string? text = e.DataObject.GetData(DataFormats.Text) as string;
-                if (!string.IsNullOrEmpty(text) && !text.All(char.IsDigit))
+                if (!string.IsNullOrEmpty(text) && !text.All(c => char.IsDigit(c) || c == '.'))
                 {
                     e.CancelCommand();
                 }

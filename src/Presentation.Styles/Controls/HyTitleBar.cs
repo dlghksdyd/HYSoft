@@ -1,11 +1,8 @@
 ﻿using HYSoft.Presentation.Interactivity;
+using HYSoft.Presentation.Interactivity.CommandBehaviors;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -13,8 +10,6 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Shell;
-using System.Windows.Threading;
-using HYSoft.Presentation.Interactivity.CommandBehaviors;
 
 namespace HYSoft.Presentation.Styles.Controls
 {
@@ -101,9 +96,9 @@ namespace HYSoft.Presentation.Styles.Controls
                 if (window.WindowState == WindowState.Normal)
                     window.DragMove();
             }
-            catch
+            catch (InvalidOperationException)
             {
-                /* ignore */
+                // DragMove can throw if mouse button is released during the call
             }
         });
 
@@ -178,17 +173,45 @@ namespace HYSoft.Presentation.Styles.Controls
             _hookInstalled = true;
 
             // WndProc hook 추가
-            window.SourceInitialized += (s, e) =>
+            if (PresentationSource.FromVisual(window) is HwndSource src)
             {
-                _hwndSource = (HwndSource)PresentationSource.FromVisual(window);
-                _hwndSource?.AddHook(WndProc);
-            };
+                _hwndSource = src;
+                _hwndSource.AddHook(WndProc);
+            }
+            else
+            {
+                window.SourceInitialized += OnSourceInitialized;
+            }
 
-            window.Closed += (s, e) =>
+            window.Closed += OnWindowClosed;
+            Unloaded += OnUnloaded;
+        }
+
+        private void OnSourceInitialized(object? sender, EventArgs e)
+        {
+            if (sender is Window w)
             {
-                _hwndSource?.RemoveHook(WndProc);
-                _hwndSource = null;
-            };
+                w.SourceInitialized -= OnSourceInitialized;
+                _hwndSource = PresentationSource.FromVisual(w) as HwndSource;
+                _hwndSource?.AddHook(WndProc);
+            }
+        }
+
+        private void OnWindowClosed(object? sender, EventArgs e)
+        {
+            CleanupHook();
+        }
+
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            CleanupHook();
+            _hookInstalled = false;
+        }
+
+        private void CleanupHook()
+        {
+            _hwndSource?.RemoveHook(WndProc);
+            _hwndSource = null;
         }
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)

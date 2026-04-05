@@ -159,9 +159,8 @@ namespace HYSoft.Presentation.Styles.Controls
             // 원본 로드
             try
             {
-                if (Source is not null)
+                if (Source is EIconKeys key)
                 {
-                    EIconKeys key = Source ?? EIconKeys.Add;
                     _baseSource = IconGenerator.GetIcon(key);
                 }
                 else
@@ -169,8 +168,9 @@ namespace HYSoft.Presentation.Styles.Controls
                     _baseSource = null;
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine($"[HyIcon] Failed to load icon: {ex.Message}");
                 _baseSource = null;
             }
 
