@@ -1,0 +1,13 @@
+using System.Windows.Controls;
+
+namespace Docs.Mvvm.Styles.Components
+{
+    public partial class UITreeHelperView : UserControl
+    {
+        public UITreeHelperView(IBottomSharedContext context)
+        {
+            InitializeComponent();
+            this.DataContext = new ComponentViewModel(context);
+        }
+    }
+}

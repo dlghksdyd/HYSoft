@@ -1,0 +1,294 @@
+<UserControl
+    x:Class="Docs.Mvvm.Styles.Components.IconGuideView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
+    xmlns:local="clr-namespace:Docs.Mvvm.Styles.Components"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Background="{hy:Color SurfaceBase}"
+    d:DataContext="{d:DesignInstance local:ComponentViewModel,
+                                     IsDesignTimeCreatable=True}"
+    d:DesignHeight="1600"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Border Margin="20">
+        <hy:HyScrollViewer>
+            <StackPanel Margin="0,0,10,0" Orientation="Vertical">
+                <!-- Title -->
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize _2Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="Icon System" />
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Md}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="The HYSoft SDK provides a complete icon system with auto-generated icon keys, runtime tinting, and XAML markup extension support. Icons are PNG-based with support for color overlay at runtime." />
+
+                <!-- 1. EIconKeys Enum -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="1. EIconKeys Enum" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Sm}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="Auto-generated enum in HYSoft.Presentation.Styles.Icons. Each value maps to a PNG icon resource. Use the Icon Browser page to see all available icons." />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="public enum EIconKeys" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="{}{" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    Add, AddChart, AddCircle, Apps, ArrowCircleRight," />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    Cancel, Check, CheckCircle, Close, Delete," />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    Edit, Error, FilterAlt, Home, Info," />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    Notifications, Save, Search, Settings, Warning," />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    ... " />
+                            <Run Foreground="{hy:Color TextInfo}" Text="// See Icon Browser for full list" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="}" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 2. hy:Icon Markup Extension -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="2. hy:Icon Markup Extension" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Sm}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="Use the hy:Icon markup extension to get an ImageSource from an icon key. Supports optional color tinting via Color (direct) or ColorKey (design token)." />
+                <RichTextBox Margin="0,0,0,8" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextInfo}" Text="&lt;!-- Basic usage (returns ImageSource) --&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="&lt;Image Source=&quot;" />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="{}{hy:Icon Save}" />
+                            <Run Text="&quot; Width=&quot;24&quot; Height=&quot;24&quot; /&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextInfo}" Text="&lt;!-- With direct color tinting --&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="&lt;Image Source=&quot;{hy:Icon Save, " />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="Color=Red" />
+                            <Run Text="}&quot; /&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextInfo}" Text="&lt;!-- With design token color --&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="&lt;Image Source=&quot;{hy:Icon Save, " />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="ColorKey=IconDefault" />
+                            <Run Text="}&quot; /&gt;" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- Live examples -->
+                <TextBlock Margin="0,8,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="- Live Examples:" />
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                    <StackPanel Margin="0,0,24,0" HorizontalAlignment="Center">
+                        <Image Source="{hy:Icon Save}" Width="32" Height="32" Margin="0,0,0,4" />
+                        <TextBlock FontSize="{hy:FontSize Xs}" Foreground="{hy:Color TextSecondary}" Text="Save" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Margin="0,0,24,0" HorizontalAlignment="Center">
+                        <Image Source="{hy:Icon Delete}" Width="32" Height="32" Margin="0,0,0,4" />
+                        <TextBlock FontSize="{hy:FontSize Xs}" Foreground="{hy:Color TextSecondary}" Text="Delete" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Margin="0,0,24,0" HorizontalAlignment="Center">
+                        <Image Source="{hy:Icon Settings}" Width="32" Height="32" Margin="0,0,0,4" />
+                        <TextBlock FontSize="{hy:FontSize Xs}" Foreground="{hy:Color TextSecondary}" Text="Settings" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Margin="0,0,24,0" HorizontalAlignment="Center">
+                        <Image Source="{hy:Icon Search}" Width="32" Height="32" Margin="0,0,0,4" />
+                        <TextBlock FontSize="{hy:FontSize Xs}" Foreground="{hy:Color TextSecondary}" Text="Search" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Margin="0,0,24,0" HorizontalAlignment="Center">
+                        <Image Source="{hy:Icon Home}" Width="32" Height="32" Margin="0,0,0,4" />
+                        <TextBlock FontSize="{hy:FontSize Xs}" Foreground="{hy:Color TextSecondary}" Text="Home" HorizontalAlignment="Center" />
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- 3. HyIcon Control -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="3. HyIcon Control" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Sm}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="A Control that renders an icon with runtime color tinting. Supports different colors for normal, hover, and pressed states. The tinting is performed using IconTintHelper which applies a color overlay on the icon's alpha channel." />
+                <RichTextBox Margin="0,0,0,8" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextInfo}" Text="&lt;!-- Basic HyIcon --&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="&lt;hy:HyIcon Source=&quot;" />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="Save" />
+                            <Run Text="&quot; Width=&quot;24&quot; Height=&quot;24&quot; " />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="              Color=&quot;Black&quot; /&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextInfo}" Text="&lt;!-- With hover and pressed state colors --&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="&lt;hy:HyIcon Source=&quot;Close&quot; Width=&quot;16&quot; Height=&quot;16&quot;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="              " />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="Color" />
+                            <Run Text="=&quot;Gray&quot;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="              " />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="ColorHover" />
+                            <Run Text="=&quot;Red&quot;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="              " />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="ColorPressed" />
+                            <Run Text="=&quot;DarkRed&quot; /&gt;" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- HyIcon live examples -->
+                <TextBlock Margin="0,8,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="- Live Examples (hover to see color change):" />
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                    <hy:HyIcon Source="Close" Width="24" Height="24" Color="{hy:Color IconDefault}" ColorHover="Red" Margin="0,0,16,0" />
+                    <hy:HyIcon Source="Save" Width="24" Height="24" Color="{hy:Color IconDefault}" ColorHover="DodgerBlue" Margin="0,0,16,0" />
+                    <hy:HyIcon Source="Delete" Width="24" Height="24" Color="{hy:Color IconDefault}" ColorHover="OrangeRed" Margin="0,0,16,0" />
+                    <hy:HyIcon Source="Check" Width="24" Height="24" Color="{hy:Color IconDefault}" ColorHover="Green" Margin="0,0,16,0" />
+                </StackPanel>
+
+                <!-- 4. HyIcon Properties -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="4. HyIcon Properties" />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Text="Source" />
+                            <Run Text=" (EIconKeys?) - The icon key to display" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Text="Color" />
+                            <Run Text=" (Brush) - Normal state tint color. Default: Black" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Text="ColorHover" />
+                            <Run Text=" (Brush) - Hover state tint color. Uses Color if not set" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Text="ColorPressed" />
+                            <Run Text=" (Brush) - Pressed state tint color. Uses Color if not set" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Text="IsPressed" />
+                            <Run Text=" (bool) - Whether the icon is in pressed state" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Text="CornerRadius" />
+                            <Run Text=" (CornerRadius) - Optional border corner radius" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 5. IconTintHelper -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="5. IconTintHelper" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Sm}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="Static utility class that applies color tinting to images. Uses the alpha channel of the source image as an opacity mask and fills with the specified color." />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// Tint an ImageSource with a specific color" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="ImageSource tinted = " />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="IconTintHelper.TintImage" />
+                            <Run Text="(originalSource, Colors.Red);" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 6. IconGenerator -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="6. IconGenerator" />
+                <RichTextBox Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="Internal class that maps EIconKeys to actual PNG resources." />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="Used by the hy:Icon markup extension and HyIcon control." />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// Get an ImageSource programmatically" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="ImageSource icon = IconGenerator.GetImageSource(EIconKeys.Save);" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+            </StackPanel>
+        </hy:HyScrollViewer>
+    </Border>
+</UserControl>

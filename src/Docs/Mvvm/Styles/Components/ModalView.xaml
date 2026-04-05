@@ -1,0 +1,285 @@
+<UserControl
+    x:Class="Docs.Mvvm.Styles.Components.ModalView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
+    xmlns:local="clr-namespace:Docs.Mvvm.Styles.Components"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Background="{hy:Color SurfaceBase}"
+    d:DataContext="{d:DesignInstance local:ComponentViewModel,
+                                     IsDesignTimeCreatable=True}"
+    d:DesignHeight="1800"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Border Margin="20">
+        <hy:HyScrollViewer>
+            <StackPanel Margin="0,0,10,0" Orientation="Vertical">
+                <!-- Title -->
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize _2Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="Modal Dialog System" />
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Md}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="The SDK provides a synchronous modal dialog system via ModalManager in the HYSoft.Presentation.Modal namespace. Modals block the UI thread using DispatcherFrame and return a ModalResult." />
+
+                <!-- 1. ModalResult -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="1. ModalResult Enum" />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="public enum ModalResult" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="{}{" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    " />
+                            <Run FontWeight="Bold" Text="None," />
+                            <Run Text="    " />
+                            <Run Foreground="{hy:Color TextInfo}" Text="// Default / unset" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    " />
+                            <Run FontWeight="Bold" Text="Ok," />
+                            <Run Text="      " />
+                            <Run Foreground="{hy:Color TextInfo}" Text="// User confirmed" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    " />
+                            <Run FontWeight="Bold" Text="Cancel," />
+                            <Run Text="  " />
+                            <Run Foreground="{hy:Color TextInfo}" Text="// User cancelled" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="{}}" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 2. Setup -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="2. Setup in App.xaml.cs" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Sm}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="Initialize ModalManager with a background brush and register your View-ViewModel pairs. Place the ModalBaseView in your main window's overlay layer." />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextInfo}" Text="// 1. Configure with overlay background color" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="ModalManager.Configure" />
+                            <Run Text="(&quot;#80000000&quot;);" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// Or with a Brush:" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="ModalManager.Configure(new SolidColorBrush(Color.FromArgb(128, 0, 0, 0)));" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextInfo}" Text="// 2. Register View-ViewModel mappings" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="ModalManager.RegisterView&lt;ConfirmDialogView, ConfirmDialogViewModel&gt;" />
+                            <Run Text="();" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="ModalManager.RegisterView&lt;InputDialogView, InputDialogViewModel&gt;();" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 3. Place in Window -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="3. Place ModalBaseView in Window" />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextInfo}" Text="&lt;!-- In MainWindow.xaml, add as overlay --&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="&lt;Grid&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    &lt;!-- Main content --&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    &lt;ContentPresenter Content=&quot;{Binding CurrentView}&quot; /&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    &lt;!-- Modal overlay (on top) --&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    &lt;ContentPresenter Content=&quot;" />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="{}{Binding Source={x:Static modal:ModalManager.View}}" />
+                            <Run Text="&quot; /&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="&lt;/Grid&gt;" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 4. Open Modal -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="4. Open a Modal" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Sm}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="Call ModalManager.Open() with a ViewModel instance. The call blocks until the modal is closed and returns the ModalResult. Must be called on the UI thread." />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="var vm = new ConfirmDialogViewModel" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="{}{" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    Title = &quot;Delete Item&quot;," />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    Message = &quot;Are you sure?&quot;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="{}}};" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="var result = ModalManager.Open(vm);" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="if (result == ModalResult.Ok)" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="{}{" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    // User confirmed - proceed with deletion" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    DeleteSelectedItem();" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="{}}" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 5. Close Modal -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="5. Close a Modal" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Sm}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="Call ModalManager.Close() from inside the modal ViewModel (e.g., OK/Cancel button commands). Pass the ViewModel instance and the desired result." />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// Inside the modal ViewModel:" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="public ICommand OkCommand =&gt; new RelayCommand(() =&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="{}{" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    " />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="ModalManager.Close(this, ModalResult.Ok);" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="{}});" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="public ICommand CancelCommand =&gt; new RelayCommand(() =&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="{}{" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    " />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="ModalManager.Close(this, ModalResult.Cancel);" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="{}});" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 6. CloseAll -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="6. CloseAll" />
+                <RichTextBox Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// Close all open modals at once (e.g., on app shutdown)" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="ModalManager.CloseAll(ModalResult.Cancel);" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="// All pending modal TCS will be completed with the specified result." />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="// All popup ViewModels will be removed from the popup list." />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+            </StackPanel>
+        </hy:HyScrollViewer>
+    </Border>
+</UserControl>

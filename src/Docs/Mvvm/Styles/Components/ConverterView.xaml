@@ -1,0 +1,282 @@
+<UserControl
+    x:Class="Docs.Mvvm.Styles.Components.ConverterView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
+    xmlns:local="clr-namespace:Docs.Mvvm.Styles.Components"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Background="{hy:Color SurfaceBase}"
+    d:DataContext="{d:DesignInstance local:ComponentViewModel,
+                                     IsDesignTimeCreatable=True}"
+    d:DesignHeight="1800"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Border Margin="20">
+        <hy:HyScrollViewer>
+            <StackPanel Margin="0,0,10,0" Orientation="Vertical">
+                <!-- Title -->
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize _2Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="Built-in Converters" />
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Md}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="The SDK includes commonly-used value converters in the HYSoft.Presentation.Converters namespace. Declare them as resources and use in XAML bindings." />
+
+                <!-- 1. BoolToVisibilityConverter -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="1. BoolToVisibilityConverter" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Sm}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="Converts true to Visible, false to Collapsed. Implements IValueConverter with two-way support." />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextInfo}" Text="&lt;!-- Resource --&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="&lt;conv:BoolToVisibilityConverter x:Key=&quot;BoolToVis&quot; /&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextInfo}" Text="&lt;!-- Usage --&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="&lt;Border Visibility=&quot;" />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="{}{Binding IsVisible, Converter={StaticResource BoolToVis}}" />
+                            <Run Text="&quot; /&gt;" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 2. BoolToVisibilityReverseConverter -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="2. BoolToVisibilityReverseConverter" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Sm}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="Opposite of BoolToVisibilityConverter. Converts false to Visible, true to Collapsed." />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="&lt;conv:BoolToVisibilityReverseConverter x:Key=&quot;BoolToVisReverse&quot; /&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="&lt;Border Visibility=&quot;" />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="{}{Binding IsHidden, Converter={StaticResource BoolToVisReverse}}" />
+                            <Run Text="&quot; /&gt;" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 3. BoolToVisibilityMultiConverter -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="3. BoolToVisibilityMultiConverter" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Sm}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="IMultiValueConverter that returns Visible only if ALL bound boolean values are true. If any is false, returns Collapsed." />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="&lt;conv:BoolToVisibilityMultiConverter x:Key=&quot;AllBoolToVis&quot; /&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="&lt;Border&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    &lt;Border.Visibility&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="        &lt;MultiBinding Converter=&quot;{StaticResource AllBoolToVis}&quot;&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="            &lt;Binding Path=&quot;IsLoggedIn&quot; /&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="            &lt;Binding Path=&quot;HasPermission&quot; /&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="        &lt;/MultiBinding&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    &lt;/Border.Visibility&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="&lt;/Border&gt;" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 4. CornerRadiusToClipConverter -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="4. CornerRadiusToClipConverter" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Sm}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="IMultiValueConverter that creates a RectangleGeometry clip from ActualWidth, ActualHeight, and CornerRadius. Used internally by controls to clip content to rounded corners." />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="&lt;Border.Clip&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    &lt;MultiBinding Converter=&quot;{StaticResource CornerRadiusClip}&quot;&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="        &lt;Binding RelativeSource=&quot;{RelativeSource Self}&quot; Path=&quot;ActualWidth&quot; /&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="        &lt;Binding RelativeSource=&quot;{RelativeSource Self}&quot; Path=&quot;ActualHeight&quot; /&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="        &lt;Binding RelativeSource=&quot;{RelativeSource Self}&quot; Path=&quot;CornerRadius&quot; /&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    &lt;/MultiBinding&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="&lt;/Border.Clip&gt;" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 5. CornerRadiusToClipExpandConverter -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="5. CornerRadiusToClipExpandConverter" />
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Sm}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="Similar to CornerRadiusToClipConverter but expands the clip region slightly to avoid anti-aliasing artifacts at border edges. Takes an additional expansion parameter." />
+
+                <!-- 6. DoublePlusMarginConverter -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="6. DoublePlusMarginConverter" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Sm}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="IMultiValueConverter that adds a margin offset to a double value. Useful for calculating adjusted widths or heights in control templates." />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextInfo}" Text="&lt;!-- Binds: value (double), margin (double) --&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="&lt;MultiBinding Converter=&quot;{StaticResource DoublePlusMargin}&quot;&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    &lt;Binding Path=&quot;ActualWidth&quot; /&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    &lt;Binding Path=&quot;Margin&quot; /&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="&lt;/MultiBinding&gt;" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 7. StringToNullableIntConverter -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="7. StringToNullableIntConverter" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Sm}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="IValueConverter that converts between string and int?. Empty or whitespace strings convert to null. Useful for numeric TextBox bindings where empty input is allowed." />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="&lt;conv:StringToNullableIntConverter x:Key=&quot;StrToNullInt&quot; /&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="&lt;TextBox Text=&quot;" />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="{}{Binding Age, Converter={StaticResource StrToNullInt}}" />
+                            <Run Text="&quot; /&gt;" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 8. WidthHeightToRectConverter -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="8. WidthHeightToRectConverter" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Sm}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="IMultiValueConverter that creates a Rect from ActualWidth and ActualHeight values. Used for clip regions and viewport calculations." />
+                <RichTextBox Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="&lt;MultiBinding Converter=&quot;{StaticResource WHToRect}&quot;&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    &lt;Binding RelativeSource=&quot;{RelativeSource Self}&quot; Path=&quot;ActualWidth&quot; /&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    &lt;Binding RelativeSource=&quot;{RelativeSource Self}&quot; Path=&quot;ActualHeight&quot; /&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="&lt;/MultiBinding&gt;" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+            </StackPanel>
+        </hy:HyScrollViewer>
+    </Border>
+</UserControl>

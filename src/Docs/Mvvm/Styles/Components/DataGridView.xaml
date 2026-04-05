@@ -71,11 +71,43 @@
                     </FlowDocument>
                 </RichTextBox>
 
-                <!-- 3. Properties -->
-                <TextBlock Margin="0,16,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="3. Properties" />
+                <!-- 3. Custom Properties -->
+                <TextBlock Margin="0,16,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="3. Custom Properties" />
                 <RichTextBox Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
                     <FlowDocument>
                         <Paragraph><Run FontWeight="Bold" Text="CornerRadius" /><Run Text=" (CornerRadius) - DataGrid border corner radius" /></Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 4. Base Properties (inherited) -->
+                <TextBlock Margin="0,16,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="4. Base Properties (inherited)" />
+                <RichTextBox Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph><Run FontWeight="Bold" Text="Background" /><Run Text=" (Brush) - Control background color" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Foreground" /><Run Text=" (Brush) - Text color" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="FontSize" /><Run Text=" (double) - Font size" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="FontWeight" /><Run Text=" (FontWeight) - Font weight" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Padding" /><Run Text=" (Thickness) - Inner padding" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Margin" /><Run Text=" (Thickness) - Outer margin" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Width" /><Run Text=" (double) - Control width" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Height" /><Run Text=" (double) - Control height" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="HorizontalAlignment" /><Run Text=" (HorizontalAlignment) - Horizontal alignment" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="VerticalAlignment" /><Run Text=" (VerticalAlignment) - Vertical alignment" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="IsEnabled" /><Run Text=" (bool) - Whether the control is enabled" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Visibility" /><Run Text=" (Visibility) - Control visibility" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Opacity" /><Run Text=" (double) - Control opacity (0.0 to 1.0)" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Cursor" /><Run Text=" (Cursor) - Mouse cursor when hovering" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="ToolTip" /><Run Text=" (object) - Tooltip content" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="ItemsSource" /><Run Text=" (IEnumerable) - Data source for grid rows" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="SelectedItem" /><Run Text=" (object) - Currently selected row item" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="SelectedIndex" /><Run Text=" (int) - Index of the selected row" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="AutoGenerateColumns" /><Run Text=" (bool) - Auto-generate columns from data source" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="CanUserSortColumns" /><Run Text=" (bool) - Whether users can sort by clicking headers" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="CanUserResizeColumns" /><Run Text=" (bool) - Whether users can resize columns" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="SelectionMode" /><Run Text=" (DataGridSelectionMode) - Single or Extended selection" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="SelectionUnit" /><Run Text=" (DataGridSelectionUnit) - Cell, FullRow, or CellOrRowHeader" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="GridLinesVisibility" /><Run Text=" (DataGridGridLinesVisibility) - Which grid lines to show" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="RowHeaderWidth" /><Run Text=" (double) - Width of row headers" /></Paragraph>
                     </FlowDocument>
                 </RichTextBox>
             </StackPanel>

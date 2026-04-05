@@ -50,7 +50,7 @@
                 <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="Disabled" />
                 <hy:HyRadioButton Text="Disabled" IsEnabled="False" Margin="0,0,0,16" />
 
-                <TextBlock Margin="0,16,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="3. Properties" />
+                <TextBlock Margin="0,16,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="3. Custom Properties" />
                 <RichTextBox Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
                     <FlowDocument>
                         <Paragraph><Run FontWeight="Bold" Text="Text" /><Run Text=" (string) - Label text" /></Paragraph>
@@ -61,6 +61,30 @@
                         <Paragraph><Run FontWeight="Bold" Text="EllipseBorderThickness" /><Run Text=" (double) - Circle border stroke width" /></Paragraph>
                         <Paragraph><Run FontWeight="Bold" Text="EllipseBorderBrush" /><Run Text=" (Brush) - Circle border brush" /></Paragraph>
                         <Paragraph><Run FontWeight="Bold" Text="EllipseHover" /><Run Text=" (Brush) - Hover state circle color" /></Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <TextBlock Margin="0,16,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="4. Base Properties (inherited)" />
+                <RichTextBox Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph><Run FontWeight="Bold" Text="Content" /><Run Text=" (object) - RadioButton label content" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="IsChecked" /><Run Text=" (bool?) - Whether the RadioButton is selected" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="GroupName" /><Run Text=" (string) - Mutual exclusion group name" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Background" /><Run Text=" (Brush) - Control background color" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Foreground" /><Run Text=" (Brush) - Text/content color" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="FontSize" /><Run Text=" (double) - Font size of content text" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="FontWeight" /><Run Text=" (FontWeight) - Font weight of content text" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Padding" /><Run Text=" (Thickness) - Inner spacing between border and content" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Margin" /><Run Text=" (Thickness) - Outer spacing around the control" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Width" /><Run Text=" (double) - Control width" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Height" /><Run Text=" (double) - Control height" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="HorizontalAlignment" /><Run Text=" (HorizontalAlignment) - Horizontal alignment within parent" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="VerticalAlignment" /><Run Text=" (VerticalAlignment) - Vertical alignment within parent" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="IsEnabled" /><Run Text=" (bool) - Whether the control is interactive" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Visibility" /><Run Text=" (Visibility) - Control visibility (Visible, Hidden, Collapsed)" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Opacity" /><Run Text=" (double) - Control opacity (0.0 to 1.0)" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Cursor" /><Run Text=" (Cursor) - Mouse cursor when hovering" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="ToolTip" /><Run Text=" (object) - Tooltip shown on hover" /></Paragraph>
                     </FlowDocument>
                 </RichTextBox>
             </StackPanel>

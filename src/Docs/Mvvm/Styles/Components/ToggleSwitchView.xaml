@@ -79,8 +79,8 @@
                     <hy:HyToggleSwitch IsChecked="True" IsEnabled="False" />
                 </StackPanel>
 
-                <!-- 3. Properties -->
-                <TextBlock Margin="0,16,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="3. Properties" />
+                <!-- 3. Custom Properties -->
+                <TextBlock Margin="0,16,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="3. Custom Properties" />
                 <RichTextBox Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
                     <FlowDocument>
                         <Paragraph><Run FontWeight="Bold" Text="SwitchWidth" /><Run Text=" (double) - Total width of the switch track. Default: 44" /></Paragraph>
@@ -88,6 +88,33 @@
                         <Paragraph><Run FontWeight="Bold" Text="ThumbSize" /><Run Text=" (double) - Diameter of the toggle thumb. Default: 16" /></Paragraph>
                         <Paragraph><Run FontWeight="Bold" Text="OnBackground" /><Run Text=" (Brush) - Track background when checked (on)" /></Paragraph>
                         <Paragraph><Run FontWeight="Bold" Text="OffBackground" /><Run Text=" (Brush) - Track background when unchecked (off)" /></Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 4. Base Properties (inherited) -->
+                <TextBlock Margin="0,16,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="4. Base Properties (inherited)" />
+                <RichTextBox Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph><Run FontWeight="Bold" Text="Content" /><Run Text=" (object) - Content displayed inside the toggle switch" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="IsChecked" /><Run Text=" (bool?) - Whether the toggle is checked. Default: false" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="IsThreeState" /><Run Text=" (bool) - Whether three-state mode is enabled. Default: false" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Command" /><Run Text=" (ICommand) - Command executed when toggled" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="CommandParameter" /><Run Text=" (object) - Parameter passed to the command" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Background" /><Run Text=" (Brush) - Background brush" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Foreground" /><Run Text=" (Brush) - Foreground brush" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="FontSize" /><Run Text=" (double) - Font size" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="FontWeight" /><Run Text=" (FontWeight) - Font weight" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Padding" /><Run Text=" (Thickness) - Inner padding" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Margin" /><Run Text=" (Thickness) - Outer margin" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Width" /><Run Text=" (double) - Element width" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Height" /><Run Text=" (double) - Element height" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="HorizontalAlignment" /><Run Text=" (HorizontalAlignment) - Horizontal alignment" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="VerticalAlignment" /><Run Text=" (VerticalAlignment) - Vertical alignment" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="IsEnabled" /><Run Text=" (bool) - Whether the control is enabled. Default: true" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Visibility" /><Run Text=" (Visibility) - Control visibility" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Opacity" /><Run Text=" (double) - Opacity level. Default: 1.0" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Cursor" /><Run Text=" (Cursor) - Mouse cursor when hovering" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="ToolTip" /><Run Text=" (object) - Tooltip content" /></Paragraph>
                     </FlowDocument>
                 </RichTextBox>
             </StackPanel>

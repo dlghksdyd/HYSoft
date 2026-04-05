@@ -1,0 +1,251 @@
+<UserControl
+    x:Class="Docs.Mvvm.Styles.Components.DragDropView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
+    xmlns:local="clr-namespace:Docs.Mvvm.Styles.Components"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Background="{hy:Color SurfaceBase}"
+    d:DataContext="{d:DesignInstance local:ComponentViewModel,
+                                     IsDesignTimeCreatable=True}"
+    d:DesignHeight="1600"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Border Margin="20">
+        <hy:HyScrollViewer>
+            <StackPanel Margin="0,0,10,0" Orientation="Vertical">
+                <!-- Title -->
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize _2Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="DragDrop Framework" />
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Md}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="The SDK provides a DragDrop helper class in the HYSoft.Presentation.DragDrop namespace that simplifies implementing drag-and-drop with ghost adorner support." />
+
+                <!-- 1. Components -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="1. Core Components" />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Text="DragDrop" />
+                            <Run Text=" - The main class that manages the entire drag-drop lifecycle: mouse tracking, adorner creation, event routing, and cleanup." />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Text="DragDataContext" />
+                            <Run Text=" - A data class (implements IDragDataContext) that holds all drag state:" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="  - DragScope (UIElement) - The container element for drag operations" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="  - DraggedItem (object) - The data being dragged" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="  - ItemAlias (string) - DataObject format identifier" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="  - AdornerElement (UIElement) - Visual element for ghost rendering" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="  - AdornerOpacity (double) - Ghost opacity (default 0.3)" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="  - AdornerOffset (Point) - Offset from cursor to ghost position" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 2. Setup -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="2. Setup in ViewModel" />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// 1. Create a DragDrop instance" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="private readonly DragDrop _dragDrop = new DragDrop();" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// 2. Prepare the data context" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="public DragDataContext DragContext { get; } = new DragDataContext" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="{}{" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    ItemAlias = &quot;MyItem&quot;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="{}}};" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// 3. Bind DragScope to a panel via ElementReferenceBinding" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="//    (See InteractivityView for ElementReferenceBinding)" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 3. Wire Up Events -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="3. Wire Up Mouse Events" />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// In PreviewMouseLeftButtonDown handler:" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="DragContext.DraggedItem = selectedItem;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="DragContext.AdornerElement = senderElement;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="DragContext.AdornerOffset = e.GetPosition(senderElement);" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="_dragDrop.PreviewMouseLeftButtonDown_InitData(e, DragContext);" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// In PreviewMouseMove handler:" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="_dragDrop.PreviewMouseMove_StartDragDrop(sender, e);" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 4. Handle Drop -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="4. Handle Drop" />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// In Drop handler:" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="var droppedItem = _dragDrop.Drop_GetDropData&lt;MyItemType&gt;(e);" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="if (droppedItem != null)" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="{}{" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    // Process the dropped item" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    Items.Remove(droppedItem);" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    Items.Insert(dropIndex, droppedItem);" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="{}}" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 5. Custom Event Handlers -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="5. Custom Event Handlers" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Md}"
+                    Foreground="{hy:Color TextPrimary}"
+                    TextWrapping="Wrap"
+                    Text="- Register additional handlers for DragOver, DragEnter, and DragLeave events:" />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="_dragDrop.AddDragOverEventHandler(OnCustomDragOver);" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="_dragDrop.AddDragEnterEventHandler(OnCustomDragEnter);" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="_dragDrop.AddDragLeaveEventHandler(OnCustomDragLeave);" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 6. Adorner Integration -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="6. Adorner Integration" />
+                <RichTextBox Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="The DragDrop class automatically manages GhostAdorner:" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="- Creates GhostAdorner from DragContext.AdornerElement when drag starts" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="- Updates ghost position during DragOver using AdornerOffset" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="- Removes adorner on DragLeave, re-adds on DragEnter" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="- Cleans up on drop completion or ESC cancel" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="For drop-position indicators, use LineAdorner separately in your" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="custom DragOver handler. See the Adorner guide for details." />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+            </StackPanel>
+        </hy:HyScrollViewer>
+    </Border>
+</UserControl>

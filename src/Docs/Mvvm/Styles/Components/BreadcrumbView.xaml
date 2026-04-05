@@ -60,8 +60,8 @@
                     <hy:HyBreadcrumbItem Content="Item" IsLast="True" />
                 </hy:HyBreadcrumb>
 
-                <!-- 3. Properties -->
-                <TextBlock Margin="0,16,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="3. Properties" />
+                <!-- 3. Custom Properties -->
+                <TextBlock Margin="0,16,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="3. Custom Properties" />
                 <RichTextBox Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
                     <FlowDocument>
                         <Paragraph FontWeight="Bold"><Run Text="HyBreadcrumb" /></Paragraph>
@@ -70,6 +70,32 @@
                         <Paragraph />
                         <Paragraph FontWeight="Bold"><Run Text="HyBreadcrumbItem" /></Paragraph>
                         <Paragraph><Run FontWeight="Bold" Text="IsLast" /><Run Text=" (bool) - Marks the last item (no separator after). Default: false" /></Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 4. Base Properties (inherited) -->
+                <TextBlock Margin="0,16,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="4. Base Properties (inherited)" />
+                <RichTextBox Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph><Run FontWeight="Bold" Text="ItemsSource" /><Run Text=" (IEnumerable) - Data source for breadcrumb items" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="ItemTemplate" /><Run Text=" (DataTemplate) - Template for each breadcrumb item" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="ItemTemplateSelector" /><Run Text=" (DataTemplateSelector) - Selector for item templates" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="DisplayMemberPath" /><Run Text=" (string) - Property path for display text" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Background" /><Run Text=" (Brush) - Background brush" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Foreground" /><Run Text=" (Brush) - Foreground brush" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="FontSize" /><Run Text=" (double) - Font size" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="FontWeight" /><Run Text=" (FontWeight) - Font weight" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Padding" /><Run Text=" (Thickness) - Inner padding" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Margin" /><Run Text=" (Thickness) - Outer margin" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Width" /><Run Text=" (double) - Element width" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Height" /><Run Text=" (double) - Element height" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="HorizontalAlignment" /><Run Text=" (HorizontalAlignment) - Horizontal alignment" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="VerticalAlignment" /><Run Text=" (VerticalAlignment) - Vertical alignment" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="IsEnabled" /><Run Text=" (bool) - Whether the control is enabled. Default: true" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Visibility" /><Run Text=" (Visibility) - Control visibility" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Opacity" /><Run Text=" (double) - Opacity level. Default: 1.0" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Cursor" /><Run Text=" (Cursor) - Mouse cursor when hovering" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="ToolTip" /><Run Text=" (object) - Tooltip content" /></Paragraph>
                     </FlowDocument>
                 </RichTextBox>
             </StackPanel>

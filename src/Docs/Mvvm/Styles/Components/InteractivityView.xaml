@@ -1,0 +1,400 @@
+<UserControl
+    x:Class="Docs.Mvvm.Styles.Components.InteractivityView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
+    xmlns:local="clr-namespace:Docs.Mvvm.Styles.Components"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Background="{hy:Color SurfaceBase}"
+    d:DataContext="{d:DesignInstance local:ComponentViewModel,
+                                     IsDesignTimeCreatable=True}"
+    d:DesignHeight="3000"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Border Margin="20">
+        <hy:HyScrollViewer>
+            <StackPanel Margin="0,0,10,0" Orientation="Vertical">
+                <!-- Title -->
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize _2Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="Interactivity" />
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Md}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="Behaviors, base classes, and attached properties in the HYSoft.Presentation.Interactivity namespace for MVVM patterns." />
+
+                <!-- 1. NotifyPropertyChangedBase -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="1. NotifyPropertyChangedBase" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Sm}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="Abstract base class implementing INotifyPropertyChanged. Provides SetProperty helper for simple property change notification." />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="public class MyViewModel : " />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="NotifyPropertyChangedBase" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="{}{" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    private string _name;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    public string Name" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    {" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="        get =&gt; _name;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="        set =&gt; " />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="SetProperty" />
+                            <Run Text="(ref _name, value);" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    }" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="}" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 2. RelayCommand -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="2. RelayCommand" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Sm}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="ICommand implementation with Action execute and optional Func&lt;bool&gt; canExecute. Also available as RelayCommand&lt;T&gt; for typed parameters and RelayCommandWithResult&lt;T&gt; for commands that return a boolean result." />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// Simple command" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="public ICommand SaveCommand =&gt; new " />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="RelayCommand" />
+                            <Run Text="(() =&gt; Save());" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// With CanExecute" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="public ICommand DeleteCommand =&gt; new RelayCommand(" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    () =&gt; Delete()," />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    () =&gt; SelectedItem != null);" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// Typed parameter" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="public ICommand SelectCommand =&gt; new " />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="RelayCommand&lt;ItemModel&gt;" />
+                            <Run Text="(item =&gt; Select(item));" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 3. EventToCommand -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="3. EventToCommand" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Sm}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="Attached behavior that routes RoutedEvents to ICommand. Supports single binding (EventToCommand.Binding) and multiple bindings (EventToCommand.MultiBinding). Automatically handles cleanup on Unloaded/Loaded." />
+                <RichTextBox Margin="0,0,0,8" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextInfo}" Text="&lt;!-- Single event binding --&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="&lt;ListBox&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    &lt;hy:EventToCommand.Binding&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="        &lt;hy:Event RoutedEvent=&quot;SelectionChanged&quot;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="                  CommandBinding=&quot;" />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="{}{Binding SelectionChangedCommand}" />
+                            <Run Text="&quot; /&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    &lt;/hy:EventToCommand.Binding&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="&lt;/ListBox&gt;" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextInfo}" Text="&lt;!-- Multiple event bindings --&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="&lt;Grid&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    &lt;hy:EventToCommand.MultiBinding&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="        &lt;hy:Event RoutedEvent=&quot;PreviewMouseLeftButtonDown&quot;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="                  CommandBinding=&quot;{Binding MouseDownCmd}&quot; /&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="        &lt;hy:Event RoutedEvent=&quot;PreviewMouseMove&quot;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="                  CommandBinding=&quot;{Binding MouseMoveCmd}&quot; /&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    &lt;/hy:EventToCommand.MultiBinding&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="&lt;/Grid&gt;" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 4. Arguments -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="4. Argument1 - Argument4" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Sm}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="Four attached properties (Argument1.Value through Argument4.Value) that use FrameworkPropertyMetadataOptions.Inherits to pass data down the visual tree. Useful for passing context data from parent to deeply nested child elements without explicit bindings at each level." />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextInfo}" Text="&lt;!-- Set at parent level --&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="&lt;ItemsControl hy:Argument1.Value=&quot;" />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="{}{Binding ParentViewModel}" />
+                            <Run Text="&quot;&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    &lt;ItemsControl.ItemTemplate&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="        &lt;DataTemplate&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="            " />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextInfo}" Text="&lt;!-- Access inherited value in child --&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="            &lt;Button Command=&quot;{Binding Path=(hy:Argument1.Value).DeleteCommand," />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="                RelativeSource={RelativeSource Self}}&quot; /&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="        &lt;/DataTemplate&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    &lt;/ItemsControl.ItemTemplate&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="&lt;/ItemsControl&gt;" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 5. ElementReferenceBinding -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="5. ElementReferenceBinding" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Sm}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="Attached property that pushes a UI element reference into a ViewModel property. Supports UIElement, FrameworkElement, and WeakReference&lt;UIElement&gt; target types. Handles DataContext changes and re-attaches on Loaded/Unloaded." />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextInfo}" Text="&lt;!-- XAML: push Grid reference to VM.DragScope --&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="&lt;Grid hy:ElementReferenceBinding.Target=&quot;" />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="{}{Binding DragScope, Mode=TwoWay}" />
+                            <Run Text="&quot; /&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextInfo}" Text="// ViewModel:" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="public UIElement DragScope { get; set; }" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 6. FocusOnVisibleBehavior -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="6. FocusOnVisibleBehavior" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Sm}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="Attached property that automatically sets keyboard focus to a control when its WhenTrue property becomes true and the control is visible. Handles deferred focus for controls that are not yet loaded or visible." />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="&lt;TextBox hy:FocusOnVisibleBehavior.WhenTrue=&quot;" />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="{}{Binding IsEditing}" />
+                            <Run Text="&quot; /&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="&lt;!-- The TextBox receives focus when IsEditing becomes true --&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="&lt;!-- For TextBox, it also moves caret to end of text --&gt;" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 7. WindowDragBehavior -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="7. WindowDragBehavior" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Sm}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="Attached property that enables window dragging from any element (typically a custom title bar). Also handles double-click maximize/restore, right-click system menu, and configures WindowChrome for proper taskbar behavior." />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="&lt;Border hy:WindowDragBehavior.EnableDragMove=&quot;" />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="True" />
+                            <Run Text="&quot;&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    &lt;TextBlock Text=&quot;Custom Title Bar&quot; /&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="&lt;/Border&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="&lt;!-- Features: --&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="&lt;!-- - Left click + drag = move window --&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="&lt;!-- - Double click = maximize/restore --&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="&lt;!-- - Right click = system menu --&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="&lt;!-- - Ignores clicks on Buttons/Thumbs --&gt;" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 8. ObservableDictionary -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="8. ObservableDictionary&lt;TKey, TValue&gt;" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Sm}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="A Dictionary that implements INotifyPropertyChanged and INotifyCollectionChanged. Raises change notifications on Add, Remove, and indexer set operations. Suitable for binding to UI collections that need dictionary-style access." />
+                <RichTextBox Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="var dict = new " />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="ObservableDictionary&lt;string, int&gt;" />
+                            <Run Text="();" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="dict[&quot;apples&quot;] = 5;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="dict[&quot;oranges&quot;] = 3;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// Raises CollectionChanged on each mutation" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// Can be used as ItemsSource with appropriate DataTemplate" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+            </StackPanel>
+        </hy:HyScrollViewer>
+    </Border>
+</UserControl>

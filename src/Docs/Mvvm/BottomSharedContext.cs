@@ -154,11 +154,11 @@ namespace Docs.Mvvm
             MenuItems.Clear();
 
             var item1 = AddItem("Colors", null, true);
-            item1.AddSubItem("Default Tokens", null);
-            item1.AddSubItem("Custom Tokens", null);
+            item1.AddSubItem("Default Tokens", typeof(DefaultTokensView));
+            item1.AddSubItem("Custom Tokens", typeof(CustomTokensView));
 
             var item2 = AddItem("Fonts", null, true);
-            item2.AddSubItem("Font Size", null);
+            item2.AddSubItem("Font Size", typeof(FontSizeView));
 
             var item3 = AddItem("Components", null, true);
             item3.AddSubItem("Badge", typeof(BadgeView));
@@ -170,7 +170,6 @@ namespace Docs.Mvvm
             item3.AddSubItem("Dialog", typeof(DialogView));
             item3.AddSubItem("Expander", typeof(ExpanderView));
             item3.AddSubItem("GridSplitter", typeof(GridSplitterView));
-            item3.AddSubItem("Icon", typeof(IconView));
             item3.AddSubItem("ListBox", typeof(ListBoxView));
             item3.AddSubItem("Menu", typeof(MenuView));
             item3.AddSubItem("NumericUpDown", typeof(NumericUpDownView));
@@ -192,12 +191,27 @@ namespace Docs.Mvvm
             item3.AddSubItem("TreeView", typeof(TreeViewView));
             item3.AddSubItem("Window", typeof(WindowView));
 
-            AddItem("Adorner", null, true);
-            AddItem("Converter", null, true);
-            AddItem("DragDrop", null, true);
-            AddItem("UI Tree Helper", null, true);
-            AddItem("Interactivity", null, true);
-            AddItem("Modal", null, true);
+            var item4 = AddItem("Icons", null, true);
+            item4.AddSubItem("Overview", typeof(IconGuideView));
+            item4.AddSubItem("Browse Assets", typeof(IconView));
+
+            var item5 = AddItem("Adorner", null, true);
+            item5.AddSubItem("GhostAdorner / LineAdorner", typeof(AdornerView));
+
+            var item6 = AddItem("Converter", null, true);
+            item6.AddSubItem("Built-in Converters", typeof(ConverterView));
+
+            var item7 = AddItem("DragDrop", null, true);
+            item7.AddSubItem("DragDrop Framework", typeof(DragDropView));
+
+            var item8 = AddItem("UI Tree Helper", null, true);
+            item8.AddSubItem("TreeSearchHelper", typeof(UITreeHelperView));
+
+            var item9 = AddItem("Interactivity", null, true);
+            item9.AddSubItem("MVVM & Behaviors", typeof(InteractivityView));
+
+            var item10 = AddItem("Modal", null, true);
+            item10.AddSubItem("Modal Manager", typeof(ModalView));
         }
     }
 }

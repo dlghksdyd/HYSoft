@@ -1,0 +1,192 @@
+<UserControl
+    x:Class="Docs.Mvvm.Styles.Components.UITreeHelperView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
+    xmlns:local="clr-namespace:Docs.Mvvm.Styles.Components"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Background="{hy:Color SurfaceBase}"
+    d:DataContext="{d:DesignInstance local:ComponentViewModel,
+                                     IsDesignTimeCreatable=True}"
+    d:DesignHeight="900"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Border Margin="20">
+        <hy:HyScrollViewer>
+            <StackPanel Margin="0,0,10,0" Orientation="Vertical">
+                <!-- Title -->
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize _2Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="TreeSearchHelper" />
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Md}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="Static utility class in HYSoft.Presentation.ElementTreeHelper for navigating the WPF visual and logical trees. Provides methods to find ancestor, child, and DataContext-sharing elements." />
+
+                <!-- 1. FindAncestor -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="1. FindAncestor&lt;T&gt;" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Sm}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="Walks up the visual tree from a given element and returns the first ancestor matching type T. Returns null if not found." />
+                <RichTextBox Margin="0,0,0,8" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextInfo}" Text="Signature:" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="static T? FindAncestor&lt;T&gt;(DependencyObject? current)" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    where T : DependencyObject" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextInfo}" Text="Example:" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// Find the parent ListBoxItem from a child element" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="var listBoxItem = TreeSearchHelper.FindAncestor&lt;ListBoxItem&gt;(clickedElement);" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// Find the containing Window" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="var window = TreeSearchHelper.FindAncestor&lt;Window&gt;(button);" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 2. FindChild -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="2. FindChild&lt;T&gt;" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Sm}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="Recursively searches the visual tree downward from a given element and returns the first child matching type T. Returns null if not found. Use carefully on large trees for performance." />
+                <RichTextBox Margin="0,0,0,8" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextInfo}" Text="Signature:" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="static T? FindChild&lt;T&gt;(DependencyObject? current)" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    where T : DependencyObject" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextInfo}" Text="Example:" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// Find a ScrollViewer inside a ListBox template" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="var scrollViewer = TreeSearchHelper.FindChild&lt;ScrollViewer&gt;(listBox);" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// Find a TextBox inside an Expander" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="var textBox = TreeSearchHelper.FindChild&lt;TextBox&gt;(expander);" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 3. FindTopElementSharingDataContext -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="3. FindTopElementSharingDataContext&lt;T&gt;" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Sm}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="Walks up the tree and finds the outermost (topmost) element that shares the same DataContext instance as the starting element. Useful in MVVM for finding the template root from inside a control template." />
+                <RichTextBox Margin="0,0,0,8" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextInfo}" Text="Signature:" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="static T? FindTopElementSharingDataContext&lt;T&gt;(" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    FrameworkElement? current," />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    Type? dataContextType)" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    where T : DependencyObject" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+                <RichTextBox Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextInfo}" Text="Example:" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// From a button inside an item template, find the root container" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="var root = TreeSearchHelper.FindTopElementSharingDataContext&lt;FrameworkElement&gt;(" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    button," />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    typeof(ItemViewModel));" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// The method traverses: Visual &gt; FrameworkElement.Parent &gt; Logical" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// and returns the last element that still has the same DataContext" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// before it changes to a different one." />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+            </StackPanel>
+        </hy:HyScrollViewer>
+    </Border>
+</UserControl>

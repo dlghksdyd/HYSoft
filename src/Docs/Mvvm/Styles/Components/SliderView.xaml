@@ -59,13 +59,42 @@
                 <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="Disabled" />
                 <hy:HySlider Margin="0,0,0,16" Value="50" Minimum="0" Maximum="100" IsEnabled="False" />
 
-                <!-- 3. Properties -->
-                <TextBlock Margin="0,16,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="3. Properties" />
+                <!-- 3. Custom Properties -->
+                <TextBlock Margin="0,16,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="3. Custom Properties" />
                 <RichTextBox Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
                     <FlowDocument>
                         <Paragraph><Run FontWeight="Bold" Text="TrackHeight" /><Run Text=" (double) - Height of the slider track. Default: 4" /></Paragraph>
                         <Paragraph><Run FontWeight="Bold" Text="ThumbSize" /><Run Text=" (double) - Size of the slider thumb. Default: 16" /></Paragraph>
                         <Paragraph><Run FontWeight="Bold" Text="TrackCornerRadius" /><Run Text=" (CornerRadius) - Corner radius of the track. Default: 2" /></Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 4. Base Properties (inherited) -->
+                <TextBlock Margin="0,16,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="4. Base Properties (inherited)" />
+                <RichTextBox Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph><Run FontWeight="Bold" Text="Background" /><Run Text=" (Brush) - Control background color" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Foreground" /><Run Text=" (Brush) - Text color" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="FontSize" /><Run Text=" (double) - Font size" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="FontWeight" /><Run Text=" (FontWeight) - Font weight" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Padding" /><Run Text=" (Thickness) - Inner padding" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Margin" /><Run Text=" (Thickness) - Outer margin" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Width" /><Run Text=" (double) - Control width" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Height" /><Run Text=" (double) - Control height" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="HorizontalAlignment" /><Run Text=" (HorizontalAlignment) - Horizontal alignment" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="VerticalAlignment" /><Run Text=" (VerticalAlignment) - Vertical alignment" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="IsEnabled" /><Run Text=" (bool) - Whether the control is enabled" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Visibility" /><Run Text=" (Visibility) - Control visibility" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Opacity" /><Run Text=" (double) - Control opacity (0.0 to 1.0)" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Cursor" /><Run Text=" (Cursor) - Mouse cursor when hovering" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="ToolTip" /><Run Text=" (object) - Tooltip content" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Value" /><Run Text=" (double) - Current slider value" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Minimum" /><Run Text=" (double) - Minimum value" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Maximum" /><Run Text=" (double) - Maximum value" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Orientation" /><Run Text=" (Orientation) - Horizontal or Vertical" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="TickPlacement" /><Run Text=" (TickPlacement) - Position of tick marks" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="TickFrequency" /><Run Text=" (double) - Interval between tick marks" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="IsSnapToTickEnabled" /><Run Text=" (bool) - Snap to tick mark values" /></Paragraph>
                     </FlowDocument>
                 </RichTextBox>
             </StackPanel>

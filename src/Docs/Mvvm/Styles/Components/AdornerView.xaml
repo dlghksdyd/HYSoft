@@ -1,0 +1,255 @@
+<UserControl
+    x:Class="Docs.Mvvm.Styles.Components.AdornerView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
+    xmlns:local="clr-namespace:Docs.Mvvm.Styles.Components"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Background="{hy:Color SurfaceBase}"
+    d:DataContext="{d:DesignInstance local:ComponentViewModel,
+                                     IsDesignTimeCreatable=True}"
+    d:DesignHeight="900"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Border Margin="20">
+        <hy:HyScrollViewer>
+            <StackPanel Margin="0,0,10,0" Orientation="Vertical">
+                <!-- Title -->
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize _2Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="GhostAdorner and LineAdorner" />
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Md}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="The SDK provides two adorner classes for drag-and-drop visual feedback. Both are located in the HYSoft.Presentation.Adorners namespace." />
+
+                <!-- 1. GhostAdorner -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="1. GhostAdorner" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Md}"
+                    Foreground="{hy:Color TextPrimary}"
+                    TextWrapping="Wrap"
+                    Text="- Renders a semi-transparent ghost image of the dragged element that follows the mouse cursor." />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Sm}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="GhostAdorner uses a VisualBrush to capture the visual of the source element and paints it at the current mouse position." />
+
+                <TextBlock
+                    Margin="0,8,0,8"
+                    FontSize="{hy:FontSize Md}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="- Constructor:" />
+                <RichTextBox Margin="0,0,0,8" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextInfo}" Text="new GhostAdorner(" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    UIElement adornerRoot,  " />
+                            <Run Foreground="{hy:Color TextSecondary}" Text="// The scope element (AdornerLayer host)" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    UIElement visual,       " />
+                            <Run Foreground="{hy:Color TextSecondary}" Text="// The element to render as ghost" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    double opacity = 0.3    " />
+                            <Run Foreground="{hy:Color TextSecondary}" Text="// Ghost opacity (default 0.3)" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextInfo}" Text=")" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <TextBlock
+                    Margin="0,8,0,8"
+                    FontSize="{hy:FontSize Md}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="- Methods:" />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Text="SetPosition(double x, double y)" />
+                            <Run Text=" - Updates the ghost position and triggers re-render." />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Md}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="- Usage Example:" />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// Create and attach" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="var layer = AdornerLayer.GetAdornerLayer(dragScope);" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="var ghost = new GhostAdorner(dragScope, draggedElement, 0.5);" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="layer.Add(ghost);" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// During drag (in DragOver handler)" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="var pos = e.GetPosition(dragScope);" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="ghost.SetPosition(pos.X - offsetX, pos.Y - offsetY);" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// Cleanup" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="layer.Remove(ghost);" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 2. LineAdorner -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="2. LineAdorner" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Md}"
+                    Foreground="{hy:Color TextPrimary}"
+                    TextWrapping="Wrap"
+                    Text="- Renders a horizontal line at the top or bottom edge of a target element, indicating where a dropped item will be inserted." />
+
+                <TextBlock
+                    Margin="0,8,0,8"
+                    FontSize="{hy:FontSize Md}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="- LinePosition Enum:" />
+                <RichTextBox Margin="0,0,0,8" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Text="LinePosition.None" />
+                            <Run Text=" - Hidden (no line drawn)" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Text="LinePosition.Top" />
+                            <Run Text=" - Line at the top edge of the target" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Text="LinePosition.Bottom" />
+                            <Run Text=" - Line at the bottom edge of the target" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <TextBlock
+                    Margin="0,8,0,8"
+                    FontSize="{hy:FontSize Md}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="- Methods:" />
+                <RichTextBox Margin="0,0,0,8" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Text="Enabled(UIElement adornerScope)" />
+                            <Run Text=" - Attaches to a new AdornerLayer." />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Text="Disabled()" />
+                            <Run Text=" - Removes from the current AdornerLayer." />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Text="ShowAtElement(FrameworkElement row, LinePosition pos, Brush brush, double thickness)" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="  - Shows the line at the specified position of the target element." />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Text="Hide()" />
+                            <Run Text=" - Hides the line." />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <TextBlock
+                    Margin="0,8,0,8"
+                    FontSize="{hy:FontSize Md}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="- Usage Example:" />
+                <RichTextBox Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// Create" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="var lineAdorner = new LineAdorner(dragScope);" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// Show line below a row during DragOver" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="lineAdorner.ShowAtElement(" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    targetRow," />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    LineAdorner.LinePosition.Bottom," />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    Brushes.DodgerBlue," />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="    2.0);" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// Hide when leaving" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="lineAdorner.Hide();" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Foreground="{hy:Color TextInfo}" Text="// Cleanup" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="lineAdorner.Disabled();" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+            </StackPanel>
+        </hy:HyScrollViewer>
+    </Border>
+</UserControl>

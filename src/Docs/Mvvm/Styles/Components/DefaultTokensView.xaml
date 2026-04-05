@@ -1,0 +1,556 @@
+<UserControl
+    x:Class="Docs.Mvvm.Styles.Components.DefaultTokensView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
+    xmlns:local="clr-namespace:Docs.Mvvm.Styles.Components"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Background="{hy:Color SurfaceBase}"
+    d:DataContext="{d:DesignInstance local:ComponentViewModel,
+                                     IsDesignTimeCreatable=True}"
+    d:DesignHeight="4000"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Border Margin="20">
+        <hy:HyScrollViewer>
+            <StackPanel Margin="0,0,10,0" Orientation="Vertical">
+                <!-- Title -->
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize _2Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="Default Color Tokens" />
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Md}"
+                    Foreground="{hy:Color TextSecondary}"
+                    TextWrapping="Wrap"
+                    Text="The HYSoft SDK provides a semantic color token system. Use tokens instead of hard-coded colors to ensure consistent theming across your application." />
+
+                <!-- 1. Usage -->
+                <TextBlock
+                    Margin="0,0,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="1. Usage" />
+                <TextBlock
+                    Margin="0,0,0,8"
+                    FontSize="{hy:FontSize Md}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="- Reference color tokens with the hy:Color markup extension:" />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="&lt;TextBlock Foreground=&quot;" />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="{}{hy:Color TextPrimary}" />
+                            <Run Text="&quot; Text=&quot;Hello&quot; /&gt;" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="&lt;Border Background=&quot;" />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="{}{hy:Color SurfaceBase}" />
+                            <Run Text="&quot; /&gt;" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 2. Text Tokens -->
+                <TextBlock
+                    Margin="0,16,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="2. Text Tokens" />
+                <!-- TextPrimary -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color TextPrimary}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="TextPrimary" />
+                </StackPanel>
+                <!-- TextSecondary -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color TextSecondary}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="TextSecondary" />
+                </StackPanel>
+                <!-- TextTertiary -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color TextTertiary}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="TextTertiary" />
+                </StackPanel>
+                <!-- TextDisabled -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color TextDisabled}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="TextDisabled" />
+                </StackPanel>
+                <!-- TextInverse -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color TextInverse}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="TextInverse" />
+                </StackPanel>
+                <!-- TextLink -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color TextLink}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="TextLink" />
+                </StackPanel>
+                <!-- TextError -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color TextError}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="TextError" />
+                </StackPanel>
+                <!-- TextSuccess -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color TextSuccess}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="TextSuccess" />
+                </StackPanel>
+                <!-- TextWarning -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color TextWarning}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="TextWarning" />
+                </StackPanel>
+                <!-- TextInfo -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color TextInfo}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="TextInfo" />
+                </StackPanel>
+                <!-- TextWatermark -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color TextWatermark}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="TextWatermark" />
+                </StackPanel>
+
+                <!-- 3. Icon Tokens -->
+                <TextBlock
+                    Margin="0,16,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="3. Icon Tokens" />
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color IconDefault}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="IconDefault" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color IconInverse}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="IconInverse" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color IconDisabled}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="IconDisabled" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color IconSuccess}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="IconSuccess" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color IconWarning}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="IconWarning" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color IconError}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="IconError" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color IconInfo}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="IconInfo" />
+                </StackPanel>
+
+                <!-- 4. Surface Tokens -->
+                <TextBlock
+                    Margin="0,16,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="4. Surface Tokens" />
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color SurfaceBase}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="SurfaceBase" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color SurfaceSubtle}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="SurfaceSubtle" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color SurfaceElevated}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="SurfaceElevated" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color SurfaceInverse}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="SurfaceInverse" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color SurfaceOverlay}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="SurfaceOverlay" />
+                </StackPanel>
+
+                <!-- 5. Border Tokens -->
+                <TextBlock
+                    Margin="0,16,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="5. Border Tokens" />
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color BorderSubtle}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="BorderSubtle" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color BorderDefault}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="BorderDefault" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color BorderStrong}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="BorderStrong" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color BorderDivider}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="BorderDivider" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color BorderFocus}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="BorderFocus" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color BorderError}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="BorderError" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color BorderSuccess}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="BorderSuccess" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color BorderWarning}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="BorderWarning" />
+                </StackPanel>
+
+                <!-- 6. Button Tokens -->
+                <TextBlock
+                    Margin="0,16,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="6. Button Tokens" />
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="Primary" />
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color ButtonPrimaryFg}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="ButtonPrimaryFg" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color ButtonPrimaryBg}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="ButtonPrimaryBg" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color ButtonPrimaryBorder}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="ButtonPrimaryBorder" />
+                </StackPanel>
+                <TextBlock Margin="0,8,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="Secondary" />
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color ButtonSecondaryFg}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="ButtonSecondaryFg" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color ButtonSecondaryBg}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="ButtonSecondaryBg" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color ButtonSecondaryBorder}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="ButtonSecondaryBorder" />
+                </StackPanel>
+                <TextBlock Margin="0,8,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="Tertiary" />
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color ButtonTertiaryFg}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="ButtonTertiaryFg" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color ButtonTertiaryBg}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="ButtonTertiaryBg" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color ButtonTertiaryBorder}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="ButtonTertiaryBorder" />
+                </StackPanel>
+                <TextBlock Margin="0,8,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="Destructive" />
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color ButtonDestructiveFg}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="ButtonDestructiveFg" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color ButtonDestructiveBg}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="ButtonDestructiveBg" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color ButtonDestructiveBorder}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="ButtonDestructiveBorder" />
+                </StackPanel>
+
+                <!-- 7. Input Tokens -->
+                <TextBlock
+                    Margin="0,16,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="7. Input Tokens" />
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color InputBg}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="InputBg" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color InputFg}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="InputFg" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color InputPlaceholder}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="InputPlaceholder" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color InputBorder}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="InputBorder" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color InputHelperText}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="InputHelperText" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color InputErrorText}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="InputErrorText" />
+                </StackPanel>
+
+                <!-- 8. Feedback Tokens -->
+                <TextBlock
+                    Margin="0,16,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="8. Feedback Tokens" />
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color FeedbackInfoFg}" CornerRadius="4" Margin="0,0,4,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <Border Width="32" Height="32" Background="{hy:Color FeedbackInfoBg}" CornerRadius="4" Margin="0,0,4,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <Border Width="32" Height="32" Background="{hy:Color FeedbackInfoBorder}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="FeedbackInfo (Fg / Bg / Border)" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color FeedbackSuccessFg}" CornerRadius="4" Margin="0,0,4,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <Border Width="32" Height="32" Background="{hy:Color FeedbackSuccessBg}" CornerRadius="4" Margin="0,0,4,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <Border Width="32" Height="32" Background="{hy:Color FeedbackSuccessBorder}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="FeedbackSuccess (Fg / Bg / Border)" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color FeedbackWarningFg}" CornerRadius="4" Margin="0,0,4,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <Border Width="32" Height="32" Background="{hy:Color FeedbackWarningBg}" CornerRadius="4" Margin="0,0,4,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <Border Width="32" Height="32" Background="{hy:Color FeedbackWarningBorder}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="FeedbackWarning (Fg / Bg / Border)" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color FeedbackErrorFg}" CornerRadius="4" Margin="0,0,4,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <Border Width="32" Height="32" Background="{hy:Color FeedbackErrorBg}" CornerRadius="4" Margin="0,0,4,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <Border Width="32" Height="32" Background="{hy:Color FeedbackErrorBorder}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="FeedbackError (Fg / Bg / Border)" />
+                </StackPanel>
+
+                <!-- 9. Badge Tokens -->
+                <TextBlock
+                    Margin="0,16,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="9. Badge Tokens" />
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color BadgeNeutralFg}" CornerRadius="4" Margin="0,0,4,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <Border Width="32" Height="32" Background="{hy:Color BadgeNeutralBg}" CornerRadius="4" Margin="0,0,4,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <Border Width="32" Height="32" Background="{hy:Color BadgeNeutralBorder}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="BadgeNeutral (Fg / Bg / Border)" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color BadgeInfoFg}" CornerRadius="4" Margin="0,0,4,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <Border Width="32" Height="32" Background="{hy:Color BadgeInfoBg}" CornerRadius="4" Margin="0,0,4,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <Border Width="32" Height="32" Background="{hy:Color BadgeInfoBorder}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="BadgeInfo (Fg / Bg / Border)" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color BadgeSuccessFg}" CornerRadius="4" Margin="0,0,4,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <Border Width="32" Height="32" Background="{hy:Color BadgeSuccessBg}" CornerRadius="4" Margin="0,0,4,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <Border Width="32" Height="32" Background="{hy:Color BadgeSuccessBorder}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="BadgeSuccess (Fg / Bg / Border)" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color BadgeWarningFg}" CornerRadius="4" Margin="0,0,4,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <Border Width="32" Height="32" Background="{hy:Color BadgeWarningBg}" CornerRadius="4" Margin="0,0,4,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <Border Width="32" Height="32" Background="{hy:Color BadgeWarningBorder}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="BadgeWarning (Fg / Bg / Border)" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color BadgeErrorFg}" CornerRadius="4" Margin="0,0,4,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <Border Width="32" Height="32" Background="{hy:Color BadgeErrorBg}" CornerRadius="4" Margin="0,0,4,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <Border Width="32" Height="32" Background="{hy:Color BadgeErrorBorder}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="BadgeError (Fg / Bg / Border)" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color BadgeHighlightFg}" CornerRadius="4" Margin="0,0,4,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <Border Width="32" Height="32" Background="{hy:Color BadgeHighlightBg}" CornerRadius="4" Margin="0,0,4,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <Border Width="32" Height="32" Background="{hy:Color BadgeHighlightBorder}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="BadgeHighlight (Fg / Bg / Border)" />
+                </StackPanel>
+
+                <!-- 10. Table Tokens -->
+                <TextBlock
+                    Margin="0,16,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="10. Table Tokens" />
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color TableHeaderBg}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="TableHeaderBg" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color TableRowBg}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="TableRowBg" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color TableRowHover}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="TableRowHover" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color TableRowSelected}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="TableRowSelected" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color TableRowActive}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="TableRowActive" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color TableBorder}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="TableBorder" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color TableStripe}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="TableStripe" />
+                </StackPanel>
+
+                <!-- 11. Navigation Tokens -->
+                <TextBlock
+                    Margin="0,16,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="11. Navigation Tokens" />
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color NavigationSidebarBg}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="NavigationSidebarBg" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color NavigationSidebarItemFg}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="NavigationSidebarItemFg" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color NavigationSidebarItemBgActive}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="NavigationSidebarItemBgActive" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color NavigationSidebarItemBgHover}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="NavigationSidebarItemBgHover" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color NavigationSidebarBorder}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="NavigationSidebarBorder" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color NavigationTabFg}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="NavigationTabFg" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color NavigationTabIndicator}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="NavigationTabIndicator" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color NavigationMenuBarBg}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="NavigationMenuBarBg" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color NavigationMenuBarFg}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="NavigationMenuBarFg" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color NavigationMenuBarBorder}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="NavigationMenuBarBorder" />
+                </StackPanel>
+
+                <!-- 12. Selection Tokens -->
+                <TextBlock
+                    Margin="0,16,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="12. Selection Tokens" />
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color SelectionBg}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="SelectionBg" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color SelectionBorder}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="SelectionBorder" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color SelectionFg}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="SelectionFg" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color SelectionInverseFg}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="SelectionInverseFg" />
+                </StackPanel>
+
+                <!-- 13. Scrollbar Tokens -->
+                <TextBlock
+                    Margin="0,16,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="13. Scrollbar Tokens" />
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color ScrollbarTrack}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="ScrollbarTrack" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color ScrollbarThumb}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="ScrollbarThumb" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color ScrollbarBorder}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="ScrollbarBorder" />
+                </StackPanel>
+
+                <!-- 14. TitleBar Tokens -->
+                <TextBlock
+                    Margin="0,16,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="14. TitleBar Tokens" />
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color TitleBarBackground}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="TitleBarBackground" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color TitleBarText}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="TitleBarText" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color TitleBarBorder}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="TitleBarBorder" />
+                </StackPanel>
+
+                <!-- 15. Popup Tokens -->
+                <TextBlock
+                    Margin="0,16,0,16"
+                    FontSize="{hy:FontSize Xl}"
+                    Foreground="{hy:Color TextPrimary}"
+                    Text="15. Popup Tokens" />
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color PopupTitleSurface}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="PopupTitleSurface" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color PopupTitleText}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="PopupTitleText" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color PopupBorder}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="PopupBorder" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="32" Height="32" Background="{hy:Color PopupContentSurface}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="PopupContentSurface" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                    <Border Width="32" Height="32" Background="{hy:Color PopupContentText}" CornerRadius="4" Margin="0,0,8,0" BorderBrush="{hy:Color BorderSubtle}" BorderThickness="1" />
+                    <TextBlock VerticalAlignment="Center" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextPrimary}" Text="PopupContentText" />
+                </StackPanel>
+            </StackPanel>
+        </hy:HyScrollViewer>
+    </Border>
+</UserControl>
