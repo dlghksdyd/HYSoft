@@ -12,8 +12,8 @@ namespace HYSoft.Presentation.Interactivity.CommandBehaviors
     /// <summary>
     /// RoutedEvent와 ICommand를 연결할 수 있도록 지원하는 Attached Behavior입니다.
     /// - 단일 바인딩: EventToCommand.Binding
-    /// - 다중 바인딩: EventToCommand.MultiBinding (FreezableCollection<Event>)
-    /// 
+    /// - 다중 바인딩: EventToCommand.MultiBinding (FreezableCollection&lt;Event&gt;)
+    ///
     /// Event는 MultiDataTrigger.Condition 스타일로 바뀌어
     /// Command/CommandParameter "직접 값"과
     /// CommandBinding/CommandParameterBinding(BindingBase) 를 분리 보관합니다.
@@ -68,7 +68,7 @@ namespace HYSoft.Presentation.Interactivity.CommandBehaviors
         }
 
         /// <summary>
-        /// UIElement에 바인딩할 Event 모음(FreezableCollection<Event>)을 나타내는 Attached Property입니다.
+        /// UIElement에 바인딩할 Event 모음(FreezableCollection&lt;Event&gt;)을 나타내는 Attached Property입니다.
         /// (여러 Event를 한 번에 부착)
         /// </summary>
         public static readonly DependencyProperty MultiBindingProperty =

@@ -4,7 +4,7 @@ namespace Docs.Mvvm.Styles.Components
 {
     public class ComponentViewModel : NotifyPropertyChangedBase
     {
-        public IBottomSharedContext SharedContext { get; }
+        public IBottomSharedContext? SharedContext { get; }
 
         public ComponentViewModel()
         {

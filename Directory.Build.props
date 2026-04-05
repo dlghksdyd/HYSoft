@@ -1,5 +1,17 @@
 <Project>
 	<PropertyGroup>
+		<!-- 공통 NuGet 메타데이터 -->
+		<Authors>Hwanyong.lee</Authors>
+		<Company>HYSoft</Company>
+		<Version>$([System.IO.File]::ReadAllText('$(MSBuildThisFileDirectory).to_publish_version').Trim())</Version>
+		<PackageVersion>$(Version)</PackageVersion>
+		<PackageTags>wpf;ui;mvvm</PackageTags>
+		<Description>WPF Development kit.</Description>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<RepositoryUrl>https://github.com/dlghksdyd/HYSoft</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/dlghksdyd/HYSoft</PackageProjectUrl>
+		<RepositoryType>git</RepositoryType>
+
 		<!-- 개발 환경 -->
 		<UseWPF>true</UseWPF>
 		<TargetFramework>net48</TargetFramework>
@@ -16,10 +28,21 @@
 		<HysoftXmlnsIncludeAll>true</HysoftXmlnsIncludeAll>
 		<HysoftXmlnsEnabled>true</HysoftXmlnsEnabled>
 
+		<!-- NuGet 페이지에 README 노출 기본값 -->
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+
 		<!-- 스크립트 루트 -->
 		<HySoftScriptsDir>$(SolutionDir)scripts\</HySoftScriptsDir>
 
 		<!-- Windows PowerShell -->
 		<HysoftPwshExe>$(WINDIR)\System32\WindowsPowerShell\v1.0\powershell.exe</HysoftPwshExe>
 	</PropertyGroup>
+
+	<!-- 루트 README를 nupkg에 포함 -->
+	<ItemGroup>
+		<None Include="$(MSBuildThisFileDirectory)README.md"
+			  Pack="true"
+			  PackagePath="\"
+			  Condition="Exists('$(MSBuildThisFileDirectory)README.md')" />
+	</ItemGroup>
 </Project>

@@ -200,7 +200,7 @@ namespace HYSoft.Presentation.Styles.Controls
         {
             if (e.DataObject.GetDataPresent(DataFormats.Text))
             {
-                string text = e.DataObject.GetData(DataFormats.Text) as string;
+                string? text = e.DataObject.GetData(DataFormats.Text) as string;
                 if (!string.IsNullOrEmpty(text) && !text.All(char.IsDigit))
                 {
                     e.CancelCommand();

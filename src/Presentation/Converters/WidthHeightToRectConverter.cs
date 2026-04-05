@@ -15,6 +15,6 @@ namespace HYSoft.Presentation.Converters
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-            => Binding.DoNothing as object[];
+            => (Binding.DoNothing as object[])!;
     }
 }

@@ -56,7 +56,7 @@ namespace HYSoft.Presentation.Styles.Controls
         private ICommand? _minimizeAppCommand;
         public ICommand MinimizeAppCommand => _minimizeAppCommand ??= new RelayCommand<EventPayload>((p) =>
         {
-            if (p.Sender is not DependencyObject d) return;
+            if (p?.Sender is not DependencyObject d) return;
 
             var window = Window.GetWindow(d);
             if (window == null) return;
@@ -67,7 +67,7 @@ namespace HYSoft.Presentation.Styles.Controls
         private ICommand? _maximizeAppCommand;
         public ICommand MaximizeAppCommand => _maximizeAppCommand ??= new RelayCommand<EventPayload>((p) =>
         {
-            if (p.Sender is not DependencyObject d) return;
+            if (p?.Sender is not DependencyObject d) return;
 
             var window = Window.GetWindow(d);
             if (window == null) return;

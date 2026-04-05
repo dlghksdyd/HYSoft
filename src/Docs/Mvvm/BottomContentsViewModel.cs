@@ -20,8 +20,8 @@ namespace Docs.Mvvm
             Menu = new LeftMenuViewModel(SharedContext);
         }
         
-        private object _menu;
-        public object Menu
+        private object? _menu;
+        public object? Menu
         {
             get => _menu;
             set => SetProperty(ref _menu, value);

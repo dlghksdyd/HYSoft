@@ -97,7 +97,7 @@ namespace HYSoft.Presentation.Bindings
                                                    Binding src)
         {
             // 1) ElementName / RelativeSource / Source가 있으면 기존 로직대로 해석
-            object resolvedSource = null;
+            object? resolvedSource = null;
 
             if (!string.IsNullOrEmpty(src.ElementName))
             {
@@ -114,7 +114,7 @@ namespace HYSoft.Presentation.Bindings
                                                                 Math.Max(1, rs.AncestorLevel));
                 else if (rs.Mode == RelativeSourceMode.TemplatedParent)
                     resolvedSource = (attachedObject as FrameworkElement)?.TemplatedParent
-                                  ?? (attachedObject as FrameworkContentElement)?.TemplatedParent;
+                                     ?? (attachedObject as FrameworkContentElement)?.TemplatedParent;
             }
             else if (src.Source != null)
             {
@@ -137,7 +137,7 @@ namespace HYSoft.Presentation.Bindings
             {
                 // ★ 핵심: 순수 {Binding} → attachedObject.DataContext를 추적하도록 리베이스
                 // 원래 경로가 없으면 현재 DataContext 자체를 사용
-                string userPath = src.Path?.Path;
+                string? userPath = src.Path?.Path;
 
                 string path = string.IsNullOrEmpty(userPath)
                     ? "DataContext"
@@ -178,7 +178,7 @@ namespace HYSoft.Presentation.Bindings
 
         // === 트리 유틸 =======================================================
 
-        private static DependencyObject FindAncestorByTypeAndLevel(DependencyObject start, Type type, int level)
+        private static DependencyObject? FindAncestorByTypeAndLevel(DependencyObject start, Type type, int level)
         {
             if (start == null || type == null || level <= 0) return null;
             int found = 0;
@@ -192,7 +192,7 @@ namespace HYSoft.Presentation.Bindings
             return null;
         }
 
-        private static DependencyObject GetParent(DependencyObject d)
+        private static DependencyObject? GetParent(DependencyObject? d)
         {
             if (d == null) return null;
 
@@ -216,7 +216,7 @@ namespace HYSoft.Presentation.Bindings
             return LogicalTreeHelper.GetParent(d);
         }
 
-        private static object FindByName(DependencyObject scope, string name)
+        private static object? FindByName(DependencyObject scope, string name)
         {
             // 1) 현재 요소 네임스코프에서 찾기
             if (scope is FrameworkElement fe)

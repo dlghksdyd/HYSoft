@@ -47,6 +47,30 @@
       }
     },
     {
+      "label": "NuGet Pack",
+      "type": "shell",
+      "command": "dotnet",
+      "args": ["build", "HYSoft.sln", "-c", "Release"],
+      "group": "build",
+      "problemMatcher": "$msCompile",
+      "detail": "Release 빌드 → 스테이징 복사 → nupkg 생성 (nuget/ 폴더)"
+    },
+    {
+      "label": "NuGet Push",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "nuget", "push",
+        "nuget/HySoft.Bundle.*.nupkg",
+        "--api-key", "${env:NUGET_API_KEY}",
+        "--source", "https://api.nuget.org/v3/index.json",
+        "--skip-duplicate"
+      ],
+      "dependsOn": "NuGet Pack",
+      "problemMatcher": [],
+      "detail": "Release 빌드 후 nuget.org에 push (NUGET_API_KEY 환경변수 필요)"
+    },
+    {
       "label": "Clean Solution",
       "type": "shell",
       "command": "dotnet",
