@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Communication.FileTransfer</name>
+    </assembly>
+    <members>
+        <member name="T:HYSoft.Communication.FileTransfer.FileTransferClient">
+            <summary>
+            파일 전송 클라이언트 구현 클래스입니다.
+            </summary>
+        </member>
+        <member name="T:HYSoft.Communication.FileTransfer.FileTransferServer">
+            <summary>
+            간단한 파일 전송 서버 구현.
+            </summary>
+        </member>
+    </members>
+</doc>

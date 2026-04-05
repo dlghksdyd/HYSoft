@@ -1,0 +1,76 @@
+<UserControl
+    x:Class="Docs.Mvvm.Styles.Components.WindowView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
+    xmlns:local="clr-namespace:Docs.Mvvm.Styles.Components"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Background="{hy:Color SurfaceBase}"
+    d:DataContext="{d:DesignInstance local:ComponentViewModel, IsDesignTimeCreatable=True}"
+    d:DesignHeight="900" d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Border Margin="20">
+        <hy:HyScrollViewer>
+            <StackPanel Margin="0,0,10,0" Orientation="Vertical">
+                <!-- 1. Getting Started -->
+                <TextBlock Margin="0,0,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="1. Getting Started" />
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}"
+                    Text="- HyWindow is a custom Window with built-in rounded corner support. Use it with HyTitleBar for a complete borderless window experience." />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="&lt;hy:HyWindow CornerRadius=&quot;8&quot;&gt;" />
+                            <LineBreak />
+                            <Run Text="    &lt;Grid&gt;" />
+                            <LineBreak />
+                            <Run Text="        &lt;Grid.RowDefinitions&gt;" />
+                            <LineBreak />
+                            <Run Text="            &lt;RowDefinition Height=&quot;Auto&quot; /&gt;" />
+                            <LineBreak />
+                            <Run Text="            &lt;RowDefinition Height=&quot;*&quot; /&gt;" />
+                            <LineBreak />
+                            <Run Text="        &lt;/Grid.RowDefinitions&gt;" />
+                            <LineBreak />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="        &lt;hy:HyTitleBar /&gt;" />
+                            <LineBreak />
+                            <Run Text="        &lt;ContentControl Grid.Row=&quot;1&quot; /&gt;" />
+                            <LineBreak />
+                            <Run Text="    &lt;/Grid&gt;" />
+                            <LineBreak />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="&lt;/hy:HyWindow&gt;" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 2. Examples -->
+                <TextBlock Margin="0,0,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="2. Examples" />
+
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="Usage" />
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextSecondary}"
+                    Text="HyWindow cannot be embedded inside another window. It replaces the standard WPF Window class as the root element of your application or dialog windows." />
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextSecondary}"
+                    Text="Set CornerRadius to apply rounded corners to the window chrome. Pair with HyTitleBar for a modern borderless title bar with minimize, maximize, and close buttons." />
+                <TextBlock Margin="0,0,0,16" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextSecondary}"
+                    Text="This Docs application itself uses HyWindow as its root window." />
+
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="CornerRadius" />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph><Run Text="CornerRadius=&quot;0&quot;  - Sharp corners (default)" /></Paragraph>
+                        <Paragraph><Run Text="CornerRadius=&quot;8&quot;  - Rounded corners" /></Paragraph>
+                        <Paragraph><Run Text="CornerRadius=&quot;16&quot; - More rounded corners" /></Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 3. Properties -->
+                <TextBlock Margin="0,16,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="3. Properties" />
+                <RichTextBox Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph><Run FontWeight="Bold" Text="CornerRadius" /><Run Text=" (CornerRadius) - Window corner radius. Default: 0" /></Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+            </StackPanel>
+        </hy:HyScrollViewer>
+    </Border>
+</UserControl>

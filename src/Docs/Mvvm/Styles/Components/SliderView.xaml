@@ -1,0 +1,74 @@
+<UserControl
+    x:Class="Docs.Mvvm.Styles.Components.SliderView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
+    xmlns:local="clr-namespace:Docs.Mvvm.Styles.Components"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Background="{hy:Color SurfaceBase}"
+    d:DataContext="{d:DesignInstance local:ComponentViewModel, IsDesignTimeCreatable=True}"
+    d:DesignHeight="900" d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Border Margin="20">
+        <hy:HyScrollViewer>
+            <StackPanel Margin="0,0,10,0" Orientation="Vertical">
+                <!-- 1. Getting Started -->
+                <TextBlock Margin="0,0,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="1. Getting Started" />
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="- Use HySlider in XAML" />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="&lt;hy:HySlider " />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="Value=&quot;50&quot; Minimum=&quot;0&quot; Maximum=&quot;100&quot;" />
+                            <Run Text=" /&gt;" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 2. Examples -->
+                <TextBlock Margin="0,0,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="2. Examples" />
+
+                <!-- Default -->
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="Default" />
+                <hy:HySlider Margin="0,0,0,16" Value="50" Minimum="0" Maximum="100" />
+
+                <!-- Custom TrackHeight -->
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="Custom TrackHeight" />
+                <StackPanel Margin="0,0,0,16" Orientation="Vertical">
+                    <TextBlock Margin="0,0,0,4" Text="TrackHeight=2" />
+                    <hy:HySlider Margin="0,0,0,8" Value="40" Minimum="0" Maximum="100" TrackHeight="2" />
+                    <TextBlock Margin="0,0,0,4" Text="TrackHeight=4 (default)" />
+                    <hy:HySlider Margin="0,0,0,8" Value="60" Minimum="0" Maximum="100" TrackHeight="4" />
+                    <TextBlock Margin="0,0,0,4" Text="TrackHeight=8" />
+                    <hy:HySlider Margin="0,0,0,8" Value="80" Minimum="0" Maximum="100" TrackHeight="8" />
+                </StackPanel>
+
+                <!-- ThumbSize -->
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="ThumbSize" />
+                <StackPanel Margin="0,0,0,16" Orientation="Vertical">
+                    <TextBlock Margin="0,0,0,4" Text="ThumbSize=12" />
+                    <hy:HySlider Margin="0,0,0,8" Value="30" Minimum="0" Maximum="100" ThumbSize="12" />
+                    <TextBlock Margin="0,0,0,4" Text="ThumbSize=16 (default)" />
+                    <hy:HySlider Margin="0,0,0,8" Value="50" Minimum="0" Maximum="100" ThumbSize="16" />
+                    <TextBlock Margin="0,0,0,4" Text="ThumbSize=24" />
+                    <hy:HySlider Margin="0,0,0,8" Value="70" Minimum="0" Maximum="100" ThumbSize="24" />
+                </StackPanel>
+
+                <!-- Disabled -->
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="Disabled" />
+                <hy:HySlider Margin="0,0,0,16" Value="50" Minimum="0" Maximum="100" IsEnabled="False" />
+
+                <!-- 3. Properties -->
+                <TextBlock Margin="0,16,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="3. Properties" />
+                <RichTextBox Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph><Run FontWeight="Bold" Text="TrackHeight" /><Run Text=" (double) - Height of the slider track. Default: 4" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="ThumbSize" /><Run Text=" (double) - Size of the slider thumb. Default: 16" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="TrackCornerRadius" /><Run Text=" (CornerRadius) - Corner radius of the track. Default: 2" /></Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+            </StackPanel>
+        </hy:HyScrollViewer>
+    </Border>
+</UserControl>

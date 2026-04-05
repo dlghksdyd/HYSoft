@@ -3,7 +3,7 @@ using System.IO;
 using System.Net;
 using System.Windows.Input;
 using HYSoft.Communication.Tcp.Client;
-using HYSoft.Communication.Tcp.Client.Protocol.FileTransfer;
+using HYSoft.Communication.FileTransfer;
 using HYSoft.Presentation.Interactivity;
 using HYSoft.Presentation.Interactivity.CommandBehaviors;
 

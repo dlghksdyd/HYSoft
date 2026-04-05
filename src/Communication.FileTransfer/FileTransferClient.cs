@@ -2,8 +2,9 @@ using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using HYSoft.Communication.Tcp.Client;
 
-namespace HYSoft.Communication.Tcp.Client.Protocol.FileTransfer
+namespace HYSoft.Communication.FileTransfer
 {
     /// <summary>
     /// 파일 전송 클라이언트 구현 클래스입니다.

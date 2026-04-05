@@ -1,0 +1,100 @@
+<UserControl
+    x:Class="Docs.Mvvm.Styles.Components.MenuView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
+    xmlns:local="clr-namespace:Docs.Mvvm.Styles.Components"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Background="{hy:Color SurfaceBase}"
+    d:DataContext="{d:DesignInstance local:ComponentViewModel, IsDesignTimeCreatable=True}"
+    d:DesignHeight="900" d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Border Margin="20">
+        <hy:HyScrollViewer>
+            <StackPanel Margin="0,0,10,0" Orientation="Vertical">
+                <!-- 1. Getting Started -->
+                <TextBlock Margin="0,0,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="1. Getting Started" />
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="- Use HyMenu / HyContextMenu / HyMenuItem in XAML" />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="&lt;hy:HyMenu&gt;" />
+                            <LineBreak />
+                            <Run Text="    &lt;hy:HyMenuItem Header=&quot;File&quot; /&gt;" />
+                            <LineBreak />
+                            <Run Text="    &lt;hy:HyMenuItem Header=&quot;Edit&quot; /&gt;" />
+                            <LineBreak />
+                            <Run Text="&lt;/hy:HyMenu&gt;" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 2. Live Examples -->
+                <TextBlock Margin="0,0,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="2. Examples" />
+
+                <!-- HyMenu with HyMenuItems -->
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="HyMenu" />
+                <hy:HyMenu HorizontalAlignment="Left" Margin="0,0,0,16">
+                    <hy:HyMenuItem Header="File">
+                        <hy:HyMenuItem Header="New" />
+                        <hy:HyMenuItem Header="Open" />
+                        <Separator />
+                        <hy:HyMenuItem Header="Save" />
+                        <hy:HyMenuItem Header="Save As..." />
+                    </hy:HyMenuItem>
+                    <hy:HyMenuItem Header="Edit">
+                        <hy:HyMenuItem Header="Undo" />
+                        <hy:HyMenuItem Header="Redo" />
+                        <Separator />
+                        <hy:HyMenuItem Header="Cut" />
+                        <hy:HyMenuItem Header="Copy" />
+                        <hy:HyMenuItem Header="Paste" />
+                    </hy:HyMenuItem>
+                    <hy:HyMenuItem Header="View">
+                        <hy:HyMenuItem Header="Zoom In" />
+                        <hy:HyMenuItem Header="Zoom Out" />
+                    </hy:HyMenuItem>
+                </hy:HyMenu>
+
+                <!-- CornerRadius -->
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="HyMenu CornerRadius" />
+                <hy:HyMenu HorizontalAlignment="Left" Margin="0,0,0,16" CornerRadius="8">
+                    <hy:HyMenuItem Header="Rounded File">
+                        <hy:HyMenuItem Header="New" />
+                        <hy:HyMenuItem Header="Open" />
+                    </hy:HyMenuItem>
+                    <hy:HyMenuItem Header="Rounded Edit">
+                        <hy:HyMenuItem Header="Undo" />
+                        <hy:HyMenuItem Header="Redo" />
+                    </hy:HyMenuItem>
+                </hy:HyMenu>
+
+                <!-- HyContextMenu -->
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="HyContextMenu (right-click the border below)" />
+                <Border Margin="0,0,0,16" Padding="24" Background="{hy:Color SurfaceAlt}" CornerRadius="4" HorizontalAlignment="Left">
+                    <Border.ContextMenu>
+                        <hy:HyContextMenu CornerRadius="4">
+                            <hy:HyMenuItem Header="Cut" />
+                            <hy:HyMenuItem Header="Copy" />
+                            <hy:HyMenuItem Header="Paste" />
+                            <Separator />
+                            <hy:HyMenuItem Header="Select All" />
+                        </hy:HyContextMenu>
+                    </Border.ContextMenu>
+                    <TextBlock Text="Right-click here to open ContextMenu" Foreground="{hy:Color TextPrimary}" />
+                </Border>
+
+                <!-- 3. Properties -->
+                <TextBlock Margin="0,16,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="3. Properties" />
+                <RichTextBox Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph><Run FontWeight="Bold" Text="HyMenu.CornerRadius" /><Run Text=" (CornerRadius) - Menu border corner radius" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="HyContextMenu.CornerRadius" /><Run Text=" (CornerRadius) - Context menu corner radius. Default: 4" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="HyMenuItem.CornerRadius" /><Run Text=" (CornerRadius) - Individual menu item corner radius" /></Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+            </StackPanel>
+        </hy:HyScrollViewer>
+    </Border>
+</UserControl>

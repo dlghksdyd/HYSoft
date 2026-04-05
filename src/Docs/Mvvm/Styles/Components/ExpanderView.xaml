@@ -1,0 +1,83 @@
+<UserControl
+    x:Class="Docs.Mvvm.Styles.Components.ExpanderView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
+    xmlns:local="clr-namespace:Docs.Mvvm.Styles.Components"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Background="{hy:Color SurfaceBase}"
+    d:DataContext="{d:DesignInstance local:ComponentViewModel, IsDesignTimeCreatable=True}"
+    d:DesignHeight="900" d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Border Margin="20">
+        <hy:HyScrollViewer>
+            <StackPanel Margin="0,0,10,0" Orientation="Vertical">
+                <!-- 1. Getting Started -->
+                <TextBlock Margin="0,0,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="1. Getting Started" />
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="- Use HyExpander / HyGroupBox in XAML" />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="&lt;hy:HyExpander Header=&quot;Section&quot; " />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="CornerRadius=&quot;4&quot;" />
+                            <Run Text="&gt;" />
+                            <LineBreak />
+                            <Run Text="    &lt;TextBlock Text=&quot;Content&quot; /&gt;" />
+                            <LineBreak />
+                            <Run Text="&lt;/hy:HyExpander&gt;" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 2. Live Examples -->
+                <TextBlock Margin="0,0,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="2. Examples" />
+
+                <!-- Expanded -->
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="HyExpander (Expanded)" />
+                <hy:HyExpander Header="Expanded Section" IsExpanded="True" Margin="0,0,0,16">
+                    <StackPanel Margin="8">
+                        <TextBlock Text="This is the content inside the expander." Foreground="{hy:Color TextPrimary}" />
+                        <TextBlock Text="It can contain any elements." Foreground="{hy:Color TextPrimary}" Margin="0,4,0,0" />
+                    </StackPanel>
+                </hy:HyExpander>
+
+                <!-- Collapsed -->
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="HyExpander (Collapsed)" />
+                <hy:HyExpander Header="Collapsed Section" IsExpanded="False" Margin="0,0,0,16">
+                    <TextBlock Text="This content is hidden when collapsed." Margin="8" Foreground="{hy:Color TextPrimary}" />
+                </hy:HyExpander>
+
+                <!-- CornerRadius -->
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="HyExpander CornerRadius" />
+                <hy:HyExpander Header="Rounded Expander" CornerRadius="8" IsExpanded="True" Margin="0,0,0,16">
+                    <TextBlock Text="Expander with CornerRadius=8" Margin="8" Foreground="{hy:Color TextPrimary}" />
+                </hy:HyExpander>
+
+                <!-- HyGroupBox -->
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="HyGroupBox" />
+                <hy:HyGroupBox Header="Group Box Section" CornerRadius="4" Margin="0,0,0,16">
+                    <StackPanel Margin="8">
+                        <TextBlock Text="GroupBox content area." Foreground="{hy:Color TextPrimary}" />
+                        <TextBlock Text="Use HyGroupBox to group related controls." Foreground="{hy:Color TextPrimary}" Margin="0,4,0,0" />
+                    </StackPanel>
+                </hy:HyGroupBox>
+
+                <!-- HyGroupBox CornerRadius -->
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="HyGroupBox CornerRadius" />
+                <hy:HyGroupBox Header="Rounded GroupBox" CornerRadius="8" Margin="0,0,0,16">
+                    <TextBlock Text="GroupBox with CornerRadius=8" Margin="8" Foreground="{hy:Color TextPrimary}" />
+                </hy:HyGroupBox>
+
+                <!-- 3. Properties -->
+                <TextBlock Margin="0,16,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="3. Properties" />
+                <RichTextBox Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph><Run FontWeight="Bold" Text="HyExpander.CornerRadius" /><Run Text=" (CornerRadius) - Expander border corner radius. Default: 4" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="HyGroupBox.CornerRadius" /><Run Text=" (CornerRadius) - GroupBox border corner radius. Default: 4" /></Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+            </StackPanel>
+        </hy:HyScrollViewer>
+    </Border>
+</UserControl>

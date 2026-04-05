@@ -1,0 +1,99 @@
+<UserControl
+    x:Class="Docs.Mvvm.Styles.Components.ToolTipView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
+    xmlns:local="clr-namespace:Docs.Mvvm.Styles.Components"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Background="{hy:Color SurfaceBase}"
+    d:DataContext="{d:DesignInstance local:ComponentViewModel, IsDesignTimeCreatable=True}"
+    d:DesignHeight="900" d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Border Margin="20">
+        <hy:HyScrollViewer>
+            <StackPanel Margin="0,0,10,0" Orientation="Vertical">
+                <!-- 1. Getting Started -->
+                <TextBlock Margin="0,0,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="1. Getting Started" />
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="- Use HyToolTip in XAML" />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="&lt;hy:HyButton Content=&quot;Hover me&quot;&gt;" />
+                            <LineBreak />
+                            <Run Text="    &lt;hy:HyButton.ToolTip&gt;" />
+                            <LineBreak />
+                            <Run Text="        &lt;hy:HyToolTip " />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="CornerRadius=&quot;4&quot;" />
+                            <Run Text=" Content=&quot;Tooltip text&quot; /&gt;" />
+                            <LineBreak />
+                            <Run Text="    &lt;/hy:HyButton.ToolTip&gt;" />
+                            <LineBreak />
+                            <Run Text="&lt;/hy:HyButton&gt;" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 2. Live Examples -->
+                <TextBlock Margin="0,0,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="2. Examples" />
+
+                <!-- Default ToolTip -->
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="Default ToolTip" />
+                <hy:HyButton HorizontalAlignment="Left" Margin="0,0,0,16" Content="Hover me" Padding="16,8">
+                    <hy:HyButton.ToolTip>
+                        <hy:HyToolTip Content="This is a default tooltip" />
+                    </hy:HyButton.ToolTip>
+                </hy:HyButton>
+
+                <!-- ToolTip on TextBlock -->
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="ToolTip on TextBlock" />
+                <TextBlock Margin="0,0,0,16" Foreground="{hy:Color TextPrimary}" Text="Hover over this text to see a tooltip">
+                    <TextBlock.ToolTip>
+                        <hy:HyToolTip Content="Tooltip attached to a TextBlock" />
+                    </TextBlock.ToolTip>
+                </TextBlock>
+
+                <!-- CornerRadius -->
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="CornerRadius" />
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                    <hy:HyButton Content="Radius 0" Padding="16,8" Margin="0,0,8,0">
+                        <hy:HyButton.ToolTip>
+                            <hy:HyToolTip Content="CornerRadius=0" CornerRadius="0" />
+                        </hy:HyButton.ToolTip>
+                    </hy:HyButton>
+                    <hy:HyButton Content="Radius 4" Padding="16,8" Margin="0,0,8,0">
+                        <hy:HyButton.ToolTip>
+                            <hy:HyToolTip Content="CornerRadius=4" CornerRadius="4" />
+                        </hy:HyButton.ToolTip>
+                    </hy:HyButton>
+                    <hy:HyButton Content="Radius 8" Padding="16,8">
+                        <hy:HyButton.ToolTip>
+                            <hy:HyToolTip Content="CornerRadius=8" CornerRadius="8" />
+                        </hy:HyButton.ToolTip>
+                    </hy:HyButton>
+                </StackPanel>
+
+                <!-- Rich Content ToolTip -->
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="Rich Content ToolTip" />
+                <hy:HyButton HorizontalAlignment="Left" Margin="0,0,0,16" Content="Hover for rich tooltip" Padding="16,8">
+                    <hy:HyButton.ToolTip>
+                        <hy:HyToolTip CornerRadius="4">
+                            <StackPanel>
+                                <TextBlock FontWeight="Bold" Text="Title" />
+                                <TextBlock Text="This tooltip has rich content." />
+                            </StackPanel>
+                        </hy:HyToolTip>
+                    </hy:HyButton.ToolTip>
+                </hy:HyButton>
+
+                <!-- 3. Properties -->
+                <TextBlock Margin="0,16,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="3. Properties" />
+                <RichTextBox Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph><Run FontWeight="Bold" Text="CornerRadius" /><Run Text=" (CornerRadius) - Tooltip border corner radius. Default: 4" /></Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+            </StackPanel>
+        </hy:HyScrollViewer>
+    </Border>
+</UserControl>

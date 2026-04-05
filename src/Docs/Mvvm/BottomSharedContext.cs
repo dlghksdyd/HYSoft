@@ -161,15 +161,36 @@ namespace Docs.Mvvm
             item2.AddSubItem("Font Size", null);
 
             var item3 = AddItem("Components", null, true);
+            item3.AddSubItem("Badge", typeof(BadgeView));
+            item3.AddSubItem("Breadcrumb", typeof(BreadcrumbView));
             item3.AddSubItem("Button", typeof(ButtonView));
             item3.AddSubItem("CheckBox", typeof(CheckBoxView));
             item3.AddSubItem("ComboBox", typeof(ComboBoxView));
+            item3.AddSubItem("DataGrid", typeof(DataGridView));
+            item3.AddSubItem("Dialog", typeof(DialogView));
+            item3.AddSubItem("Expander", typeof(ExpanderView));
+            item3.AddSubItem("GridSplitter", typeof(GridSplitterView));
             item3.AddSubItem("Icon", typeof(IconView));
+            item3.AddSubItem("ListBox", typeof(ListBoxView));
+            item3.AddSubItem("Menu", typeof(MenuView));
+            item3.AddSubItem("NumericUpDown", typeof(NumericUpDownView));
+            item3.AddSubItem("Paginator", typeof(PaginatorView));
             item3.AddSubItem("PasswordBox", typeof(PasswordBoxView));
+            item3.AddSubItem("ProgressBar", typeof(ProgressBarView));
             item3.AddSubItem("RadioButton", typeof(RadioButtonView));
+            item3.AddSubItem("RichTextBox", typeof(RichTextBoxView));
             item3.AddSubItem("ScrollViewer", typeof(ScrollViewerView));
+            item3.AddSubItem("Slider", typeof(SliderView));
+            item3.AddSubItem("StatusBar", typeof(StatusBarView));
+            item3.AddSubItem("TabControl", typeof(TabControlView));
             item3.AddSubItem("TextBox", typeof(TextBoxView));
             item3.AddSubItem("TitleBar", typeof(TitleBarView));
+            item3.AddSubItem("Toast", typeof(ToastView));
+            item3.AddSubItem("ToggleSwitch", typeof(ToggleSwitchView));
+            item3.AddSubItem("ToolBar", typeof(ToolBarView));
+            item3.AddSubItem("ToolTip", typeof(ToolTipView));
+            item3.AddSubItem("TreeView", typeof(TreeViewView));
+            item3.AddSubItem("Window", typeof(WindowView));
 
             AddItem("Adorner", null, true);
             AddItem("Converter", null, true);

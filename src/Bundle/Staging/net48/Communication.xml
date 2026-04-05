@@ -4,11 +4,6 @@
         <name>Communication</name>
     </assembly>
     <members>
-        <member name="T:HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient">
-            <summary>
-            파일 전송 클라이언트 구현 클래스입니다.
-            </summary>
-        </member>
         <member name="T:HYSoft.Communication.Tcp.Client.TcpClient">
             <summary>
             비동기 TCP 클라이언트 구현 클래스입니다.
@@ -48,11 +43,6 @@
         <member name="P:HYSoft.Communication.Tcp.Client.TcpClientOptions.Port">
             <summary>
             연결할 서버의 포트 번호를 가져옵니다.
-            </summary>
-        </member>
-        <member name="T:HYSoft.Communication.Tcp.Server.Protocol.FileTransfer.FileTransferServer">
-            <summary>
-            간단한 파일 전송 서버 구현.
             </summary>
         </member>
         <member name="T:HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler">

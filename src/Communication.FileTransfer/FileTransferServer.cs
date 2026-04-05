@@ -5,8 +5,9 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using HYSoft.Communication.Tcp.Server;
 
-namespace HYSoft.Communication.Tcp.Server.Protocol.FileTransfer
+namespace HYSoft.Communication.FileTransfer
 {
     /// <summary>
     /// 간단한 파일 전송 서버 구현.

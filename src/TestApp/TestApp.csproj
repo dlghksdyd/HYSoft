@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Communication\Communication.csproj" />
+    <ProjectReference Include="..\Communication.FileTransfer\Communication.FileTransfer.csproj" />
     <ProjectReference Include="..\Presentation\Presentation.csproj" />
     <ProjectReference Include="..\Presentation.Styles\Presentation.Styles.csproj" />
   </ItemGroup>

@@ -1,0 +1,60 @@
+<UserControl
+    x:Class="Docs.Mvvm.Styles.Components.PaginatorView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
+    xmlns:local="clr-namespace:Docs.Mvvm.Styles.Components"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Background="{hy:Color SurfaceBase}"
+    d:DataContext="{d:DesignInstance local:ComponentViewModel, IsDesignTimeCreatable=True}"
+    d:DesignHeight="900" d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Border Margin="20">
+        <hy:HyScrollViewer>
+            <StackPanel Margin="0,0,10,0" Orientation="Vertical">
+                <!-- 1. Getting Started -->
+                <TextBlock Margin="0,0,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="1. Getting Started" />
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="- Use HyPaginator in XAML" />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="&lt;hy:HyPaginator " />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="CurrentPage=&quot;1&quot; TotalPages=&quot;10&quot;" />
+                            <Run Text=" /&gt;" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <!-- 2. Examples -->
+                <TextBlock Margin="0,0,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="2. Examples" />
+
+                <!-- Default -->
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="Default Paginator" />
+                <hy:HyPaginator Margin="0,0,0,16" HorizontalAlignment="Left"
+                    CurrentPage="1" TotalPages="10" />
+
+                <!-- Multiple pages with custom PageSize -->
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="With TotalItems and PageSize" />
+                <hy:HyPaginator Margin="0,0,0,16" HorizontalAlignment="Left"
+                    CurrentPage="3" TotalPages="20" PageSize="10" TotalItems="200" />
+
+                <!-- Single page -->
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="Single Page" />
+                <hy:HyPaginator Margin="0,0,0,16" HorizontalAlignment="Left"
+                    CurrentPage="1" TotalPages="1" />
+
+                <!-- 3. Properties -->
+                <TextBlock Margin="0,16,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="3. Properties" />
+                <RichTextBox Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph><Run FontWeight="Bold" Text="CurrentPage" /><Run Text=" (int) - Current active page number. Default: 1" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="TotalPages" /><Run Text=" (int) - Total number of pages. Default: 1" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="PageSize" /><Run Text=" (int) - Number of items per page. Default: 20" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="TotalItems" /><Run Text=" (int) - Total number of items. Default: 0" /></Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+            </StackPanel>
+        </hy:HyScrollViewer>
+    </Border>
+</UserControl>

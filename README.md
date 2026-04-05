@@ -22,7 +22,8 @@ The `HySoft.Bundle` package contains the following assemblies:
 |----------|-------------|
 | **Presentation.dll** | MVVM infrastructure, converters, DragDrop, Modal, attached behaviors |
 | **Presentation.Styles.dll** | Custom WPF controls, color/font/icon design tokens, themes |
-| **Communication.dll** | Async TCP client/server, file transfer protocol |
+| **Communication.dll** | Async TCP client/server |
+| **Communication.FileTransfer.dll** | File transfer protocol (chunked transfer, CRC32, resume) |
 | **Data.dll** | MSSQL DbContext base class (Entity Framework 6) |
 | **Docs.exe** | Interactive documentation viewer (run to browse all components) |
 | **TestApp.exe** | Sample application with Modal, Icon, FileTransfer demos |
