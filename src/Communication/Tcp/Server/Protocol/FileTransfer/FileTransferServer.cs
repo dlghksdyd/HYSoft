@@ -61,9 +61,15 @@ namespace HYSoft.Communication.Tcp.Server.Protocol.FileTransfer
         /// 내부적으로 <see cref="TcpServer.StartAsync"/>를 호출하고,
         /// 데이터 수신 이벤트 핸들러(<see cref="TcpServer.DataReceived"/>)를 등록합니다.
         /// </remarks>
+        private bool _receiving;
+
         public async Task ReceiveFileAsync()
         {
-            _server.DataReceived += OnDataReceived;
+            if (!_receiving)
+            {
+                _receiving = true;
+                _server.DataReceived += OnDataReceived;
+            }
             await _server.StartAsync().ConfigureAwait(false);
         }
 
@@ -328,6 +334,7 @@ namespace HYSoft.Communication.Tcp.Server.Protocol.FileTransfer
             if (_sessions.TryRemove(s.ClientId, out _))
             {
                 try { s.Stream?.Dispose(); } catch { /* ignore */ }
+                try { s.Lock.Dispose(); } catch { /* ignore */ }
                 s.DisposeBuffers();
             }
         }

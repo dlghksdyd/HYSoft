@@ -1,0 +1,57 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build Solution",
+      "type": "shell",
+      "command": "dotnet",
+      "args": ["build", "HYSoft.sln"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": "$msCompile",
+      "presentation": {
+        "reveal": "silent",
+        "revealProblems": "onProblem"
+      }
+    },
+    {
+      "label": "Build Solution (Release)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": ["build", "HYSoft.sln", "-c", "Release"],
+      "group": "build",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Run Docs",
+      "type": "shell",
+      "command": "src/Docs/bin/Debug/net48/Docs.exe",
+      "dependsOn": "Build Solution",
+      "group": "test",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "silent"
+      }
+    },
+    {
+      "label": "Run TestApp",
+      "type": "shell",
+      "command": "src/TestApp/bin/Debug/net48/TestApp.exe",
+      "dependsOn": "Build Solution",
+      "group": "test",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "silent"
+      }
+    },
+    {
+      "label": "Clean Solution",
+      "type": "shell",
+      "command": "dotnet",
+      "args": ["clean", "HYSoft.sln"],
+      "problemMatcher": "$msCompile"
+    }
+  ]
+}

@@ -96,34 +96,38 @@ namespace HYSoft.Presentation.Interactivity
             return null;
         }
 
-        private static WindowChrome _chrome;
-        private static HwndSource? _hwndSource;
         private static void CreateWindowChrome(UIElement ui)
         {
             var window = Window.GetWindow(ui);
             if (window == null) return;
 
-            // WindowChrome 삽입
-            _chrome = WindowChrome.GetWindowChrome(window);
-            if (_chrome == null)
-            {
-                _chrome = new WindowChrome
-                {
-                    CaptionHeight = 0,
-                    CornerRadius = new CornerRadius(0),
-                    GlassFrameThickness = new Thickness(0),
-                    ResizeBorderThickness = SystemParameters.WindowResizeBorderThickness,
-                    UseAeroCaptionButtons = false,
-                };
-                WindowChrome.SetWindowChrome(window, _chrome);
+            // WindowChrome이 이미 존재하면 스킵
+            if (WindowChrome.GetWindowChrome(window) != null) return;
 
-                // WndProc hook 추가
-                window.SourceInitialized += (s, e) =>
-                {
-                    _hwndSource = (HwndSource)PresentationSource.FromVisual(window);
-                    _hwndSource?.AddHook(WndProc);
-                };
-            }
+            var chrome = new WindowChrome
+            {
+                CaptionHeight = 0,
+                CornerRadius = new CornerRadius(0),
+                GlassFrameThickness = new Thickness(0),
+                ResizeBorderThickness = SystemParameters.WindowResizeBorderThickness,
+                UseAeroCaptionButtons = false,
+            };
+            WindowChrome.SetWindowChrome(window, chrome);
+
+            // WndProc hook (윈도우별 로컬 변수로 관리)
+            HwndSource? hwndSource = null;
+
+            window.SourceInitialized += (s, e) =>
+            {
+                hwndSource = (HwndSource)PresentationSource.FromVisual(window);
+                hwndSource?.AddHook(WndProc);
+            };
+
+            window.Closed += (s, e) =>
+            {
+                hwndSource?.RemoveHook(WndProc);
+                hwndSource = null;
+            };
         }
         
         private static IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)

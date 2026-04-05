@@ -15,9 +15,10 @@ namespace HYSoft.Communication.Tcp.Client.Protocol.FileTransfer
     /// 헤더 전송 → 서버 응답(Resume 여부) → 본문 전송 → Tail 전송 → 최종 상태 응답의 순서를 따릅니다.
     /// </para>
     /// </summary>
-    public class FileTransferClient
+    public class FileTransferClient : IDisposable
     {
         private readonly TcpClient _client;
+        private bool _disposed;
 
         // 프로토콜 상수
         private const uint MAGIC_HEADER = 0x46543130; // "FT10"
@@ -40,6 +41,16 @@ namespace HYSoft.Communication.Tcp.Client.Protocol.FileTransfer
         public FileTransferClient(TcpClientOptions options)
         {
             _client = TcpClientManager.Create(options);
+        }
+
+        /// <summary>
+        /// 리소스를 해제합니다.
+        /// </summary>
+        public void Dispose()
+        {
+            if (_disposed) return;
+            _disposed = true;
+            TcpClientManager.Dispose(_client);
         }
 
         /// <summary>

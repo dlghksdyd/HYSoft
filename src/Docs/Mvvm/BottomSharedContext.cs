@@ -117,7 +117,8 @@ namespace Docs.Mvvm
 
         #region 커맨드
 
-        public ICommand SelectMenuItemCommand => new RelayCommand<EventPayload>((p) =>
+        private ICommand? _selectMenuItemCommand;
+        public ICommand SelectMenuItemCommand => _selectMenuItemCommand ??= new RelayCommand<EventPayload>((p) =>
         {
             if (p is null) return;
             if (p.Parameter is not MenuItem item) return;
@@ -134,8 +135,9 @@ namespace Docs.Mvvm
             if (item.ViewType is null) Content = null;
             else Content = Activator.CreateInstance(item.ViewType, this);
         });
-        
-        public ICommand UpdateLeftMenuItemCommand => new RelayCommand<EventPayload>((p) =>
+
+        private ICommand? _updateLeftMenuItemCommand;
+        public ICommand UpdateLeftMenuItemCommand => _updateLeftMenuItemCommand ??= new RelayCommand<EventPayload>((p) =>
         {
             if (p?.Parameter is not ELeftMenuType type) return;
 
@@ -159,15 +161,15 @@ namespace Docs.Mvvm
             item2.AddSubItem("Font Size", null);
 
             var item3 = AddItem("Components", null, true);
-            item3.AddSubItem("Button", null);
-            item3.AddSubItem("CheckBox", null);
-            item3.AddSubItem("ComboBox", null);
+            item3.AddSubItem("Button", typeof(ButtonView));
+            item3.AddSubItem("CheckBox", typeof(CheckBoxView));
+            item3.AddSubItem("ComboBox", typeof(ComboBoxView));
             item3.AddSubItem("Icon", typeof(IconView));
-            item3.AddSubItem("PasswordBox", null);
-            item3.AddSubItem("RadioButton", null);
-            item3.AddSubItem("ScrollViewer", null);
-            item3.AddSubItem("TextBox", null);
-            item3.AddSubItem("TitleBar", null);
+            item3.AddSubItem("PasswordBox", typeof(PasswordBoxView));
+            item3.AddSubItem("RadioButton", typeof(RadioButtonView));
+            item3.AddSubItem("ScrollViewer", typeof(ScrollViewerView));
+            item3.AddSubItem("TextBox", typeof(TextBoxView));
+            item3.AddSubItem("TitleBar", typeof(TitleBarView));
 
             AddItem("Adorner", null, true);
             AddItem("Converter", null, true);

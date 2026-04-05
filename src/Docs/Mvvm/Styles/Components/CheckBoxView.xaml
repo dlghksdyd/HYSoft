@@ -1,0 +1,79 @@
+<UserControl
+    x:Class="Docs.Mvvm.Styles.Components.CheckBoxView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
+    xmlns:local="clr-namespace:Docs.Mvvm.Styles.Components"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Background="{hy:Color SurfaceBase}"
+    d:DataContext="{d:DesignInstance local:ComponentViewModel, IsDesignTimeCreatable=True}"
+    d:DesignHeight="900" d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Border Margin="20">
+        <hy:HyScrollViewer>
+            <StackPanel Margin="0,0,10,0" Orientation="Vertical">
+                <TextBlock Margin="0,0,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="1. Getting Started" />
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="- Use HyCheckBox in XAML" />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="&lt;hy:HyCheckBox Content=&quot;Accept terms&quot; " />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}" Text="BoxSize=&quot;20&quot; CornerRadius=&quot;4&quot;" />
+                            <Run Text=" /&gt;" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <TextBlock Margin="0,0,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="2. Examples" />
+
+                <!-- Default -->
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="Default" />
+                <StackPanel Margin="0,0,0,16" Orientation="Vertical">
+                    <hy:HyCheckBox Content="Option A" Margin="0,0,0,4" />
+                    <hy:HyCheckBox Content="Option B" IsChecked="True" Margin="0,0,0,4" />
+                    <hy:HyCheckBox Content="Disabled" IsEnabled="False" />
+                </StackPanel>
+
+                <!-- BoxSize -->
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="BoxSize" />
+                <StackPanel Margin="0,0,0,16" Orientation="Vertical">
+                    <hy:HyCheckBox Content="BoxSize=14" BoxSize="14" IsChecked="True" Margin="0,0,0,4" />
+                    <hy:HyCheckBox Content="BoxSize=18 (default)" BoxSize="18" IsChecked="True" Margin="0,0,0,4" />
+                    <hy:HyCheckBox Content="BoxSize=24" BoxSize="24" IsChecked="True" />
+                </StackPanel>
+
+                <!-- CornerRadius -->
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="CornerRadius" />
+                <StackPanel Margin="0,0,0,16" Orientation="Horizontal">
+                    <hy:HyCheckBox Content="Radius 0" CornerRadius="0" IsChecked="True" Margin="0,0,16,0" />
+                    <hy:HyCheckBox Content="Radius 4" CornerRadius="4" IsChecked="True" Margin="0,0,16,0" />
+                    <hy:HyCheckBox Content="Radius 9 (circle)" CornerRadius="9" IsChecked="True" />
+                </StackPanel>
+
+                <!-- Custom Colors -->
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="Custom Colors" />
+                <StackPanel Margin="0,0,0,16" Orientation="Vertical">
+                    <hy:HyCheckBox Content="Custom CheckBrush" CheckBrush="Blue" IsChecked="True" Margin="0,0,0,4" />
+                    <hy:HyCheckBox Content="Custom BoxBorderBrush" BoxBorderBrush="Red" IsChecked="True" />
+                </StackPanel>
+
+                <!-- 3. Properties -->
+                <TextBlock Margin="0,16,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="3. Properties" />
+                <RichTextBox Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph><Run FontWeight="Bold" Text="BoxSize" /><Run Text=" (double) - Checkbox box size. Default: 18" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="CornerRadius" /><Run Text=" (CornerRadius) - Box corner radius. Default: 4" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="BoxBorderThickness" /><Run Text=" (double) - Border width. Default: 1" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="CheckThickness" /><Run Text=" (double) - Check mark stroke width. Default: 2" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="BoxBackground" /><Run Text=" (Brush) - Box fill. Default: White" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="BoxBorderBrush" /><Run Text=" (Brush) - Border brush. Default: Gray" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="CheckBrush" /><Run Text=" (Brush) - Check mark color. Default: Black" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="TextPadding" /><Run Text=" (Thickness) - Spacing between box and label" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="DisabledOpacity" /><Run Text=" (double) - Opacity when disabled. Default: 0.4" /></Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+            </StackPanel>
+        </hy:HyScrollViewer>
+    </Border>
+</UserControl>

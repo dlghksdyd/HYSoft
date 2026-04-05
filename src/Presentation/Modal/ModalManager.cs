@@ -102,8 +102,11 @@ namespace HYSoft.Presentation.Modal
         {
             if (ViewModel == null) return;
 
-            if (_pending.Remove(viewmodel, out var tcs))
+            if (_pending.TryGetValue(viewmodel, out var tcs))
+            {
+                _pending.Remove(viewmodel);
                 tcs.TrySetResult(result);
+            }
 
             ViewModel.ClosePopup(viewmodel);
         }
@@ -118,10 +121,8 @@ namespace HYSoft.Presentation.Modal
             // 완료되지 않은 TCS 모두 처리
             foreach (var kv in _pending.ToList())
             {
-                if (_pending.Remove(kv.Key, out var tcs))
-                {
-                    tcs.TrySetResult(result);
-                }
+                _pending.Remove(kv.Key);
+                kv.Value.TrySetResult(result);
             }
 
             // 열린 팝업 모두 제거

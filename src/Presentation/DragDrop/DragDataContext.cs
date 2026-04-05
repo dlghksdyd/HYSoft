@@ -5,7 +5,7 @@ namespace HYSoft.Presentation.DragDrop
 {
     public class DragDataContext : NotifyPropertyChangedBase, IDragDataContext
     {
-        private UIElement? _dragScope = new UIElement();
+        private UIElement? _dragScope;
         public UIElement? DragScope
         {
             get => _dragScope;

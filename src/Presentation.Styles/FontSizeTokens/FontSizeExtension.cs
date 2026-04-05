@@ -34,7 +34,7 @@ namespace HYSoft.Presentation.Styles.FontSizeTokens
         private Dictionary<EFontSizeKeys, double>? _map;
 
         private static FontSizePalette? _current;
-        public static FontSizePalette Current => _current = Initialize();
+        public static FontSizePalette Current => _current ??= Initialize();
 
         public double GetBrush(EFontSizeKeys key)
         {

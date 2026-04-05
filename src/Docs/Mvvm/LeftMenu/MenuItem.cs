@@ -1,13 +1,6 @@
 ﻿using HYSoft.Presentation.Interactivity;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Media.Animation;
 using HYSoft.Presentation.Interactivity.CommandBehaviors;
 
 namespace Docs.Mvvm.LeftMenu
@@ -73,24 +66,28 @@ namespace Docs.Mvvm.LeftMenu
             return item;
         }
 
-        public ICommand UnselectMenuCommand => new RelayCommand(() =>
+        private ICommand? _unselectMenuCommand;
+        public ICommand UnselectMenuCommand => _unselectMenuCommand ??= new RelayCommand(() =>
         {
             IsSelected = false;
         });
 
-        public ICommand SelectMenuCommand => new RelayCommand(() =>
+        private ICommand? _selectMenuCommand;
+        public ICommand SelectMenuCommand => _selectMenuCommand ??= new RelayCommand(() =>
         {
             IsSelected = true;
         });
-        
-        public ICommand ExpandMenuCommand => new RelayCommand(() =>
+
+        private ICommand? _expandMenuCommand;
+        public ICommand ExpandMenuCommand => _expandMenuCommand ??= new RelayCommand(() =>
         {
             IsExpand = true;
-            
+
             Parent?.ExpandMenuCommand.Execute(null);
         });
 
-        public ICommand CollapseMenuCommand => new RelayCommand(() =>
+        private ICommand? _collapseMenuCommand;
+        public ICommand CollapseMenuCommand => _collapseMenuCommand ??= new RelayCommand(() =>
         {
             IsExpand = false;
         });

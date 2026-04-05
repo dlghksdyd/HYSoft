@@ -1,0 +1,13 @@
+<Window x:Class="TestApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
+        Title="TestApp" Width="800" Height="600"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="20">
+        <TextBlock Text="TestApp Ready"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontSize="24" />
+    </Grid>
+</Window>

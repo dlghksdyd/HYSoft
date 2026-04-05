@@ -51,6 +51,8 @@ namespace HYSoft.Presentation.Styles.Controls
         {
             base.OnApplyTemplate();
 
+            // 이전 핸들러 정리
+            this.TextChanged -= StylePasswordBox_TextChanged;
             if (_passwordBox != null)
                 _passwordBox.PasswordChanged -= _passwordBox_PasswordChanged;
 

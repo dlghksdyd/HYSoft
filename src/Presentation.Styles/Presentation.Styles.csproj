@@ -3,30 +3,19 @@
 	<PropertyGroup>
 		<RootNamespace>HYSoft.Presentation.Styles</RootNamespace>
 		<UseWPF>true</UseWPF>
-		<PackageOutputPath>$(ProjectDir)bin\$(Configuration)\</PackageOutputPath>
-
-		<!-- NuGet 메타데이터 -->
-		<PackageId>HYSoft.Presentation.Styles</PackageId>
-		<Description>UI Controls and Themes for WPF.</Description>
-		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<LangVersion>latest</LangVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="MahApps.Metro.IconPacks.Material" Version="6.1.0" />
+		<ProjectReference Include="..\Presentation\Presentation.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="PresentationFramework.Aero2" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<Resource Include="Icons\png\**\*.png" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Reference Include="Presentation">
-	    <HintPath>..\..\dll\Presentation.dll</HintPath>
-	  </Reference>
 	</ItemGroup>
 
 	<ItemGroup>

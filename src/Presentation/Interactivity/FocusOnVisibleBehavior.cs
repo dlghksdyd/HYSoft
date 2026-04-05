@@ -45,23 +45,34 @@ namespace HYSoft.Presentation.Interactivity
             {
                 RoutedEventHandler loaded = null!;
                 DependencyPropertyChangedEventHandler vis = null!;
+                RoutedEventHandler unloaded = null!;
+
+                void Cleanup()
+                {
+                    c.Loaded -= loaded;
+                    c.IsVisibleChanged -= vis;
+                    c.Unloaded -= unloaded;
+                }
+
+                unloaded = (_, __) => Cleanup();
 
                 loaded = (_, __) =>
                 {
-                    c.Loaded -= loaded;
+                    Cleanup();
                     if (c.IsVisible) TryFocus();
                 };
                 vis = (_, args) =>
                 {
                     if (args.NewValue is bool v && v)
                     {
-                        c.IsVisibleChanged -= vis;
+                        Cleanup();
                         if (c.IsLoaded) TryFocus();
                     }
                 };
 
                 c.Loaded += loaded;
                 c.IsVisibleChanged += vis;
+                c.Unloaded += unloaded;
             }
         }
     }

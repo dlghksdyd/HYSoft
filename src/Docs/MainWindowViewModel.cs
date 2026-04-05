@@ -1,4 +1,4 @@
-﻿using Docs.Mvvm.Popup;
+using Docs.Mvvm.Popup;
 using HYSoft.Presentation.Interactivity;
 using HYSoft.Presentation.Modal;
 using System.Windows;
@@ -11,7 +11,8 @@ namespace Docs
 {
     public class MainWindowViewModel : NotifyPropertyChangedBase
     {
-        public ICommand ExitAppCommand => new RelayCommand(() =>
+        private ICommand? _exitAppCommand;
+        public ICommand ExitAppCommand => _exitAppCommand ??= new RelayCommand(() =>
         {
             var result = ModalManager.Open(new PopupInfoViewModel()
             {

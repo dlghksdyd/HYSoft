@@ -64,22 +64,8 @@ namespace HYSoft.Communication.Tcp.Client
             // 세마포어 정리: 사용 중일 수 있으므로 non-blocking으로 가능할 때만 Dispose
             static void TryDisposeSemaphore(SemaphoreSlim sem)
             {
-                try
-                {
-                    // 누가 쓰는 중이면 Release 필요할 수 있어 Dispose를 건너뜀
-                    if (sem.Wait(0))
-                    {
-                        sem.Dispose();
-                    }
-                    else
-                    {
-                        // 사용 중이면 건너뜀 (ObjectDisposedException 방지)
-                    }
-                }
-                catch
-                {
-                    /* ignore */
-                }
+                try { sem.Dispose(); }
+                catch { /* ignore */ }
             }
 
             TryDisposeSemaphore(_sendLock);

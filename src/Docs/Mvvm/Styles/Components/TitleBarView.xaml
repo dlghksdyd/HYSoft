@@ -1,0 +1,76 @@
+<UserControl
+    x:Class="Docs.Mvvm.Styles.Components.TitleBarView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
+    xmlns:local="clr-namespace:Docs.Mvvm.Styles.Components"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Background="{hy:Color SurfaceBase}"
+    d:DataContext="{d:DesignInstance local:ComponentViewModel, IsDesignTimeCreatable=True}"
+    d:DesignHeight="900" d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Border Margin="20">
+        <hy:HyScrollViewer>
+            <StackPanel Margin="0,0,10,0" Orientation="Vertical">
+                <TextBlock Margin="0,0,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="1. Getting Started" />
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}"
+                    Text="- HyTitleBar replaces the default window title bar. Set WindowStyle=None on the Window." />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="&lt;Window WindowStyle=&quot;None&quot;&gt;" />
+                            <LineBreak />
+                            <Run Text="  &lt;Grid&gt;" />
+                            <LineBreak />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}"
+                                 Text="    &lt;hy:HyTitleBar ExitAppCommand=&quot;{Binding CloseCommand}&quot;&gt;" />
+                            <LineBreak />
+                            <Run Text="      &lt;TextBlock Text=&quot;My App&quot; /&gt;" />
+                            <LineBreak />
+                            <Run FontWeight="Bold" Foreground="{hy:Color TextError}"
+                                 Text="    &lt;/hy:HyTitleBar&gt;" />
+                            <LineBreak />
+                            <Run Text="    &lt;!-- Main content --&gt;" />
+                            <LineBreak />
+                            <Run Text="  &lt;/Grid&gt;" />
+                            <LineBreak />
+                            <Run Text="&lt;/Window&gt;" />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <TextBlock Margin="0,0,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="2. Features" />
+
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="Built-in Behaviors" />
+                <RichTextBox Margin="0,0,0,16" Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph><Run FontWeight="Bold" Text="Drag to move" /><Run Text=" - Click and drag the title bar to move the window" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Double-click" /><Run Text=" - Toggle maximize / restore" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Minimize button" /><Run Text=" - Built-in MinimizeAppCommand" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Maximize button" /><Run Text=" - Built-in MaximizeAppCommand" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Close button" /><Run Text=" - Bind to ExitAppCommand" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="WindowChrome" /><Run Text=" - Automatically configures WindowChrome for borderless window" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="Monitor-aware maximize" /><Run Text=" - Correctly handles multi-monitor maximize bounds via WndProc" /></Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Md}" Foreground="{hy:Color TextPrimary}" Text="Live Example" />
+                <TextBlock Margin="0,0,0,8" FontSize="{hy:FontSize Sm}" Foreground="{hy:Color TextSecondary}"
+                    Text="This application's title bar is a HyTitleBar. See the top of the window." />
+
+                <TextBlock Margin="0,16,0,16" FontSize="{hy:FontSize Xl}" Foreground="{hy:Color TextPrimary}" Text="3. Properties" />
+                <RichTextBox Padding="8" FontSize="{hy:FontSize Sm}" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph><Run FontWeight="Bold" Text="ExitAppCommand" /><Run Text=" (ICommand) - Custom close command" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="MinimizeAppCommand" /><Run Text=" (ICommand) - Built-in minimize (read-only)" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="MaximizeAppCommand" /><Run Text=" (ICommand) - Built-in maximize/restore/drag (read-only)" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="IconSize" /><Run Text=" (double) - Icon dimensions. Default: 32" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="IconPadding" /><Run Text=" (Thickness) - Icon padding. Default: 0" /></Paragraph>
+                        <Paragraph><Run FontWeight="Bold" Text="IconMargin" /><Run Text=" (Thickness) - Icon margin. Default: 0" /></Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+            </StackPanel>
+        </hy:HyScrollViewer>
+    </Border>
+</UserControl>

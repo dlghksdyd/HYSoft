@@ -2,18 +2,14 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>TestApp</RootNamespace>
+    <AssemblyName>TestApp</AssemblyName>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Presentation\Presentation.csproj" />
     <ProjectReference Include="..\Presentation.Styles\Presentation.Styles.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Mvvm\Styles\Colors\" />
   </ItemGroup>
 
 </Project>

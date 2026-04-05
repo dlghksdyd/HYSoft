@@ -53,18 +53,19 @@ namespace HYSoft.Presentation.Styles.Controls
             set => SetValue(ExitAppCommandProperty, value);
         }
 
-        public ICommand MinimizeAppCommand => new RelayCommand<EventPayload>((p) =>
+        private ICommand? _minimizeAppCommand;
+        public ICommand MinimizeAppCommand => _minimizeAppCommand ??= new RelayCommand<EventPayload>((p) =>
         {
             if (p.Sender is not DependencyObject d) return;
 
             var window = Window.GetWindow(d);
             if (window == null) return;
-            
+
             SystemCommands.MinimizeWindow(window);
         });
 
-
-        public ICommand MaximizeAppCommand => new RelayCommand<EventPayload>((p) =>
+        private ICommand? _maximizeAppCommand;
+        public ICommand MaximizeAppCommand => _maximizeAppCommand ??= new RelayCommand<EventPayload>((p) =>
         {
             if (p.Sender is not DependencyObject d) return;
 
@@ -147,20 +148,23 @@ namespace HYSoft.Presentation.Styles.Controls
             return null;
         }
 
-        private static WindowChrome _chrome;
         private HwndSource? _hwndSource;
+        private bool _hookInstalled;
+
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+
+            if (_hookInstalled) return;
 
             var window = Window.GetWindow(this);
             if (window == null) return;
 
             // WindowChrome 삽입
-            _chrome = WindowChrome.GetWindowChrome(window);
-            if (_chrome == null)
+            var chrome = WindowChrome.GetWindowChrome(window);
+            if (chrome == null)
             {
-                _chrome = new WindowChrome
+                chrome = new WindowChrome
                 {
                     CaptionHeight = 0,
                     CornerRadius = new CornerRadius(0),
@@ -168,14 +172,22 @@ namespace HYSoft.Presentation.Styles.Controls
                     ResizeBorderThickness = SystemParameters.WindowResizeBorderThickness,
                     UseAeroCaptionButtons = false,
                 };
-                WindowChrome.SetWindowChrome(window, _chrome);
+                WindowChrome.SetWindowChrome(window, chrome);
             }
+
+            _hookInstalled = true;
 
             // WndProc hook 추가
             window.SourceInitialized += (s, e) =>
             {
                 _hwndSource = (HwndSource)PresentationSource.FromVisual(window);
                 _hwndSource?.AddHook(WndProc);
+            };
+
+            window.Closed += (s, e) =>
+            {
+                _hwndSource?.RemoveHook(WndProc);
+                _hwndSource = null;
             };
         }
 

@@ -1,13 +1,4 @@
 <Project>
-	<PropertyGroup>
-		<PublishedVersionFile>$(MSBuildThisFileDirectory).last_published_version</PublishedVersionFile>
-		<!-- Bundle 스테이징 경로 -->
-		<HysoftBundleStageLib>$(SolutionDir)src\Bundle\Staging\$(TargetFramework)\</HysoftBundleStageLib>
-		<!-- Dll 파일 경로-->
-		<DllCopyPath>$(MSBuildThisFileDirectory)dll\</DllCopyPath>
-		<!-- Docs 파일 경로-->
-		<DocsPath>$(SolutionDir)src\Docs\bin\Release\net8.0-windows7.0\</DocsPath>
-	</PropertyGroup>
 
 	<!-- Global Xmlns 생성 -->
 	<Target Name="GenerateGlobalXmlns"
@@ -32,83 +23,10 @@
 		</ItemGroup>
 	</Target>
 
-	<!-- 마지막으로 성공 푸시한 버전을 로드 -->
-	<Target Name="LoadLastPublishedVersion" Condition="'$(NUGET_API_KEY)'!=''">
-		<PropertyGroup>
-			<LastPublishedVersion></LastPublishedVersion>
-		</PropertyGroup>
-
-		<ReadLinesFromFile File="$(PublishedVersionFile)" Condition="Exists('$(PublishedVersionFile)')">
-			<Output TaskParameter="Lines" ItemName="_LastPubVerLines" />
-		</ReadLinesFromFile>
-
-		<PropertyGroup Condition="'@(_LastPubVerLines)'!=''">
-			<LastPublishedVersion>@(_LastPubVerLines->'%(Identity)')</LastPublishedVersion>
-		</PropertyGroup>
-	</Target>
-
-	<!-- Pack 이후, push 실행 (Bundle 프로젝트에서만) -->
-	<Target Name="PublishNuGetOnPack"
-			AfterTargets="Pack"
-			DependsOnTargets="LoadLastPublishedVersion"
-			Condition="'$(Configuration)'=='Release' and '$(NUGET_API_KEY)'!='' and '$(MSBuildProjectName)'=='Bundle'">
-
-		<Exec Command="cmd /c set DOTNET_CLI_UI_LANGUAGE=en &amp;&amp; dotnet nuget push &quot;$(PackageOutputPath)$(PackageId).$(Version).nupkg&quot; --api-key $(NUGET_API_KEY) --source https://api.nuget.org/v3/index.json --skip-duplicate" />
-
-		<WriteLinesToFile Condition="'$(Version)'!='$(LastPublishedVersion)'"
-						  File="$(PublishedVersionFile)"
-						  Lines="$(Version)"
-						  Overwrite="true" />
-	</Target>
-
 	<!-- Clean 시 GlobalXmlns 생성물 삭제 -->
 	<Target Name="CleanGlobalXmlns" AfterTargets="Clean">
 		<Delete Files="$(IntermediateOutputPath)GlobalXmlns.g.cs" />
 		<Delete Files="$(IntermediateOutputPath)globalxmlns.filelist.txt" />
-	</Target>
-
-	<!-- 프로젝트 빌드 후, 산출물을 Bundle의 스테이징으로 복사 -->
-	<Target Name="CopyOutputToBundleStage" AfterTargets="Build" 
-			Condition="'$(MSBuildProjectName)' != 'Samples' And '$(MSBuildProjectName)' != 'Bundle' And '$(Configuration)'=='Release'">
-
-		<!-- 만약 스테이징 디렉토리가 없으면 생성 -->
-		<MakeDir Directories="$(HysoftBundleStageLib)" Condition="!Exists('$(HysoftBundleStageLib)')" />
-
-		<!-- 이 프로젝트의 산출물 선정 -->
-		<ItemGroup>
-			<__OutDll Include="$(TargetPath)" Condition="Exists('$(TargetPath)')" />
-			<__OutXml Include="$(OutputPath)$(AssemblyName).xml" Condition="Exists('$(OutputPath)$(AssemblyName).xml')" />
-		</ItemGroup>
-
-		<!-- 스테이징으로 복사 -->
-		<Copy SourceFiles="@(__OutDll)" DestinationFolder="$(HysoftBundleStageLib)" SkipUnchangedFiles="true" Condition="'@(__OutDll)'!=''" />
-		<Copy SourceFiles="@(__OutXml)" DestinationFolder="$(HysoftBundleStageLib)" SkipUnchangedFiles="true" Condition="'@(__OutXml)'!=''" />
-	</Target>
-
-	<!-- Docs 프로젝트일 경우 exe파일까지 스테이징으로 복사 -->
-	<Target Name="CopyExeToBundleStage" AfterTargets="Build" Condition="'$(MSBuildProjectName)' == 'Docs'">
-		<!-- 만약 Docs 디렉토리가 없으면 생성 -->
-		<MakeDir Directories="$(HysoftBundleStageLib)Docs\" Condition="!Exists('$(HysoftBundleStageLib)Docs\')" />
-
-		<!-- 산출물 선정 -->
-		<ItemGroup>
-			<__OutExe Include="$(DocsPath)**\*" Condition="Exists('$(DocsPath)')"></__OutExe>
-		</ItemGroup>
-
-		<!-- 스테이징으로 복사 -->
-		<Copy SourceFiles="@(__OutExe)" DestinationFolder="$(HysoftBundleStageLib)Docs\" SkipUnchangedFiles="true" Condition="'@(__OutExe)'!=''" />
-	</Target>
-
-	<!-- 프로젝트 빌드 후, 산출물을 dll 폴더로 복사 -->
-	<Target Name="CopyDllsToSolutionDllFolder" AfterTargets="Build">
-		<!-- 폴더 생성 -->
-		<MakeDir Directories="$(DllCopyPath)" Condition="!Exists('$(DllCopyPath)')" />
-		<!-- 복사 할 파일 목록 -->
-		<ItemGroup>
-			<__OutDll Include="$(TargetPath)" Condition="Exists('$(TargetPath)')"></__OutDll>
-		</ItemGroup>
-		<!-- 폴더로 복사 -->
-		<Copy SourceFiles="@(__OutDll)" DestinationFolder="$(DllCopyPath)" SkipUnchangedFiles="true" Condition="'@(__OutDll)'!=''" />
 	</Target>
 
 </Project>
