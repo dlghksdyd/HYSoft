@@ -21,9 +21,9 @@ The `HySoft.Bundle` package contains the following assemblies:
 | Assembly | Description |
 |----------|-------------|
 | **Presentation.dll** | MVVM infrastructure, converters, DragDrop, Modal, attached behaviors |
-| **Presentation.Styles.dll** | Custom WPF controls, color/font/icon design tokens, themes |
+| **Presentation.Styles.dll** | 33 custom WPF controls, color/font/icon design tokens, themes |
 | **Communication.dll** | Async TCP client/server |
-| **Communication.FileTransfer.dll** | File transfer protocol (chunked transfer, CRC32, resume) |
+| **Communication.FileTransfer.dll** | File transfer protocol (chunked transfer, CRC32, resume, progress reporting) |
 | **Data.dll** | MSSQL DbContext base class (Entity Framework 6) |
 | **Docs.exe** | Interactive documentation viewer (run to browse all components) |
 | **TestApp.exe** | Sample application with Modal, Icon, FileTransfer demos |
@@ -43,7 +43,7 @@ The `HySoft.Bundle` package contains the following assemblies:
 <hy:HyButton Content="Click Me" CornerRadius="8" />
 
 <!-- TextBox with watermark and input filtering -->
-<hy:HyTextBox WaterMark="Enter text" IsOnlyNumber="True" CanKorean="False" />
+<hy:HyTextBox Watermark="Enter text" IsOnlyNumber="True" CanKorean="False" />
 
 <!-- Icon with hover/press tinting -->
 <hy:HyIcon Source="Save" Color="Black" ColorHover="Blue" ColorPressed="Gray" />
@@ -54,19 +54,86 @@ The `HySoft.Bundle` package contains the following assemblies:
 
 ## Custom Controls
 
+### Basic
+
 | Control | Base | Key Properties |
 |---------|------|----------------|
 | `HyButton` | Button | CornerRadius |
-| `HyTextBox` | TextBox | WaterMark, IsOnlyNumber, CanKorean, CanPaste, CornerRadius |
 | `HyCheckBox` | CheckBox | BoxSize, CornerRadius, CheckBrush, BoxBorderBrush |
-| `HyComboBox` | ComboBox | CornerRadius, PopupCornerRadius, PopupHorizontalOffset |
 | `HyRadioButton` | RadioButton | Text, ButtonSize, EllipseBorderBrush, EllipseForeground |
-| `HyPasswordBox` | TextBox | WaterMark, CornerRadius |
-| `HyScrollViewer` | ScrollViewer | ThumbColor, ScrollBarSize, ThumbCornerRadius, RepeatButtonVisibility |
-| `HyDatePicker` | DatePicker | Watermark, IsEditable, CalendarScale, CornerRadius |
-| `HyIcon` | Control | Source (EIconKeys), Color, ColorHover, ColorPressed |
-| `HyTitleBar` | ContentControl | ExitAppCommand, IconSize, MinimizeAppCommand, MaximizeAppCommand |
+| `HyToggleSwitch` | ToggleButton | SwitchWidth, SwitchHeight, ThumbSize, OnBackground, OffBackground |
+
+### Text Input
+
+| Control | Base | Key Properties |
+|---------|------|----------------|
+| `HyTextBox` | TextBox | Watermark, IsOnlyNumber, CanKorean, CanPaste, CornerRadius |
+| `HyPasswordBox` | TextBox | Watermark, CornerRadius |
 | `HyTextBlock` | Control | Text, CornerRadius |
+| `HyRichTextBox` | RichTextBox | Watermark, WatermarkForeground, CornerRadius |
+| `HyNumericUpDown` | Control | Value, Minimum, Maximum, Increment, Watermark, StringFormat |
+
+### Selection
+
+| Control | Base | Key Properties |
+|---------|------|----------------|
+| `HyComboBox` | ComboBox | CornerRadius, PopupCornerRadius, PopupHorizontalOffset |
+| `HyListBox` | ListBox | CornerRadius |
+| `HyDatePicker` | DatePicker | Watermark, IsEditable, CalendarScale, CornerRadius |
+| `HySlider` | Slider | TrackHeight, ThumbSize, TrackCornerRadius |
+
+### Data Display
+
+| Control | Base | Key Properties |
+|---------|------|----------------|
+| `HyDataGrid` | DataGrid | CornerRadius |
+| `HyTreeView` | TreeView | CornerRadius |
+| `HyBadge` | Control | Text, BadgeType (Neutral/Info/Success/Warning/Error/Highlight) |
+| `HyProgressBar` | ProgressBar | CornerRadius, TrackBackground |
+| `HyProgressRing` | Control | IsActive, RingSize, StrokeThickness, RingColor |
+
+### Layout & Navigation
+
+| Control | Base | Key Properties |
+|---------|------|----------------|
+| `HyTabControl` | TabControl | CornerRadius |
+| `HyExpander` | Expander | CornerRadius |
+| `HyGroupBox` | GroupBox | CornerRadius |
+| `HyScrollViewer` | ScrollViewer | ThumbColor, ScrollBarSize, ThumbCornerRadius |
+| `HyGridSplitter` | GridSplitter | SplitterColor, SplitterThickness |
+| `HyBreadcrumb` | ItemsControl | Separator, SeparatorForeground |
+| `HyPaginator` | Control | CurrentPage, TotalPages, PageSize, TotalItems |
+
+### Container & Chrome
+
+| Control | Base | Key Properties |
+|---------|------|----------------|
+| `HyWindow` | Window | CornerRadius |
+| `HyTitleBar` | ContentControl | ExitAppCommand, IconSize, MinimizeAppCommand, MaximizeAppCommand |
+| `HyDialog` | Window | DialogTitle, DialogMessage, ConfirmButtonText, CancelButtonText, ShowCancelButton |
+| `HyToolBar` | ToolBar | CornerRadius |
+| `HyStatusBar` | StatusBar | CornerRadius |
+
+### Feedback
+
+| Control | Base | Key Properties |
+|---------|------|----------------|
+| `HyToast` | Control | Message, ToastType (Info/Success/Warning/Error), IsOpen, AutoCloseDelay |
+| `HyToolTip` | ToolTip | CornerRadius |
+
+### Menu
+
+| Control | Base | Key Properties |
+|---------|------|----------------|
+| `HyMenu` | Menu | CornerRadius |
+| `HyContextMenu` | ContextMenu | CornerRadius |
+| `HyMenuItem` | MenuItem | CornerRadius |
+
+### Other
+
+| Control | Base | Key Properties |
+|---------|------|----------------|
+| `HyIcon` | Control | Source (EIconKeys), Color, ColorHover, ColorPressed |
 | `HyTemplateControl` | Control | ComponentType, Header, Value, IsEditable, IsRequired, Commands |
 
 ## Design Tokens
@@ -144,9 +211,38 @@ var result = ModalManager.Open(new MyPopupViewModel());
 if (result == ModalResult.Ok) { /* confirmed */ }
 ```
 
+## File Transfer
+
+```csharp
+// Client - send file with progress
+var client = new FileTransferClient(new TcpClientOptions(IPAddress.Parse("127.0.0.1"), 20000));
+await client.SendFileAsync("data.zip",
+    progress: new Progress<FileTransferProgress>(p =>
+        Console.WriteLine($"{p.Percentage:P0} ({p.BytesTransferred}/{p.TotalBytes})")),
+    cancellationToken: cts.Token);
+
+// Server - receive files
+var server = new FileTransferServer(new TcpServerOptions(IPAddress.Any, 20000), "./received");
+await server.ReceiveFileAsync();
+```
+
+## Project Structure
+
+```
+HYSoft.sln
+├── Communication              # Async TCP client/server transport layer
+├── Communication.FileTransfer # File transfer protocol (depends on Communication)
+├── Data                       # MSSQL DbContext base class
+├── Presentation               # MVVM infrastructure, converters, behaviors
+├── Presentation.Styles        # 33 WPF custom controls + design tokens
+├── Docs                       # Interactive documentation viewer
+├── TestApp                    # Sample application
+└── Bundle                     # NuGet packaging aggregator
+```
+
 ## Documentation
 
-Run `Docs.exe` included in the package to browse interactive documentation for all components.
+Run `Docs.exe` included in the package to browse interactive documentation for all 33 components.
 
 ## License
 
