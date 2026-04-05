@@ -37,6 +37,12 @@
                             <Setter TargetName="Track" Property="Background" Value="{Binding OnBackground, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Trigger>
 
+                        <!-- Keyboard Focus -->
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="Track" Property="BorderBrush" Value="{c:Color ButtonPrimaryBg}" />
+                            <Setter TargetName="Track" Property="BorderThickness" Value="1.5" />
+                        </Trigger>
+
                         <!-- Disabled -->
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value="0.5" />

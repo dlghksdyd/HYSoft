@@ -283,6 +283,7 @@ namespace HYSoft.Presentation.Styles.Controls
         {
             // Visual Tree에서 제거될 때 강한 핸들러 제거로 누수 방지
             UnsubscribeStateChanges();
+            _image = null;
         }
 
         protected override void OnMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs e)

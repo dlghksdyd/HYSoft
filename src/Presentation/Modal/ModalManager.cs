@@ -122,7 +122,7 @@ namespace HYSoft.Presentation.Modal
             foreach (var kv in _pending.ToList())
             {
                 _pending.Remove(kv.Key);
-                kv.Value.TrySetResult(result);
+                try { kv.Value.TrySetResult(result); } catch { }
             }
 
             // 열린 팝업 모두 제거

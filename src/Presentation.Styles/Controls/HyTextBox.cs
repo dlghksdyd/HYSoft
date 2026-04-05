@@ -57,7 +57,6 @@ namespace HYSoft.Presentation.Styles.Controls
         private bool _canPasteHandlersAttached;
         private bool _canKoreanHandlersAttached;
         private CommandBinding? _pasteBinding;
-        private bool _cleanupHooked;
 
         static HyTextBox()
         {
@@ -74,15 +73,7 @@ namespace HYSoft.Presentation.Styles.Controls
 
         public HyTextBox()
         {
-            // Ensure cleanup when the control is unloaded from the visual tree
-            Loaded += (_, __) =>
-            {
-                if (!_cleanupHooked)
-                {
-                    Unloaded += OnUnloadedCleanup;
-                    _cleanupHooked = true;
-                }
-            };
+            Unloaded += OnUnloadedCleanup;
         }
 
         private void OnUnloadedCleanup(object? sender, RoutedEventArgs e)

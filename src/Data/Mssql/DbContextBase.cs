@@ -9,7 +9,8 @@ namespace HYSoft.Data.Mssql
     /// </summary>
     public abstract class DbContextBase : DbContext
     {
-        private static string? _connectionString;
+        private static volatile string? _connectionString;
+        private static readonly object _initLock = new object();
 
         /// <summary>
         ///     기본 생성자입니다.
@@ -26,7 +27,10 @@ namespace HYSoft.Data.Mssql
         /// </summary>
         public static void Initialize(string server, string port, string uid, string pwd, string database)
         {
-            _connectionString = $"server={server},{port};uid={uid};pwd={pwd};database={database};Encrypt=True;TrustServerCertificate=True;MultipleActiveResultSets=True;";
+            lock (_initLock)
+            {
+                _connectionString = $"server={server},{port};uid={uid};pwd={pwd};database={database};Encrypt=True;TrustServerCertificate=True;MultipleActiveResultSets=True;";
+            }
         }
 
         /// <summary>

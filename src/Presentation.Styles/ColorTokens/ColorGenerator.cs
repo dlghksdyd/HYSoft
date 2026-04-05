@@ -13,10 +13,12 @@ namespace HYSoft.Presentation.Styles.ColorTokens
         // enum 이름과 XAML의 x:Key가 1:1로 동일하다는 전제
         private static readonly string[] KeyNames = Enum.GetNames(typeof(EColorKeys));
 
+        private static readonly object _fallbackLock = new object();
+        private static ResourceDictionary? _fallbackDict;
+
         public static Dictionary<EColorKeys, Brush> Generate()
         {
             var map = new Dictionary<EColorKeys, Brush>(capacity: KeyNames.Length);
-            ResourceDictionary? fallbackDict = null;
 
             SolidColorBrush Resolve(string key)
             {
@@ -28,7 +30,14 @@ namespace HYSoft.Presentation.Styles.ColorTokens
                 }
 
                 // 2) 없으면 패키지 XAML을 로드해서 조회
-                fallbackDict ??= (ResourceDictionary)Application.LoadComponent(SemanticsUri);
+                if (_fallbackDict == null)
+                {
+                    lock (_fallbackLock)
+                    {
+                        _fallbackDict ??= (ResourceDictionary)Application.LoadComponent(SemanticsUri);
+                    }
+                }
+                var fallbackDict = _fallbackDict;
                 if (fallbackDict.Contains(key) && fallbackDict[key] is SolidColorBrush b2)
                     return b2;
 

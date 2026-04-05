@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -75,9 +76,9 @@ namespace HYSoft.Presentation.Styles.Controls
 
         private void UpdateIsDocumentEmpty()
         {
-            var start = Document.ContentStart;
-            var end = Document.ContentEnd;
-            IsDocumentEmpty = (start.GetOffsetToPosition(end) <= 4);
+            IsDocumentEmpty = !Document.Blocks.Any() ||
+                Document.Blocks.All(b => b is Paragraph p &&
+                    !p.Inlines.Any(inline => inline is Run r && r.Text.Length > 0));
         }
     }
 }

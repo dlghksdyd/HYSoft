@@ -22,13 +22,21 @@ namespace HYSoft.Presentation.Styles.Icons
 
             var uriString = "pack://application:,,,/" + component + relativePath;
 
-            var bmp = new BitmapImage();
-            bmp.BeginInit();
-            bmp.CacheOption = BitmapCacheOption.OnLoad;
-            bmp.UriSource = new Uri(uriString, UriKind.Absolute);
-            bmp.EndInit();
-            if (bmp.CanFreeze) bmp.Freeze();
-            return bmp;
+            try
+            {
+                var bmp = new BitmapImage();
+                bmp.BeginInit();
+                bmp.CacheOption = BitmapCacheOption.OnLoad;
+                bmp.UriSource = new Uri(uriString, UriKind.Absolute);
+                bmp.EndInit();
+                if (bmp.CanFreeze) bmp.Freeze();
+                return bmp;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[IconGenerator] Failed to load icon '{iconKey}': {ex.Message}");
+                throw;
+            }
         }
     }
 }

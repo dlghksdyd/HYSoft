@@ -15,10 +15,16 @@ namespace HYSoft.Presentation.Styles.Controls
     public class HyToast : Control
     {
         private DispatcherTimer? _autoCloseTimer;
+        private Button? _closeButton;
 
         static HyToast()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(HyToast), new FrameworkPropertyMetadata(typeof(HyToast)));
+        }
+
+        public HyToast()
+        {
+            Unloaded += (_, __) => StopAutoCloseTimer();
         }
 
         public static readonly DependencyProperty MessageProperty =
@@ -142,10 +148,15 @@ namespace HYSoft.Presentation.Styles.Controls
         {
             base.OnApplyTemplate();
 
-            if (GetTemplateChild("PART_CloseButton") is Button closeButton)
-            {
-                closeButton.Click += (s, e) => IsOpen = false;
-            }
+            if (_closeButton != null)
+                _closeButton.Click -= OnCloseButtonClick;
+
+            _closeButton = GetTemplateChild("PART_CloseButton") as Button;
+
+            if (_closeButton != null)
+                _closeButton.Click += OnCloseButtonClick;
         }
+
+        private void OnCloseButtonClick(object sender, RoutedEventArgs e) => IsOpen = false;
     }
 }

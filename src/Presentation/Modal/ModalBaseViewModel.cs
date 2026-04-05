@@ -26,7 +26,7 @@ namespace HYSoft.Presentation.Modal
 
         public void ClosePopup(object popupViewModel)
         {
-            var info = PopupList.ToList().Find(p => ReferenceEquals(p.Content, popupViewModel));
+            var info = PopupList.FirstOrDefault(p => ReferenceEquals(p.Content, popupViewModel));
             if (info != null) PopupList.Remove(info);
         }
     }

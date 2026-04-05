@@ -204,6 +204,12 @@ namespace HYSoft.Presentation.Styles.Controls
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
+            var window = Window.GetWindow(this);
+            if (window != null)
+            {
+                window.Closed -= OnWindowClosed;
+                window.SourceInitialized -= OnSourceInitialized;
+            }
             CleanupHook();
             _hookInstalled = false;
         }

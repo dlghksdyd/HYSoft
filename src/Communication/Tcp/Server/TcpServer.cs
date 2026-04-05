@@ -246,7 +246,7 @@ namespace HYSoft.Communication.Tcp.Server
                 {
                     if (_clients.Count >= _options.MaxClients)
                     {
-                        await Task.Delay(100).ConfigureAwait(false);
+                        await Task.Delay(100, token).ConfigureAwait(false);
                         continue;
                     }
 

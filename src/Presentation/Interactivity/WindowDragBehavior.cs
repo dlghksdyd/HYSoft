@@ -125,7 +125,7 @@ namespace HYSoft.Presentation.Interactivity
 
             window.Closed += (s, e) =>
             {
-                hwndSource?.RemoveHook(WndProc);
+                try { hwndSource?.RemoveHook(WndProc); } catch { }
                 hwndSource = null;
             };
         }
