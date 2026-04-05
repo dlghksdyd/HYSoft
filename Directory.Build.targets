@@ -1,15 +1,13 @@
 <Project>
 	<PropertyGroup>
-		<PublishedVersionFile>$(MSBuildThisFileDirectory).last_published_version</PublishedVersionFile>
 		<!-- Bundle 스테이징 경로 -->
 		<HysoftBundleStageLib>$(SolutionDir)src\Bundle\Staging\$(TargetFramework)\</HysoftBundleStageLib>
-		<!-- Docs 파일 경로-->
-		<DocsPath>$(SolutionDir)src\Docs\bin\Release\$(TargetFramework)\</DocsPath>
 	</PropertyGroup>
 
-	<!-- Global Xmlns 생성 -->
+	<!-- Global Xmlns 생성 (Bundle은 소스 파일 없으므로 스킵) -->
 	<Target Name="GenerateGlobalXmlns"
 	        BeforeTargets="BeforeCompile"
+	        Condition="'$(HysoftXmlnsEnabled)' != 'false'"
 	        Inputs="@(Compile);$(HysoftXmlns);$(HysoftXmlnsPrefix);$(HysoftXmlnsIncludeAll);$(MSBuildAllProjects)"
 	        Outputs="$(IntermediateOutputPath)GlobalXmlns.g.cs">
 
@@ -36,31 +34,40 @@
 		<Delete Files="$(IntermediateOutputPath)globalxmlns.filelist.txt" />
 	</Target>
 
-	<!-- 프로젝트 빌드 후, 산출물을 Bundle의 스테이징으로 복사 -->
+	<!-- Clean 시 nuget 폴더의 nupkg 삭제 (Bundle 프로젝트에서만) -->
+	<Target Name="CleanNuGetPackages" AfterTargets="Clean" Condition="'$(MSBuildProjectName)'=='Bundle'">
+		<ItemGroup>
+			<_NupkgFiles Include="$(SolutionDir)nuget\*.nupkg" />
+		</ItemGroup>
+		<Delete Files="@(_NupkgFiles)" Condition="'@(_NupkgFiles)'!=''" />
+	</Target>
+
+	<!-- 라이브러리 프로젝트 빌드 후, DLL/XML을 Bundle 스테이징으로 복사 -->
 	<Target Name="CopyOutputToBundleStage" AfterTargets="Build"
-			Condition="'$(MSBuildProjectName)' != 'Bundle' And '$(Configuration)'=='Release'">
+			Condition="'$(OutputType)' != 'WinExe' And '$(MSBuildProjectName)' != 'Bundle' And '$(Configuration)'=='Release'">
 
 		<MakeDir Directories="$(HysoftBundleStageLib)" Condition="!Exists('$(HysoftBundleStageLib)')" />
 
 		<ItemGroup>
-			<__OutDll Include="$(TargetPath)" Condition="Exists('$(TargetPath)')" />
-			<__OutXml Include="$(OutputPath)$(AssemblyName).xml" Condition="Exists('$(OutputPath)$(AssemblyName).xml')" />
+			<_OutDll Include="$(TargetPath)" Condition="Exists('$(TargetPath)')" />
+			<_OutXml Include="$(OutputPath)$(AssemblyName).xml" Condition="Exists('$(OutputPath)$(AssemblyName).xml')" />
 		</ItemGroup>
 
-		<Copy SourceFiles="@(__OutDll)" DestinationFolder="$(HysoftBundleStageLib)" SkipUnchangedFiles="true" Condition="'@(__OutDll)'!=''" />
-		<Copy SourceFiles="@(__OutXml)" DestinationFolder="$(HysoftBundleStageLib)" SkipUnchangedFiles="true" Condition="'@(__OutXml)'!=''" />
+		<Copy SourceFiles="@(_OutDll)" DestinationFolder="$(HysoftBundleStageLib)" SkipUnchangedFiles="true" Condition="'@(_OutDll)'!=''" />
+		<Copy SourceFiles="@(_OutXml)" DestinationFolder="$(HysoftBundleStageLib)" SkipUnchangedFiles="true" Condition="'@(_OutXml)'!=''" />
 	</Target>
 
-	<!-- WinExe 프로젝트일 경우 exe파일까지 스테이징으로 복사 -->
-	<Target Name="CopyExeToBundleStage" AfterTargets="CopyOutputToBundleStage"
+	<!-- WinExe 프로젝트는 전체 출력물을 서브폴더로 복사 -->
+	<Target Name="CopyExeToBundleStage" AfterTargets="Build"
 			Condition="'$(OutputType)' == 'WinExe' And '$(MSBuildProjectName)' != 'Bundle' And '$(Configuration)'=='Release'">
+
 		<MakeDir Directories="$(HysoftBundleStageLib)$(MSBuildProjectName)\" Condition="!Exists('$(HysoftBundleStageLib)$(MSBuildProjectName)\')" />
 
 		<ItemGroup>
-			<__OutExeFiles Include="$(OutputPath)**\*" Condition="Exists('$(OutputPath)')"></__OutExeFiles>
+			<_OutExeFiles Include="$(OutputPath)**\*" Condition="Exists('$(OutputPath)')" />
 		</ItemGroup>
 
-		<Copy SourceFiles="@(__OutExeFiles)" DestinationFolder="$(HysoftBundleStageLib)$(MSBuildProjectName)\" SkipUnchangedFiles="true" Condition="'@(__OutExeFiles)'!=''" />
+		<Copy SourceFiles="@(_OutExeFiles)" DestinationFolder="$(HysoftBundleStageLib)$(MSBuildProjectName)\" SkipUnchangedFiles="true" Condition="'@(_OutExeFiles)'!=''" />
 	</Target>
 
 </Project>

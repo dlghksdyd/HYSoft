@@ -1,38 +1,28 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<!-- 이 프로젝트 자체는 컴파일 산출물이 필요 없음 -->
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<HysoftXmlnsEnabled>false</HysoftXmlnsEnabled>
+		<NoWarn>$(NoWarn);CS2008;NU5128</NoWarn>
 
-		<!-- Nuget 메타데이터 -->
+		<!-- NuGet 패키지 설정 -->
 		<PackageId>HySoft.Bundle</PackageId>
-		<Authors>HySoft</Authors>
 		<Description>Bundled HySoft assemblies</Description>
 		<IsPackable>true</IsPackable>
 		<IncludeBuildOutput>false</IncludeBuildOutput>
 		<PackageOutputPath>$(SolutionDir)nuget\</PackageOutputPath>
+		<GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">true</GeneratePackageOnBuild>
 	</PropertyGroup>
 
-	<!-- 팩 전에 스테이징 안의 파일들을 nupkg에 포함 (Bundle 프로젝트만) -->
-	<Target Name="IncludeStagingFiles" Condition="'$(MSBuildProjectName)'=='Bundle'" AfterTargets="Build">
-		<!-- 스테이징 경로 보장 -->
+	<!-- Pack 직전에 스테이징 파일들을 nupkg에 포함 -->
+	<Target Name="IncludeStagingFiles" BeforeTargets="GenerateNuspec">
 		<MakeDir Directories="$(HysoftBundleStageLib)" />
 
-		<!-- 스테이징 안의 파일들을 nupkg에 포함 -->
 		<ItemGroup>
-			<!-- 라이브러리 DLL 및 XML -->
 			<None Include="$(HysoftBundleStageLib)*.xml" Pack="true" PackagePath="lib/$(TargetFramework)" />
 			<None Include="$(HysoftBundleStageLib)*.dll" Pack="true" PackagePath="lib/$(TargetFramework)" />
-			<!-- Docs exe -->
 			<None Include="$(HysoftBundleStageLib)Docs\**\*" Pack="true" PackagePath="lib/$(TargetFramework)/Docs" />
-			<!-- TestApp exe -->
 			<None Include="$(HysoftBundleStageLib)TestApp\**\*" Pack="true" PackagePath="lib/$(TargetFramework)/TestApp" />
-			<!-- Resources -->
 			<None Include="$(HysoftBundleStageLib)Resources\**\*" Pack="true" PackagePath="resources" />
 		</ItemGroup>
-	</Target>
-
-	<!-- 빌드하면 곧바로 Pack까지 수행 -->
-	<Target Name="PackOnBuild" AfterTargets="IncludeStagingFiles">
-		<MSBuild Projects="$(MSBuildProjectFullPath)" Targets="Pack" />
 	</Target>
 </Project>

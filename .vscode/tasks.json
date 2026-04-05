@@ -47,28 +47,39 @@
       }
     },
     {
+      "label": "Clean Solution (Release)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": ["clean", "HYSoft.sln", "-c", "Release"],
+      "problemMatcher": "$msCompile",
+      "presentation": {
+        "reveal": "silent"
+      }
+    },
+    {
       "label": "NuGet Pack",
       "type": "shell",
       "command": "dotnet",
       "args": ["build", "HYSoft.sln", "-c", "Release"],
+      "dependsOn": "Clean Solution (Release)",
       "group": "build",
       "problemMatcher": "$msCompile",
-      "detail": "Release 빌드 → 스테이징 복사 → nupkg 생성 (nuget/ 폴더)"
+      "detail": "Clean → Release 빌드 → 스테이징 복사 → nupkg 생성 (nuget/ 폴더)"
     },
     {
       "label": "NuGet Push",
-      "type": "shell",
+      "type": "process",
       "command": "dotnet",
       "args": [
         "nuget", "push",
-        "nuget/HySoft.Bundle.*.nupkg",
+        "${workspaceFolder}/nuget/HySoft.Bundle.${input:publishVersion}.nupkg",
         "--api-key", "${env:NUGET_API_KEY}",
         "--source", "https://api.nuget.org/v3/index.json",
         "--skip-duplicate"
       ],
       "dependsOn": "NuGet Pack",
       "problemMatcher": [],
-      "detail": "Release 빌드 후 nuget.org에 push (NUGET_API_KEY 환경변수 필요)"
+      "detail": "Clean → Release 빌드 → nuget.org에 push (NUGET_API_KEY 환경변수 필요)"
     },
     {
       "label": "Clean Solution",
@@ -76,6 +87,14 @@
       "command": "dotnet",
       "args": ["clean", "HYSoft.sln"],
       "problemMatcher": "$msCompile"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "publishVersion",
+      "type": "promptString",
+      "description": "배포할 버전 (예: 1.0.85)",
+      "default": "1.0.85"
     }
   ]
 }

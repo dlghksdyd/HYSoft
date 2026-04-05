@@ -2,8 +2,6 @@
 
 	<PropertyGroup>
 		<RootNamespace>HYSoft.Communication</RootNamespace>
-		<UseWPF>true</UseWPF>
-		<LangVersion>latest</LangVersion>
 	</PropertyGroup>
 
 	<ItemGroup>

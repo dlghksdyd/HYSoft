@@ -4,7 +4,6 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>TestApp</RootNamespace>
     <AssemblyName>TestApp</AssemblyName>
-    <UseWPF>true</UseWPF>
   </PropertyGroup>
 
   <ItemGroup>
