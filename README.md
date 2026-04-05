@@ -2,36 +2,43 @@
 
 WPF Software Development Kit for .NET Framework 4.8.
 
-## Features
+## Installation
 
-- **Custom Controls** - HyButton, HyTextBox, HyCheckBox, HyComboBox, HyRadioButton, HyPasswordBox, HyScrollViewer, HyDatePicker, HyIcon, HyTitleBar, HyTextBlock, HyTemplateControl
-- **Design Token System** - 145 semantic color tokens, 6 font size tokens, 87 icon assets with tinting support
-- **MVVM Infrastructure** - RelayCommand, NotifyPropertyChangedBase, ObservableDictionary, EventToCommand
-- **Drag & Drop** - GhostAdorner, LineAdorner, DragDrop orchestrator
-- **Modal Dialog** - ModalManager with synchronous blocking API
-- **Attached Behaviors** - WindowDragBehavior, FocusOnVisibleBehavior, ElementReferenceBinding
+```
+Install-Package HySoft.Bundle
+```
+
+or .NET CLI:
+
+```
+dotnet add package HySoft.Bundle
+```
+
+## What's Included
+
+The `HySoft.Bundle` package contains the following assemblies:
+
+| Assembly | Description |
+|----------|-------------|
+| **Presentation.dll** | MVVM infrastructure, converters, DragDrop, Modal, attached behaviors |
+| **Presentation.Styles.dll** | Custom WPF controls, color/font/icon design tokens, themes |
+| **Communication.dll** | Async TCP client/server, file transfer protocol |
+| **Data.dll** | MSSQL DbContext base class (Entity Framework 6) |
+| **Docs.exe** | Interactive documentation viewer (run to browse all components) |
+| **TestApp.exe** | Sample application with Modal, Icon, FileTransfer demos |
 
 ## Quick Start
 
-### 1. Add project references
-
-```xml
-<ItemGroup>
-    <ProjectReference Include="..\Presentation\Presentation.csproj" />
-    <ProjectReference Include="..\Presentation.Styles\Presentation.Styles.csproj" />
-</ItemGroup>
-```
-
-### 2. Add the XAML namespace
+### 1. Add the XAML namespace
 
 ```xml
 <Window xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml">
 ```
 
-### 3. Use controls and tokens
+### 2. Use controls and tokens
 
 ```xml
-<!-- Button with corner radius -->
+<!-- Button -->
 <hy:HyButton Content="Click Me" CornerRadius="8" />
 
 <!-- TextBox with watermark and input filtering -->
@@ -40,18 +47,9 @@ WPF Software Development Kit for .NET Framework 4.8.
 <!-- Icon with hover/press tinting -->
 <hy:HyIcon Source="Save" Color="Black" ColorHover="Blue" ColorPressed="Gray" />
 
-<!-- Color and font size tokens -->
+<!-- Design tokens -->
 <TextBlock Foreground="{hy:Color TextPrimary}" FontSize="{hy:FontSize Md}" />
 ```
-
-## Solution Structure
-
-| Project | Type | Description |
-|---------|------|-------------|
-| **Presentation** | Library | MVVM infrastructure, converters, DragDrop, Modal, behaviors |
-| **Presentation.Styles** | Library | Custom WPF controls, color/font/icon tokens, themes |
-| **Docs** | WinExe | Interactive documentation viewer |
-| **TestApp** | WinExe | Test application |
 
 ## Custom Controls
 
@@ -80,7 +78,7 @@ WPF Software Development Kit for .NET Framework 4.8.
 <Button Background="{hy:Color ButtonPrimaryBg}" Foreground="{hy:Color ButtonPrimaryFg}" />
 ```
 
-145 semantic tokens across categories: Text, Icon, Surface, Border, Button, Input, Feedback, Badge, Table, Navigation, Selection, Scrollbar, TitleBar, Popup.
+145 semantic tokens: Text, Icon, Surface, Border, Button, Input, Feedback, Badge, Table, Navigation, Selection, Scrollbar, TitleBar, Popup.
 
 ### Font Sizes
 
@@ -100,11 +98,7 @@ WPF Software Development Kit for .NET Framework 4.8.
 ### Icons
 
 ```xml
-<!-- In XAML markup -->
 <Image Source="{hy:Icon Add}" />
-<Image Source="{hy:Icon Save, ColorKey=IconDefault}" />
-
-<!-- As control -->
 <hy:HyIcon Source="Settings" Color="Black" Width="24" Height="24" />
 ```
 
@@ -113,7 +107,6 @@ WPF Software Development Kit for .NET Framework 4.8.
 ## MVVM
 
 ```csharp
-// ViewModel base class
 public class MyViewModel : NotifyPropertyChangedBase
 {
     private string _name;
@@ -128,7 +121,7 @@ public class MyViewModel : NotifyPropertyChangedBase
 }
 ```
 
-### EventToCommand (XAML event to ICommand binding)
+### EventToCommand
 
 ```xml
 <hy:HyTextBox>
@@ -145,16 +138,14 @@ public class MyViewModel : NotifyPropertyChangedBase
 ModalManager.Configure("#33ffffff");
 ModalManager.RegisterView<MyPopupView, MyPopupViewModel>();
 
-// Open modal (synchronous, blocks UI thread)
+// Open (synchronous, blocks UI thread)
 var result = ModalManager.Open(new MyPopupViewModel());
 if (result == ModalResult.Ok) { /* confirmed */ }
 ```
 
-## Build
+## Documentation
 
-```bash
-dotnet build HYSoft.sln
-```
+Run `Docs.exe` included in the package to browse interactive documentation for all components.
 
 ## License
 
