@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Communication</name>
+    </assembly>
+    <members>
+        <member name="T:HYSoft.Communication.Tcp.Client.Protocol.FileTransfer.FileTransferClient">
+            <summary>
+            파일 전송 클라이언트 구현 클래스입니다.
+            </summary>
+        </member>
+        <member name="T:HYSoft.Communication.Tcp.Client.TcpClient">
+            <summary>
+            비동기 TCP 클라이언트 구현 클래스입니다.
+            </summary>
+        </member>
+        <member name="T:HYSoft.Communication.Tcp.Client.TcpClientManager">
+            <summary>
+            <see cref="T:HYSoft.Communication.Tcp.Client.TcpClient"/> 인스턴스를 생성하고 관리하는 정적 매니저 클래스입니다.
+            </summary>
+        </member>
+        <member name="M:HYSoft.Communication.Tcp.Client.TcpClientManager.Create(HYSoft.Communication.Tcp.Client.TcpClientOptions)">
+            <summary>
+            지정된 옵션을 사용하여 새로운 <see cref="T:HYSoft.Communication.Tcp.Client.TcpClient"/> 인스턴스를 생성하고 내부 관리 목록에 등록합니다.
+            </summary>
+            <param name="options">생성 시 사용할 <see cref="T:HYSoft.Communication.Tcp.Client.TcpClientOptions"/> 설정입니다.</param>
+            <returns>생성된 <see cref="T:HYSoft.Communication.Tcp.Client.TcpClient"/> 인스턴스입니다.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="options"/>가 <c>null</c>인 경우 발생합니다.</exception>
+            <exception cref="T:System.InvalidOperationException">클라이언트를 내부 딕셔너리에 등록하지 못한 경우 발생합니다.</exception>
+        </member>
+        <member name="M:HYSoft.Communication.Tcp.Client.TcpClientManager.Dispose(HYSoft.Communication.Tcp.Client.TcpClient)">
+            <summary>
+            지정된 <see cref="T:HYSoft.Communication.Tcp.Client.TcpClient"/> 인스턴스를 해제(dispose)하고 내부 관리 목록에서 제거합니다.
+            </summary>
+            <param name="client">해제할 <see cref="T:HYSoft.Communication.Tcp.Client.TcpClient"/> 인스턴스입니다.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="client"/>가 <c>null</c>인 경우 발생합니다.</exception>
+        </member>
+        <member name="T:HYSoft.Communication.Tcp.Client.TcpClientOptions">
+            <summary>
+            TCP 클라이언트의 동작을 정의하는 옵션 클래스입니다.
+            </summary>
+        </member>
+        <member name="P:HYSoft.Communication.Tcp.Client.TcpClientOptions.Host">
+            <summary>
+            연결할 서버의 호스트 IP 주소를 가져옵니다.
+            </summary>
+        </member>
+        <member name="P:HYSoft.Communication.Tcp.Client.TcpClientOptions.Port">
+            <summary>
+            연결할 서버의 포트 번호를 가져옵니다.
+            </summary>
+        </member>
+        <member name="T:HYSoft.Communication.Tcp.Server.Protocol.FileTransfer.FileTransferServer">
+            <summary>
+            간단한 파일 전송 서버 구현.
+            </summary>
+        </member>
+        <member name="T:HYSoft.Communication.Tcp.Server.TcpDataReceivedEventHandler">
+            <summary>
+            TCP 서버에서 클라이언트로부터 데이터가 수신되었을 때 호출되는 이벤트 핸들러를 나타냅니다.
+            </summary>
+        </member>
+        <member name="T:HYSoft.Communication.Tcp.Server.TcpDataReceivedContext">
+            <summary>
+            TCP 서버에서 특정 클라이언트로부터 데이터가 수신되었을 때 전달되는 컨텍스트입니다.
+            </summary>
+        </member>
+        <member name="F:HYSoft.Communication.Tcp.Server.TcpDataReceivedContext.Data">
+            <summary>
+            클라이언트로부터 수신된 데이터 바이트 배열입니다.
+            </summary>
+        </member>
+        <member name="F:HYSoft.Communication.Tcp.Server.TcpDataReceivedContext.ClientId">
+            <summary>
+            클라이언트의 고유 GUID입니다.
+            </summary>
+        </member>
+        <member name="M:HYSoft.Communication.Tcp.Server.TcpDataReceivedContext.ReplyAsync(System.Byte[])">
+            <summary>
+            수신한 클라이언트에게 응답 데이터를 비동기적으로 전송합니다.
+            </summary>
+        </member>
+        <member name="T:HYSoft.Communication.Tcp.Server.TcpServer">
+            <summary>
+            비동기 TCP 서버.
+            </summary>
+        </member>
+        <member name="T:HYSoft.Communication.Tcp.Server.TcpServerManager">
+            <summary>
+            <see cref="T:HYSoft.Communication.Tcp.Server.TcpServer"/> 인스턴스를 생성하고 관리하는 정적 매니저 클래스입니다.
+            </summary>
+        </member>
+        <member name="M:HYSoft.Communication.Tcp.Server.TcpServerManager.Create(HYSoft.Communication.Tcp.Server.TcpServerOptions)">
+            <summary>
+            지정된 옵션을 사용하여 새로운 <see cref="T:HYSoft.Communication.Tcp.Server.TcpServer"/> 인스턴스를 생성하고 등록합니다.
+            </summary>
+            <param name="options">서버 생성 시 사용할 <see cref="T:HYSoft.Communication.Tcp.Server.TcpServerOptions"/>입니다.</param>
+            <returns>생성된 <see cref="T:HYSoft.Communication.Tcp.Server.TcpServer"/> 인스턴스입니다.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="options"/>가 <c>null</c>인 경우 발생합니다.</exception>
+            <exception cref="T:System.InvalidOperationException">서버를 내부 딕셔너리에 등록하지 못한 경우 발생합니다.</exception>
+        </member>
+        <member name="M:HYSoft.Communication.Tcp.Server.TcpServerManager.Dispose(HYSoft.Communication.Tcp.Server.TcpServer)">
+            <summary>
+            지정된 <see cref="T:HYSoft.Communication.Tcp.Server.TcpServer"/> 인스턴스를 해제(dispose)하고 내부 관리 목록에서 제거합니다.
+            </summary>
+            <param name="server">해제할 <see cref="T:HYSoft.Communication.Tcp.Server.TcpServer"/> 인스턴스입니다.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="server"/>가 <c>null</c>인 경우 발생합니다.</exception>
+        </member>
+        <member name="T:HYSoft.Communication.Tcp.Server.TcpServerOptions">
+            <summary>
+            TCP 서버 동작을 설정하기 위한 옵션 클래스입니다.
+            </summary>
+        </member>
+        <member name="P:HYSoft.Communication.Tcp.Server.TcpServerOptions.ListenAddress">
+            <summary>
+            서버가 바인딩할 IP 주소를 가져옵니다.
+            </summary>
+        </member>
+        <member name="P:HYSoft.Communication.Tcp.Server.TcpServerOptions.Port">
+            <summary>
+            서버가 바인딩할 포트 번호를 가져옵니다.
+            </summary>
+        </member>
+    </members>
+</doc>
