@@ -5,6 +5,9 @@ namespace HYSoft.Presentation.Styles.Controls
 {
     public class HyDialog : Window
     {
+        private Button? _confirmButton;
+        private Button? _cancelButton;
+
         static HyDialog()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(HyDialog), new FrameworkPropertyMetadata(typeof(HyDialog)));
@@ -77,23 +80,31 @@ namespace HYSoft.Presentation.Styles.Controls
         {
             base.OnApplyTemplate();
 
-            if (GetTemplateChild("PART_ConfirmButton") is Button confirmButton)
-            {
-                confirmButton.Click += (s, e) =>
-                {
-                    DialogResult = true;
-                    Close();
-                };
-            }
+            // Detach old handlers
+            if (_confirmButton != null)
+                _confirmButton.Click -= OnConfirmClick;
+            if (_cancelButton != null)
+                _cancelButton.Click -= OnCancelClick;
 
-            if (GetTemplateChild("PART_CancelButton") is Button cancelButton)
-            {
-                cancelButton.Click += (s, e) =>
-                {
-                    DialogResult = false;
-                    Close();
-                };
-            }
+            _confirmButton = GetTemplateChild("PART_ConfirmButton") as Button;
+            _cancelButton = GetTemplateChild("PART_CancelButton") as Button;
+
+            if (_confirmButton != null)
+                _confirmButton.Click += OnConfirmClick;
+            if (_cancelButton != null)
+                _cancelButton.Click += OnCancelClick;
+        }
+
+        private void OnConfirmClick(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
+            Close();
+        }
+
+        private void OnCancelClick(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+            Close();
         }
     }
 }

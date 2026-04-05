@@ -1,8 +1,11 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using HYSoft.Communication.Tcp.Client;
+using static HYSoft.Communication.FileTransfer.BinaryHelper;
+using static HYSoft.Communication.FileTransfer.FileTransferConstants;
 
 namespace HYSoft.Communication.FileTransfer
 {
@@ -13,13 +16,6 @@ namespace HYSoft.Communication.FileTransfer
     {
         private readonly TcpClient _client;
         private bool _disposed;
-
-        private const uint MAGIC_HEADER = 0x46543130; // "FT10"
-        private const uint MAGIC_TAIL = 0x4654454E;   // "FTEN"
-        private const byte STATUS_OK = 0x00;
-        private const byte STATUS_RESUME = 0x01;
-        private const byte STATUS_ERROR = 0xFF;
-        private const int DefaultChunkSize = 64 * 1024;
 
         private bool _isSending;
         private readonly object _lock = new object();
@@ -36,7 +32,16 @@ namespace HYSoft.Communication.FileTransfer
             TcpClientManager.Dispose(_client);
         }
 
-        public async Task SendFileAsync(string filePath)
+        /// <summary>
+        /// 파일을 서버로 비동기 전송합니다.
+        /// </summary>
+        /// <param name="filePath">전송할 파일 경로.</param>
+        /// <param name="progress">진행률 콜백 (선택).</param>
+        /// <param name="cancellationToken">취소 토큰 (선택).</param>
+        public async Task SendFileAsync(
+            string filePath,
+            IProgress<FileTransferProgress>? progress = null,
+            CancellationToken cancellationToken = default)
         {
             lock (_lock)
             {
@@ -52,6 +57,8 @@ namespace HYSoft.Communication.FileTransfer
                 if (!File.Exists(filePath))
                     throw new FileNotFoundException("File not found.", filePath);
 
+                cancellationToken.ThrowIfCancellationRequested();
+
                 var fileInfo = new FileInfo(filePath);
                 long fileSize = fileInfo.Length;
 
@@ -65,7 +72,7 @@ namespace HYSoft.Communication.FileTransfer
                 // Header: [MAGIC(4)][Flags(1)][FileSize(8)][NameLen(2)][FileName(?)]
                 byte[] header = new byte[4 + 1 + 8 + 2 + fileNameBytes.Length];
                 int offset = 0;
-                WriteUInt32BE(header, offset, MAGIC_HEADER); offset += 4;
+                WriteUInt32BE(header, offset, MagicHeader); offset += 4;
                 header[offset++] = 0x00;
                 WriteUInt64BE(header, offset, (ulong)fileSize); offset += 8;
                 WriteUInt16BE(header, offset, (ushort)fileNameBytes.Length); offset += 2;
@@ -78,7 +85,7 @@ namespace HYSoft.Communication.FileTransfer
                 byte status = resp[0];
                 long startOffset = (long)ReadUInt64BE(resp, 1);
 
-                if (status != STATUS_OK && status != STATUS_RESUME)
+                if (status != StatusOk && status != StatusResume)
                     throw new IOException($"Server rejected header. Status=0x{status:X2}");
                 if (startOffset < 0 || startOffset > fileSize)
                     throw new IOException($"Invalid resume offset from server: {startOffset}");
@@ -86,6 +93,8 @@ namespace HYSoft.Communication.FileTransfer
                 // Send file data
                 uint crc32 = 0xFFFFFFFFu;
                 byte[] buffer = new byte[DefaultChunkSize];
+                long totalToSend = fileSize - startOffset;
+                long sentSoFar = 0;
 
                 using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, DefaultChunkSize, true))
                 {
@@ -93,6 +102,7 @@ namespace HYSoft.Communication.FileTransfer
                     long pos = 0;
                     while (pos < startOffset)
                     {
+                        cancellationToken.ThrowIfCancellationRequested();
                         int toRead = (int)Math.Min(DefaultChunkSize, startOffset - pos);
                         int read = await fs.ReadAsync(buffer, 0, toRead).ConfigureAwait(false);
                         if (read <= 0) throw new EndOfStreamException("Unexpected EOF while pre-CRC calculation.");
@@ -103,12 +113,15 @@ namespace HYSoft.Communication.FileTransfer
                     // Send startOffset..end + CRC
                     while (pos < fileSize)
                     {
+                        cancellationToken.ThrowIfCancellationRequested();
                         int toRead = (int)Math.Min(DefaultChunkSize, fileSize - pos);
                         int read = await fs.ReadAsync(buffer, 0, toRead).ConfigureAwait(false);
                         if (read <= 0) throw new EndOfStreamException("Unexpected EOF while sending.");
                         await _client.SendAsync(buffer, 0, read).ConfigureAwait(false);
                         crc32 = Crc32.Update(crc32, buffer, 0, read);
                         pos += read;
+                        sentSoFar += read;
+                        progress?.Report(new FileTransferProgress(sentSoFar, totalToSend));
                     }
                 }
 
@@ -116,84 +129,19 @@ namespace HYSoft.Communication.FileTransfer
 
                 // Tail: [MAGIC_TAIL(4)][CRC32(4)]
                 byte[] tail = new byte[8];
-                WriteUInt32BE(tail, 0, MAGIC_TAIL);
+                WriteUInt32BE(tail, 0, MagicTail);
                 WriteUInt32BE(tail, 4, crc32);
                 await _client.SendAsync(tail).ConfigureAwait(false);
 
                 // Final status
                 byte[] finalResp = new byte[1];
                 await _client.ReceiveAsync(finalResp).ConfigureAwait(false);
-                if (finalResp[0] != STATUS_OK)
+                if (finalResp[0] != StatusOk)
                     throw new IOException($"Server reported error. Status=0x{finalResp[0]:X2}");
             }
             finally
             {
                 lock (_lock) { _isSending = false; }
-            }
-        }
-
-        #region Binary Helpers
-
-        private static void WriteUInt32BE(byte[] buf, int offset, uint value)
-        {
-            buf[offset] = (byte)(value >> 24);
-            buf[offset + 1] = (byte)(value >> 16);
-            buf[offset + 2] = (byte)(value >> 8);
-            buf[offset + 3] = (byte)value;
-        }
-
-        private static void WriteUInt64BE(byte[] buf, int offset, ulong value)
-        {
-            buf[offset] = (byte)(value >> 56);
-            buf[offset + 1] = (byte)(value >> 48);
-            buf[offset + 2] = (byte)(value >> 40);
-            buf[offset + 3] = (byte)(value >> 32);
-            buf[offset + 4] = (byte)(value >> 24);
-            buf[offset + 5] = (byte)(value >> 16);
-            buf[offset + 6] = (byte)(value >> 8);
-            buf[offset + 7] = (byte)value;
-        }
-
-        private static void WriteUInt16BE(byte[] buf, int offset, ushort value)
-        {
-            buf[offset] = (byte)(value >> 8);
-            buf[offset + 1] = (byte)value;
-        }
-
-        private static ulong ReadUInt64BE(byte[] buf, int offset)
-        {
-            return ((ulong)buf[offset] << 56) | ((ulong)buf[offset + 1] << 48) |
-                   ((ulong)buf[offset + 2] << 40) | ((ulong)buf[offset + 3] << 32) |
-                   ((ulong)buf[offset + 4] << 24) | ((ulong)buf[offset + 5] << 16) |
-                   ((ulong)buf[offset + 6] << 8) | buf[offset + 7];
-        }
-
-        #endregion
-
-        private static class Crc32
-        {
-            private const uint Poly = 0xEDB88320u;
-            private static readonly uint[] Table = CreateTable();
-
-            private static uint[] CreateTable()
-            {
-                var table = new uint[256];
-                for (uint i = 0; i < 256; i++)
-                {
-                    uint c = i;
-                    for (int k = 0; k < 8; k++)
-                        c = (c & 1) != 0 ? (Poly ^ (c >> 1)) : (c >> 1);
-                    table[i] = c;
-                }
-                return table;
-            }
-
-            public static uint Update(uint crc, byte[] data, int offset, int count)
-            {
-                uint c = crc;
-                for (int i = offset; i < offset + count; i++)
-                    c = Table[(c ^ data[i]) & 0xFF] ^ (c >> 8);
-                return c;
             }
         }
     }

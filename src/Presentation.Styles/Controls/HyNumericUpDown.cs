@@ -61,7 +61,13 @@ namespace HYSoft.Presentation.Styles.Controls
         }
         public static readonly DependencyProperty IncrementProperty =
             DependencyProperty.Register(nameof(Increment), typeof(double), typeof(HyNumericUpDown),
-                new PropertyMetadata(1.0));
+                new PropertyMetadata(1.0, null, CoerceIncrement));
+
+        private static object CoerceIncrement(DependencyObject d, object baseValue)
+        {
+            if (baseValue is double v && v <= 0) return 1.0;
+            return baseValue;
+        }
 
         public CornerRadius CornerRadius
         {
@@ -171,7 +177,11 @@ namespace HYSoft.Presentation.Styles.Controls
         {
             if (_isUpdatingText) return;
 
-            if (_textBox != null && double.TryParse(_textBox.Text, NumberStyles.Any, CultureInfo.CurrentCulture, out double parsed))
+            if (_textBox != null
+                && double.TryParse(_textBox.Text.Trim(),
+                    NumberStyles.AllowLeadingSign | NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands,
+                    CultureInfo.CurrentCulture, out double parsed)
+                && !double.IsNaN(parsed) && !double.IsInfinity(parsed))
             {
                 SetCurrentValue(ValueProperty, parsed);
             }

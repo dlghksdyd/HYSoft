@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using HYSoft.Communication.Tcp.Server;
+using static HYSoft.Communication.FileTransfer.BinaryHelper;
+using static HYSoft.Communication.FileTransfer.FileTransferConstants;
 
 namespace HYSoft.Communication.FileTransfer
 {
@@ -17,12 +19,6 @@ namespace HYSoft.Communication.FileTransfer
         private readonly TcpServer _server;
         private readonly string _storageRoot;
         private readonly ConcurrentDictionary<Guid, Session> _sessions = new ConcurrentDictionary<Guid, Session>();
-
-        private const uint MAGIC_HEADER = 0x46543130;
-        private const uint MAGIC_TAIL = 0x4654454E;
-        private const byte STATUS_OK = 0x00;
-        private const byte STATUS_RESUME = 0x01;
-        private const byte STATUS_ERROR = 0xFF;
 
         private bool _receiving;
 
@@ -56,7 +52,7 @@ namespace HYSoft.Communication.FileTransfer
                 }
                 catch
                 {
-                    try { await ctx.ReplyAsync(new byte[] { STATUS_ERROR }).ConfigureAwait(false); } catch { }
+                    try { await ctx.ReplyAsync(new byte[] { StatusError }).ConfigureAwait(false); } catch { }
                     CleanupSession(session);
                 }
                 finally
@@ -91,7 +87,7 @@ namespace HYSoft.Communication.FileTransfer
 
                         byte[] span = s.HeaderBuffer.ToArray();
                         uint magic = ReadUInt32BE(span, 0);
-                        if (magic != MAGIC_HEADER) { s.State = SessionState.Error; break; }
+                        if (magic != MagicHeader) { s.State = SessionState.Error; break; }
 
                         s.Flags = span[4];
                         s.FileSize = (long)ReadUInt64BE(span, 5);
@@ -122,16 +118,16 @@ namespace HYSoft.Communication.FileTransfer
                         Directory.CreateDirectory(Path.GetDirectoryName(s.FullPath)!);
                         if (File.Exists(s.FullPath)) TryDeleteQuiet(s.FullPath);
 
-                        s.Stream = new FileStream(s.FullPath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None, 64 * 1024, true);
+                        s.Stream = new FileStream(s.FullPath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None, DefaultChunkSize, true);
                         if (s.Stream.Length != startOffset) s.Stream.SetLength(startOffset);
                         s.Stream.Seek(startOffset, SeekOrigin.Begin);
 
-                        s.Crc32 = 0xFFFFFFFFu;
+                        s.CrcValue = 0xFFFFFFFFu;
                         if (startOffset > 0) await SeedCrcFromExistingAsync(s, startOffset).ConfigureAwait(false);
                         s.ReceivedAfterOffset = startOffset;
 
                         var resp = new byte[9];
-                        resp[0] = startOffset > 0 ? STATUS_RESUME : STATUS_OK;
+                        resp[0] = startOffset > 0 ? StatusResume : StatusOk;
                         WriteUInt64BE(resp, 1, (ulong)startOffset);
                         await ctx.ReplyAsync(resp).ConfigureAwait(false);
 
@@ -148,7 +144,7 @@ namespace HYSoft.Communication.FileTransfer
                         if (toWrite > 0)
                         {
                             await s.Stream!.WriteAsync(inputData, inputOffset, toWrite).ConfigureAwait(false);
-                            s.Crc32 = Crc32.Update(s.Crc32, inputData, inputOffset, toWrite);
+                            s.CrcValue = Crc32.Update(s.CrcValue, inputData, inputOffset, toWrite);
                             s.ReceivedAfterOffset += toWrite;
                             inputOffset += toWrite;
                         }
@@ -172,19 +168,19 @@ namespace HYSoft.Communication.FileTransfer
                         uint magicTail = ReadUInt32BE(span, 0);
                         uint crcFromClient = ReadUInt32BE(span, 4);
 
-                        if (magicTail != MAGIC_TAIL) { s.State = SessionState.Error; break; }
+                        if (magicTail != MagicTail) { s.State = SessionState.Error; break; }
 
-                        s.Crc32 ^= 0xFFFFFFFFu;
-                        if (s.Crc32 != crcFromClient)
+                        s.CrcValue ^= 0xFFFFFFFFu;
+                        if (s.CrcValue != crcFromClient)
                         {
-                            await ctx.ReplyAsync(new byte[] { STATUS_ERROR }).ConfigureAwait(false);
+                            await ctx.ReplyAsync(new byte[] { StatusError }).ConfigureAwait(false);
                             s.State = SessionState.Error;
                             break;
                         }
 
                         await s.Stream!.FlushAsync().ConfigureAwait(false);
                         s.State = SessionState.Done;
-                        await ctx.ReplyAsync(new byte[] { STATUS_OK }).ConfigureAwait(false);
+                        await ctx.ReplyAsync(new byte[] { StatusOk }).ConfigureAwait(false);
                         break;
                     }
                 }
@@ -207,14 +203,14 @@ namespace HYSoft.Communication.FileTransfer
         {
             s.Stream!.Flush();
             s.Stream.Seek(0, SeekOrigin.Begin);
-            byte[] buf = new byte[64 * 1024];
+            byte[] buf = new byte[DefaultChunkSize];
             long pos = 0;
             while (pos < upToLength)
             {
                 int toRead = (int)Math.Min(buf.Length, upToLength - pos);
                 int read = await s.Stream.ReadAsync(buf, 0, toRead).ConfigureAwait(false);
                 if (read <= 0) throw new EndOfStreamException("Unexpected EOF while CRC seeding.");
-                s.Crc32 = Crc32.Update(s.Crc32, buf, 0, read);
+                s.CrcValue = Crc32.Update(s.CrcValue, buf, 0, read);
                 pos += read;
             }
             s.Stream.Seek(upToLength, SeekOrigin.Begin);
@@ -230,29 +226,6 @@ namespace HYSoft.Communication.FileTransfer
             }
         }
 
-        #region Binary Helpers
-
-        private static uint ReadUInt32BE(byte[] buf, int offset)
-            => ((uint)buf[offset] << 24) | ((uint)buf[offset + 1] << 16) | ((uint)buf[offset + 2] << 8) | buf[offset + 3];
-
-        private static ulong ReadUInt64BE(byte[] buf, int offset)
-            => ((ulong)buf[offset] << 56) | ((ulong)buf[offset + 1] << 48) | ((ulong)buf[offset + 2] << 40) |
-               ((ulong)buf[offset + 3] << 32) | ((ulong)buf[offset + 4] << 24) | ((ulong)buf[offset + 5] << 16) |
-               ((ulong)buf[offset + 6] << 8) | buf[offset + 7];
-
-        private static ushort ReadUInt16BE(byte[] buf, int offset)
-            => (ushort)((buf[offset] << 8) | buf[offset + 1]);
-
-        private static void WriteUInt64BE(byte[] buf, int offset, ulong value)
-        {
-            buf[offset] = (byte)(value >> 56); buf[offset + 1] = (byte)(value >> 48);
-            buf[offset + 2] = (byte)(value >> 40); buf[offset + 3] = (byte)(value >> 32);
-            buf[offset + 4] = (byte)(value >> 24); buf[offset + 5] = (byte)(value >> 16);
-            buf[offset + 6] = (byte)(value >> 8); buf[offset + 7] = (byte)value;
-        }
-
-        #endregion
-
         private enum SessionState { WaitHeader, WaitFileName, ReceivingData, WaitTail, Done, Error }
 
         private sealed class Session
@@ -266,7 +239,7 @@ namespace HYSoft.Communication.FileTransfer
             public byte Flags;
             public long ReceivedAfterOffset;
             public FileStream? Stream;
-            public uint Crc32;
+            public uint CrcValue;
             public int ExpectedNameBytes;
             public readonly GrowingBuffer HeaderBuffer = new GrowingBuffer();
             public readonly SemaphoreSlim Lock = new SemaphoreSlim(1, 1);
@@ -300,32 +273,6 @@ namespace HYSoft.Communication.FileTransfer
             }
 
             public void Dispose() => _buf = Array.Empty<byte>();
-        }
-
-        private static class Crc32
-        {
-            private const uint Poly = 0xEDB88320u;
-            private static readonly uint[] Table = CreateTable();
-
-            private static uint[] CreateTable()
-            {
-                var t = new uint[256];
-                for (uint i = 0; i < 256; i++)
-                {
-                    uint c = i;
-                    for (int k = 0; k < 8; k++) c = (c & 1) != 0 ? (Poly ^ (c >> 1)) : (c >> 1);
-                    t[i] = c;
-                }
-                return t;
-            }
-
-            public static uint Update(uint crc, byte[] data, int offset, int count)
-            {
-                uint c = crc;
-                for (int i = offset; i < offset + count; i++)
-                    c = Table[(c ^ data[i]) & 0xFF] ^ (c >> 8);
-                return c;
-            }
         }
     }
 }

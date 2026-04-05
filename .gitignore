@@ -1,10 +1,28 @@
-.vs/*
+# IDE / Editor
+.vs/
+.idea/
+*.user
+*.suo
+*.userprefs
+*.sln.docstates
 
-nuget/*
+# Build output
+**/obj/
+**/bin/
 
-**/obj/**
-**/bin/**
+# NuGet
+nuget/
+*.nupkg
 
-**/*.dll
-**/*.pdb
-**/*.exe
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs / temp
+*.log
+*.tmp
+
+# Staging DLLs are tracked (git add -f is NOT needed)
+# The staging folder is explicitly included below
+!src/Bundle/Staging/**

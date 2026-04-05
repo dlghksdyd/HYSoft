@@ -19,52 +19,22 @@
                         Background="{TemplateBinding OffBackground}"
                         CornerRadius="{Binding SwitchHeight, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static local:HyToggleSwitch.HalfConverter}}">
                         <Ellipse
-                            x:Name="Thumb"
+                            x:Name="PART_Thumb"
                             Width="{TemplateBinding ThumbSize}"
                             Height="{TemplateBinding ThumbSize}"
                             HorizontalAlignment="Left"
                             Margin="3,0,3,0"
                             Fill="White">
                             <Ellipse.RenderTransform>
-                                <TranslateTransform x:Name="ThumbTranslate" X="0" />
+                                <TranslateTransform x:Name="PART_ThumbTranslate" X="0" />
                             </Ellipse.RenderTransform>
                         </Ellipse>
                     </Border>
 
                     <ControlTemplate.Triggers>
-                        <!-- Checked: slide thumb right, change track color -->
+                        <!-- Checked: change track color -->
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="Track" Property="Background" Value="{Binding OnBackground, RelativeSource={RelativeSource TemplatedParent}}" />
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="ThumbTranslate"
-                                            Storyboard.TargetProperty="X"
-                                            To="22"
-                                            Duration="0:0:0.15">
-                                            <DoubleAnimation.EasingFunction>
-                                                <CubicEase EasingMode="EaseOut" />
-                                            </DoubleAnimation.EasingFunction>
-                                        </DoubleAnimation>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="ThumbTranslate"
-                                            Storyboard.TargetProperty="X"
-                                            To="0"
-                                            Duration="0:0:0.15">
-                                            <DoubleAnimation.EasingFunction>
-                                                <CubicEase EasingMode="EaseOut" />
-                                            </DoubleAnimation.EasingFunction>
-                                        </DoubleAnimation>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.ExitActions>
                         </Trigger>
 
                         <!-- Disabled -->
