@@ -11,6 +11,7 @@ namespace HYSoft.Presentation.Interactivity
 {
     public class ObservableDictionary<TKey, TValue> :
         Dictionary<TKey, TValue>, INotifyPropertyChanged, INotifyCollectionChanged
+        where TKey : notnull
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         public event NotifyCollectionChangedEventHandler? CollectionChanged;
@@ -59,7 +60,7 @@ namespace HYSoft.Presentation.Interactivity
 
         public new bool Remove(TKey key)
         {
-            if (base.TryGetValue(key, out TValue value) && base.Remove(key))
+            if (base.TryGetValue(key, out TValue? value) && base.Remove(key))
             {
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Count"));
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Item[]"));

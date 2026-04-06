@@ -146,7 +146,7 @@ namespace HYSoft.Communication.Tcp.Client
                         ThrowIfDisposed();
                         var segment = new ArraySegment<byte>(buffer, offset + totalSent, count - totalSent);
                         int sent = await Task.Factory.FromAsync(
-                            socket.BeginSend(segment.Array, segment.Offset, segment.Count, SocketFlags.None, null, null),
+                            socket.BeginSend(segment.Array!, segment.Offset, segment.Count, SocketFlags.None, null, null),
                             socket.EndSend).ConfigureAwait(false);
 
                         if (sent <= 0)

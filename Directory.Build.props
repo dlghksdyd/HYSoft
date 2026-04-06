@@ -32,7 +32,7 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 
 		<!-- 스크립트 루트 -->
-		<HySoftScriptsDir>$(SolutionDir)scripts\</HySoftScriptsDir>
+		<HySoftScriptsDir>$(MSBuildThisFileDirectory)scripts\</HySoftScriptsDir>
 
 		<!-- Windows PowerShell -->
 		<HysoftPwshExe>$(WINDIR)\System32\WindowsPowerShell\v1.0\powershell.exe</HysoftPwshExe>

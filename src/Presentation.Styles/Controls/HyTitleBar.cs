@@ -1,5 +1,4 @@
-﻿using HYSoft.Presentation.Interactivity;
-using HYSoft.Presentation.Interactivity.CommandBehaviors;
+﻿using HYSoft.Presentation.Styles;
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
