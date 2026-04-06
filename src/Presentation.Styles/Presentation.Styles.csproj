@@ -8,11 +8,7 @@
 		<ProjectReference Include="..\Presentation\Presentation.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<Reference Include="PresentationFramework.Aero2" />
-	</ItemGroup>
-
-	<ItemGroup>
+<ItemGroup>
 		<Resource Include="Icons\png\**\*.png" />
 	</ItemGroup>
 
