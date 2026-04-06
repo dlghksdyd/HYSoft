@@ -10,6 +10,10 @@ namespace HYSoft.Presentation.Styles.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(HyListBox), new FrameworkPropertyMetadata(typeof(HyListBox)));
         }
 
+        protected override DependencyObject GetContainerForItemOverride() => new HyListBoxItem();
+
+        protected override bool IsItemItsOwnContainerOverride(object item) => item is HyListBoxItem;
+
         public static readonly DependencyProperty CornerRadiusProperty =
             DependencyProperty.Register(
                 nameof(CornerRadius),
