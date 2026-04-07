@@ -9,6 +9,7 @@ namespace HYSoft.Presentation.Styles.Controls
         static HyComboBox()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(HyComboBox), new FrameworkPropertyMetadata(typeof(HyComboBox)));
+            VerticalContentAlignmentProperty.OverrideMetadata(typeof(HyComboBox), new FrameworkPropertyMetadata(VerticalAlignment.Center));
 
             EventManager.RegisterClassHandler(
                 typeof(HyComboBox),

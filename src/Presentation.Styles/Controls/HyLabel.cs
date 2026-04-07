@@ -3,19 +3,19 @@ using System.Windows.Controls;
 
 namespace HYSoft.Presentation.Styles.Controls
 {
-    public class HyToolBar : ToolBar
+    public class HyLabel : Label
     {
-        static HyToolBar()
+        static HyLabel()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(HyToolBar), new FrameworkPropertyMetadata(typeof(HyToolBar)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(HyLabel), new FrameworkPropertyMetadata(typeof(HyLabel)));
         }
 
         public static readonly DependencyProperty CornerRadiusProperty =
             DependencyProperty.Register(
                 nameof(CornerRadius),
                 typeof(CornerRadius),
-                typeof(HyToolBar),
-                new FrameworkPropertyMetadata(new CornerRadius(0)));
+                typeof(HyLabel),
+                new FrameworkPropertyMetadata(new CornerRadius(0), FrameworkPropertyMetadataOptions.AffectsRender));
 
         public CornerRadius CornerRadius
         {

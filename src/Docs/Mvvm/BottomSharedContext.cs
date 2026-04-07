@@ -180,13 +180,11 @@ namespace Docs.Mvvm
             item3.AddSubItem("RichTextBox", typeof(RichTextBoxView));
             item3.AddSubItem("ScrollViewer", typeof(ScrollViewerView));
             item3.AddSubItem("Slider", typeof(SliderView));
-            item3.AddSubItem("StatusBar", typeof(StatusBarView));
             item3.AddSubItem("TabControl", typeof(TabControlView));
             item3.AddSubItem("TextBox", typeof(TextBoxView));
             item3.AddSubItem("TitleBar", typeof(TitleBarView));
             item3.AddSubItem("Toast", typeof(ToastView));
             item3.AddSubItem("ToggleSwitch", typeof(ToggleSwitchView));
-            item3.AddSubItem("ToolBar", typeof(ToolBarView));
             item3.AddSubItem("ToolTip", typeof(ToolTipView));
             item3.AddSubItem("TreeView", typeof(TreeViewView));
             item3.AddSubItem("Window", typeof(WindowView));
