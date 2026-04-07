@@ -5,6 +5,8 @@
 
     <Style TargetType="{x:Type controls:HyTextBlock}">
         <Setter Property="Background" Value="Transparent" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:HyTextBlock}">

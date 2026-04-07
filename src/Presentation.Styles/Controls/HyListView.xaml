@@ -4,16 +4,16 @@
     xmlns:c="clr-namespace:HYSoft.Presentation.Styles.ColorTokens"
     xmlns:local="clr-namespace:HYSoft.Presentation.Styles.Controls">
 
-    <Style TargetType="{x:Type local:HyListBoxItem}">
+    <Style TargetType="{x:Type local:HyListViewItem}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{c:Color TextPrimary}" />
-        <Setter Property="Padding" Value="8,6" />
+        <Setter Property="Padding" Value="4,2" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:HyListBoxItem}">
+                <ControlTemplate TargetType="{x:Type local:HyListViewItem}">
                     <Border
                         x:Name="Root"
                         Background="{TemplateBinding Background}"
@@ -22,7 +22,7 @@
                         CornerRadius="{TemplateBinding CornerRadius}"
                         Padding="{TemplateBinding Padding}"
                         SnapsToDevicePixels="True">
-                        <ContentPresenter
+                        <GridViewRowPresenter
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
@@ -37,7 +37,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style TargetType="{x:Type local:HyListBox}">
+    <Style TargetType="{x:Type local:HyListView}">
         <Setter Property="Background" Value="{c:Color SurfaceBase}" />
         <Setter Property="BorderBrush" Value="{c:Color BorderSubtle}" />
         <Setter Property="BorderThickness" Value="1" />
@@ -49,7 +49,7 @@
         <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:HyListBox}">
+                <ControlTemplate TargetType="{x:Type local:HyListView}">
                     <Border
                         x:Name="Root"
                         Background="{TemplateBinding Background}"
@@ -57,9 +57,7 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}"
                         SnapsToDevicePixels="True">
-                        <ScrollViewer
-                            Focusable="False"
-                            Padding="{TemplateBinding Padding}">
+                        <ScrollViewer Focusable="False" Padding="{TemplateBinding Padding}">
                             <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </ScrollViewer>
                     </Border>

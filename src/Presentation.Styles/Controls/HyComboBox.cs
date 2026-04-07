@@ -25,6 +25,10 @@ namespace HYSoft.Presentation.Styles.Controls
             }
         }
 
+        protected override DependencyObject GetContainerForItemOverride() => new HyComboBoxItem();
+
+        protected override bool IsItemItsOwnContainerOverride(object item) => item is HyComboBoxItem;
+
         public static readonly DependencyProperty CornerRadiusProperty =
             DependencyProperty.Register(
                 nameof(CornerRadius),

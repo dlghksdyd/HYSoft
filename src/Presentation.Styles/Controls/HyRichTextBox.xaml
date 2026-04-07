@@ -10,6 +10,8 @@
         <Setter Property="BorderBrush" Value="{c:Color InputBorder}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Padding" Value="8" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>

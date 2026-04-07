@@ -33,5 +33,6 @@
         <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyGridSplitter.xaml" />
         <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyBreadcrumb.xaml" />
         <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyRichTextBox.xaml" />
+        <ResourceDictionary Source="/Presentation.Styles;component/Controls/HyListView.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

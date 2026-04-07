@@ -7,6 +7,8 @@
     <Style TargetType="{x:Type local:HyRadioButton}">
         <Setter Property="Foreground" Value="White" />
         <Setter Property="FontSize" Value="20" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="ButtonSize" Value="16" />
         <Setter Property="TextPadding" Value="10" />
         <Setter Property="EllipseBackground" Value="White" />

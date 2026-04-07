@@ -7,6 +7,8 @@
         <Setter Property="Foreground" Value="{StaticResource {x:Static SystemColors.ControlTextBrushKey}}" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="4,0,0,0" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="TextPadding" Value="10 0 0 0" />
