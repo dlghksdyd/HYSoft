@@ -97,6 +97,7 @@
     <SolidColorBrush x:Key="NavigationSidebarBorder">#c5d4e3</SolidColorBrush>
     <SolidColorBrush x:Key="NavigationTabFg">#1d2c3b</SolidColorBrush>
     <SolidColorBrush x:Key="NavigationTabIndicator">#0672cb</SolidColorBrush>
+    <SolidColorBrush x:Key="NavigationItemBgHover">#0672cb</SolidColorBrush>
     <SolidColorBrush x:Key="NavigationMenuBarBg">#1282d6</SolidColorBrush>
     <SolidColorBrush x:Key="NavigationMenuBarFg">#eafaff</SolidColorBrush>
     <SolidColorBrush x:Key="NavigationMenuBarBorder">#002a58</SolidColorBrush>
@@ -209,6 +210,7 @@
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.NavigationSidebarBorder}}" Color="{Binding Color, Source={StaticResource NavigationSidebarBorder}}" />
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.NavigationTabFg}}" Color="{Binding Color, Source={StaticResource NavigationTabFg}}" />
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.NavigationTabIndicator}}" Color="{Binding Color, Source={StaticResource NavigationTabIndicator}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.NavigationItemBgHover}}" Color="{Binding Color, Source={StaticResource NavigationItemBgHover}}" />
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.NavigationMenuBarBg}}" Color="{Binding Color, Source={StaticResource NavigationMenuBarBg}}" />
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.NavigationMenuBarFg}}" Color="{Binding Color, Source={StaticResource NavigationMenuBarFg}}" />
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.NavigationMenuBarBorder}}" Color="{Binding Color, Source={StaticResource NavigationMenuBarBorder}}" />

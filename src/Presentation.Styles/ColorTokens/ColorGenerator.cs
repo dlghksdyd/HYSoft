@@ -138,6 +138,7 @@ namespace HYSoft.Presentation.Styles.ColorTokens
             map[EColorKeys.NavigationSidebarBorder] = Resolve(nameof(EColorKeys.NavigationSidebarBorder));
             map[EColorKeys.NavigationTabFg] = Resolve(nameof(EColorKeys.NavigationTabFg));
             map[EColorKeys.NavigationTabIndicator] = Resolve(nameof(EColorKeys.NavigationTabIndicator));
+            map[EColorKeys.NavigationItemBgHover] = Resolve(nameof(EColorKeys.NavigationItemBgHover));
             map[EColorKeys.NavigationMenuBarBg] = Resolve(nameof(EColorKeys.NavigationMenuBarBg));
             map[EColorKeys.NavigationMenuBarFg] = Resolve(nameof(EColorKeys.NavigationMenuBarFg));
             map[EColorKeys.NavigationMenuBarBorder] = Resolve(nameof(EColorKeys.NavigationMenuBarBorder));
@@ -260,6 +261,7 @@ namespace HYSoft.Presentation.Styles.ColorTokens
         NavigationSidebarBorder,
         NavigationTabFg,
         NavigationTabIndicator,
+        NavigationItemBgHover,
         NavigationMenuBarBg,
         NavigationMenuBarFg,
         NavigationMenuBarBorder,
