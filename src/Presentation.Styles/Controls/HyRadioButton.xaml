@@ -75,12 +75,20 @@
                             <Setter TargetName="PART_Bullet" Property="StrokeDashArray" Value="1 1" />
                         </Trigger>
 
-                        <!--  비활성화: 투명도 낮춤  -->
+                        <!--  비활성화: 투명도 낮춤 (PART_Dot은 체크 상태에서만 dim)  -->
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="PART_Bullet" Property="Opacity" Value="0.5" />
-                            <Setter TargetName="PART_Dot" Property="Opacity" Value="0.5" />
                             <Setter TargetName="xTextBlock" Property="Opacity" Value="0.5" />
                         </Trigger>
+
+                        <!--  비활성화 + 체크됨: 점도 dim (체크 안 된 disabled는 점이 보이면 안 됨)  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False" />
+                                <Condition Property="IsChecked" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_Dot" Property="Opacity" Value="0.5" />
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

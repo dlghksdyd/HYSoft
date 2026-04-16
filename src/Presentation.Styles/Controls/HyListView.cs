@@ -32,7 +32,7 @@ namespace HYSoft.Presentation.Styles.Controls
     }
 
     /// <summary>
-    /// HyListViewItem — ListViewItem 래퍼. hover/selected 하이라이트 제거.
+    /// HyListViewItem — ListViewItem 래퍼. IsMouseOver/IsSelected 시 배경색 하이라이트 제공.
     /// </summary>
     public class HyListViewItem : ListViewItem
     {
