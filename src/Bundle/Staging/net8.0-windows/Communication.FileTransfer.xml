@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Communication.FileTransfer</name>
+    </assembly>
+    <members>
+        <member name="T:HYSoft.Communication.FileTransfer.BinaryHelper">
+            <summary>
+            Big-Endian 바이트 직렬화/역직렬화 헬퍼.
+            </summary>
+        </member>
+        <member name="T:HYSoft.Communication.FileTransfer.Crc32">
+            <summary>
+            CRC-32 (IEEE 802.3) 체크섬 유틸리티.
+            </summary>
+        </member>
+        <member name="M:HYSoft.Communication.FileTransfer.Crc32.Compute(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            전체 데이터에 대한 CRC-32 계산 (Init → Update → Finalize).
+            </summary>
+        </member>
+        <member name="T:HYSoft.Communication.FileTransfer.FileTransferClient">
+            <summary>
+            파일 전송 클라이언트 구현 클래스입니다.
+            </summary>
+        </member>
+        <member name="M:HYSoft.Communication.FileTransfer.FileTransferClient.SendFileAsync(System.String,System.IProgress{HYSoft.Communication.FileTransfer.FileTransferProgress},System.Threading.CancellationToken)">
+            <summary>
+            파일을 서버로 비동기 전송합니다.
+            </summary>
+            <param name="filePath">전송할 파일 경로.</param>
+            <param name="progress">진행률 콜백 (선택).</param>
+            <param name="cancellationToken">취소 토큰 (선택).</param>
+        </member>
+        <member name="T:HYSoft.Communication.FileTransfer.FileTransferConstants">
+            <summary>
+            파일 전송 프로토콜 공용 상수.
+            </summary>
+        </member>
+        <member name="F:HYSoft.Communication.FileTransfer.FileTransferConstants.MagicHeader">
+            <summary>헤더 매직 바이트 "FT10"</summary>
+        </member>
+        <member name="F:HYSoft.Communication.FileTransfer.FileTransferConstants.MagicTail">
+            <summary>테일 매직 바이트 "FTEN"</summary>
+        </member>
+        <member name="F:HYSoft.Communication.FileTransfer.FileTransferConstants.DefaultChunkSize">
+            <summary>기본 전송 청크 크기 (64 KB)</summary>
+        </member>
+        <member name="T:HYSoft.Communication.FileTransfer.FileTransferProgress">
+            <summary>
+            파일 전송 진행률 정보.
+            </summary>
+        </member>
+        <member name="P:HYSoft.Communication.FileTransfer.FileTransferProgress.BytesTransferred">
+            <summary>현재까지 전송된 바이트 수.</summary>
+        </member>
+        <member name="P:HYSoft.Communication.FileTransfer.FileTransferProgress.TotalBytes">
+            <summary>전체 전송 바이트 수.</summary>
+        </member>
+        <member name="P:HYSoft.Communication.FileTransfer.FileTransferProgress.Percentage">
+            <summary>진행률 (0.0 ~ 1.0).</summary>
+        </member>
+        <member name="T:HYSoft.Communication.FileTransfer.FileTransferServer">
+            <summary>
+            간단한 파일 전송 서버 구현.
+            </summary>
+        </member>
+    </members>
+</doc>

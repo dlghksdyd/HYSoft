@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TestApp</name>
+    </assembly>
+    <members>
+        <member name="T:TestApp.App">
+            <summary>
+            App
+            </summary>
+        </member>
+        <member name="M:TestApp.App.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:TestApp.App.Main">
+            <summary>
+            Application Entry Point.
+            </summary>
+        </member>
+        <member name="T:TestApp.MainWindow">
+            <summary>
+            MainWindow
+            </summary>
+        </member>
+        <member name="M:TestApp.MainWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:TestApp.Samples.FileTransfer.FileTransferClientView">
+            <summary>
+            FileTransferClientView
+            </summary>
+        </member>
+        <member name="M:TestApp.Samples.FileTransfer.FileTransferClientView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:TestApp.Samples.FileTransfer.FileTransferServerView">
+            <summary>
+            FileTransferServerView
+            </summary>
+        </member>
+        <member name="M:TestApp.Samples.FileTransfer.FileTransferServerView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:TestApp.Samples.Icons.IconSampleView">
+            <summary>
+            IconSampleView
+            </summary>
+        </member>
+        <member name="M:TestApp.Samples.Icons.IconSampleView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:TestApp.Samples.Modal.ModalInfoView">
+            <summary>
+            ModalInfoView
+            </summary>
+        </member>
+        <member name="M:TestApp.Samples.Modal.ModalInfoView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:TestApp.Samples.Modal.ModalSampleView">
+            <summary>
+            ModalSampleView
+            </summary>
+        </member>
+        <member name="M:TestApp.Samples.Modal.ModalSampleView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+    </members>
+</doc>
