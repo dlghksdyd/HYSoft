@@ -160,6 +160,14 @@ namespace HYSoft.Presentation.Styles.ColorTokens
             map[EColorKeys.ButtonActionBg] = Resolve(nameof(EColorKeys.ButtonActionBg));
             map[EColorKeys.ButtonActionFg] = Resolve(nameof(EColorKeys.ButtonActionFg));
             map[EColorKeys.StatusActiveFg] = Resolve(nameof(EColorKeys.StatusActiveFg));
+            map[EColorKeys.OverlayBackdrop] = Resolve(nameof(EColorKeys.OverlayBackdrop));
+            map[EColorKeys.BorderInverse] = Resolve(nameof(EColorKeys.BorderInverse));
+            map[EColorKeys.LogTrace] = Resolve(nameof(EColorKeys.LogTrace));
+            map[EColorKeys.LogInfo] = Resolve(nameof(EColorKeys.LogInfo));
+            map[EColorKeys.LogWarn] = Resolve(nameof(EColorKeys.LogWarn));
+            map[EColorKeys.LogError] = Resolve(nameof(EColorKeys.LogError));
+            map[EColorKeys.LogCritical] = Resolve(nameof(EColorKeys.LogCritical));
+            map[EColorKeys.SurfaceScrim] = Resolve(nameof(EColorKeys.SurfaceScrim));
 
             return map;
         }
@@ -285,6 +293,14 @@ namespace HYSoft.Presentation.Styles.ColorTokens
         PopupContentText,
         ButtonActionBg,
         ButtonActionFg,
-        StatusActiveFg
+        StatusActiveFg,
+        OverlayBackdrop,
+        BorderInverse,
+        LogTrace,
+        LogInfo,
+        LogWarn,
+        LogError,
+        LogCritical,
+        SurfaceScrim
     }
 }

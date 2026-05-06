@@ -50,6 +50,14 @@
     <SolidColorBrush x:Key="ButtonActionBg">#E05A2E</SolidColorBrush>
     <SolidColorBrush x:Key="ButtonActionFg">#FFFFFF</SolidColorBrush>
     <SolidColorBrush x:Key="StatusActiveFg">#0DC40D</SolidColorBrush>
+    <SolidColorBrush x:Key="LogTrace">#757575</SolidColorBrush>
+    <SolidColorBrush x:Key="LogInfo">#2E7D32</SolidColorBrush>
+    <SolidColorBrush x:Key="LogWarn">#EF6C00</SolidColorBrush>
+    <SolidColorBrush x:Key="LogError">#C62828</SolidColorBrush>
+    <SolidColorBrush x:Key="LogCritical">#B71C1C</SolidColorBrush>
+    <SolidColorBrush x:Key="OverlayBackdrop">#11000000</SolidColorBrush>
+    <SolidColorBrush x:Key="SurfaceScrim">#80000000</SolidColorBrush>
+    <SolidColorBrush x:Key="BorderInverse">#304554</SolidColorBrush>
     <SolidColorBrush x:Key="InputBg">#f2f6fa</SolidColorBrush>
     <SolidColorBrush x:Key="InputFg">#0a0e14</SolidColorBrush>
     <SolidColorBrush x:Key="InputPlaceholder">#293b4d</SolidColorBrush>
@@ -235,4 +243,12 @@
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.ButtonActionBg}}" Color="{Binding Color, Source={StaticResource ButtonActionBg}}" />
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.ButtonActionFg}}" Color="{Binding Color, Source={StaticResource ButtonActionFg}}" />
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.StatusActiveFg}}" Color="{Binding Color, Source={StaticResource StatusActiveFg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.LogTrace}}" Color="{Binding Color, Source={StaticResource LogTrace}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.LogInfo}}" Color="{Binding Color, Source={StaticResource LogInfo}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.LogWarn}}" Color="{Binding Color, Source={StaticResource LogWarn}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.LogError}}" Color="{Binding Color, Source={StaticResource LogError}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.LogCritical}}" Color="{Binding Color, Source={StaticResource LogCritical}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.OverlayBackdrop}}" Color="{Binding Color, Source={StaticResource OverlayBackdrop}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.BorderInverse}}" Color="{Binding Color, Source={StaticResource BorderInverse}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.SurfaceScrim}}" Color="{Binding Color, Source={StaticResource SurfaceScrim}}" />
 </ResourceDictionary>
