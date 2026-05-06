@@ -157,6 +157,9 @@ namespace HYSoft.Presentation.Styles.ColorTokens
             map[EColorKeys.PopupBorder] = Resolve(nameof(EColorKeys.PopupBorder));
             map[EColorKeys.PopupContentSurface] = Resolve(nameof(EColorKeys.PopupContentSurface));
             map[EColorKeys.PopupContentText] = Resolve(nameof(EColorKeys.PopupContentText));
+            map[EColorKeys.ButtonActionBg] = Resolve(nameof(EColorKeys.ButtonActionBg));
+            map[EColorKeys.ButtonActionFg] = Resolve(nameof(EColorKeys.ButtonActionFg));
+            map[EColorKeys.StatusActiveFg] = Resolve(nameof(EColorKeys.StatusActiveFg));
 
             return map;
         }
@@ -279,6 +282,9 @@ namespace HYSoft.Presentation.Styles.ColorTokens
         PopupTitleText,
         PopupBorder,
         PopupContentSurface,
-        PopupContentText
+        PopupContentText,
+        ButtonActionBg,
+        ButtonActionFg,
+        StatusActiveFg
     }
 }

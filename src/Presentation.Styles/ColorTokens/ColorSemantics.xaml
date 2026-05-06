@@ -47,6 +47,9 @@
     <SolidColorBrush x:Key="ButtonDestructiveFg">#f2f6fa</SolidColorBrush>
     <SolidColorBrush x:Key="ButtonDestructiveBg">#d0353f</SolidColorBrush>
     <SolidColorBrush x:Key="ButtonDestructiveBorder">#bb2a33</SolidColorBrush>
+    <SolidColorBrush x:Key="ButtonActionBg">#E05A2E</SolidColorBrush>
+    <SolidColorBrush x:Key="ButtonActionFg">#FFFFFF</SolidColorBrush>
+    <SolidColorBrush x:Key="StatusActiveFg">#0DC40D</SolidColorBrush>
     <SolidColorBrush x:Key="InputBg">#f2f6fa</SolidColorBrush>
     <SolidColorBrush x:Key="InputFg">#0a0e14</SolidColorBrush>
     <SolidColorBrush x:Key="InputPlaceholder">#293b4d</SolidColorBrush>
@@ -229,4 +232,7 @@
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.PopupBorder}}" Color="{Binding Color, Source={StaticResource PopupBorder}}" />
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.PopupContentSurface}}" Color="{Binding Color, Source={StaticResource PopupContentSurface}}" />
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.PopupContentText}}" Color="{Binding Color, Source={StaticResource PopupContentText}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.ButtonActionBg}}" Color="{Binding Color, Source={StaticResource ButtonActionBg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.ButtonActionFg}}" Color="{Binding Color, Source={StaticResource ButtonActionFg}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.StatusActiveFg}}" Color="{Binding Color, Source={StaticResource StatusActiveFg}}" />
 </ResourceDictionary>
