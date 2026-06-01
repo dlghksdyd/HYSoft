@@ -12,6 +12,30 @@ Claude Code가 HYSoft 프로젝트를 이해하는 데 필요한 컨텍스트.
 
 HYSoft는 WPF 데스크톱 앱용 .NET SDK. `HySoft.Bundle` NuGet으로 배포. MIT. 저자: Hwanyong.lee
 
+## 설치
+
+```
+Install-Package HySoft.Bundle
+```
+
+또는 .NET CLI:
+
+```
+dotnet add package HySoft.Bundle
+```
+
+## What's Included
+
+| Assembly | Description |
+|----------|-------------|
+| **Presentation.dll** | MVVM infrastructure, converters, DragDrop, Modal, attached behaviors |
+| **Presentation.Styles.dll** | 33 custom WPF controls, color/font/icon design tokens, themes |
+| **Communication.dll** | Async TCP client/server |
+| **Communication.FileTransfer.dll** | File transfer protocol (chunked transfer, CRC32, resume, progress reporting) |
+| **Data.dll** | MSSQL DbContext base class (Entity Framework 6) |
+| **Docs.exe** | Interactive documentation viewer (run to browse all components) |
+| **TestApp.exe** | Sample application with Modal, Icon, FileTransfer demos |
+
 ## 기술 스택
 
 - C# (latest, Nullable enable) / .NET Framework 4.8 (기본), .NET 8.0 Windows (일부)
@@ -21,15 +45,20 @@ HYSoft는 WPF 데스크톱 앱용 .NET SDK. `HySoft.Bundle` NuGet으로 배포. 
 ## 솔루션 구조
 
 ```
-src/Communication/              비동기 TCP 클라이언트/서버
-src/Communication.FileTransfer/ FT10 파일 전송
-src/Data/                       MSSQL DbContext (EF6)
-src/Presentation/               MVVM, 컨버터, 모달, 드래그앤드롭
-src/Presentation.Styles/        34개 커스텀 컨트롤, 디자인 토큰
-src/Docs/                       문서 뷰어 (WPF 앱)
-src/TestApp/                    샘플 앱 (WPF 앱)
-src/Bundle/                     NuGet 패키지 생성
+HYSoft.sln
+├── Communication              # Async TCP client/server transport layer
+├── Communication.FileTransfer # File transfer protocol (depends on Communication)
+├── Data                       # MSSQL DbContext base class
+├── Presentation               # MVVM infrastructure, converters, behaviors
+├── Presentation.Styles        # 33 WPF custom controls + design tokens
+├── Docs                       # Interactive documentation viewer
+├── TestApp                    # Sample application
+└── Bundle                     # NuGet packaging aggregator
 ```
+
+## Branch Policy
+
+- Do not push directly to `main`. Use a feature branch such as `hylee`.
 
 ## 빌드
 
