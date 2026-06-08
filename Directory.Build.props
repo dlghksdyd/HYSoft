@@ -28,8 +28,8 @@
 		<HysoftXmlnsIncludeAll>true</HysoftXmlnsIncludeAll>
 		<HysoftXmlnsEnabled>true</HysoftXmlnsEnabled>
 
-		<!-- NuGet 페이지에 README 노출 기본값 -->
-		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<!-- NuGet 페이지에 README 노출 — 실제 파일이 있을 때만 선언 (없으면 NU5039 방지) -->
+		<PackageReadmeFile Condition="Exists('$(MSBuildThisFileDirectory)README.md')">README.md</PackageReadmeFile>
 
 		<!-- 스크립트 루트 -->
 		<HySoftScriptsDir>$(MSBuildThisFileDirectory)scripts\</HySoftScriptsDir>
