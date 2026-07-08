@@ -33,9 +33,9 @@
                                         <Border
                                             x:Name="BtnBorder"
                                             Background="Transparent"
-                                            BorderBrush="{c:Color BorderSubtle}"
-                                            BorderThickness="1"
-                                            CornerRadius="4"
+                                            BorderBrush="Transparent"
+                                            BorderThickness="0"
+                                            CornerRadius="0"
                                             Padding="{TemplateBinding Padding}">
                                             <ContentPresenter
                                                 HorizontalAlignment="Center"
@@ -73,9 +73,9 @@
                                         <Border
                                             x:Name="BtnBorder"
                                             Background="Transparent"
-                                            BorderBrush="{c:Color BorderSubtle}"
-                                            BorderThickness="1"
-                                            CornerRadius="4"
+                                            BorderBrush="Transparent"
+                                            BorderThickness="0"
+                                            CornerRadius="0"
                                             Padding="{TemplateBinding Padding}">
                                             <ContentPresenter
                                                 HorizontalAlignment="Center"
@@ -126,9 +126,9 @@
                                         <Border
                                             x:Name="BtnBorder"
                                             Background="Transparent"
-                                            BorderBrush="{c:Color BorderSubtle}"
-                                            BorderThickness="1"
-                                            CornerRadius="4"
+                                            BorderBrush="Transparent"
+                                            BorderThickness="0"
+                                            CornerRadius="0"
                                             Padding="{TemplateBinding Padding}">
                                             <ContentPresenter
                                                 HorizontalAlignment="Center"
@@ -166,9 +166,9 @@
                                         <Border
                                             x:Name="BtnBorder"
                                             Background="Transparent"
-                                            BorderBrush="{c:Color BorderSubtle}"
-                                            BorderThickness="1"
-                                            CornerRadius="4"
+                                            BorderBrush="Transparent"
+                                            BorderThickness="0"
+                                            CornerRadius="0"
                                             Padding="{TemplateBinding Padding}">
                                             <ContentPresenter
                                                 HorizontalAlignment="Center"
