@@ -41,7 +41,7 @@ namespace HYSoft.Communication.Tcp.Server
                 var dataCtx = new TcpDataReceivedContext(this, ctx.Id, data);
                 DataReceived?.Invoke(dataCtx);
             }
-            catch { }
+            catch (Exception ex) { Log(ex, "DataReceived handler threw"); }
         }
 
         #endregion
