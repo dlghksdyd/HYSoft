@@ -169,7 +169,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:HyThumb}">
                     <Border
-                        x:Name="xVerticalThumRectangle"
+                        x:Name="xVerticalThumbRectangle"
                         Width="{TemplateBinding Width}"
                         Height="{TemplateBinding Height}"
                         Background="{TemplateBinding ThumbColor}"
@@ -177,12 +177,12 @@
                         SnapsToDevicePixels="True" />
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="xVerticalThumRectangle" Property="Opacity" Value="0.8" />
-                            <Setter TargetName="xVerticalThumRectangle" Property="Cursor" Value="Hand" />
+                            <Setter TargetName="xVerticalThumbRectangle" Property="Opacity" Value="0.8" />
+                            <Setter TargetName="xVerticalThumbRectangle" Property="Cursor" Value="Hand" />
                         </Trigger>
                         <Trigger Property="IsDragging" Value="true">
-                            <Setter TargetName="xVerticalThumRectangle" Property="Opacity" Value="0.5" />
-                            <Setter TargetName="xVerticalThumRectangle" Property="Cursor" Value="Hand" />
+                            <Setter TargetName="xVerticalThumbRectangle" Property="Opacity" Value="0.5" />
+                            <Setter TargetName="xVerticalThumbRectangle" Property="Cursor" Value="Hand" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -197,7 +197,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:HyThumb}">
                     <Border
-                        x:Name="xHorizontalThumRectangle"
+                        x:Name="xHorizontalThumbRectangle"
                         Width="{TemplateBinding Width}"
                         Height="{TemplateBinding Height}"
                         Background="{TemplateBinding ThumbColor}"
@@ -205,12 +205,12 @@
                         SnapsToDevicePixels="True" />
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="xHorizontalThumRectangle" Property="Opacity" Value="0.5" />
-                            <Setter TargetName="xHorizontalThumRectangle" Property="Cursor" Value="Hand" />
+                            <Setter TargetName="xHorizontalThumbRectangle" Property="Opacity" Value="0.5" />
+                            <Setter TargetName="xHorizontalThumbRectangle" Property="Cursor" Value="Hand" />
                         </Trigger>
                         <Trigger Property="IsDragging" Value="true">
-                            <Setter TargetName="xHorizontalThumRectangle" Property="Opacity" Value="0.5" />
-                            <Setter TargetName="xHorizontalThumRectangle" Property="Cursor" Value="Hand" />
+                            <Setter TargetName="xHorizontalThumbRectangle" Property="Opacity" Value="0.5" />
+                            <Setter TargetName="xHorizontalThumbRectangle" Property="Cursor" Value="Hand" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
