@@ -6,7 +6,7 @@
     <Style TargetType="{x:Type local:HyTextBox}">
         <Setter Property="Background" Value="White" />
         <Setter Property="Watermark" Value="" />
-        <Setter Property="WatermarkForeground" Value="{x:Null}" />
+        <Setter Property="WatermarkForeground" Value="LightGray" />
         <Setter Property="CornerRadius" Value="4" />
         <Setter Property="BorderBrush" Value="{c:Color InputBorder}" />
         <Setter Property="BorderThickness" Value="1" />

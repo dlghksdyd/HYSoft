@@ -68,16 +68,15 @@
                     <Viewbox
                         Width="{TemplateBinding RingSize}"
                         Height="{TemplateBinding RingSize}">
-                        <Canvas
-                            x:Name="RingCanvas"
-                            Width="32"
-                            Height="32"
-                            RenderTransformOrigin="0.5,0.5">
-                            <Canvas.RenderTransform>
+                        <!-- Grid 32x32: Path 의 geometry bbox (2,2)-(30,30) 와 정확히 매칭.
+                             RenderTransformOrigin="0.5,0.5" → (16,16) 으로 회전 중심 고정. -->
+                        <Grid Width="32" Height="32" RenderTransformOrigin="0.5,0.5">
+                            <Grid.RenderTransform>
                                 <RotateTransform x:Name="SpinTransform" Angle="0" />
-                            </Canvas.RenderTransform>
+                            </Grid.RenderTransform>
 
-                            <!-- Arc using Path with ArcSegment -->
+                            <!-- 270° arc: (16,2) 12시 → 시계방향 large → (2,16) 9시.
+                                 12-3-6-9 4 개 cardinal point 통과 → bbox (2,2)-(30,30) 대칭. -->
                             <Path
                                 Stroke="{TemplateBinding RingColor}"
                                 StrokeThickness="{TemplateBinding StrokeThickness}"
@@ -87,7 +86,7 @@
                                     <PathGeometry>
                                         <PathFigure StartPoint="16,2" IsClosed="False">
                                             <ArcSegment
-                                                Point="28.5,22"
+                                                Point="2,16"
                                                 Size="14,14"
                                                 SweepDirection="Clockwise"
                                                 IsLargeArc="True" />
@@ -95,7 +94,7 @@
                                     </PathGeometry>
                                 </Path.Data>
                             </Path>
-                        </Canvas>
+                        </Grid>
                     </Viewbox>
 
                     <ControlTemplate.Triggers>

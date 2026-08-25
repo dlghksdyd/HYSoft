@@ -34,6 +34,16 @@ lib/{TargetFramework}/
 resources/ (디자인 리소스)
 ```
 
+## 스테이징 동작
+
+Release 빌드 시 각 라이브러리의 출력 DLL/XML이 `src/Bundle/Staging/{TargetFramework}/`
+로 복사된 뒤 nupkg에 포함된다(`Directory.Build.targets`의 `CopyOutputToBundleStage`).
+
+스테이징 복사는 **HYSoft 자체 솔루션(HYSoft.sln) 빌드일 때만** 수행된다.
+HYSoft가 외부 솔루션의 `ProjectReference`로 소비될 때는 `$(SolutionDir)`가 소비 측
+루트가 되어 스테이징 산출물이 소비 저장소로 누수되므로, `HysoftBundleStagingEnabled`
+조건(`$(SolutionDir)` == `$(MSBuildThisFileDirectory)`)으로 차단한다.
+
 ## 사용
 
 ```xml

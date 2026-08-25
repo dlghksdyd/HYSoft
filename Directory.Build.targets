@@ -1,7 +1,17 @@
 <Project>
 	<PropertyGroup>
-		<!-- Bundle 스테이징 경로 -->
-		<HysoftBundleStageLib>$(SolutionDir)src\Bundle\Staging\$(TargetFramework)\</HysoftBundleStageLib>
+		<!-- Bundle 스테이징 경로 — 항상 HYSoft 자체 트리 기준 (소비 솔루션과 무관) -->
+		<HysoftBundleStageLib>$(MSBuildThisFileDirectory)src\Bundle\Staging\$(TargetFramework)\</HysoftBundleStageLib>
+
+		<!--
+			Bundle 스테이징 복사는 HYSoft 자체 솔루션(HYSoft.sln) 빌드일 때만 수행.
+			HYSoft 가 외부 솔루션의 ProjectReference 로 소비될 때는 SolutionDir 이
+			소비 측 루트가 되어 스테이징 산출물이 누수되므로 차단한다.
+			(HYSoft.sln 은 Directory.Build.targets 와 같은 디렉터리에 위치 → 두 경로 일치)
+		-->
+		<HysoftBundleStagingEnabled
+			Condition="'$(HysoftBundleStagingEnabled)' == '' And '$(SolutionDir)' == '$(MSBuildThisFileDirectory)'">true</HysoftBundleStagingEnabled>
+		<HysoftBundleStagingEnabled Condition="'$(HysoftBundleStagingEnabled)' == ''">false</HysoftBundleStagingEnabled>
 	</PropertyGroup>
 
 	<!-- Global Xmlns 생성 (Bundle은 소스 파일 없으므로 스킵) -->
@@ -44,7 +54,7 @@
 
 	<!-- 라이브러리 프로젝트 빌드 후, DLL/XML을 Bundle 스테이징으로 복사 -->
 	<Target Name="CopyOutputToBundleStage" AfterTargets="Build"
-			Condition="'$(OutputType)' != 'WinExe' And '$(MSBuildProjectName)' != 'Bundle' And '$(Configuration)'=='Release'">
+			Condition="'$(OutputType)' != 'WinExe' And '$(MSBuildProjectName)' != 'Bundle' And '$(Configuration)'=='Release' And '$(HysoftBundleStagingEnabled)'=='true'">
 
 		<MakeDir Directories="$(HysoftBundleStageLib)" Condition="!Exists('$(HysoftBundleStageLib)')" />
 
@@ -59,7 +69,7 @@
 
 	<!-- WinExe 프로젝트는 전체 출력물을 서브폴더로 복사 -->
 	<Target Name="CopyExeToBundleStage" AfterTargets="Build"
-			Condition="'$(OutputType)' == 'WinExe' And '$(MSBuildProjectName)' != 'Bundle' And '$(Configuration)'=='Release'">
+			Condition="'$(OutputType)' == 'WinExe' And '$(MSBuildProjectName)' != 'Bundle' And '$(Configuration)'=='Release' And '$(HysoftBundleStagingEnabled)'=='true'">
 
 		<MakeDir Directories="$(HysoftBundleStageLib)$(MSBuildProjectName)\" Condition="!Exists('$(HysoftBundleStageLib)$(MSBuildProjectName)\')" />
 
