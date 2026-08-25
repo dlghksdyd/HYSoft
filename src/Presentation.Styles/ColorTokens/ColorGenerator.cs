@@ -159,6 +159,7 @@ namespace HYSoft.Presentation.Styles.ColorTokens
             map[EColorKeys.PopupContentText] = Resolve(nameof(EColorKeys.PopupContentText));
             map[EColorKeys.ButtonActionBg] = Resolve(nameof(EColorKeys.ButtonActionBg));
             map[EColorKeys.ButtonActionFg] = Resolve(nameof(EColorKeys.ButtonActionFg));
+            map[EColorKeys.ButtonActionBorder] = Resolve(nameof(EColorKeys.ButtonActionBorder));
             map[EColorKeys.StatusActiveFg] = Resolve(nameof(EColorKeys.StatusActiveFg));
             map[EColorKeys.OverlayBackdrop] = Resolve(nameof(EColorKeys.OverlayBackdrop));
             map[EColorKeys.BorderInverse] = Resolve(nameof(EColorKeys.BorderInverse));
@@ -293,6 +294,7 @@ namespace HYSoft.Presentation.Styles.ColorTokens
         PopupContentText,
         ButtonActionBg,
         ButtonActionFg,
+        ButtonActionBorder,
         StatusActiveFg,
         OverlayBackdrop,
         BorderInverse,

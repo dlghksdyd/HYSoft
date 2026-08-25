@@ -71,7 +71,13 @@ namespace HYSoft.Presentation.Styles.Controls
         private void _passwordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             if (sender is PasswordBox pb && pb.Password != null)
+            {
                 this.Text = pb.Password;
+                // Text 의 기본 UpdateSourceTrigger 는 LostFocus 라, Enter 로 즉시 제출하면
+                // 마지막 입력이 바인딩 소스(VM)에 안 밀려 빈/이전 값으로 로그인되는 문제가 있다.
+                // 매 입력마다 소스를 강제 flush 해 포커스 이동 없이도 최신 값을 보장한다.
+                GetBindingExpression(TextProperty)?.UpdateSource();
+            }
         }
     }
 }
