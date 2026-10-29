@@ -19,14 +19,18 @@
                         SnapsToDevicePixels="True">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <!-- First Page -->
+                            <!-- 🔴 [work-4002] 크기·글자 크기·여백은 리터럴이 아니라 HyPaginator 의 DP 다.
+                                 기본값은 종전 리터럴과 동일(24 / 4 / 4,0,0,0 / 10 / 8 / 8,0,8,0)이므로
+                                 값을 주지 않는 화면의 렌더는 바뀌지 않는다. 소비처가 크게 쓰고 싶으면
+                                 ScaleTransform 이 아니라 이 속성들을 준다(23-uiux-design §5). -->
                             <Button
                                 x:Name="PART_FirstButton"
-                                Width="24" Height="24"
-                                Padding="4"
+                                Width="{TemplateBinding ButtonSize}" Height="{TemplateBinding ButtonSize}"
+                                Padding="{TemplateBinding ButtonPadding}"
                                 Cursor="Hand"
                                 Focusable="False"
                                 Content="&#x23EE;"
-                                FontSize="10"
+                                FontSize="{TemplateBinding FirstLastGlyphFontSize}"
                                 Foreground="{TemplateBinding Foreground}">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
@@ -60,13 +64,13 @@
                             <!-- Previous Page -->
                             <Button
                                 x:Name="PART_PreviousButton"
-                                Width="24" Height="24"
-                                Margin="4,0,0,0"
-                                Padding="4"
+                                Width="{TemplateBinding ButtonSize}" Height="{TemplateBinding ButtonSize}"
+                                Margin="{TemplateBinding ButtonSpacing}"
+                                Padding="{TemplateBinding ButtonPadding}"
                                 Cursor="Hand"
                                 Focusable="False"
                                 Content="&#x25C0;"
-                                FontSize="8"
+                                FontSize="{TemplateBinding PrevNextGlyphFontSize}"
                                 Foreground="{TemplateBinding Foreground}">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
@@ -99,7 +103,7 @@
 
                             <!-- Page Info -->
                             <TextBlock
-                                Margin="8,0"
+                                Margin="{TemplateBinding PageInfoMargin}"
                                 VerticalAlignment="Center"
                                 FontSize="{TemplateBinding FontSize}"
                                 Foreground="{TemplateBinding Foreground}">
@@ -114,12 +118,12 @@
                             <!-- Next Page -->
                             <Button
                                 x:Name="PART_NextButton"
-                                Width="24" Height="24"
-                                Padding="4"
+                                Width="{TemplateBinding ButtonSize}" Height="{TemplateBinding ButtonSize}"
+                                Padding="{TemplateBinding ButtonPadding}"
                                 Cursor="Hand"
                                 Focusable="False"
                                 Content="&#x25B6;"
-                                FontSize="8"
+                                FontSize="{TemplateBinding PrevNextGlyphFontSize}"
                                 Foreground="{TemplateBinding Foreground}">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
@@ -153,13 +157,13 @@
                             <!-- Last Page -->
                             <Button
                                 x:Name="PART_LastButton"
-                                Width="24" Height="24"
-                                Margin="4,0,0,0"
-                                Padding="4"
+                                Width="{TemplateBinding ButtonSize}" Height="{TemplateBinding ButtonSize}"
+                                Margin="{TemplateBinding ButtonSpacing}"
+                                Padding="{TemplateBinding ButtonPadding}"
                                 Cursor="Hand"
                                 Focusable="False"
                                 Content="&#x23ED;"
-                                FontSize="10"
+                                FontSize="{TemplateBinding FirstLastGlyphFontSize}"
                                 Foreground="{TemplateBinding Foreground}">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
