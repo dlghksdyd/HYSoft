@@ -111,7 +111,8 @@ namespace HYSoft.Presentation.Styles.Controls
 
         public HyIcon()
         {
-            // Unloaded 시 반드시 구독 해제
+            // Unloaded 시 반드시 구독 해제, 다시 Loaded 되면 복원
+            Loaded += OnLoaded;
             Unloaded += OnUnloaded;
         }
 
@@ -278,6 +279,23 @@ namespace HYSoft.Presentation.Styles.Controls
 
         private void OnStateChanged(object? sender, EventArgs e) => ApplyCurrentStateSource();
         #endregion
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            // 첫 로드는 OnApplyTemplate 이 이미 처리했다(_image 가 있다).
+            if (_image != null) return;
+
+            // 같은 인스턴스가 언로드됐다가 다시 붙으면(화면을 캐시해 재사용하는 경우) 템플릿은 다시 적용되지 않아
+            // OnApplyTemplate 이 불리지 않는다. 여기서 이미지 참조와 상태 구독을 되살리지 않으면, 그 뒤의 Color·상태
+            // 변경이 틴트만 다시 만들고 화면에는 반영되지 않는다(이미지가 언로드 직전 색으로 굳는다).
+            _image = GetTemplateChild("PART_Image") as System.Windows.Controls.Image;
+            if (_image == null) return; // 템플릿 적용 전 — OnApplyTemplate 이 처리한다
+
+            UnsubscribeStateChanges();
+            RebuildBaseAndTints();
+            ApplyCurrentStateSource();
+            SubscribeStateChanges();
+        }
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
