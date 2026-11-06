@@ -9,6 +9,11 @@
         <Setter Property="Foreground" Value="{c:Color TextSecondary}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Padding" Value="12,8" />
+        <!--  TabControl 은 탭을 고를 때마다 내용 영역(PART_SelectedContentHost)의 정렬을 «고른 탭 항목의» 이 두 값으로 맞춘다.
+              setter 가 없으면 Control 기본값(Left/Top)이 되어 크기를 따로 주지 않은 내용(그래프 등)이 0 으로 접힌다.
+              WPF 기본 TabItem 스타일과 같게 Stretch. 머리글은 ContentSite 의 고정 Center 라 영향 없다.  -->
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
