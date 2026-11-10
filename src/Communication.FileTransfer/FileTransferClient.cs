@@ -12,9 +12,14 @@ namespace HYSoft.Communication.FileTransfer
     /// <summary>
     /// 파일 전송 클라이언트 구현 클래스입니다.
     /// </summary>
+    /// <remarks>
+    /// 전송이 도중에 실패·취소되면 연결을 버리고 다음 전송은 새 연결로 한다 — 반쯤 보낸 스트림에 다음 헤더를 이어 보내면
+    /// 서버가 그것을 이전 파일의 데이터로 읽는다. 서버는 끊긴 전송의 조각 파일을 남기므로 다음 전송은 이어받기가 된다.
+    /// </remarks>
     public class FileTransferClient : IDisposable
     {
-        private readonly TcpClient _client;
+        private readonly TcpClientOptions _options;
+        private TcpClient _client;
         private bool _disposed;
 
         private bool _isSending;
@@ -22,14 +27,31 @@ namespace HYSoft.Communication.FileTransfer
 
         public FileTransferClient(TcpClientOptions options)
         {
+            _options = options ?? throw new ArgumentNullException(nameof(options));
             _client = TcpClientManager.Create(options);
         }
 
         public void Dispose()
         {
-            if (_disposed) return;
-            _disposed = true;
+            lock (_lock)
+            {
+                if (_disposed) return;
+                _disposed = true;
+            }
+
             TcpClientManager.Dispose(_client);
+        }
+
+        /// <summary>연결을 버리고 새 클라이언트로 바꾼다. Dispose 뒤면 바꾸지 않는다.</summary>
+        private void ResetConnection()
+        {
+            lock (_lock)
+            {
+                if (_disposed) return;
+                var broken = _client;
+                _client = TcpClientManager.Create(_options);
+                TcpClientManager.Dispose(broken);
+            }
         }
 
         /// <summary>
@@ -50,6 +72,7 @@ namespace HYSoft.Communication.FileTransfer
                 _isSending = true;
             }
 
+            bool connectionUsed = false;
             try
             {
                 if (string.IsNullOrWhiteSpace(filePath))
@@ -67,6 +90,7 @@ namespace HYSoft.Communication.FileTransfer
                 if (fileNameBytes.Length > ushort.MaxValue)
                     throw new InvalidOperationException("File name is too long for protocol.");
 
+                connectionUsed = true;
                 await _client.ConnectAsync().ConfigureAwait(false);
 
                 // Header: [MAGIC(4)][Flags(1)][FileSize(8)][NameLen(2)][FileName(?)]
@@ -138,6 +162,12 @@ namespace HYSoft.Communication.FileTransfer
                 await _client.ReceiveAsync(finalResp).ConfigureAwait(false);
                 if (finalResp[0] != StatusOk)
                     throw new IOException($"Server reported error. Status=0x{finalResp[0]:X2}");
+            }
+            catch
+            {
+                // 어디까지 보냈는지 서버와 어긋났을 수 있다 — 이 연결은 다시 쓰지 않는다.
+                if (connectionUsed) ResetConnection();
+                throw;
             }
             finally
             {

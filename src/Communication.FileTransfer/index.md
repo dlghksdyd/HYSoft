@@ -21,8 +21,8 @@ SERVER->CLIENT: [STATUS(1)]  (0x00=성공, 0xFF=오류)
 
 | 클래스 | 설명 |
 |--------|------|
-| FileTransferClient | 파일 송신 (SendFileAsync, IProgress, CancellationToken) |
-| FileTransferServer | 파일 수신 서버 (ReceiveFileAsync, 상태 머신) |
+| FileTransferClient | 파일 송신 (SendFileAsync, IProgress, CancellationToken). 실패 시 연결을 버리고 다음 호출에서 이어받기 |
+| FileTransferServer | 파일 수신 서버 (ReceiveFileAsync, Dispose). `.ftpart` 에 받고 CRC 일치 시 교체·이어받기 |
 | FileTransferProgress | 진행률 (BytesTransferred, TotalBytes, Percentage) |
 | FileTransferConstants | 프로토콜 상수 (Magic, Status, ChunkSize) |
 | Crc32 | CRC-32 IEEE 802.3 (Compute, Update) |
@@ -31,7 +31,11 @@ SERVER->CLIENT: [STATUS(1)]  (0x00=성공, 0xFF=오류)
 ## 보안
 
 - 파일명 경로 순회 방지 (`..`, `/`, `\` 제거)
-- Path.GetFullPath()로 storageRoot 내부 ���약
+- 결과 파일은 storageRoot 바로 아래여야 한다(`Path.GetFullPath` 후 폴더 비교)
+
+## 동시성
+
+- 한 연결의 조각은 도착 순서대로 처리(다음 읽기는 그 뒤) — 2026-11-10 이전에는 순서가 섞여 CRC 오류가 났다
 
 ## 상세 문서
 

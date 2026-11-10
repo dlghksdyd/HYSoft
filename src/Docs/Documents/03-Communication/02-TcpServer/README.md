@@ -32,7 +32,7 @@ Task StopAsync()
 // CTS 취소, 리스너 종료, 전체 클라이언트 연결 해제
 
 async Task<bool> SendAsync(Guid clientId, byte[] data, CancellationToken ct)
-// 특정 클라이언트에 송신. 클라이언트별 SendLock. 성공/실패 bool 반환
+// 특정 클라이언트에 송신. 클라이언트별 SendLock. 실패(없는/닫히는 클라이언트·취소·소켓 오류)는 예외 없이 false
 
 async Task<int> BroadcastAsync(byte[] data, CancellationToken ct)
 // 전체 클라이언트에 병렬 송신. 성공 수 반환
@@ -47,8 +47,11 @@ bool Disconnect(Guid clientId)
 ### 이벤트/콜백
 
 ```csharp
-event TcpDataReceivedEventHandler? DataReceived; // 데이터 수신 시
-Action<Exception, string>? LogError;              // 오류 로깅 콜백
+event TcpDataReceivedEventHandler? DataReceived; // 소켓 읽기마다(메시지 단위 아님)
+event Action<Guid>? ClientDisconnected;           // 연결당 정확히 1회, 마지막 DataReceived 뒤
+Action<Exception, string>? LogError;              // 오류·처리기 예외 로깅 콜백
 ```
+
+⚠️ `StartAsync` 는 SO_REUSEADDR 를 켠다 — Windows 에서는 이미 쓰는 포트에도 바인딩이 성공할 수 있다.
 
 하위: [Events & Usage](01-EventsUsage.md)

@@ -24,10 +24,11 @@ TcpClientManager.Dispose(client);               // 해제 + 등록 해제
 
 - **클라이언트**: Connect/Send/Receive 각각 별도 `SemaphoreSlim`
 - **서버**: 클라이언트별 SendLock, 전역 StartStopLock
-- **타임아웃**: Connect 만 적용. Send/Receive 타임아웃은 현재 미적용 ([TcpClient](01-TcpClient/README.md) 참고)
+- **타임아웃**: Connect 는 전체, Send/Receive 는 소켓 호출 1회 단위의 유휴 시간 ([TcpClient](01-TcpClient/README.md))
 
 ## 오류 처리
 
-- 소켓 예외 시 클라이언트 연결 해제/정리
+- 클라이언트: 타임아웃·소켓 오류·상대 종료 뒤 연결을 버린다(프레임 어긋남 방지). 복구는 `ConnectAsync`
+- 서버: 송신 실패는 예외가 아니라 `false`. 연결 종료는 `ClientDisconnected` 로 연결당 1회 알림
 - 옵션 `LogError` 콜백으로 로깅
 - try/catch/finally + `Interlocked.Exchange`로 안전한 리소스 해제

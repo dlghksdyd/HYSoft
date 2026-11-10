@@ -14,15 +14,16 @@
 | Presentation.dll | MVVM 인프라, 컨버터, 모달 |
 | Presentation.Styles.dll | 커스텀 컨트롤, 디자인 토큰 |
 
-## Target Frameworks
+## Target Framework
 
-- net48 (.NET Framework 4.8)
-- net8.0-windows7.0 (.NET 8.0 Windows)
+- `net8.0-windows` (`Directory.Build.props`). 저장소의 `src/Bundle/Staging/net48/` 은 전환 전 산출물이다
 
 ## 포함 애플리케이션
 
 - **TestApp**: 파일전송/모달/아이콘 데모 (3개 샘플)
-- **Docs**: 33개 컴포넌트 인터랙티브 문서 뷰어
+- **Docs**: 인터랙티브 문서 뷰어 (UI Support · DB Support · Communication)
+
+시험 프로젝트(`tests/`)는 `HysoftBundleStagingEnabled=false` 라 번들에 들어가지 않는다.
 
 ## 패키지 구조
 

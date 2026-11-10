@@ -16,6 +16,8 @@ SERVER->CLIENT: [STATUS(1)] 0x00=성공, 0xFF=오류
 ```
 
 모든 정수: Big-Endian. 파일명: UTF-8.
+이어받기(0x01): 서버의 `이름.ftpart` 길이만큼 건너뛴다. CRC 는 여전히 파일 전체.
+헤더 거부: `[0xFF][0×8]` 9바이트 후 서버가 연결을 끊는다.
 
 ## FileTransferConstants
 
@@ -23,6 +25,7 @@ SERVER->CLIENT: [STATUS(1)] 0x00=성공, 0xFF=오류
 MagicHeader = 0x46543130;  MagicTail = 0x4654454E;
 StatusOk = 0x00;  StatusResume = 0x01;  StatusError = 0xFF;
 DefaultChunkSize = 65_536; // 64KB
+PartialFileSuffix = ".ftpart";
 ```
 
 ## Crc32

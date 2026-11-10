@@ -29,7 +29,8 @@
                 <TextBlock Style="{StaticResource DocsBody}" Text="- DataReceived is raised on an I/O thread once per socket read. Message boundaries are not preserved - reassemble frames per ClientId. Marshal to the Dispatcher before touching UI." />
                 <TextBlock Style="{StaticResource DocsBody}" Text="- Do not block inside the handler: the next read of that client waits until the handler returns. Start async work as a task and catch its exceptions." />
                 <TextBlock Style="{StaticResource DocsBody}" Text="- Exceptions thrown synchronously by a handler are caught and passed to LogError; exceptions inside a fire-and-forget task are not." />
-                <TextBlock Style="{StaticResource DocsBody}" Text="- SendAsync / ReplyAsync return false on failure, but waiting for the per-client send lock can still throw (OperationCanceledException, ObjectDisposedException) when the client is closing." />
+                <TextBlock Style="{StaticResource DocsBody}" Text="- SendAsync / ReplyAsync report every send failure as false (unknown or closing client, cancelled token, socket error)." />
+                <TextBlock Style="{StaticResource DocsBody}" Text="- Release per-client state (reassembly buffers, open files) in ClientDisconnected - it is raised once per connection, after the last DataReceived of that client." />
 
                 <Border Margin="0,8,0,16" Style="{StaticResource DocsNote}">
                     <StackPanel>

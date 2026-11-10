@@ -34,6 +34,18 @@ namespace HYSoft.Communication.Tcp.Server
 
         public event TcpDataReceivedEventHandler? DataReceived;
 
+        /// <summary>
+        /// 클라이언트 연결이 끝났을 때(상대 종료·<see cref="Disconnect"/>·<see cref="StopAsync"/>·수신 오류) 연결당 정확히 한 번
+        /// 발생한다. 그 클라이언트의 <see cref="DataReceived"/> 가 모두 끝난 뒤에 온다. 처리기 예외는 <see cref="LogError"/> 로 간다.
+        /// </summary>
+        public event Action<Guid>? ClientDisconnected;
+
+        private void RaiseClientDisconnected(Guid clientId)
+        {
+            try { ClientDisconnected?.Invoke(clientId); }
+            catch (Exception ex) { Log(ex, "ClientDisconnected handler threw"); }
+        }
+
         private void RaiseDataReceived(TcpClientContext ctx, byte[] data)
         {
             try
@@ -185,12 +197,26 @@ namespace HYSoft.Communication.Tcp.Server
             if (data.Length == 0) return true;
             if (!_clients.TryGetValue(clientId, out var ctx)) return false;
 
-            using (var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(ct, ctx.Cts.Token))
+            CancellationTokenSource linkedCts;
+            try
+            {
+                linkedCts = CancellationTokenSource.CreateLinkedTokenSource(ct, ctx.Cts.Token);
+            }
+            catch (ObjectDisposedException)
+            {
+                return false;   // 클라이언트가 이미 닫혀 Cts 가 해제됐다.
+            }
+
+            using (linkedCts)
             {
                 var token = linkedCts.Token;
-                await ctx.SendLock.WaitAsync(token).ConfigureAwait(false);
+                bool lockTaken = false;
                 try
                 {
+                    // 🔴 잠금 대기도 try 안이다 — 취소·클라이언트 종료(잠금 Dispose)가 예외로 새지 않고 false 가 된다.
+                    await ctx.SendLock.WaitAsync(token).ConfigureAwait(false);
+                    lockTaken = true;
+
                     var sock = ctx.Socket;
                     int offset = 0;
                     while (offset < data.Length)
@@ -210,6 +236,7 @@ namespace HYSoft.Communication.Tcp.Server
                     return false;
                 }
                 catch (OperationCanceledException) { return false; }
+                catch (ObjectDisposedException) { return false; }
                 catch (Exception ex)
                 {
                     Log(ex, "Send unexpected");
@@ -218,7 +245,10 @@ namespace HYSoft.Communication.Tcp.Server
                 }
                 finally
                 {
-                    ctx.SendLock.Release();
+                    if (lockTaken)
+                    {
+                        try { ctx.SendLock.Release(); } catch (ObjectDisposedException) { }
+                    }
                 }
             }
         }
@@ -326,6 +356,9 @@ namespace HYSoft.Communication.Tcp.Server
                 {
                     if (_clients.TryRemove(ctx.Id, out _))
                         CloseClient(ctx);
+
+                    // 모든 클라이언트는 이 루프를 정확히 한 번 지나므로 여기서 한 번만 알린다.
+                    RaiseClientDisconnected(ctx.Id);
                 }
             }
         }

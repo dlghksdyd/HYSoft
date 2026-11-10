@@ -19,17 +19,17 @@ namespace Docs.Mvvm.Communication
             new OptionRow("ReceiveBufferSize", "int", "64 KB", "Socket receive buffer size."),
             new OptionRow("SendBufferSize", "int", "64 KB", "Socket send buffer size."),
             new OptionRow("ConnectTimeout", "TimeSpan", "5 s", "ConnectAsync throws TimeoutException when exceeded."),
-            new OptionRow("SendTimeout", "TimeSpan", "10 s", "Declared, but not applied to the socket operation in the current build (see note)."),
-            new OptionRow("ReceiveTimeout", "TimeSpan", "10 s", "Declared, but not applied to the socket operation in the current build (see note)."),
+            new OptionRow("SendTimeout", "TimeSpan", "10 s", "Idle timeout per socket send. TimeoutException, and the connection is dropped. InfiniteTimeSpan = wait forever."),
+            new OptionRow("ReceiveTimeout", "TimeSpan", "10 s", "Idle timeout per socket read (resets whenever bytes arrive). TimeoutException, and the connection is dropped. InfiniteTimeSpan = wait forever."),
         };
 
         public static IReadOnlyList<MemberRow> ClientMembers { get; } = new[]
         {
             new MemberRow("TcpClientManager.Create(options)", "Creates a client and registers it. The TcpClient constructor is private - always create through the manager."),
             new MemberRow("TcpClientManager.Dispose(client)", "Closes the socket, releases the locks and unregisters the client. A disposed client cannot be reused."),
-            new MemberRow("Task ConnectAsync()", "Connects (IPv4). Returns immediately if already connected and alive; replaces a dead socket with a new one."),
+            new MemberRow("Task ConnectAsync()", "Connects (IPv4). Returns immediately if already connected and alive; otherwise opens a new connection - also the way to recover after a drop."),
             new MemberRow("Task SendAsync(byte[] buffer[, int offset, int count])", "Loops until every byte is sent. Throws InvalidOperationException when not connected."),
-            new MemberRow("Task ReceiveAsync(byte[] buffer[, int offset, int count])", "Waits until the buffer is completely filled. Peer close (0 bytes) throws SocketException(ConnectionReset)."),
+            new MemberRow("Task ReceiveAsync(byte[] buffer[, int offset, int count])", "Waits until the buffer is completely filled. Peer close (0 bytes) throws SocketException(ConnectionReset) and drops the connection."),
             new MemberRow("bool IsDisposed", "True after TcpClientManager.Dispose."),
             new MemberRow("Guid Guid", "Instance ID used by the manager."),
         };
@@ -68,18 +68,18 @@ finally
 }
 """;
 
-        public const string ClientTimeoutWorkaround =
+        public const string ClientRecovery =
 """
-// SendTimeout / ReceiveTimeout are not enforced yet - bound the wait yourself.
-var receive = client.ReceiveAsync(buffer);
-var finished = await Task.WhenAny(receive, Task.Delay(TimeSpan.FromSeconds(3)));
-if (finished != receive)
+try
 {
-    TcpClientManager.Dispose(client);          // closes the socket -> pending receive faults
-    _ = receive.ContinueWith(t => _ = t.Exception, TaskContinuationOptions.OnlyOnFaulted);
-    throw new TimeoutException("No response within 3 s.");
+    await client.ReceiveAsync(buffer);
 }
-await receive;
+catch (Exception ex) when (ex is TimeoutException or SocketException)
+{
+    // The connection has already been dropped (a frame may have been read halfway).
+    // Do not retry on the same stream - reconnect and restart the exchange.
+    await client.ConnectAsync();
+}
 """;
 
         #endregion
@@ -104,28 +104,32 @@ await receive;
             new MemberRow("TcpServerManager.Dispose(server)", "Stops the server synchronously, closes every client and unregisters it."),
             new MemberRow("Task StartAsync()", "Binds, listens and starts the background accept loop, then returns. No-op when already started."),
             new MemberRow("Task StopAsync()", "Stops accepting and disconnects every client. No-op when not started."),
-            new MemberRow("Task<bool> SendAsync(Guid clientId, byte[] data, CancellationToken ct = default)", "Sends to one client. Returns false for an unknown client or a socket error."),
+            new MemberRow("Task<bool> SendAsync(Guid clientId, byte[] data, CancellationToken ct = default)", "Sends to one client. Returns false for an unknown or closing client, a cancelled token or a socket error - it does not throw for these."),
             new MemberRow("Task<int> BroadcastAsync(byte[] data, CancellationToken ct = default)", "Sends to every client in parallel; returns the number of successful sends."),
             new MemberRow("bool Disconnect(Guid clientId)", "Closes one client. False when the ID is unknown."),
             new MemberRow("(Guid Id, EndPoint? Remote)[] GetClientsSnapshot()", "Copy of the currently connected clients."),
             new MemberRow("int ConnectedCount", "Number of connected clients."),
             new MemberRow("event TcpDataReceivedEventHandler DataReceived", "Raised for every socket read with a TcpDataReceivedContext (Data, ClientId, ReplyAsync)."),
+            new MemberRow("event Action<Guid> ClientDisconnected", "Raised exactly once per connection when it ends (peer close, Disconnect, StopAsync, error), after its last DataReceived. Use it to release per-client state."),
             new MemberRow("Action<Exception, string>? LogError", "Receives socket errors and exceptions thrown by DataReceived handlers."),
         };
 
         public const string ServerUsage =
 """
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Net;
 using System.Text;
 using HYSoft.Communication.Tcp.Server;
 
+var frames = new ConcurrentDictionary<Guid, MemoryStream>();   // partial messages per client
 var options = new TcpServerOptions(IPAddress.Loopback, 8080) { MaxClients = 64 };
 var server = TcpServerManager.Create(options);
 server.LogError = (ex, message) => Debug.WriteLine($"{message}: {ex.Message}");
 
 // Runs on an I/O thread, once per socket read - NOT once per message.
 server.DataReceived += ctx => _ = EchoAsync(ctx);
+server.ClientDisconnected += clientId => frames.TryRemove(clientId, out _);   // per-client state
 
 await server.StartAsync();
 
@@ -142,10 +146,11 @@ static async Task EchoAsync(TcpDataReceivedContext ctx)
     {
         bool sent = await ctx.ReplyAsync(ctx.Data);   // false = client gone / socket error
     }
-    catch (Exception)
+    catch (Exception ex)
     {
-        // The client was closed while replying (lock disposed / cancelled).
+        // ReplyAsync reports failure as false; this guards your own code in the handler.
         // Never let an exception escape a fire-and-forget task.
+        Debug.WriteLine(ex);
     }
 }
 """;
@@ -163,14 +168,18 @@ CLIENT -> SERVER  [MAGIC_TAIL "FTEN" (4)][CRC32 (4)]  CRC-32 (IEEE) of the whole
 SERVER -> CLIENT  [STATUS (1)]                        0x00 = saved, 0xFF = CRC / protocol error
 
 All integers are big-endian.
+START_OFFSET > 0 (RESUME) = the server already holds that many bytes in "<name>.ftpart".
+A header the server cannot accept is answered with 9 bytes [0xFF][0 x 8].
 """;
 
         public static IReadOnlyList<MemberRow> FileTransferMembers { get; } = new[]
         {
             new MemberRow("new FileTransferClient(TcpClientOptions options)", "Creates its own TcpClient through TcpClientManager. IDisposable."),
-            new MemberRow("Task SendFileAsync(string filePath, IProgress<FileTransferProgress>? progress = null, CancellationToken ct = default)", "Connects, sends one file and waits for the final status. One transfer at a time per instance."),
-            new MemberRow("new FileTransferServer(TcpServerOptions options, string? storageRoot = null)", "Creates the TCP server immediately and creates storageRoot (default: <app>\\received)."),
-            new MemberRow("Task ReceiveFileAsync()", "Subscribes to DataReceived and starts listening, then returns (it does not wait for a file)."),
+            new MemberRow("Task SendFileAsync(string filePath, IProgress<FileTransferProgress>? progress = null, CancellationToken ct = default)", "Connects, sends one file and waits for the final status. One transfer at a time per instance. A failed or cancelled transfer drops the connection; the next call reconnects and resumes."),
+            new MemberRow("new FileTransferServer(TcpServerOptions options, string? storageRoot = null)", "Creates the TCP server immediately and creates storageRoot (default: <app>\\received). IDisposable."),
+            new MemberRow("Task ReceiveFileAsync()", "Starts listening, then returns (it does not wait for a file). Calling it again is a no-op; after Dispose it throws ObjectDisposedException."),
+            new MemberRow("void Dispose()", "Closes the listener and every connection and releases open files (partial files stay for resume). Blocks up to ~1 s per connection - call it off the UI thread."),
+            new MemberRow("string StorageRoot", "Absolute storage folder."),
             new MemberRow("FileTransferProgress", "BytesTransferred, TotalBytes, Percentage (0.0 - 1.0)."),
             new MemberRow("FileTransferConstants", "MagicHeader, MagicTail, StatusOk/Resume/Error, DefaultChunkSize (64 KB)."),
         };
@@ -187,6 +196,8 @@ var server = new FileTransferServer(
     new TcpServerOptions(IPAddress.Any, 20000),
     storageRoot: @"D:\Inbox");
 await server.ReceiveFileAsync();            // returns once listening
+// ... on shutdown:
+await Task.Run(server.Dispose);              // frees the port
 
 // Sending side
 using var client = new FileTransferClient(

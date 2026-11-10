@@ -30,13 +30,16 @@ public async Task SendFileAsync(
 9. 서버 최종 상태 수신
 
 동시 전송 불가 (`_isSending` 뮤텍스).
+실패·취소되면 연결을 버린다 — 다음 호출은 새로 연결하고, 서버에 조각 파일이 있으면 이어받는다.
 
 ### 예외
 
 - `ArgumentException`: 잘못된 경로
 - `FileNotFoundException`: 파일 없음
-- `InvalidOperationException`: 이미 전송 중
-- `IOException`: 프로토콜 오류
+- `InvalidOperationException`: 이미 전송 중 / 파일명 65535 바이트 초과
+- `IOException`: 서버 거부·CRC/프로토콜 오류
+- `OperationCanceledException`: 취소(청크 사이에서 확인)
+- `TimeoutException` / `SocketException`: ReceiveTimeout 안에 응답 없음 / 연결 끊김
 
 ## 사용 예시
 

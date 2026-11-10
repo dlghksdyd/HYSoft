@@ -26,19 +26,21 @@
                 <TextBox Style="{StaticResource DocsCode}" Text="{x:Static local:CommunicationContent.FileTransferUsage}" />
 
                 <TextBlock Style="{StaticResource DocsSection}" Text="4. Client errors" />
-                <TextBlock Style="{StaticResource DocsBody}" Text="ArgumentException (empty path), FileNotFoundException, InvalidOperationException (a transfer is already running on this instance, or the file name exceeds 65535 UTF-8 bytes), IOException (server rejected the header or reported a CRC / protocol error), OperationCanceledException (token cancelled between chunks)." />
+                <TextBlock Style="{StaticResource DocsBody}" Text="ArgumentException (empty path), FileNotFoundException, InvalidOperationException (a transfer is already running on this instance, or the file name exceeds 65535 UTF-8 bytes), IOException (server rejected the header or reported a CRC / protocol error), OperationCanceledException (token cancelled between chunks), TimeoutException / SocketException (no answer within ReceiveTimeout, or the connection broke)." />
+                <TextBlock Style="{StaticResource DocsBody}" Text="After any failure the client drops its connection; the next SendFileAsync reconnects and, if the server kept the partial file, resumes from it." />
 
                 <TextBlock Style="{StaticResource DocsSection}" Text="5. Server behaviour" />
-                <TextBlock Style="{StaticResource DocsBody}" Text="- The received name is sanitized ('..', '/', '\' and invalid characters become '_') and the final path must stay inside storageRoot, otherwise the session fails." />
-                <TextBlock Style="{StaticResource DocsBody}" Text="- A file with the same name is deleted and written again." />
-                <TextBlock Style="{StaticResource DocsBody}" Text="- On a CRC mismatch the server answers 0xFF; the partially written file stays on disk." />
+                <TextBlock Style="{StaticResource DocsBody}" Text="- The received name is sanitized ('..', '/', '\' and invalid characters become '_') and the file must land directly in storageRoot, otherwise the header is rejected." />
+                <TextBlock Style="{StaticResource DocsBody}" Text="- Data is written to '&lt;name&gt;.ftpart'. Only when the whole-file CRC matches is it renamed to '&lt;name&gt;', replacing an existing file. Until then an existing file of that name is untouched." />
+                <TextBlock Style="{StaticResource DocsBody}" Text="- Resume: if '&lt;name&gt;.ftpart' exists and is not longer than the new file, the server answers RESUME with its length and the client sends only the rest. The final CRC still covers the whole file." />
+                <TextBlock Style="{StaticResource DocsBody}" Text="- CRC mismatch or a damaged tail: the server answers 0xFF and deletes the partial file, so the next attempt starts from zero. A dropped connection keeps the partial file for resume." />
+                <TextBlock Style="{StaticResource DocsBody}" Text="- Chunks of one connection are processed in arrival order; the next read waits until the previous chunk is on disk, so a slow disk slows the sender instead of buffering in memory." />
+                <TextBlock Style="{StaticResource DocsBody}" Text="- Dispose closes the listener and all connections. A disposed server cannot be started again." />
 
                 <Border Margin="0,8,0,16" Style="{StaticResource DocsNote}">
                     <StackPanel>
-                        <TextBlock FontWeight="Bold" Style="{StaticResource DocsNoteText}" Text="Current limitations" />
-                        <TextBlock Style="{StaticResource DocsNoteText}" Text="- Resume: the client honours a START_OFFSET from the server, but FileTransferServer always answers 0x00 with offset 0, so every transfer starts from the beginning." />
-                        <TextBlock Style="{StaticResource DocsNoteText}" Text="- Lifetime: FileTransferServer has no Stop or Dispose. Once ReceiveFileAsync has been called the port stays open until the process exits - create one server per process." />
-                        <TextBlock Style="{StaticResource DocsNoteText}" Text="- No response timeout: SendFileAsync waits for the server's status bytes through TcpClient.ReceiveAsync, whose ReceiveTimeout is not enforced yet (see TcpClient). The CancellationToken is checked only between chunks and does not interrupt that wait - bound the call with Task.WhenAny and dispose the client on timeout." />
+                        <TextBlock FontWeight="Bold" Style="{StaticResource DocsNoteText}" Text="Resume trusts the file name" />
+                        <TextBlock Style="{StaticResource DocsNoteText}" Text="The header carries no file identity, so a partial file with the same name is assumed to be the start of the same file. If it is not, the final CRC fails, the partial is deleted and the retry sends the whole file - one wasted attempt, never a corrupt result." />
                     </StackPanel>
                 </Border>
 

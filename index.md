@@ -1,79 +1,46 @@
-# CLAUDE.md
+# HYSoft
 
-Claude Code가 HYSoft 프로젝트를 이해하는 데 필요한 컨텍스트.
+Claude Code 가 HYSoft 저장소에서 작업할 때 먼저 읽는 문서. 패키지 소개는 [README.md](README.md).
 
 ## 문서 규칙
 
-- 프로젝트 내 모든 .md 문서는 **60줄 이내**로 작성한다.
-- 60줄 초과 시 계층 구조로 분할한다.
-- 각 프로젝트 루트에 CLAUDE.md가 있으면 해당 프로젝트의 세부 컨텍스트를 참조한다.
+- 프로젝트 내 모든 .md 문서는 **60줄 이내**로 작성한다. 넘으면 계층 구조로 분할한다.
+- 각 프로젝트 폴더의 `index.md` 가 그 프로젝트의 세부 컨텍스트다.
 
-## 프로젝트 개요
+## 개요
 
-HYSoft는 WPF 데스크톱 앱용 .NET SDK. `HySoft.Bundle` NuGet으로 배포. MIT. 저자: Hwanyong.lee
+WPF 데스크톱 앱용 .NET SDK. `HySoft.Bundle` NuGet 으로 배포. 모든 프로젝트 `net8.0-windows`
+(커밋 `ae132ef` 에서 net48 에서 전환). 주요 의존: EF Core 9.0.8, Microsoft.Xaml.Behaviors.Wpf 1.1.135.
 
-## 설치
-
-```
-Install-Package HySoft.Bundle
-```
-
-또는 .NET CLI:
+## 솔루션 구조 (HYSoft.sln)
 
 ```
-dotnet add package HySoft.Bundle
-```
-
-## What's Included
-
-| Assembly | Description |
-|----------|-------------|
-| **Presentation.dll** | MVVM infrastructure, converters, DragDrop, Modal, attached behaviors |
-| **Presentation.Styles.dll** | 33 custom WPF controls, color/font/icon design tokens, themes |
-| **Communication.dll** | Async TCP client/server |
-| **Communication.FileTransfer.dll** | File transfer protocol (chunked transfer, CRC32, resume, progress reporting) |
-| **Data.dll** | MSSQL DbContext base class (Entity Framework 6) |
-| **Docs.exe** | Interactive documentation viewer (run to browse all components) |
-| **TestApp.exe** | Sample application with Modal, Icon, FileTransfer demos |
-
-## 기술 스택
-
-- C# (latest, Nullable enable) / .NET Framework 4.8 (기본), .NET 8.0 Windows (일부)
-- WPF / EF 6.5.1 / Microsoft.Xaml.Behaviors.Wpf 1.1.135
-- XAML: `xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"`
-
-## 솔루션 구조
-
-```
-HYSoft.sln
-├── Communication              # Async TCP client/server transport layer
-├── Communication.FileTransfer # File transfer protocol (depends on Communication)
-├── Data                       # MSSQL DbContext base class
-├── Presentation               # MVVM infrastructure, converters, behaviors
-├── Presentation.Styles        # 33 WPF custom controls + design tokens
-├── Docs                       # Interactive documentation viewer
-├── TestApp                    # Sample application
-└── Bundle                     # NuGet packaging aggregator
+src/Communication              비동기 TCP 클라이언트/서버
+src/Communication.FileTransfer FT10 파일 전송 (→ Communication)
+src/Data                       MSSQL DbContextBase (EF Core 9)
+src/Presentation               MVVM 인프라, 컨버터, 비헤이비어
+src/Presentation.Styles        Hy* 컨트롤 + 디자인 토큰 (→ Presentation)
+src/Docs                       문서 뷰어 앱 (→ Presentation, Presentation.Styles, Communication)
+src/TestApp                    샘플 앱 (→ Communication, FileTransfer, Presentation, Styles)
+src/Bundle                     NuGet 패키징
+tests/HYSoft.Communication.Tests  통신·파일 전송 시험 (xUnit, 실제 루프백 소켓)
 ```
 
 ## Branch Policy
 
 - Do not push directly to `main`. Use a feature branch such as `hylee`.
 
-## 빌드
+## 빌드·시험
 
-- `Directory.Build.props`: 공통 속성, 버전은 `.to_publish_version`에서 읽음
-- `Directory.Build.targets`: 컴파일 전 `GlobalXmlns.g.cs` 자동 생성
-- Bundle: Release 시 `$(SolutionDir)nuget/`에 NuGet 자동 생성
+- `Directory.Build.props`: 공통 속성, 버전은 `.to_publish_version` 에서 읽음
+- `Directory.Build.targets`: 컴파일 전 `GlobalXmlns.g.cs` 생성, Release 시 Bundle 스테이징 복사
+  (시험 프로젝트는 `HysoftBundleStagingEnabled=false` 로 번들에서 뺀다)
+- 시험: `dotnet test tests/HYSoft.Communication.Tests --filter "FullyQualifiedName~HYSoft.Communication.Tests"`
+  — 순차 실행, 시험당 30초 상한(무기한 대기 회귀가 멈춤 대신 실패로 드러나게)
 
-## 의존 관계
+## Docs 앱을 AI 가 시험할 때
 
-```
-Communication.FileTransfer --> Communication
-Presentation.Styles --> Presentation
-TestApp --> Communication, Communication.FileTransfer, Presentation, Presentation.Styles
-Docs --> Presentation, Presentation.Styles
-```
+화면을 끌어오지 말고 CLI 를 쓴다: `pwsh -File scripts/docs-cli.ps1 launch` → [src/Docs/Cli/README.md](src/Docs/Cli/README.md)
 
 ## 코딩 규칙
 

@@ -28,16 +28,16 @@
 
                 <TextBlock Style="{StaticResource DocsSection}" Text="4. Errors" />
                 <TextBlock Style="{StaticResource DocsBody}" Text="ConnectAsync - TimeoutException (ConnectTimeout exceeded), SocketException (refused / unreachable)." />
-                <TextBlock Style="{StaticResource DocsBody}" Text="SendAsync / ReceiveAsync - InvalidOperationException (not connected or socket already disposed), SocketException (ConnectionReset when the peer closes)." />
+                <TextBlock Style="{StaticResource DocsBody}" Text="SendAsync / ReceiveAsync - TimeoutException (no progress within SendTimeout / ReceiveTimeout), SocketException (ConnectionReset when the peer closes, or another socket error), InvalidOperationException (not connected, or the connection was dropped earlier)." />
                 <TextBlock Style="{StaticResource DocsBody}" Text="Any call after TcpClientManager.Dispose - ObjectDisposedException." />
 
                 <Border Margin="0,8,0,16" Style="{StaticResource DocsNote}">
                     <StackPanel>
-                        <TextBlock FontWeight="Bold" Style="{StaticResource DocsNoteText}" Text="Current limitation - SendTimeout / ReceiveTimeout" />
-                        <TextBlock Style="{StaticResource DocsNoteText}" Text="SendAsync and ReceiveAsync create a timeout CancellationTokenSource but never pass its token to the socket call. A peer that stops sending therefore keeps ReceiveAsync waiting indefinitely. Until this is fixed, bound the wait yourself:" />
+                        <TextBlock FontWeight="Bold" Style="{StaticResource DocsNoteText}" Text="After a timeout or socket error the connection is dropped" />
+                        <TextBlock Style="{StaticResource DocsNoteText}" Text="The call may have sent or read part of a frame, so the same stream cannot be trusted any more. The client closes it: later sends and receives throw InvalidOperationException until ConnectAsync opens a new connection." />
                     </StackPanel>
                 </Border>
-                <TextBox Style="{StaticResource DocsCode}" Text="{x:Static local:CommunicationContent.ClientTimeoutWorkaround}" />
+                <TextBox Style="{StaticResource DocsCode}" Text="{x:Static local:CommunicationContent.ClientRecovery}" />
             </StackPanel>
         </hy:HyScrollViewer>
     </Border>
