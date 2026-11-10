@@ -1,0 +1,49 @@
+<UserControl
+    x:Class="Docs.Mvvm.Communication.FileTransferView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
+    xmlns:local="clr-namespace:Docs.Mvvm.Communication"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Background="{hy:Color SurfaceBase}"
+    d:DesignHeight="1600"
+    d:DesignWidth="900"
+    mc:Ignorable="d">
+    <Border Margin="20">
+        <hy:HyScrollViewer>
+            <StackPanel Margin="0,0,10,0" Orientation="Vertical">
+                <TextBlock Style="{StaticResource DocsPageTitle}" Text="File Transfer (FT10)" />
+                <TextBlock Style="{StaticResource DocsLead}" Text="HYSoft.Communication.FileTransfer sends one file per call over TcpClient / TcpServer, verifies it with CRC-32 and reports progress. The receiving side writes files into a single storage folder." />
+
+                <TextBlock Style="{StaticResource DocsSection}" Text="1. Protocol" />
+                <TextBox Style="{StaticResource DocsCode}" Text="{x:Static local:CommunicationContent.FileTransferProtocol}" />
+
+                <TextBlock Style="{StaticResource DocsSection}" Text="2. API" />
+                <ItemsControl ItemsSource="{x:Static local:CommunicationContent.FileTransferMembers}" Style="{StaticResource DocsTable}" />
+
+                <TextBlock Style="{StaticResource DocsSection}" Text="3. Usage" />
+                <TextBox Style="{StaticResource DocsCode}" Text="{x:Static local:CommunicationContent.FileTransferUsage}" />
+
+                <TextBlock Style="{StaticResource DocsSection}" Text="4. Client errors" />
+                <TextBlock Style="{StaticResource DocsBody}" Text="ArgumentException (empty path), FileNotFoundException, InvalidOperationException (a transfer is already running on this instance, or the file name exceeds 65535 UTF-8 bytes), IOException (server rejected the header or reported a CRC / protocol error), OperationCanceledException (token cancelled between chunks)." />
+
+                <TextBlock Style="{StaticResource DocsSection}" Text="5. Server behaviour" />
+                <TextBlock Style="{StaticResource DocsBody}" Text="- The received name is sanitized ('..', '/', '\' and invalid characters become '_') and the final path must stay inside storageRoot, otherwise the session fails." />
+                <TextBlock Style="{StaticResource DocsBody}" Text="- A file with the same name is deleted and written again." />
+                <TextBlock Style="{StaticResource DocsBody}" Text="- On a CRC mismatch the server answers 0xFF; the partially written file stays on disk." />
+
+                <Border Margin="0,8,0,16" Style="{StaticResource DocsNote}">
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold" Style="{StaticResource DocsNoteText}" Text="Current limitations" />
+                        <TextBlock Style="{StaticResource DocsNoteText}" Text="- Resume: the client honours a START_OFFSET from the server, but FileTransferServer always answers 0x00 with offset 0, so every transfer starts from the beginning." />
+                        <TextBlock Style="{StaticResource DocsNoteText}" Text="- Lifetime: FileTransferServer has no Stop or Dispose. Once ReceiveFileAsync has been called the port stays open until the process exits - create one server per process." />
+                        <TextBlock Style="{StaticResource DocsNoteText}" Text="- No response timeout: SendFileAsync waits for the server's status bytes through TcpClient.ReceiveAsync, whose ReceiveTimeout is not enforced yet (see TcpClient). The CancellationToken is checked only between chunks and does not interrupt that wait - bound the call with Task.WhenAny and dispose the client on timeout." />
+                    </StackPanel>
+                </Border>
+
+                <TextBlock Style="{StaticResource DocsBody}" Text="A runnable client/server pair is included in TestApp (Samples/FileTransfer)." />
+            </StackPanel>
+        </hy:HyScrollViewer>
+    </Border>
+</UserControl>

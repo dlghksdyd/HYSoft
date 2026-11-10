@@ -12,8 +12,11 @@ public FileTransferServer(TcpServerOptions options, string? storageRoot = null)
 ## ReceiveFileAsync
 
 ```csharp
-public async Task ReceiveFileAsync() // 서버 시작, 무한 대기
+public async Task ReceiveFileAsync() // DataReceived 구독 + 리슨 시작 후 곧바로 반환
 ```
+
+⚠️ Stop·Dispose 가 없다 — 한 번 시작하면 프로세스가 끝날 때까지 포트를 쥔다.
+⚠️ 항상 offset 0(StatusOk)으로 답하고 같은 이름 파일을 지운 뒤 다시 쓴다 — 이어받기는 동작하지 않는다.
 
 ## 상태 머신
 
@@ -41,5 +44,5 @@ public async Task ReceiveFileAsync() // 서버 시작, 무한 대기
 ```csharp
 var options = new TcpServerOptions(IPAddress.Any, 9000);
 var server = new FileTransferServer(options, "C:/received");
-await server.ReceiveFileAsync(); // 무한 대기
+await server.ReceiveFileAsync(); // 리슨 시작 후 반환(서버는 계속 돈다)
 ```

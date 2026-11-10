@@ -1,0 +1,43 @@
+<UserControl
+    x:Class="Docs.Mvvm.Communication.TcpServerView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
+    xmlns:local="clr-namespace:Docs.Mvvm.Communication"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Background="{hy:Color SurfaceBase}"
+    d:DesignHeight="1600"
+    d:DesignWidth="900"
+    mc:Ignorable="d">
+    <Border Margin="20">
+        <hy:HyScrollViewer>
+            <StackPanel Margin="0,0,10,0" Orientation="Vertical">
+                <TextBlock Style="{StaticResource DocsPageTitle}" Text="TcpServer" />
+                <TextBlock Style="{StaticResource DocsLead}" Text="Asynchronous IPv4 TCP server in HYSoft.Communication.Tcp.Server. A background accept loop gives every client its own receive loop, and every read is delivered through the DataReceived event. Instances are created and released only through TcpServerManager." />
+
+                <TextBlock Style="{StaticResource DocsSection}" Text="1. TcpServerOptions" />
+                <ItemsControl ItemsSource="{x:Static local:CommunicationContent.ServerOptions}" Style="{StaticResource DocsTable}" />
+
+                <TextBlock Style="{StaticResource DocsSection}" Text="2. API" />
+                <ItemsControl ItemsSource="{x:Static local:CommunicationContent.ServerMembers}" Style="{StaticResource DocsTable}" />
+
+                <TextBlock Style="{StaticResource DocsSection}" Text="3. Usage" />
+                <TextBox Style="{StaticResource DocsCode}" Text="{x:Static local:CommunicationContent.ServerUsage}" />
+
+                <TextBlock Style="{StaticResource DocsSection}" Text="4. Things to know" />
+                <TextBlock Style="{StaticResource DocsBody}" Text="- DataReceived is raised on an I/O thread once per socket read. Message boundaries are not preserved - reassemble frames per ClientId. Marshal to the Dispatcher before touching UI." />
+                <TextBlock Style="{StaticResource DocsBody}" Text="- Do not block inside the handler: the next read of that client waits until the handler returns. Start async work as a task and catch its exceptions." />
+                <TextBlock Style="{StaticResource DocsBody}" Text="- Exceptions thrown synchronously by a handler are caught and passed to LogError; exceptions inside a fire-and-forget task are not." />
+                <TextBlock Style="{StaticResource DocsBody}" Text="- SendAsync / ReplyAsync return false on failure, but waiting for the per-client send lock can still throw (OperationCanceledException, ObjectDisposedException) when the client is closing." />
+
+                <Border Margin="0,8,0,16" Style="{StaticResource DocsNote}">
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold" Style="{StaticResource DocsNoteText}" Text="Port sharing - SO_REUSEADDR" />
+                        <TextBlock Style="{StaticResource DocsNoteText}" Text="StartAsync enables ReuseAddress on the listener. On Windows this lets the bind succeed even when another socket already uses the port, so a port conflict is not reported as an error. Make sure the port is free (for example with IPGlobalProperties.GetActiveTcpListeners) before starting." />
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </hy:HyScrollViewer>
+    </Border>
+</UserControl>

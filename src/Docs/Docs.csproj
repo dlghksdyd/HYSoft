@@ -6,6 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Communication › Live Echo Demo 가 실제 TcpServer/TcpClient 를 돌린다 -->
+    <ProjectReference Include="..\Communication\Communication.csproj" />
     <ProjectReference Include="..\Presentation\Presentation.csproj" />
     <ProjectReference Include="..\Presentation.Styles\Presentation.Styles.csproj" />
   </ItemGroup>

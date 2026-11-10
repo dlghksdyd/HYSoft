@@ -24,7 +24,7 @@ TcpClientManager.Dispose(client);               // 해제 + 등록 해제
 
 - **클라이언트**: Connect/Send/Receive 각각 별도 `SemaphoreSlim`
 - **서버**: 클라이언트별 SendLock, 전역 StartStopLock
-- **타임아웃**: 유휴 기반 (부분 전송 성공 후 리셋)
+- **타임아웃**: Connect 만 적용. Send/Receive 타임아웃은 현재 미적용 ([TcpClient](01-TcpClient/README.md) 참고)
 
 ## 오류 처리
 

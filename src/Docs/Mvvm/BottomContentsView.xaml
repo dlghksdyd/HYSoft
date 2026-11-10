@@ -16,6 +16,11 @@
         <DataTemplate DataType="{x:Type leftMenu:LeftMenuViewModel}">
             <leftMenu:LeftMenuView DataContext="{Binding}" />
         </DataTemplate>
+
+        <!--  상단 메뉴 — 선택되지 않은 영역은 흐리게, 선택된 영역은 밑줄로 표시  -->
+        <Style x:Key="TopNavItem" TargetType="TextBlock">
+            <Setter Property="Opacity" Value="0.55" />
+        </Style>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -40,6 +45,16 @@
                             CommandParameter="{x:Static leftMenu:ELeftMenuType.UiSupport}"
                             RoutedEvent="{x:Static TextBlock.MouseLeftButtonUpEvent}" />
                     </hy:EventToCommand.Binding>
+                    <TextBlock.Style>
+                        <Style BasedOn="{StaticResource TopNavItem}" TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SharedContext.CurrentMenuType}" Value="{x:Static leftMenu:ELeftMenuType.UiSupport}">
+                                    <Setter Property="Opacity" Value="1" />
+                                    <Setter Property="TextDecorations" Value="Underline" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
                 </TextBlock>
                 <TextBlock
                     Margin="0,0,60,0"
@@ -54,6 +69,16 @@
                             CommandParameter="{x:Static leftMenu:ELeftMenuType.DbSupport}"
                             RoutedEvent="{x:Static TextBlock.MouseLeftButtonUpEvent}" />
                     </hy:EventToCommand.Binding>
+                    <TextBlock.Style>
+                        <Style BasedOn="{StaticResource TopNavItem}" TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SharedContext.CurrentMenuType}" Value="{x:Static leftMenu:ELeftMenuType.DbSupport}">
+                                    <Setter Property="Opacity" Value="1" />
+                                    <Setter Property="TextDecorations" Value="Underline" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
                 </TextBlock>
                 <TextBlock
                     Margin="0,0,60,0"
@@ -68,6 +93,16 @@
                             CommandParameter="{x:Static leftMenu:ELeftMenuType.Communication}"
                             RoutedEvent="{x:Static TextBlock.MouseLeftButtonUpEvent}" />
                     </hy:EventToCommand.Binding>
+                    <TextBlock.Style>
+                        <Style BasedOn="{StaticResource TopNavItem}" TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SharedContext.CurrentMenuType}" Value="{x:Static leftMenu:ELeftMenuType.Communication}">
+                                    <Setter Property="Opacity" Value="1" />
+                                    <Setter Property="TextDecorations" Value="Underline" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
                 </TextBlock>
             </StackPanel>
         </Border>

@@ -1,0 +1,51 @@
+<UserControl
+    x:Class="Docs.Mvvm.Database.DbContextBaseView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
+    xmlns:local="clr-namespace:Docs.Mvvm.Database"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Background="{hy:Color SurfaceBase}"
+    d:DesignHeight="1600"
+    d:DesignWidth="900"
+    mc:Ignorable="d">
+    <Border Margin="20">
+        <hy:HyScrollViewer>
+            <StackPanel Margin="0,0,10,0" Orientation="Vertical">
+                <TextBlock Style="{StaticResource DocsPageTitle}" Text="DbContextBase (MSSQL)" />
+                <TextBlock Style="{StaticResource DocsLead}" Text="HYSoft.Data.Mssql.DbContextBase is an Entity Framework Core 9 DbContext preconfigured for SQL Server. Call Initialize once with the connection settings, derive a context and describe the model in ConfigureModel." />
+
+                <TextBlock Style="{StaticResource DocsSection}" Text="1. Package" />
+                <TextBlock Style="{StaticResource DocsBody}" Text="Data.dll (net8.0-windows) references Microsoft.EntityFrameworkCore and Microsoft.EntityFrameworkCore.SqlServer 9.0.8. Use EF Core APIs (ModelBuilder, DbSet, ToListAsync) - not the EF6 DbModelBuilder." />
+
+                <TextBlock Style="{StaticResource DocsSection}" Text="2. API" />
+                <ItemsControl ItemsSource="{x:Static local:DatabaseContent.Members}" Style="{StaticResource DocsTable}" />
+
+                <TextBlock Style="{StaticResource DocsSection}" Text="3. Define a context" />
+                <TextBox Style="{StaticResource DocsCode}" Text="{x:Static local:DatabaseContent.DefineContext}" />
+
+                <TextBlock Style="{StaticResource DocsSection}" Text="4. Initialize at startup" />
+                <TextBox Style="{StaticResource DocsCode}" Text="{x:Static local:DatabaseContent.InitializeAtStartup}" />
+                <TextBlock Style="{StaticResource DocsBody}" Text="Initialize builds this connection string:" />
+                <TextBox Style="{StaticResource DocsCode}" Text="{x:Static local:DatabaseContent.ConnectionString}" />
+
+                <TextBlock Style="{StaticResource DocsSection}" Text="5. Query and save" />
+                <TextBox Style="{StaticResource DocsCode}" Text="{x:Static local:DatabaseContent.QueryAndSave}" />
+
+                <TextBlock Style="{StaticResource DocsSection}" Text="6. Things to know" />
+                <TextBlock Style="{StaticResource DocsBody}" Text="- One database per process: the options are stored in a single static field shared by every derived context. Calling Initialize again replaces them for contexts created afterwards - it is not locked or write-once." />
+                <TextBlock Style="{StaticResource DocsBody}" Text="- EF Core builds the model once per context type and caches it, so ConfigureModel runs once per derived type per process." />
+                <TextBlock Style="{StaticResource DocsBody}" Text="- MultipleActiveResultSets=True is always on." />
+
+                <Border Margin="0,8,0,16" Style="{StaticResource DocsNote}">
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold" Style="{StaticResource DocsNoteText}" Text="Security" />
+                        <TextBlock Style="{StaticResource DocsNoteText}" Text="- TrustServerCertificate=True: the connection is encrypted, but the server certificate is not validated. Use it only on a trusted network." />
+                        <TextBlock Style="{StaticResource DocsNoteText}" Text="- The password is part of the connection string in memory. Load it from protected configuration and do not log the options." />
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </hy:HyScrollViewer>
+    </Border>
+</UserControl>

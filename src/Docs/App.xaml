@@ -6,6 +6,12 @@
     xmlns:local="clr-namespace:Docs"
     StartupUri="MainWindow.xaml">
     <Application.Resources>
+      <ResourceDictionary>
+        <ResourceDictionary.MergedDictionaries>
+            <!--  문서 페이지 공용 스타일(제목·본문·코드 블록·표·주의 상자)  -->
+            <ResourceDictionary Source="Mvvm/Shared/DocsStyles.xaml" />
+        </ResourceDictionary.MergedDictionaries>
+
         <!--  TextBlock 전역  -->
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Pretendard" />
@@ -23,6 +29,6 @@
 
         <hy:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <hy:BoolToVisibilityReverseConverter x:Key="BoolToVisibilityReverseConverter" />
-
+      </ResourceDictionary>
     </Application.Resources>
 </Application>

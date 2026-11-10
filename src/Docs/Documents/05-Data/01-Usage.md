@@ -1,22 +1,23 @@
-# Data Library - Usage
+# Data Library - Usage (EF Core 9)
 
 ## 1. 파생 DbContext 정의
 
 ```csharp
-public class AppDbContext : DbContextBase
+using HYSoft.Data.Mssql;
+using Microsoft.EntityFrameworkCore;
+
+public sealed class AppDbContext : DbContextBase
 {
-    public DbSet<User> Users { get; set; }
-    public DbSet<Product> Products { get; set; }
+    public DbSet<User> Users => Set<User>();
 
-    protected override void ConfigureModel(DbModelBuilder modelBuilder)
+    protected override void ConfigureModel(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<User>()
-            .ToTable("Users")
-            .HasKey(u => u.Id);
-
-        modelBuilder.Entity<Product>()
-            .ToTable("Products")
-            .HasMany(p => p.Categories);
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.ToTable("Users");
+            entity.HasKey(u => u.Id);
+            entity.Property(u => u.Name).HasMaxLength(50).IsRequired();
+        });
     }
 }
 ```
@@ -25,26 +26,26 @@ public class AppDbContext : DbContextBase
 
 ```csharp
 DbContextBase.Initialize(
-    server: "sqlserver.example.com",
-    port: "1433",
-    uid: "app_user",
-    pwd: "password",
-    database: "MyAppDb"
-);
+    server: settings.Server,
+    port: settings.Port,        // 문자열, 예: "1433"
+    uid: settings.User,
+    pwd: settings.Password,     // 소스에 적지 말 것
+    database: settings.Database);
 ```
 
 ## 3. 데이터 접근
 
 ```csharp
+// 작업 단위마다 짧게 쓴다. DbContext 는 스레드 안전하지 않다.
 using (var db = new AppDbContext())
 {
-    var users = db.Users.Where(u => u.IsActive).ToList();
+    var active = await db.Users.Where(u => u.IsActive).AsNoTracking().ToListAsync();
     db.Users.Add(new User { Name = "홍길동" });
-    db.SaveChanges();
+    await db.SaveChangesAsync();
 }
 ```
 
 ## 참고
 
-현재 솔루션 내 다른 프로젝트에서 직접 참조하지 않음.
-비즈니스 로직 프로젝트에서 파생 DbContext를 구현하여 사용.
+솔루션 내 다른 프로젝트는 직접 참조하지 않는다. 비즈니스 로직 프로젝트에서 파생 DbContext 를 구현해 쓴다.
+Docs 앱 › DB Support › DbContextBase 페이지에 같은 내용이 있다.

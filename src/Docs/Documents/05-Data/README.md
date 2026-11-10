@@ -1,10 +1,11 @@
 # HYSoft.Data Library
 
-MSSQL DbContext 기본 클래스. 네임스페이스: `HYSoft.Data.Mssql`. 의존성: EF 6.5.1.
+MSSQL DbContext 기본 클래스. 네임스페이스: `HYSoft.Data.Mssql`.
+의존성: Microsoft.EntityFrameworkCore / .SqlServer **9.0.8** (EF Core, net8.0-windows). EF6 아님.
 
 ## DbContextBase (abstract)
 
-`System.Data.Entity.DbContext` 상속. Template Method 패턴.
+`Microsoft.EntityFrameworkCore.DbContext` 상속. Template Method 패턴.
 
 ### Initialize (static)
 
@@ -13,46 +14,37 @@ public static void Initialize(
     string server, string port, string uid, string pwd, string database)
 ```
 
-- 앱 시작 시 한 번 호출
-- `lock(_initLock)` 스레드 안전, `volatile` 연결 문자열 저장
-- 연결 속성: Encrypt=True, TrustServerCertificate=True, MARS=True
+- 앱 시작 시 한 번 호출. `DbContextOptions` 를 만들어 **static 필드 하나**에 저장
+- 연결 속성: Encrypt=True, TrustServerCertificate=True, MultipleActiveResultSets=True
+- 잠금·한 번 쓰기 보장 없음 — 다시 부르면 그 뒤에 만드는 컨텍스트부터 새 설정을 쓴다
 
 ### 생성자 (protected)
 
 ```csharp
 protected DbContextBase()
-    : base(_connectionString
-        ?? throw new InvalidOperationException("먼저 Initialize를 호출해야 합니다."))
+    : base(_options ?? throw new InvalidOperationException("먼저 Initialize를 호출해야 합니다."))
 ```
 
-### OnModelCreating (sealed)
+### OnModelCreating (sealed) / ConfigureModel (abstract)
 
 ```csharp
-protected sealed override void OnModelCreating(DbModelBuilder modelBuilder)
+protected sealed override void OnModelCreating(ModelBuilder modelBuilder)
 {
     base.OnModelCreating(modelBuilder);
     ConfigureModel(modelBuilder);  // 파생 클래스에 위임
 }
+
+protected abstract void ConfigureModel(ModelBuilder modelBuilder);
 ```
 
-### ConfigureModel (abstract)
+EF Core 는 컨텍스트 형식마다 모델을 한 번 만들어 캐시한다 — ConfigureModel 은 형식당 1회 실행.
 
-```csharp
-protected abstract void ConfigureModel(DbModelBuilder modelBuilder);
-```
+## 주의
 
-파생 클래스에서 엔티티 매핑, 관계, 제약 정의.
-
-## 설계 패턴
-
-| 패턴 | 적용 |
+| 항목 | 내용 |
 |------|------|
-| Template Method | OnModelCreating → ConfigureModel |
-| Singleton (연결 문자열) | static volatile + lock |
-| 한 번 쓰기 | 초기화 후 불변 |
-
-## 스레드 안전
-
-volatile + lock 초기화. 한번 설정된 문자열은 수정 불가.
+| DB 개수 | 프로세스당 1개(모든 파생 컨텍스트가 같은 옵션 공유) |
+| 인증서 | TrustServerCertificate=True — 서버 인증서를 검증하지 않음. 신뢰된 망에서만 |
+| 비밀번호 | 연결 문자열에 들어간다 — 보호된 설정에서 읽고 로그에 남기지 말 것 |
 
 하위: [Usage](01-Usage.md)

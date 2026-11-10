@@ -24,7 +24,7 @@ WPF 데스크톱 애플리케이션 개발을 위한 .NET 라이브러리 모음
   - [TcpServer](03-Communication/02-TcpServer/README.md) | [Events](03-Communication/02-TcpServer/01-EventsUsage.md)
 - [04-FileTransfer](04-FileTransfer/README.md) - FT10 파일 전송
   - [Client](04-FileTransfer/01-Client.md) | [Server](04-FileTransfer/02-Server.md)
-- [05-Data](05-Data/README.md) - MSSQL (EF6)
+- [05-Data](05-Data/README.md) - MSSQL (EF Core 9)
   - [Usage](05-Data/01-Usage.md)
 - [06-Bundle](06-Bundle.md) - NuGet 패키지 배포
 

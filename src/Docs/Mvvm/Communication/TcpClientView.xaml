@@ -1,0 +1,44 @@
+<UserControl
+    x:Class="Docs.Mvvm.Communication.TcpClientView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hy="http://schemas.hysoft.com/wpf/2025/xaml"
+    xmlns:local="clr-namespace:Docs.Mvvm.Communication"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Background="{hy:Color SurfaceBase}"
+    d:DesignHeight="1600"
+    d:DesignWidth="900"
+    mc:Ignorable="d">
+    <Border Margin="20">
+        <hy:HyScrollViewer>
+            <StackPanel Margin="0,0,10,0" Orientation="Vertical">
+                <TextBlock Style="{StaticResource DocsPageTitle}" Text="TcpClient" />
+                <TextBlock Style="{StaticResource DocsLead}" Text="Asynchronous IPv4 TCP client in HYSoft.Communication.Tcp.Client. Connect, send and receive each have their own lock, so one send and one receive can run at the same time. Instances are created and released only through TcpClientManager." />
+
+                <TextBlock Style="{StaticResource DocsSection}" Text="1. TcpClientOptions" />
+                <ItemsControl ItemsSource="{x:Static local:CommunicationContent.ClientOptions}" Style="{StaticResource DocsTable}" />
+
+                <TextBlock Style="{StaticResource DocsSection}" Text="2. API" />
+                <ItemsControl ItemsSource="{x:Static local:CommunicationContent.ClientMembers}" Style="{StaticResource DocsTable}" />
+
+                <TextBlock Style="{StaticResource DocsSection}" Text="3. Usage" />
+                <TextBlock Style="{StaticResource DocsBody}" Text="TCP is a byte stream: one SendAsync on the other side may arrive in several reads, and several sends may arrive together. Because ReceiveAsync fills the whole buffer, define a framing (for example a 4-byte length header) and read exactly that many bytes." />
+                <TextBox Style="{StaticResource DocsCode}" Text="{x:Static local:CommunicationContent.ClientUsage}" />
+
+                <TextBlock Style="{StaticResource DocsSection}" Text="4. Errors" />
+                <TextBlock Style="{StaticResource DocsBody}" Text="ConnectAsync - TimeoutException (ConnectTimeout exceeded), SocketException (refused / unreachable)." />
+                <TextBlock Style="{StaticResource DocsBody}" Text="SendAsync / ReceiveAsync - InvalidOperationException (not connected or socket already disposed), SocketException (ConnectionReset when the peer closes)." />
+                <TextBlock Style="{StaticResource DocsBody}" Text="Any call after TcpClientManager.Dispose - ObjectDisposedException." />
+
+                <Border Margin="0,8,0,16" Style="{StaticResource DocsNote}">
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold" Style="{StaticResource DocsNoteText}" Text="Current limitation - SendTimeout / ReceiveTimeout" />
+                        <TextBlock Style="{StaticResource DocsNoteText}" Text="SendAsync and ReceiveAsync create a timeout CancellationTokenSource but never pass its token to the socket call. A peer that stops sending therefore keeps ReceiveAsync waiting indefinitely. Until this is fixed, bound the wait yourself:" />
+                    </StackPanel>
+                </Border>
+                <TextBox Style="{StaticResource DocsCode}" Text="{x:Static local:CommunicationContent.ClientTimeoutWorkaround}" />
+            </StackPanel>
+        </hy:HyScrollViewer>
+    </Border>
+</UserControl>

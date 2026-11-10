@@ -19,6 +19,9 @@ namespace Docs.Mvvm
         // 오른쪽에 보이는 컨텐츠
         object? Content { get; set; }
         
+        // 상단 메뉴에서 현재 선택된 영역 (선택 전이면 null)
+        ELeftMenuType? CurrentMenuType { get; }
+
         // 왼쪽 메뉴 아이템
         ObservableCollection<MenuItem> MenuItems { get; set; }
         public bool IsContentVisibility { get; }
@@ -37,10 +40,17 @@ namespace Docs.Mvvm
         }
 
         private object? _content;
-        public object? Content 
-        { 
+        public object? Content
+        {
             get => _content;
             set => SetProperty(ref _content, value);
+        }
+
+        private ELeftMenuType? _currentMenuType;
+        public ELeftMenuType? CurrentMenuType
+        {
+            get => _currentMenuType;
+            private set => SetProperty(ref _currentMenuType, value);
         }
 
         #region 왼쪽 메뉴 아이템
@@ -132,22 +142,93 @@ namespace Docs.Mvvm
             item.SelectMenuCommand.Execute(null);
 
             // 컨텐츠 변경
-            if (item.ViewType is null) Content = null;
-            else Content = Activator.CreateInstance(item.ViewType, this);
+            if (item.ViewType is null) ReplaceContent(null);
+            else ReplaceContent(Activator.CreateInstance(item.ViewType, this));
         });
+
+        /// <summary>
+        /// 오른쪽 페이지를 바꾸고, 이전 페이지가 <see cref="IDisposable"/> 이면 즉시 정리한다
+        /// (예: Live Echo Demo 의 TcpServer·TcpClient). 정리를 Unloaded 이벤트에 맡기지 않는다.
+        /// </summary>
+        private void ReplaceContent(object? next)
+        {
+            var previous = Content;
+            Content = next;
+
+            if (!ReferenceEquals(previous, next) && previous is IDisposable disposable)
+                disposable.Dispose();
+        }
 
         private ICommand? _updateLeftMenuItemCommand;
         public ICommand UpdateLeftMenuItemCommand => _updateLeftMenuItemCommand ??= new RelayCommand<EventPayload>((p) =>
         {
             if (p?.Parameter is not ELeftMenuType type) return;
 
-            if (type == ELeftMenuType.UiSupport)
+            // 이미 보고 있는 영역을 다시 누르면 현재 페이지를 그대로 둔다.
+            if (CurrentMenuType == type) return;
+
+            switch (type)
             {
-                SetMenuItems_Styles();
+                case ELeftMenuType.UiSupport:
+                    SetMenuItems_Styles();
+                    break;
+                case ELeftMenuType.DbSupport:
+                    SetMenuItems_Database();
+                    break;
+                case ELeftMenuType.Communication:
+                    SetMenuItems_Communication();
+                    break;
+                default:
+                    return;
             }
+
+            CurrentMenuType = type;
+
+            // 이전 영역의 페이지가 남지 않도록 새 영역의 첫 페이지를 연다.
+            SelectedMenu = null;
+            var first = FindFirstPage(MenuItems);
+            if (first is null) ReplaceContent(null);
+            else SelectMenuItemCommand.Execute(new EventPayload(null, null, first));
         });
 
         #endregion
+
+        /// <summary>
+        /// 메뉴 트리에서 페이지(ViewType 이 있는 항목)를 깊이 우선으로 처음 찾은 것을 돌려준다.
+        /// </summary>
+        private static MenuItem? FindFirstPage(IEnumerable<MenuItem> items)
+        {
+            foreach (var item in items)
+            {
+                if (item.ViewType is not null) return item;
+
+                var sub = FindFirstPage(item.SubItems);
+                if (sub is not null) return sub;
+            }
+
+            return null;
+        }
+
+        private void SetMenuItems_Database()
+        {
+            MenuItems.Clear();
+
+            var mssql = AddItem("MSSQL", null, true);
+            mssql.AddSubItem("DbContextBase", typeof(Database.DbContextBaseView));
+        }
+
+        private void SetMenuItems_Communication()
+        {
+            MenuItems.Clear();
+
+            var tcp = AddItem("TCP", null, true);
+            tcp.AddSubItem("TcpClient", typeof(Communication.TcpClientView));
+            tcp.AddSubItem("TcpServer", typeof(Communication.TcpServerView));
+            tcp.AddSubItem("Live Echo Demo", typeof(Communication.TcpEchoDemoView));
+
+            var fileTransfer = AddItem("File Transfer", null, true);
+            fileTransfer.AddSubItem("FT10 Protocol & API", typeof(Communication.FileTransferView));
+        }
 
         private void SetMenuItems_Styles()
         {
