@@ -4,6 +4,20 @@
     xmlns:c="clr-namespace:HYSoft.Presentation.Styles.ColorTokens"
     xmlns:local="clr-namespace:HYSoft.Presentation.Styles.Controls">
 
+    <!--  IconButtons 용 단추 내용 — 아이콘 색은 단추 글자색, 크기는 HyPaginator.IconSize  -->
+    <DataTemplate x:Key="HyPaginatorFirstIcon">
+        <local:HyIcon Source="FirstPage" Width="{Binding IconSize, RelativeSource={RelativeSource AncestorType={x:Type local:HyPaginator}}}" Height="{Binding IconSize, RelativeSource={RelativeSource AncestorType={x:Type local:HyPaginator}}}" Color="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type local:HyPaginator}}}" IsHitTestVisible="False" />
+    </DataTemplate>
+    <DataTemplate x:Key="HyPaginatorPreviousIcon">
+        <local:HyIcon Source="NavigateBefore" Width="{Binding IconSize, RelativeSource={RelativeSource AncestorType={x:Type local:HyPaginator}}}" Height="{Binding IconSize, RelativeSource={RelativeSource AncestorType={x:Type local:HyPaginator}}}" Color="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type local:HyPaginator}}}" IsHitTestVisible="False" />
+    </DataTemplate>
+    <DataTemplate x:Key="HyPaginatorNextIcon">
+        <local:HyIcon Source="NavigateNext" Width="{Binding IconSize, RelativeSource={RelativeSource AncestorType={x:Type local:HyPaginator}}}" Height="{Binding IconSize, RelativeSource={RelativeSource AncestorType={x:Type local:HyPaginator}}}" Color="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type local:HyPaginator}}}" IsHitTestVisible="False" />
+    </DataTemplate>
+    <DataTemplate x:Key="HyPaginatorLastIcon">
+        <local:HyIcon Source="LastPage" Width="{Binding IconSize, RelativeSource={RelativeSource AncestorType={x:Type local:HyPaginator}}}" Height="{Binding IconSize, RelativeSource={RelativeSource AncestorType={x:Type local:HyPaginator}}}" Color="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type local:HyPaginator}}}" IsHitTestVisible="False" />
+    </DataTemplate>
+
     <Style TargetType="{x:Type local:HyPaginator}">
         <Setter Property="Foreground" Value="{c:Color TextPrimary}" />
         <Setter Property="Background" Value="Transparent" />
@@ -39,7 +53,7 @@
                                             Background="Transparent"
                                             BorderBrush="Transparent"
                                             BorderThickness="0"
-                                            CornerRadius="0"
+                                            CornerRadius="{Binding ButtonCornerRadius, RelativeSource={RelativeSource AncestorType={x:Type local:HyPaginator}}}"
                                             Padding="{TemplateBinding Padding}">
                                             <ContentPresenter
                                                 HorizontalAlignment="Center"
@@ -79,7 +93,7 @@
                                             Background="Transparent"
                                             BorderBrush="Transparent"
                                             BorderThickness="0"
-                                            CornerRadius="0"
+                                            CornerRadius="{Binding ButtonCornerRadius, RelativeSource={RelativeSource AncestorType={x:Type local:HyPaginator}}}"
                                             Padding="{TemplateBinding Padding}">
                                             <ContentPresenter
                                                 HorizontalAlignment="Center"
@@ -106,14 +120,8 @@
                                 Margin="{TemplateBinding PageInfoMargin}"
                                 VerticalAlignment="Center"
                                 FontSize="{TemplateBinding FontSize}"
-                                Foreground="{TemplateBinding Foreground}">
-                                <TextBlock.Text>
-                                    <MultiBinding StringFormat="Page {0} of {1}">
-                                        <Binding Path="CurrentPage" RelativeSource="{RelativeSource TemplatedParent}" />
-                                        <Binding Path="TotalPages" RelativeSource="{RelativeSource TemplatedParent}" />
-                                    </MultiBinding>
-                                </TextBlock.Text>
-                            </TextBlock>
+                                Foreground="{TemplateBinding Foreground}"
+                                Text="{TemplateBinding PageInfoText}" />
 
                             <!-- Next Page -->
                             <Button
@@ -132,7 +140,7 @@
                                             Background="Transparent"
                                             BorderBrush="Transparent"
                                             BorderThickness="0"
-                                            CornerRadius="0"
+                                            CornerRadius="{Binding ButtonCornerRadius, RelativeSource={RelativeSource AncestorType={x:Type local:HyPaginator}}}"
                                             Padding="{TemplateBinding Padding}">
                                             <ContentPresenter
                                                 HorizontalAlignment="Center"
@@ -172,7 +180,7 @@
                                             Background="Transparent"
                                             BorderBrush="Transparent"
                                             BorderThickness="0"
-                                            CornerRadius="0"
+                                            CornerRadius="{Binding ButtonCornerRadius, RelativeSource={RelativeSource AncestorType={x:Type local:HyPaginator}}}"
                                             Padding="{TemplateBinding Padding}">
                                             <ContentPresenter
                                                 HorizontalAlignment="Center"
@@ -199,6 +207,13 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value="0.5" />
+                        </Trigger>
+                        <!--  IconButtons — 글리프 대신 HYSoft 아이콘(단추마다 따로 만들어지게 ContentTemplate 으로 바꾼다)  -->
+                        <Trigger Property="IconButtons" Value="True">
+                            <Setter TargetName="PART_FirstButton" Property="ContentTemplate" Value="{StaticResource HyPaginatorFirstIcon}" />
+                            <Setter TargetName="PART_PreviousButton" Property="ContentTemplate" Value="{StaticResource HyPaginatorPreviousIcon}" />
+                            <Setter TargetName="PART_NextButton" Property="ContentTemplate" Value="{StaticResource HyPaginatorNextIcon}" />
+                            <Setter TargetName="PART_LastButton" Property="ContentTemplate" Value="{StaticResource HyPaginatorLastIcon}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -147,17 +147,92 @@ namespace HYSoft.Presentation.Styles.Controls
             DependencyProperty.Register(nameof(PageInfoMargin), typeof(Thickness), typeof(HyPaginator),
                 new FrameworkPropertyMetadata(new Thickness(8, 0, 8, 0), FrameworkPropertyMetadataOptions.AffectsMeasure));
 
+        // ── 아이콘 단추·문구 형식 (2026-11-11, 진단 결과 조회) ───────────────────────────
+        //
+        // 🔴 기본값은 종전과 «완전히 같다»(글리프 단추 · 직각 · 「Page {0} of {1}」) — 값을 주지 않는 화면(활성화진단 이력·배터리 목록,
+        //    PaginatorMetricsGuardTests)의 렌더는 바뀌지 않는다. 켜는 화면만 HYSoft 아이콘(FirstPage·NavigateBefore·NavigateNext·LastPage)과
+        //    둥근 단추를 쓴다.
+
+        /// <summary>참이면 처음·이전·다음·끝 단추가 글리프 글자 대신 HYSoft 아이콘을 보인다. 기본 거짓(종전 글리프).</summary>
+        public bool IconButtons
+        {
+            get => (bool)GetValue(IconButtonsProperty);
+            set => SetValue(IconButtonsProperty, value);
+        }
+        public static readonly DependencyProperty IconButtonsProperty =
+            DependencyProperty.Register(nameof(IconButtons), typeof(bool), typeof(HyPaginator),
+                new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+        /// <summary>아이콘 크기(px) — <see cref="IconButtons"/> 일 때. 기본 18.</summary>
+        public double IconSize
+        {
+            get => (double)GetValue(IconSizeProperty);
+            set => SetValue(IconSizeProperty, value);
+        }
+        public static readonly DependencyProperty IconSizeProperty =
+            DependencyProperty.Register(nameof(IconSize), typeof(double), typeof(HyPaginator),
+                new FrameworkPropertyMetadata(18d, FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+        /// <summary>단추 모서리 둥글기. 기본 0 — 종전 템플릿과 같다.</summary>
+        public CornerRadius ButtonCornerRadius
+        {
+            get => (CornerRadius)GetValue(ButtonCornerRadiusProperty);
+            set => SetValue(ButtonCornerRadiusProperty, value);
+        }
+        public static readonly DependencyProperty ButtonCornerRadiusProperty =
+            DependencyProperty.Register(nameof(ButtonCornerRadius), typeof(CornerRadius), typeof(HyPaginator),
+                new FrameworkPropertyMetadata(new CornerRadius(0)));
+
+        /// <summary>가운데 문구 형식 — <c>{0}</c> = 지금 쪽, <c>{1}</c> = 전체 쪽. 기본 「Page {0} of {1}」 — 종전과 같다.</summary>
+        public string PageInfoFormat
+        {
+            get => (string)GetValue(PageInfoFormatProperty);
+            set => SetValue(PageInfoFormatProperty, value);
+        }
+        public static readonly DependencyProperty PageInfoFormatProperty =
+            DependencyProperty.Register(nameof(PageInfoFormat), typeof(string), typeof(HyPaginator),
+                new PropertyMetadata("Page {0} of {1}", (d, _) => ((HyPaginator)d).UpdatePageInfo()));
+
+        /// <summary>가운데 문구(읽기 전용 — <see cref="PageInfoFormat"/> 로 만든다).</summary>
+        public string PageInfoText => (string)GetValue(PageInfoTextProperty);
+        private static readonly DependencyPropertyKey PageInfoTextPropertyKey =
+            DependencyProperty.RegisterReadOnly(nameof(PageInfoText), typeof(string), typeof(HyPaginator),
+                new PropertyMetadata("Page 1 of 1"));
+        public static readonly DependencyProperty PageInfoTextProperty = PageInfoTextPropertyKey.DependencyProperty;
+
+        private void UpdatePageInfo()
+        {
+            string format = string.IsNullOrEmpty(PageInfoFormat) ? "Page {0} of {1}" : PageInfoFormat;
+            string text;
+            try
+            {
+                text = string.Format(System.Globalization.CultureInfo.InvariantCulture, format, CurrentPage, TotalPages);
+            }
+            catch (FormatException)
+            {
+                text = string.Format(System.Globalization.CultureInfo.InvariantCulture, "Page {0} of {1}", CurrentPage, TotalPages);   // 형식이 깨졌으면 기본 문구
+            }
+
+            SetValue(PageInfoTextPropertyKey, text);
+        }
+
         private static void OnCurrentPageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is HyPaginator ctrl)
+            {
                 ctrl.UpdateButtonStates();
+                ctrl.UpdatePageInfo();
+            }
         }
 
         private static void OnTotalPagesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             d.CoerceValue(CurrentPageProperty);
             if (d is HyPaginator ctrl)
+            {
                 ctrl.UpdateButtonStates();
+                ctrl.UpdatePageInfo();
+            }
         }
 
         private static object CoerceCurrentPage(DependencyObject d, object baseValue)

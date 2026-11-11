@@ -14,12 +14,13 @@
               WPF 기본 TabItem 스타일과 같게 Stretch. 머리글은 ContentSite 의 고정 Center 라 영향 없다.  -->
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
-        <Setter Property="Cursor" Value="Hand" />
+        <!--  🔴 손 모양 커서는 탭 «머리글»(템플릿 Root)에만 둔다. 탭 항목 자체에 두면 커서 조회가 논리 부모(탭 항목)를 거쳐
+              탭 «내용» 전체(표·그래프·빈 곳)가 손 모양이 됐다 — 누를 것이 없는 곳이 눌리는 것처럼 보인다.  -->
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:HyTabItem}">
-                    <Grid x:Name="Root" SnapsToDevicePixels="True">
+                    <Grid x:Name="Root" SnapsToDevicePixels="True" Cursor="Hand">
                         <Border
                             x:Name="MainBorder"
                             Background="{TemplateBinding Background}"
@@ -55,7 +56,7 @@
                         <!--  Disabled  -->
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value="0.5" />
-                            <Setter Property="Cursor" Value="Arrow" />
+                            <Setter TargetName="Root" Property="Cursor" Value="Arrow" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

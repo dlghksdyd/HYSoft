@@ -169,6 +169,9 @@ namespace HYSoft.Presentation.Styles.ColorTokens
             map[EColorKeys.LogError] = Resolve(nameof(EColorKeys.LogError));
             map[EColorKeys.LogCritical] = Resolve(nameof(EColorKeys.LogCritical));
             map[EColorKeys.SurfaceScrim] = Resolve(nameof(EColorKeys.SurfaceScrim));
+            map[EColorKeys.TitleBarHover] = Resolve(nameof(EColorKeys.TitleBarHover));
+            map[EColorKeys.TitleBarPressed] = Resolve(nameof(EColorKeys.TitleBarPressed));
+            map[EColorKeys.TitleBarCloseHover] = Resolve(nameof(EColorKeys.TitleBarCloseHover));
 
             return map;
         }
@@ -303,6 +306,9 @@ namespace HYSoft.Presentation.Styles.ColorTokens
         LogWarn,
         LogError,
         LogCritical,
-        SurfaceScrim
+        SurfaceScrim,
+        TitleBarHover,
+        TitleBarPressed,
+        TitleBarCloseHover
     }
 }

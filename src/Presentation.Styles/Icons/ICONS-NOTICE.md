@@ -6,6 +6,11 @@
 - 2026-10-29 추가분 6종(`Factory`·`DirectionsCar`·`BatteryFull`·`ViewModule`·`FolderOpen`·`Tune`)은
   npm `@material-design-icons/svg@0.14.15` 의 `outlined/*.svg` 를 72×72(24 그리드의 3배), 검정 단색 +
   투명 배경 PNG 로 래스터화했다.
+- 2026-11-11 추가분 2종(`CropSquare` = 창 최대화 · `FilterNone` = 창 복원)도 같은 패키지·같은 규격이다
+  (`outlined/crop_square.svg`·`filter_none.svg`, nonzero 채우기). 같은 방식으로 만든 `close`·`remove`·`list_alt` 가
+  기존 PNG 와 평균 알파 차이 0.89·0.00·0.06(0~255)으로 맞았다.
+- 2026-11-11 `LastPage` 는 기존 `FirstPage.png` 를 **좌우로 뒤집어** 만들었다(Material `last_page` = `first_page` 의 거울상).
+  패키지의 `first_page` 를 같은 방식으로 래스터화하면 기존 PNG 와 평균 알파 차이 4.13 으로 막대가 조금 굵어 — 처음·끝 단추가 짝으로 보이게 기존 것을 뒤집었다.
 - 같은 방식으로 만든 `list_alt`·`fact_check` 가 기존 `ListAlt.png`·`FactCheck.png` 와 픽셀 단위로 일치한다
   (평균 알파 차이 0.06·0.34) — 기존 아이콘도 같은 출처·규격이다.
 - 🔴 Material **Symbols**(`@material-symbols/svg-*`)는 선이 가늘어 기존 아이콘과 따로 논다. 추가할 때는

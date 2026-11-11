@@ -123,6 +123,10 @@
     <SolidColorBrush x:Key="TitleBarBackground">#293b4d</SolidColorBrush>
     <SolidColorBrush x:Key="TitleBarText">#f2f6fa</SolidColorBrush>
     <SolidColorBrush x:Key="TitleBarBorder">#c5d4e3</SolidColorBrush>
+    <!-- 제목줄(짙은 바탕) 위 항목·창 버튼의 마우스 올림·누름 — 바탕색에 흰색을 겹친다. 닫기 버튼 올림은 Windows 관례의 빨강 -->
+    <SolidColorBrush x:Key="TitleBarHover">#1FFFFFFF</SolidColorBrush>
+    <SolidColorBrush x:Key="TitleBarPressed">#33FFFFFF</SolidColorBrush>
+    <SolidColorBrush x:Key="TitleBarCloseHover">#C42B1C</SolidColorBrush>
     <SolidColorBrush x:Key="PopupTitleSurface">#293b4d</SolidColorBrush>
     <SolidColorBrush x:Key="PopupTitleText">#ebf1f6</SolidColorBrush>
     <SolidColorBrush x:Key="PopupBorder">#7e7e7e</SolidColorBrush>
@@ -253,4 +257,7 @@
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.OverlayBackdrop}}" Color="{Binding Color, Source={StaticResource OverlayBackdrop}}" />
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.BorderInverse}}" Color="{Binding Color, Source={StaticResource BorderInverse}}" />
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.SurfaceScrim}}" Color="{Binding Color, Source={StaticResource SurfaceScrim}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TitleBarHover}}" Color="{Binding Color, Source={StaticResource TitleBarHover}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TitleBarPressed}}" Color="{Binding Color, Source={StaticResource TitleBarPressed}}" />
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type c:ColorKeys}, ResourceId={x:Static c:EColorKeys.TitleBarCloseHover}}" Color="{Binding Color, Source={StaticResource TitleBarCloseHover}}" />
 </ResourceDictionary>

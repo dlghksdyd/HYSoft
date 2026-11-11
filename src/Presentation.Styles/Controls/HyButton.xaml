@@ -40,14 +40,14 @@
                     </Border>
 
                     <ControlTemplate.Triggers>
-                        <!--  Hover  -->
+                        <!--  Hover (HoverOverlay — 기본 #10000000)  -->
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="StateOverlay" Property="Background" Value="#10000000" />
+                            <Setter TargetName="StateOverlay" Property="Background" Value="{Binding HoverOverlay, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Trigger>
 
-                        <!--  Pressed  -->
+                        <!--  Pressed (PressedOverlay — 기본 #20000000)  -->
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="StateOverlay" Property="Background" Value="#20000000" />
+                            <Setter TargetName="StateOverlay" Property="Background" Value="{Binding PressedOverlay, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Trigger>
 
                         <!--  Keyboard Focus  -->

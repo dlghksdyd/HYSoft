@@ -104,7 +104,7 @@
                 <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
             </Trigger>
             <Trigger Property="IsHighlighted" Value="True">
-                <Setter TargetName="Root" Property="Background" Value="{c:Color NavigationItemBgHover}" />
+                <Setter TargetName="Root" Property="Background" Value="{Binding HighlightBackground, RelativeSource={RelativeSource TemplatedParent}}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.5" />
@@ -112,23 +112,35 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <!-- HyMenuItem: TopLevelItem template -->
+    <!-- HyMenuItem: TopLevelItem template — IsCurrent 면 아래 밑줄(지금 화면) -->
     <ControlTemplate x:Key="HyMenuItemTopLevelItemTemplate" TargetType="{x:Type local:HyMenuItem}">
-        <Border
-            x:Name="Root"
-            Background="Transparent"
-            CornerRadius="{TemplateBinding CornerRadius}"
-            Padding="12,6"
-            SnapsToDevicePixels="True">
-            <ContentPresenter
-                VerticalAlignment="Center"
-                ContentSource="Header"
-                RecognizesAccessKey="True"
-                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-        </Border>
+        <Grid SnapsToDevicePixels="True">
+            <Border
+                x:Name="Root"
+                Background="Transparent"
+                CornerRadius="{TemplateBinding CornerRadius}"
+                Padding="12,6"
+                SnapsToDevicePixels="True">
+                <ContentPresenter
+                    VerticalAlignment="Center"
+                    ContentSource="Header"
+                    RecognizesAccessKey="True"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            </Border>
+            <Border
+                x:Name="CurrentIndicator"
+                Height="2"
+                Margin="8,0"
+                VerticalAlignment="Bottom"
+                Background="{TemplateBinding CurrentIndicatorBrush}"
+                Visibility="Hidden" />
+        </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsHighlighted" Value="True">
-                <Setter TargetName="Root" Property="Background" Value="{c:Color NavigationItemBgHover}" />
+                <Setter TargetName="Root" Property="Background" Value="{Binding HighlightBackground, RelativeSource={RelativeSource TemplatedParent}}" />
+            </Trigger>
+            <Trigger Property="IsCurrent" Value="True">
+                <Setter TargetName="CurrentIndicator" Property="Visibility" Value="Visible" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.5" />
@@ -173,7 +185,7 @@
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsHighlighted" Value="True">
-                <Setter TargetName="Root" Property="Background" Value="{c:Color NavigationItemBgHover}" />
+                <Setter TargetName="Root" Property="Background" Value="{Binding HighlightBackground, RelativeSource={RelativeSource TemplatedParent}}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.5" />
@@ -245,7 +257,7 @@
                 <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
             </Trigger>
             <Trigger Property="IsHighlighted" Value="True">
-                <Setter TargetName="Root" Property="Background" Value="{c:Color NavigationItemBgHover}" />
+                <Setter TargetName="Root" Property="Background" Value="{Binding HighlightBackground, RelativeSource={RelativeSource TemplatedParent}}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.5" />
@@ -256,6 +268,8 @@
     <!-- HyMenuItem -->
     <Style TargetType="{x:Type local:HyMenuItem}">
         <Setter Property="Foreground" Value="{c:Color TextPrimary}" />
+        <Setter Property="HighlightBackground" Value="{c:Color NavigationItemBgHover}" />
+        <Setter Property="CurrentIndicatorBrush" Value="{c:Color NavigationTabIndicator}" />
         <Setter Property="Padding" Value="8,6" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
